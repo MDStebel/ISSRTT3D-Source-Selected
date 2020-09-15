@@ -20,8 +20,8 @@ class CrewMembersTableViewController: UITableViewController, TableAnimatable {
         static let segueToHelpFromCrew          = "segueToHelpFromCrew"
         static let segueToFullBio               = "segueToFullBio"
         static let customCellIdentifier         = "crewMemberCell"
-        static let crewAPIEndpointURLString     = "https://issrttapi.com/crew.json"                         // API endpoint
-        static let bioBackupURLString           = "https://www.issrtt.com/issrtt-astronaut-bio-not-found"   // Backup URL is used if a bio URL is not returned in the JSON file
+        static let crewAPIEndpointURLString     = "---"                         // API endpoint
+        static let bioBackupURLString           = "---"   // Backup URL is used if a bio URL is not returned in the JSON file
         static let newLine                      = "\n"
         static let tableRowSize: CGFloat        = 180
         static let fontForTitle                 = Theme.nasa
