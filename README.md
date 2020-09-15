@@ -7,4 +7,3 @@ Note: does not include, resources, images, fonts, graphics, soundtracks. All API
 ![banner](https://github.com/MDStebel/ISSRTT-Source-Public/blob/master/ISSRTT%20FB%20Cover%20Banner.png)
 
 © 2016-2020 Michael Stebel
-ISSRTT FB Cover Banner.png
