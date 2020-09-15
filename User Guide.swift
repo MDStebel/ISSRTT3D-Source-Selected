@@ -1,9 +1,9 @@
 //
 //  User Guide.swift
-//  ISS Tracker
+//  ISS Real-Time Tracker
 //
 //  Created by Michael Stebel on 6/15/18.
-//  Copyright © 2018-2019 Michael Stebel Consulting, LLC. All rights reserved.
+//  Copyright © 2018-2020 Michael Stebel Consulting, LLC. All rights reserved.
 //
 
 import UIKit
@@ -14,9 +14,9 @@ struct UserGuide {
     
     // MARK: - Theme colors converted to CSS hex
     
-    private static let helpViewBackgroundColor = UIColor(named: "User Guide Background")?.toHex ?? "000000"
-    private static let tintColor = UIColor(named: "Tint")?.toHex ?? "ff0000"
-    private static let whiteColor = UIColor(named: "White")?.toHex ?? "ffffff"
+    private static let helpViewBackgroundColor = UIColor(named: Theme.usrGuide)?.toHex ?? "000000"
+    private static let tintColor = UIColor(named: Theme.tint)?.toHex ?? "ff0000"
+    private static let whiteColor = UIColor(named: Theme.white)?.toHex ?? "ffffff"
     
     
     // MARK: - Common code
