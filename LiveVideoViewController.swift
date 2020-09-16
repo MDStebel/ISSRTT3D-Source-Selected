@@ -1,73 +1,128 @@
 //
-//  LiveVideoViewController.swift
+//  OverheadTimesTableViewController.swift
 //  ISS Real-Time Tracker
 //
-//  Created by Michael Stebel on 8/7/16.
+//  Created by Michael Stebel on 3/16/16.
 //  Copyright © 2016-2020 Michael Stebel Consulting, LLC. All rights reserved.
 //
 
 import UIKit
-import WebKit
+import EventKit
+import CoreLocation
 
 
-class LiveVideoViewController: UIViewController, WKUIDelegate, WKNavigationDelegate {
+class PassesTableViewController: UITableViewController, CLLocationManagerDelegate, TableAnimatable {
+    
+    
+    // MARK: - Rating System Enum
+    
+    
+    /// Defines the passes rating system
+    ///
+    /// This enum holds the max (i.e., lowest magnitude) values for the respective ratings and returns number of stars for each. Call: var nStars = RatingSystem.good.numberOfStars
+    enum RatingSystem: Double, CaseIterable {
+        
+        case poor   =  100.0
+        case fair   = -0.5
+        case good   = -1.0
+        case better = -1.5
+        case best   = -2.0
+        
+        var numberOfStars: Int {
+            switch self {
+            case .poor :
+                return 0
+            case .fair   :
+                return 1
+            case .good   :
+                return 2
+            case .better :
+                return 3
+            case .best   :
+                return 4
+            }
+        }
 
-
+    }
+    
+    
     // MARK: - Properties
     
     
-    /// Constants used in this class
     private struct Constants {
-        static let segueToHelpFromVideo     = "segueToHelpFromStreamingVideo"
-        static let fontForTitle             = Theme.nasa
+        static let segueToHelpFromPasses                = "segueToHelpFromPasses"
+        static let fontForTitle                         = Theme.nasa
     }
     
+    private var rating                                  = 0
+    private let baseURLForOverheadTimes                 = "---"     // API endpoint
+    private let apiKey                                  = "---"                                     // API key
+    private let altitude                                = 0
+    private let minObservationTime                      = 300                                                             // In seconds
+    private let customCellIdentifier                    = "OverheadTimesCell"
+    private let deg                                     = "°"
+    private let newLine                                 = "\n"
+    private let noRatingStar                            = #imageLiteral(resourceName: "star-unfilled")
+    private let ratingStar                              = #imageLiteral(resourceName: "star")
+    private var numberOfDays                            = 1
+    private var numberOfOverheadTimesActuallyReported   = 0
+    private var userCurrentCoordinatesString            = ""
+    private var dateFormatterForDate                    = DateFormatter()
+    private var dateFormatterForTime                    = DateFormatter()
+    private var userLatitude                            = 0.0
+    private var userLongitude                           = 0.0
+    private var overheadTimesList                       = [Passes.Pass]()
     
-    /// Channel will be selected by caller during prepare for segue
-    var channelSelected: LiveTVChoices.Channels = .liveEarth
-
+    private var ISSlocationManager: CLLocationManager!
     
-    /// Selector containing the URL to access the JSON date containing the final URLs of the channels
-    private var whichJsonFileToUse = LiveTVChoices.URLAlternatives.v9.rawValue
-    
-    
-    /// Live video feed address
-    private var videoURL = ""
-    
-    
-    /// The web view
-    private var webView: WKWebView! {
-        didSet{
-            webView.backgroundColor = UIColor(named: Theme.popupBgd)
-        }
-    }
-    
-    
-    /// Alias for the function type used in callback
-    typealias callBack = () -> ()
-    
+    /// Defines type for completion handler function
+    typealias completionHandler = (Data) -> ()
     
     // Change status bar to light color for this VC
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return .lightContent
     }
-
+    
+    
+    // MARK: - Outlets
+    
+    
+    @IBOutlet private var overheadTimes: UITableView!
+    @IBOutlet private var promptLabel: UILabel! {
+        didSet {
+            promptLabel.text = "Getting your location..."
+            promptLabel.layer.maskedCorners = [.layerMinXMaxYCorner, .layerMaxXMaxYCorner]
+            promptLabel.layer.cornerRadius = 27
+            promptLabel.layer.masksToBounds = true
+        }
+    }
+    @IBOutlet private var spinner: UIActivityIndicatorView!
+    @IBOutlet private var changeNumberOfDaysButton: UIBarButtonItem!
+    
     
     // MARK: - Methods
     
-
-    @IBAction private func refresh(_ sender: UIBarButtonItem) {
-        webView.reload()
+    
+    private func setupDateFormatter() {
+        dateFormatterForDate.dateFormat = Globals.outputDateOnlyFormatString
+        dateFormatterForTime.dateFormat = Globals.outputTimeOnlyFormatString
     }
-
+    
+    private func getNumberOfDaysOfPassesToReturn() {
+        numberOfDays = Int(Globals.numberOfDaysDictionary[Globals.numberOfDaysOfPassesSelectedSegment] ?? String(Globals.numberOfDaysOfPassesDefaultSelectionSegment))!
+    }
     
     override func viewDidLoad() {
         
         super.viewDidLoad()
 
-        setupWebView()
-        getHDEVUrl(then: loadWebView)       // Get URL of the stream from my website, and if successful, execute callback
-
+        spinner.hidesWhenStopped = true
+        setupDateFormatter()
+        getNumberOfDaysOfPassesToReturn()
+        setupRefreshControl()
+        setUpLocationManager()
+        checkCLAccess()
+        
     }
     
     
@@ -82,114 +137,292 @@ class LiveVideoViewController: UIViewController, WKUIDelegate, WKNavigationDeleg
             navigationController?.navigationBar.barTintColor = UIColor(named: Theme.tint)
         }
         
-    }
-    
-    
-    private func setupWebView() {
-        
-        let webConfiguration = WKWebViewConfiguration()
-        webConfiguration.mediaTypesRequiringUserActionForPlayback = .audio
-
-        webView = WKWebView(frame: .zero, configuration: webConfiguration)
-        webView.uiDelegate = self
-        webView.navigationDelegate = self
-        view = webView
+//        // Use appropriate background color for light or dark mode
+//        if traitCollection.userInterfaceStyle == .light {
+//            overheadTimes.backgroundColor = UIColor(named: "Alternate Background")
+//        } else {
+//            overheadTimes.backgroundColor = UIColor(named: "Flipside View Background Color")
+//        }
         
     }
     
+    
+    /// Set up refresh contol to allow pull-to-refresh in table view
+    private func setupRefreshControl() {
         
-    /// Retrieve address of desired channel.
-    ///
-    /// Gets HDEV URL to use from JSON data, then executes callback.
-    /// - Parameter then: The completion handler method to call after we have the channel URL.
-    private func getHDEVUrl(then completionHandler: @escaping callBack ) {
+        refreshControl = UIRefreshControl()
+        refreshControl?.tintColor = UIColor(named: Theme.tint)
         
-        // Make sure we can create the URL
-        guard let myJsonFile = URL(string: whichJsonFileToUse) else { return }
+        if let refreshingFont = UIFont(name: Constants.fontForTitle, size: 12.0) {
+            let attributes = [NSAttributedString.Key.font: refreshingFont, .foregroundColor: UIColor.white]
+            refreshControl?.attributedTitle = NSAttributedString(string: "Updating passes...", attributes: attributes )
+        }
         
-        let getURLTask = URLSession.shared.dataTask(with: myJsonFile) { (data, response, error) -> Void in
-            if let unparsedData = data {
-
-                // Call parser with data and if successful (not nil) copy crew member names to currentCrew string array and fill the table
-                if let parsedURL = try? JSONDecoder().decode(LiveTVChoices.self, from: unparsedData) {
-                    
-                    switch self.channelSelected {
-                    case .liveEarth :
-                        self.videoURL = parsedURL.liveURL
-                    case .nasaTV :
-                        self.videoURL = parsedURL.nasatvURL
-                    }
-                    
-                    completionHandler()                     // We got the URL from JSON. Now call completionHandler (callback)
-                    
-                } else {
-                    
-                    DispatchQueue.main.async {
-                        self.alert(for: "Can't receive video stream at this time.", message: "Tap Done, wait a few minutes, then try again.")
-                    } // end of GCD closure
-                    
-                }
-                
-            } else {
-                
+        // Configure refresh control
+        refreshControl?.addTarget(self, action: #selector(refreshTable(_:)), for: .valueChanged)
+    
+    }
+    
+    /// Selector for refresh control
+    @objc func refreshTable(_ sender: Any) {
+        restartGettingUserLocation()
+    }
+    
+        
+    /// Set up location manager
+    private func setUpLocationManager() {
+        
+        ISSlocationManager = CLLocationManager()            // Create a CLLocationManager instance to get user's location
+        ISSlocationManager.delegate = self
+        ISSlocationManager.desiredAccuracy = kCLLocationAccuracyBest
+        ISSlocationManager.requestWhenInUseAuthorization()
+        
+    }
+    
+    
+    /// Check that user has granted ISSRTT access
+    private func checkCLAccess() {
+        
+        if !canGetLocation() {
+            
+            spinner.stopAnimating()
+            promptLabel.text = "Access to your location was not granted"
+            
+            // Present alert to allow user to go to system Settings to change access tp Location Services
+            let alert = UIAlertController(title: "Location Access Denied", message: "Access to your location was previously denied. Please update your iOS Settings to change this.", preferredStyle: .alert)
+            let goToSettingAction = UIAlertAction(title: "Go to Settings", style: .default) { (action) in
                 DispatchQueue.main.async {
-                    self.cannotConnectToInternetAlert()
-                } // end of GCD closure
-                
+                    let url = URL(string: UIApplication.openSettingsURLString)!
+                    UIApplication.shared.open(url, options: [:])
+                }
             }
             
-        }  // end of dataTaskWithURL closure
-        
-        // Start task
-        getURLTask.resume()
-        
-    }
-    
-    
-    private func explainBlankScreenToUserPopup() {
-        
-        let alertController = UIAlertController(title: "See a Blank Screen?", message: "If your screen is blank, then NASA is not currently streaming live video. Try later. Tap the help button on the upper-right for more information.", preferredStyle: .alert)
-        let okAction = UIAlertAction(title: "OK", style: .default)
-        let dontShowAgainAction = UIAlertAction(title: "Don't Show This Again", style: .default) { (dontShow) in
-            Globals.blackScreenInHDEVExplanationPopsUp = false
-            }
-        
-        alertController.addAction(okAction)
-        alertController.addAction(dontShowAgainAction)
-        alertController.preferredAction = okAction
-        present(alertController, animated: true, completion: nil)
-
-    }
-    
-    
-    private func loadWebView() {
-        
-        if let URL = URL(string: videoURL) {
-            let urlRequest = URLRequest(url: URL)
-            DispatchQueue.main.async {
-                self.webView.load(urlRequest)                       // Load web page from the main queue
-                
-                // Only the live Earth view needs to present this popup
-                if Globals.blackScreenInHDEVExplanationPopsUp && self.channelSelected == .liveEarth {
-                    self.explainBlankScreenToUserPopup()
+            let cancelAction = UIAlertAction(title: "Cancel", style: .cancel) { (action) in
+                DispatchQueue.main.async {
+                    self.dismiss(animated: true, completion: nil)
                 }
             }
-        } else {
+            
+            alert.addAction(goToSettingAction)
+            alert.addAction(cancelAction)
+            alert.preferredAction = goToSettingAction
+            
+            present(alert, animated: true)
+            
+        }
+        
+        ISSlocationManager.startUpdatingLocation()          // Get locations
+        
+    }
+    
+    
+    /// Check authorization to access Location Services
+    private func canGetLocation() -> Bool {
+        
+        switch CLLocationManager.authorizationStatus() {
+        case .authorizedWhenInUse : return true
+        case .authorizedAlways : return true
+        case .denied : return false
+        case .notDetermined : return true
+        case .restricted : return false
+        @unknown default : return true
+        }
+        
+    }
+    
+    
+    private func restartGettingUserLocation() {
+        
+        ISSlocationManager.startUpdatingLocation()
+        
+    }
+    
+    
+    @IBAction func changeNumberOfDaysThisTimeOnlyAndRefreshPasses(_ sender: UIBarButtonItem) {
+        
+        noPasesPopup(withTitle: "Change Number of Days", withStyleToUse: .actionSheet)
+        
+    }
+    
+    
+    /// Give user opportunity to change number of days (this run only!) and try again
+    private func noPasesPopup(withTitle title: String, withStyleToUse usingStyle : UIAlertController.Style) {
+        
+        let alertController = UIAlertController(title: title, message: "Change number of days this time only by selecting below, or change for next time in Settings", preferredStyle: usingStyle)
+        
+        alertController.addAction(UIAlertAction(title: "Back", style: .cancel) { (dontShow) in
+            self.dismiss(animated: true, completion: nil)
+            }
+        )
+        
+        // Add number-of-days selections from the dictionary
+        for i in 0..<Int(Globals.numberOfDaysDictionary.count) {
+            alertController.addAction(UIAlertAction(title: "\(Globals.numberOfDaysDictionary[i]!) days", style: .default) { (choice) in
+                self.numberOfDays = Int(Globals.numberOfDaysDictionary[i]!)!
+                self.restartGettingUserLocation()
+                }
+            )
+        }
+        
+        if usingStyle == .actionSheet {
+            alertController.popoverPresentationController?.barButtonItem = changeNumberOfDaysButton
+        }
+        
+        self.present(alertController, animated: true, completion: nil)
+        
+    }
+    
+    
+    /// Location manager delegate
+    func locationManager(_ ISSLocationManager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        
+        let userLocation = locations.first!
+        userLatitude = userLocation.coordinate.latitude
+        userLongitude = userLocation.coordinate.longitude
+        
+        getISSOverheadtimes(then: decodeJSONPasses)
+        
+        ISSLocationManager.stopUpdatingLocation()   // Now that we have user's location, we don't need it again, so stop updating location
+        
+    }
+    
+    
+    /// Get data from JSON file
+    private func decodeJSONPasses(withData data: Data) {
+        
+        let decoder = JSONDecoder()
+        
+        do {
+            
+            let passesDataSet = try decoder.decode(Passes.self, from: data)
+            
+            numberOfOverheadTimesActuallyReported = passesDataSet.info.passescount
+            if numberOfOverheadTimesActuallyReported > 0 {
+                // Success!
+                overheadTimesList = passesDataSet.passes
+                
+                DispatchQueue.main.async {
+                    self.spinner.stopAnimating()
+                    self.refreshControl?.endRefreshing()
+                    self.animate(table: self.overheadTimes)
+                    self.userCurrentCoordinatesString = CoordinatesConversions.decimalCoordinatesToDegMinSec(latitude: self.userLatitude, longitude: self.userLongitude, format: Globals.coordinatesStringFormat)
+                    self.promptLabel.text = "\(self.numberOfOverheadTimesActuallyReported) \(self.numberOfOverheadTimesActuallyReported > 1 ? "passes" : "pass") over next \(self.numberOfDays) days from your location:\n\(self.userCurrentCoordinatesString)\nTap a pass to add a reminder to your calendar"
+                }
+            } else {
+                DispatchQueue.main.async {
+                    self.spinner.stopAnimating()
+                    self.refreshControl?.endRefreshing()
+                    self.promptLabel.text = "No visible passes for the next \(self.numberOfDays) days"
+                    self.noPasesPopup(withTitle: "No Passes Found", withStyleToUse: .alert)
+                    
+                }
+            }
+        }
+        catch {
             DispatchQueue.main.async {
-                self.alert(for: "URL Error!", message: "Can't access video feed.")
+                self.spinner.stopAnimating()
+                self.refreshControl?.endRefreshing()
+                self.promptLabel.text = "No visible passes for the next \(self.numberOfDays) days"
+                self.noPasesPopup(withTitle: "No Passes Found", withStyleToUse: .alert)
             }
         }
         
     }
     
-
-    // MARK: - WebKit Navigation Delegate Methods
-
     
-    func webView(_ webView: WKWebView, didFailProvisionalNavigation navigation: WKNavigation!, withError error: Error) {
+    /// Get ISS passes
+    private func getISSOverheadtimes(then completionHandler: @escaping completionHandler ) {
         
         DispatchQueue.main.async {
-            self.alert(for: "Navigation Error!", message: "Can't access video feed.")
+            self.spinner.startAnimating()
+            self.promptLabel.text = "Computing passes for the next \(self.numberOfDays) days"
+        }
+        
+        // Create the API URL request from endpoint. If not succesful, then return
+        let URLrequestString = baseURLForOverheadTimes + "/\(userLatitude)/\(userLongitude)/\(altitude)/\(numberOfDays)/\(minObservationTime)/&apiKey=\(apiKey)"
+        
+        guard let URLRequest = URL(string: URLrequestString) else { return }
+        
+        // Get the data. We need to get data or report connection error
+        let getPassesDataFromAPI = URLSession.shared.dataTask(with: URLRequest) { (data, response, error) in
+            
+            if let dataReturned = data {
+                
+                completionHandler(dataReturned)
+                
+            } else {
+                
+                DispatchQueue.main.async {
+                    self.spinner.stopAnimating()
+                    self.refreshControl?.endRefreshing()
+                    self.cannotConnectToInternetAlert()
+                    self.promptLabel.text = "Connection Error"
+                } // end of GCD closure
+                
+            }
+            
+        }
+        
+        getPassesDataFromAPI.resume()
+        
+    }
+    
+    
+    /// This method adds an event to user's calendar if access is granted
+    private func addEvent(_ passEvent: Passes.Pass) {
+        
+        let eventStore = EKEventStore()
+        if (EKEventStore.authorizationStatus(for: .event) != EKAuthorizationStatus.authorized) {
+            eventStore.requestAccess(to: .event) { (granted, error) -> Void in
+                if granted {
+                    self.createEvent(eventStore, passEvent: passEvent)
+                } else {
+                    DispatchQueue.main.async {
+                        self.alert(for: "Can't create event", message: "Access to your calendar was previously denied. Please update your Settings to change this")
+                    }
+                }
+            } // completion block closure
+            
+        } else {
+            createEvent(eventStore, passEvent: passEvent)
+        }
+        
+    }
+    
+    /// Create the calendar event
+    private func createEvent(_ eventStore: EKEventStore, passEvent: Passes.Pass) {
+        
+        // Create an event
+        let event = EKEvent(eventStore: eventStore)
+        event.title = "ISS Pass Starts"
+        event.calendar = eventStore.defaultCalendarForNewEvents
+        event.startDate = Date(timeIntervalSince1970: Double(passEvent.startUTC))
+        event.endDate = Date(timeIntervalSince1970: Double(passEvent.endUTC))
+        
+        // Set two alarms: one at 20 mins and the other at 60 mins before the pass
+        event.alarms = [EKAlarm(relativeOffset: -1200.0), EKAlarm(relativeOffset: -3600.0)]
+        
+        // Create entries for event location and notes
+        event.location = "Your Location: \(userCurrentCoordinatesString)"
+        let mag = passEvent.mag
+        let startAz = String(format: Globals.azimuthFormat, passEvent.startAz) + deg
+        let startEl = String(format: Globals.elevationFormat, passEvent.startEl) + deg
+        let maxAz = String(format: Globals.azimuthFormat, passEvent.maxAz) + deg
+        let maxEl = String(format: Globals.elevationFormat, passEvent.maxEl) + deg
+        let endAz = String(format: Globals.azimuthFormat, passEvent.endAz) + deg
+        let endEl = String(format: Globals.elevationFormat, passEvent.endEl) + deg
+        event.notes = "Max Magnitude: \(mag)\nStarting azimuth: \(startAz) \(passEvent.startAzCompass)\nStarting elevation: \(startEl)\nMax azimuth: \(maxAz) \(passEvent.maxAzCompass)\nMax elevation: \(maxEl)\nEnding azimuth: \(endAz) \(passEvent.endAzCompass)\nEnding elevation: \(endEl)"
+        
+        let whichEvent = EKSpan.thisEvent
+        do {
+            try eventStore.save(event, span: whichEvent)
+            DispatchQueue.main.async {
+                self.alert(for: "Event Saved!", message: "A pass was added to your calendar. You'll be alerted 1 hour before and again 20 minutes before it starts.")
+            }
+        } catch {
+            DispatchQueue.main.async {
+                self.alert(for: "Failed", message: "Could not add a pass to your calendar")
+            }
         }
         
     }
@@ -198,25 +431,23 @@ class LiveVideoViewController: UIViewController, WKUIDelegate, WKNavigationDeleg
     /// Prepare for seque
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         
-        // This guard statement prevents a crash if a segue is unnamed
-        guard segue.identifier != nil else { return }
+        guard segue.identifier != nil else { return }                                     // Prevents crash if a segue is unnamed
         
         switch segue.identifier {
-        case Constants.segueToHelpFromVideo :
+        case Constants.segueToHelpFromPasses :
+            
+            DispatchQueue.main.async {
+                self.spinner.startAnimating()
+            }
             
             let navigationController = segue.destination as! UINavigationController
             let destinationVC = navigationController.topViewController as! HelpViewController
-            
-            // Set the appropriate help content for the specific channel selected and pass it to the help VC
-            switch channelSelected {
-            case .liveEarth :
-                destinationVC.helpContentHTML = UserGuide.streamingVideoHelp
-            case .nasaTV :
-                destinationVC.helpContentHTML = UserGuide.NASATVVideoHelp
-            }
-            
+            destinationVC.helpContentHTML = UserGuide.passesHelp
             destinationVC.helpButtonInCallingVCSourceView = navigationController.navigationBar
             
+            DispatchQueue.main.async {
+                self.spinner.stopAnimating()
+            }
         default :
             break
         }
@@ -227,11 +458,145 @@ class LiveVideoViewController: UIViewController, WKUIDelegate, WKNavigationDeleg
     /// Unwind segue
     @IBAction func unwindFromOtherVCs(unwindSegue: UIStoryboardSegue) {
         
-    } 
+    }
     
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
     }
+    
+    
+}
 
+
+//  MARK: - Table extensions
+extension PassesTableViewController {
+    
+    override func numberOfSections(in tableView: UITableView) -> Int {
+        
+        return 1
+        
+    }
+    
+    
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        
+        return numberOfOverheadTimesActuallyReported
+        
+    }
+    
+    
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        
+        /// Helper function to convert number of seconds into minutes and seconds and return in a string. Parameter numberOfSeconds: time in secondsReturns: string representation of time in minutes and seconds
+        func minsAndSecs(from numberOfSeconds: Int) -> String {
+            let dateComponentsFormatter = DateComponentsFormatter()
+            dateComponentsFormatter.allowedUnits = [.minute, .second]
+            dateComponentsFormatter.unitsStyle = .brief
+            
+            return dateComponentsFormatter.string(from: Double(numberOfSeconds)) ?? " "
+        }
+        
+        
+        /// Helper function to get number of stars to display for this pass
+        func numberOfRatingStarsFor(thisMagnitude: Double) -> Int {
+            
+            // Determine the rating based on the magnitude of this pass
+            switch thisMagnitude {                                                                            // Now determine number of stars to show
+            case _ where thisMagnitude <= RatingSystem.best.rawValue      : rating = RatingSystem.best.numberOfStars
+            case _ where thisMagnitude <= RatingSystem.better.rawValue    : rating = RatingSystem.better.numberOfStars
+            case _ where thisMagnitude <= RatingSystem.good.rawValue      : rating = RatingSystem.good.numberOfStars
+            case _ where thisMagnitude <= RatingSystem.fair.rawValue      : rating = RatingSystem.fair.numberOfStars
+            default                                                       : rating = RatingSystem.poor.numberOfStars
+            }
+            
+            
+            return rating
+            
+        }
+        
+        
+        /// Helper function to clear data displayed in cell
+        func clearDataIn(thisCell cell: PassesTableViewCell) {
+            cell.passDate.text = ""
+            cell.durationLabel.text = ""
+            cell.magnitudeLabel.text = ""
+            cell.startTime.text = ""
+            cell.startAz.text = ""
+            cell.startEl.text = ""
+            cell.startComp.text = ""
+            cell.maxTime.text = ""
+            cell.maxAz.text = ""
+            cell.maxEl.text = ""
+            cell.maxComp.text = ""
+            cell.endTime.text = ""
+            cell.endAz.text = ""
+            cell.endEl.text = ""
+            cell.endComp.text = ""
+            cell.backgroundColor = UIColor(named: Theme.popupBgd)
+            cell.tintColor = UIColor(named: Theme.popupBgd)
+            cell.passDate.backgroundColor = UIColor(named: Theme.popupBgd)
+        }
+        
+        
+        let cell = tableView.dequeueReusableCell(withIdentifier: customCellIdentifier, for: indexPath) as! PassesTableViewCell
+        
+        if numberOfOverheadTimesActuallyReported > 0 {
+            
+            // Date of pass
+            cell.passDate.text = dateFormatterForDate.string(from: Date(timeIntervalSince1970: overheadTimesList[indexPath.row].startUTC))
+            
+            // Duration & max magnitude
+            cell.durationLabel.text = "DUR: \(minsAndSecs(from: overheadTimesList[indexPath.row].duration))"
+            cell.magnitudeLabel.text = "MAG: \(overheadTimesList[indexPath.row].mag)"
+            
+            // Start of pass data
+            cell.startTime.text = dateFormatterForTime.string(from: Date(timeIntervalSince1970: overheadTimesList[indexPath.row].startUTC))
+            cell.startAz.text = String(format: Globals.azimuthFormat, overheadTimesList[indexPath.row].startAz) + deg
+            cell.startEl.text = String(format: Globals.elevationFormat, overheadTimesList[indexPath.row].startEl) + deg
+            cell.startComp.text = String(overheadTimesList[indexPath.row].startAzCompass)
+            
+            // Maximum elevation data
+            cell.maxTime.text = dateFormatterForTime.string(from: Date(timeIntervalSince1970: overheadTimesList[indexPath.row].maxUTC))
+            cell.maxAz.text = String(format: Globals.azimuthFormat, overheadTimesList[indexPath.row].maxAz) + deg
+            cell.maxEl.text = String(format: Globals.elevationFormat, overheadTimesList[indexPath.row].maxEl) + deg
+            cell.maxComp.text = String(overheadTimesList[indexPath.row].maxAzCompass)
+            
+            // End-of-pass data
+            cell.endTime.text = dateFormatterForTime.string(from: Date(timeIntervalSince1970: overheadTimesList[indexPath.row].endUTC))
+            cell.endAz.text = String(format: Globals.azimuthFormat, overheadTimesList[indexPath.row].endAz) + deg
+            cell.endEl.text = String(format: Globals.elevationFormat, overheadTimesList[indexPath.row].endEl) + deg
+            cell.endComp.text = String(overheadTimesList[indexPath.row].endAzCompass)
+            
+            // Show the stars & set date label background color
+            let mag = overheadTimesList[indexPath.row].mag
+            cell.passDate.backgroundColor = UIColor(ciColor: .green)           // Set the date label background color to green for all cells
+            let rating = numberOfRatingStarsFor(thisMagnitude: mag)
+            let totalStarsInRatingSystem = RatingSystem.allCases.count-1       // Subtract additional 1 because there is one less star that actually can show
+            for star in 0...(totalStarsInRatingSystem-1) {
+                cell.ratingStarView[star].image = star < rating ? ratingStar : noRatingStar
+            }
+            
+        } else {
+            
+            // If there there's no pass data show alert and clear cells, as any data in the table is invalid
+            alert(for: "No Visible Passes", message: "No visible passes were found during the next \(numberOfDays) days")
+            clearDataIn(thisCell: cell)
+            
+        }
+        
+        return cell
+        
+    }
+    
+    
+    /// Cell was selected, so add as event to calendar
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
+        // Make a copy of the selected pass and create a calendar event for it
+        let passToSave = overheadTimesList[indexPath.row]
+        addEvent(passToSave)
+        
+    }
+    
 }
