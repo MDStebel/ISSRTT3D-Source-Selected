@@ -1,9 +1,10 @@
 //
-//  WhatsNewKitTest.swift
+//  WhatsNewKitConfiguration.swift
 //  ISS Real-Time Tracker
 //
 //  Created by Michael Stebel on 10/3/19.
 //  Copyright © 2019-2020 Michael Stebel Consulting, LLC. All rights reserved.
+//  Uses WhatsNewKit by Sven Tiigi
 //
 
 import WhatsNewKit
@@ -21,7 +22,7 @@ private let whatsNew = WhatsNew(
         WhatsNew.Item(
             title: "Announcements",
             subtitle: """
-                      Just exceeded 80,000 downloads! Thanks to all my users.
+                       .
                       """,
             image: UIImage(named: "icons8-megaphone_filled.imageset")
         ),
@@ -54,16 +55,16 @@ let detailButton = WhatsNewViewController.DetailButton(
 )
 
 // Main font for items and other text
-private let mainFont = UIFont(name: Globals.appFont, size: 16)!
-private let itemTitleFont = UIFont(name: Globals.appFontBold, size: 20)!
-private let detailButtonFont = UIFont(name: Globals.appFont, size: 14)!
+private let mainFont = UIFont(name: Theme.appFont, size: 16)!
+private let itemTitleFont = UIFont(name: Theme.appFontBold, size: 20)!
+private let detailButtonFont = UIFont(name: Theme.appFont, size: 14)!
 
 // Set the ISSRTT custom theme
 private var myTheme = WhatsNewViewController.Theme { configuration in
     configuration.backgroundColor                   = UIColor(named: Theme.usrGuide)!
     configuration.tintColor                         = UIColor(named: Theme.tint)!
     configuration.titleView.titleMode               = .fixed
-    configuration.titleView.titleFont               = UIFont(name: Globals.themeFont, size: Globals.whatsNewTitleFontSize)!
+    configuration.titleView.titleFont               = UIFont(name: Theme.nasa, size: Theme.whatsNewTitleFontSize)!
     configuration.titleView.titleColor              = UIColor(named: Theme.tint)!
     configuration.titleView.secondaryColor          = .init(startIndex: 7, length: 3, color: UIColor(named: Theme.star)!)
     configuration.titleView.animation               = .slideDown
