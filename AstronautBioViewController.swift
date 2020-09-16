@@ -89,7 +89,7 @@ class AstronautBioViewController: UIViewController, WKUIDelegate, WKNavigationDe
         super .viewWillAppear(animated)
         
         // Set font and attributes for navigation bar
-        let titleFontSize = Globals.navigationBarTitleFontSize
+        let titleFontSize = Theme.navigationBarTitleFontSize
         if let titleFont = UIFont(name: Constants.fontForTitle, size: titleFontSize) {
             let attributes = [NSAttributedString.Key.font: titleFont, .foregroundColor: UIColor.white]
             navigationController?.navigationBar.titleTextAttributes = attributes
