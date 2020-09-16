@@ -1,5 +1,5 @@
 //
-//  ShortBioView.swift
+//  CrewMemberDetailView.swift
 //  ISS Real-Time Tracker
 //
 //  Created by Michael Stebel on 11/18/17.
