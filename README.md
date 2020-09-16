@@ -9,4 +9,4 @@ Learn about the app or get support here: https://www.issrtt.com
 
 ![banner](https://github.com/MDStebel/ISSRTT-Source-Public/blob/master/Call%20for%20Beta%20Testers.png)
 
-© 2016-2020 Michael Stebel Consulting, LLC.
+####© 2016-2020 Michael Stebel Consulting, LLC.
