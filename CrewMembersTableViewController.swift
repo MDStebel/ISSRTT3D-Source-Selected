@@ -74,7 +74,7 @@ class CrewMembersTableViewController: UITableViewController, TableAnimatable {
         super.viewDidLoad()
         setupRefreshControl()
         
-    } // end view did load
+    } 
     
     
     override func viewWillAppear(_ animated: Bool) {
@@ -82,7 +82,7 @@ class CrewMembersTableViewController: UITableViewController, TableAnimatable {
         super.viewWillAppear(animated)
 
         // Set font and attributes for navigation bar
-        let titleFontSize = Globals.navigationBarTitleFontSize
+        let titleFontSize = Theme.navigationBarTitleFontSize
         if let titleFont = UIFont(name: Constants.fontForTitle, size: titleFontSize) {
             let attributes = [NSAttributedString.Key.font: titleFont, .foregroundColor: UIColor.white]
             navigationController?.navigationBar.titleTextAttributes = attributes
@@ -363,7 +363,7 @@ extension CrewMembersTableViewController {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> AstronautTableViewCell {
         
         let cell = tableView.dequeueReusableCell(withIdentifier: Constants.customCellIdentifier, for: indexPath) as! AstronautTableViewCell   // Custom cell class
-        cell.backgroundColor = UIColor.lightGray.withAlphaComponent(Globals.cellBackgroundColorAlpha)
+        cell.backgroundColor = UIColor.lightGray.withAlphaComponent(Theme.cellBackgroundColorAlpha)
         
         if currentCrewSize > 0 {
             
