@@ -29,6 +29,7 @@ struct Theme {
     static let navigationBarTitleFontSizeForIPad: CGFloat   = 24
     static let navigationBarTitleFontSizeForIPhone: CGFloat = 20
     static let cellBackgroundColorAlpha: CGFloat            = 0.15
+    
     static var lastBackgroundColorWas: UIColor              = .white
     static var navigationBarTitleFontSize: CGFloat          = 0
     static var whatsNewTitleFontSize: CGFloat               = 36
