@@ -1,5 +1,5 @@
 //
-//  HelpModalViewController.swift
+//  HelpViewController.swift
 //  ISS Real-Time Tracker
 //
 //  Copyright © 2016-2020 Michael Stebel Consulting, LLC. All rights reserved.
@@ -69,7 +69,7 @@ class HelpViewController: UIViewController, WKUIDelegate, WKNavigationDelegate {
         super .viewWillAppear(animated)
         
         // Set font and attributes for navigation bar
-        let titleFontSize = Globals.navigationBarTitleFontSize
+        let titleFontSize = Theme.navigationBarTitleFontSize
         if let titleFont = UIFont(name: Constants.fontForTitle, size: titleFontSize) {
             let attributes = [NSAttributedString.Key.font: titleFont, .foregroundColor: UIColor.white]
             navigationController?.navigationBar.titleTextAttributes = attributes
