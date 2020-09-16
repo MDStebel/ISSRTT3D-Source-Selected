@@ -1,5 +1,5 @@
 //
-//  OverheadTimesTableViewController.swift
+//  PassesTableViewController.swift
 //  ISS Real-Time Tracker
 //
 //  Created by Michael Stebel on 3/16/16.
