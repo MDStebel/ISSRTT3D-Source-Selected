@@ -19,7 +19,7 @@ class LiveVideoViewController: UIViewController, WKUIDelegate, WKNavigationDeleg
     /// Constants used in this class
     private struct Constants {
         static let segueToHelpFromVideo     = "segueToHelpFromStreamingVideo"
-        static let fontForTitle             = Globals.themeFont
+        static let fontForTitle             = Theme.nasa
     }
     
     
@@ -75,7 +75,7 @@ class LiveVideoViewController: UIViewController, WKUIDelegate, WKNavigationDeleg
         super .viewWillAppear(animated)
         
         // Set font and attributes for navigation bar
-        let titleFontSize = Globals.navigationBarTitleFontSize
+        let titleFontSize = Theme.navigationBarTitleFontSize
         if let titleFont = UIFont(name: Constants.fontForTitle, size: titleFontSize) {
             let attributes = [NSAttributedString.Key.font: titleFont, .foregroundColor: UIColor.white]
             navigationController?.navigationBar.titleTextAttributes = attributes
