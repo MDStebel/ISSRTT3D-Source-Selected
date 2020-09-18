@@ -1,82 +1,43 @@
 //
-//  PassesTableViewController.swift
+//  CrewMembersTableViewController.swift
 //  ISS Real-Time Tracker
 //
-//  Created by Michael Stebel on 3/16/16.
+//  Created by Michael Stebel on 2/22/16.
 //  Copyright © 2016-2020 Michael Stebel Consulting, LLC. All rights reserved.
 //
 
 import UIKit
-import EventKit
-import CoreLocation
 
 
-class PassesTableViewController: UITableViewController, CLLocationManagerDelegate, TableAnimatable {
-    
-    
-    // MARK: - Rating System Enum
-    
-    
-    /// Defines the passes rating system
-    ///
-    /// This enum holds the max (i.e., lowest magnitude) values for the respective ratings and returns number of stars for each. Call: var nStars = RatingSystem.good.numberOfStars
-    enum RatingSystem: Double, CaseIterable {
-        
-        case poor   =  100.0
-        case fair   = -0.5
-        case good   = -1.0
-        case better = -1.5
-        case best   = -2.0
-        
-        var numberOfStars: Int {
-            switch self {
-            case .poor :
-                return 0
-            case .fair   :
-                return 1
-            case .good   :
-                return 2
-            case .better :
-                return 3
-            case .best   :
-                return 4
-            }
-        }
-
-    }
+class CrewMembersTableViewController: UITableViewController, TableAnimatable {
     
     
     // MARK: - Properties
     
     
+    /// Constants
     private struct Constants {
-        static let segueToHelpFromPasses                = "segueToHelpFromPasses"
-        static let fontForTitle                         = Theme.nasa
+        static let segueToHelpFromCrew          = "segueToHelpFromCrew"
+        static let segueToFullBio               = "segueToFullBio"
+        static let customCellIdentifier         = "crewMemberCell"
+        static let crewAPIEndpointURLString     = "---"                         // API endpoint
+        static let bioBackupURLString           = "---"   // Backup URL is used if a bio URL is not returned in the JSON file
+        static let newLine                      = "\n"
+        static let tableRowSize: CGFloat        = 180
+        static let fontForTitle                 = Theme.nasa
+        static let updatingDataPromptText       = "Updating crew data..."
+        static let tapAnyCrewMemberPromptText   = "Tap any crew member for bios & tweets"
+        static let spacecraftID                 = "International Space Station"
     }
     
-    private var rating                                  = 0
-    private let baseURLForOverheadTimes                 = "---"     // API endpoint
-    private let apiKey                                  = "---"                                     // API key
-    private let altitude                                = 0
-    private let minObservationTime                      = 300                                                             // In seconds
-    private let customCellIdentifier                    = "OverheadTimesCell"
-    private let deg                                     = "°"
-    private let newLine                                 = "\n"
-    private let noRatingStar                            = #imageLiteral(resourceName: "star-unfilled")
-    private let ratingStar                              = #imageLiteral(resourceName: "star")
-    private var numberOfDays                            = 1
-    private var numberOfOverheadTimesActuallyReported   = 0
-    private var userCurrentCoordinatesString            = ""
-    private var dateFormatterForDate                    = DateFormatter()
-    private var dateFormatterForTime                    = DateFormatter()
-    private var userLatitude                            = 0.0
-    private var userLongitude                           = 0.0
-    private var overheadTimesList                       = [Passes.Pass]()
+    private var currentCrew: [Astronaut]?       = []
+    private var currentCrewSize                 = 0
+    private var getCurrentCrewMembersAlreadyRun = false
+    private var lastIndex                       = 0
+    private var index                           = 0
     
-    private var ISSlocationManager: CLLocationManager!
-    
-    /// Defines type for completion handler function
-    typealias completionHandler = (Data) -> ()
+    /// Placeholder image to use if there's no image for an astronaut returned by the API call
+    private let placeholderImage                = #imageLiteral(resourceName: "astronaut_filled_Grey")
     
     // Change status bar to light color for this VC
     override var preferredStatusBarStyle: UIStatusBarStyle {
@@ -87,48 +48,39 @@ class PassesTableViewController: UITableViewController, CLLocationManagerDelegat
     // MARK: - Outlets
     
     
-    @IBOutlet private var overheadTimes: UITableView!
-    @IBOutlet private var promptLabel: UILabel! {
+    @IBOutlet private var crewTable: UITableView!
+    @IBOutlet var helpButton: UIBarButtonItem!
+    @IBOutlet private var spinner: UIActivityIndicatorView! {
         didSet {
-            promptLabel.text = "Getting your location..."
+            spinner.hidesWhenStopped = true
+        }
+    }
+    @IBOutlet var crewMemberDetailView: CrewMemberDetailView!
+    @IBOutlet var promptLabel: UILabel! {
+        didSet {
+            promptLabel.text = Constants.updatingDataPromptText
             promptLabel.layer.maskedCorners = [.layerMinXMaxYCorner, .layerMaxXMaxYCorner]
             promptLabel.layer.cornerRadius = 27
             promptLabel.layer.masksToBounds = true
         }
     }
-    @IBOutlet private var spinner: UIActivityIndicatorView!
-    @IBOutlet private var changeNumberOfDaysButton: UIBarButtonItem!
     
     
     // MARK: - Methods
     
     
-    private func setupDateFormatter() {
-        dateFormatterForDate.dateFormat = Globals.outputDateOnlyFormatString
-        dateFormatterForTime.dateFormat = Globals.outputTimeOnlyFormatString
-    }
-    
-    private func getNumberOfDaysOfPassesToReturn() {
-        numberOfDays = Int(Globals.numberOfDaysDictionary[Globals.numberOfDaysOfPassesSelectedSegment] ?? String(Globals.numberOfDaysOfPassesDefaultSelectionSegment))!
-    }
-    
     override func viewDidLoad() {
         
         super.viewDidLoad()
-
-        spinner.hidesWhenStopped = true
-        setupDateFormatter()
-        getNumberOfDaysOfPassesToReturn()
         setupRefreshControl()
-        setUpLocationManager()
-        checkCLAccess()
         
-    }
+    } 
     
     
     override func viewWillAppear(_ animated: Bool) {
-        super .viewWillAppear(animated)
         
+        super.viewWillAppear(animated)
+
         // Set font and attributes for navigation bar
         let titleFontSize = Theme.navigationBarTitleFontSize
         if let titleFont = UIFont(name: Constants.fontForTitle, size: titleFontSize) {
@@ -139,10 +91,26 @@ class PassesTableViewController: UITableViewController, CLLocationManagerDelegat
         
 //        // Use appropriate background color for light or dark mode
 //        if traitCollection.userInterfaceStyle == .light {
-//            overheadTimes.backgroundColor = UIColor(named: "Alternate Background")
+//            crewTable.backgroundColor = UIColor(named: "Alternate Background")
 //        } else {
-//            overheadTimes.backgroundColor = UIColor(named: "Flipside View Background Color")
+//            crewTable.backgroundColor = UIColor(named: "Flipside View Background Color")
 //        }
+        
+    }
+    
+    
+    override func viewDidAppear(_ animated: Bool) {
+        
+        super.viewDidAppear(animated)
+        
+        // If we came here from the map view, get the crew from the API, otherwise, we're returning from the bio viewcontroller, so do nothing.
+        if !getCurrentCrewMembersAlreadyRun {
+            
+            DispatchQueue.global(qos: .userInteractive).async {
+                self.getCurrrentCrewMembers()
+            }
+            
+        }
         
     }
     
@@ -155,275 +123,136 @@ class PassesTableViewController: UITableViewController, CLLocationManagerDelegat
         
         if let refreshingFont = UIFont(name: Constants.fontForTitle, size: 12.0) {
             let attributes = [NSAttributedString.Key.font: refreshingFont, .foregroundColor: UIColor.white]
-            refreshControl?.attributedTitle = NSAttributedString(string: "Updating passes...", attributes: attributes )
+            refreshControl?.attributedTitle = NSAttributedString(string: Constants.updatingDataPromptText, attributes: attributes )
         }
         
         // Configure refresh control
         refreshControl?.addTarget(self, action: #selector(refreshTable(_:)), for: .valueChanged)
-    
+        
     }
+    
     
     /// Selector for refresh control
     @objc func refreshTable(_ sender: Any) {
-        restartGettingUserLocation()
-    }
-    
         
-    /// Set up location manager
-    private func setUpLocationManager() {
-        
-        ISSlocationManager = CLLocationManager()            // Create a CLLocationManager instance to get user's location
-        ISSlocationManager.delegate = self
-        ISSlocationManager.desiredAccuracy = kCLLocationAccuracyBest
-        ISSlocationManager.requestWhenInUseAuthorization()
-        
-    }
-    
-    
-    /// Check that user has granted ISSRTT access
-    private func checkCLAccess() {
-        
-        if !canGetLocation() {
-            
-            spinner.stopAnimating()
-            promptLabel.text = "Access to your location was not granted"
-            
-            // Present alert to allow user to go to system Settings to change access tp Location Services
-            let alert = UIAlertController(title: "Location Access Denied", message: "Access to your location was previously denied. Please update your iOS Settings to change this.", preferredStyle: .alert)
-            let goToSettingAction = UIAlertAction(title: "Go to Settings", style: .default) { (action) in
-                DispatchQueue.main.async {
-                    let url = URL(string: UIApplication.openSettingsURLString)!
-                    UIApplication.shared.open(url, options: [:])
-                }
-            }
-            
-            let cancelAction = UIAlertAction(title: "Cancel", style: .cancel) { (action) in
-                DispatchQueue.main.async {
-                    self.dismiss(animated: true, completion: nil)
-                }
-            }
-            
-            alert.addAction(goToSettingAction)
-            alert.addAction(cancelAction)
-            alert.preferredAction = goToSettingAction
-            
-            present(alert, animated: true)
-            
-        }
-        
-        ISSlocationManager.startUpdatingLocation()          // Get locations
-        
-    }
-    
-    
-    /// Check authorization to access Location Services
-    private func canGetLocation() -> Bool {
-        
-        switch CLLocationManager.authorizationStatus() {
-        case .authorizedWhenInUse : return true
-        case .authorizedAlways : return true
-        case .denied : return false
-        case .notDetermined : return true
-        case .restricted : return false
-        @unknown default : return true
+        DispatchQueue.global(qos: .userInteractive).async {
+            self.getCurrrentCrewMembers()
         }
         
     }
     
     
-    private func restartGettingUserLocation() {
-        
-        ISSlocationManager.startUpdatingLocation()
-        
-    }
-    
-    
-    @IBAction func changeNumberOfDaysThisTimeOnlyAndRefreshPasses(_ sender: UIBarButtonItem) {
-        
-        noPasesPopup(withTitle: "Change Number of Days", withStyleToUse: .actionSheet)
-        
-    }
-    
-    
-    /// Give user opportunity to change number of days (this run only!) and try again
-    private func noPasesPopup(withTitle title: String, withStyleToUse usingStyle : UIAlertController.Style) {
-        
-        let alertController = UIAlertController(title: title, message: "Change number of days this time only by selecting below, or change for next time in Settings", preferredStyle: usingStyle)
-        
-        alertController.addAction(UIAlertAction(title: "Back", style: .cancel) { (dontShow) in
-            self.dismiss(animated: true, completion: nil)
-            }
-        )
-        
-        // Add number-of-days selections from the dictionary
-        for i in 0..<Int(Globals.numberOfDaysDictionary.count) {
-            alertController.addAction(UIAlertAction(title: "\(Globals.numberOfDaysDictionary[i]!) days", style: .default) { (choice) in
-                self.numberOfDays = Int(Globals.numberOfDaysDictionary[i]!)!
-                self.restartGettingUserLocation()
-                }
-            )
-        }
-        
-        if usingStyle == .actionSheet {
-            alertController.popoverPresentationController?.barButtonItem = changeNumberOfDaysButton
-        }
-        
-        self.present(alertController, animated: true, completion: nil)
-        
-    }
-    
-    
-    /// Location manager delegate
-    func locationManager(_ ISSLocationManager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        
-        let userLocation = locations.first!
-        userLatitude = userLocation.coordinate.latitude
-        userLongitude = userLocation.coordinate.longitude
-        
-        getISSOverheadtimes(then: decodeJSONPasses)
-        
-        ISSLocationManager.stopUpdatingLocation()   // Now that we have user's location, we don't need it again, so stop updating location
-        
-    }
-    
-    
-    /// Get data from JSON file
-    private func decodeJSONPasses(withData data: Data) {
-        
-        let decoder = JSONDecoder()
-        
-        do {
-            
-            let passesDataSet = try decoder.decode(Passes.self, from: data)
-            
-            numberOfOverheadTimesActuallyReported = passesDataSet.info.passescount
-            if numberOfOverheadTimesActuallyReported > 0 {
-                // Success!
-                overheadTimesList = passesDataSet.passes
-                
-                DispatchQueue.main.async {
-                    self.spinner.stopAnimating()
-                    self.refreshControl?.endRefreshing()
-                    self.animate(table: self.overheadTimes)
-                    self.userCurrentCoordinatesString = CoordinatesConversions.decimalCoordinatesToDegMinSec(latitude: self.userLatitude, longitude: self.userLongitude, format: Globals.coordinatesStringFormat)
-                    self.promptLabel.text = "\(self.numberOfOverheadTimesActuallyReported) \(self.numberOfOverheadTimesActuallyReported > 1 ? "passes" : "pass") over next \(self.numberOfDays) days from your location:\n\(self.userCurrentCoordinatesString)\nTap a pass to add a reminder to your calendar"
-                }
-            } else {
-                DispatchQueue.main.async {
-                    self.spinner.stopAnimating()
-                    self.refreshControl?.endRefreshing()
-                    self.promptLabel.text = "No visible passes for the next \(self.numberOfDays) days"
-                    self.noPasesPopup(withTitle: "No Passes Found", withStyleToUse: .alert)
-                    
-                }
-            }
-        }
-        catch {
-            DispatchQueue.main.async {
-                self.spinner.stopAnimating()
-                self.refreshControl?.endRefreshing()
-                self.promptLabel.text = "No visible passes for the next \(self.numberOfDays) days"
-                self.noPasesPopup(withTitle: "No Passes Found", withStyleToUse: .alert)
-            }
-        }
-        
-    }
-    
-    
-    /// Get ISS passes
-    private func getISSOverheadtimes(then completionHandler: @escaping completionHandler ) {
+    /// Method to get current crew data from API
+    private func getCurrrentCrewMembers() {
         
         DispatchQueue.main.async {
             self.spinner.startAnimating()
-            self.promptLabel.text = "Computing passes for the next \(self.numberOfDays) days"
+            self.promptLabel.text = Constants.updatingDataPromptText
         }
         
-        // Create the API URL request from endpoint. If not succesful, then return
-        let URLrequestString = baseURLForOverheadTimes + "/\(userLatitude)/\(userLongitude)/\(altitude)/\(numberOfDays)/\(minObservationTime)/&apiKey=\(apiKey)"
+        // Create the session
+        let configuration = URLSessionConfiguration.ephemeral               // Set up an ephemeral session, which uses only RAM and no persistent storage for cache, etc.
+        let crewURLSession = URLSession(configuration: configuration)
+        crewURLSession.configuration.urlCache = nil                         // Turn off caching
         
-        guard let URLRequest = URL(string: URLrequestString) else { return }
-        
-        // Get the data. We need to get data or report connection error
-        let getPassesDataFromAPI = URLSession.shared.dataTask(with: URLRequest) { (data, response, error) in
+        let urlForCurrentCrew = URL(string: Constants.crewAPIEndpointURLString)!
+
+        let crewMembersTask = crewURLSession.dataTask(with: urlForCurrentCrew) { [ weak weakSelf = self ] (data, response, error) -> Void in
             
-            if let dataReturned = data {
+            if let urlContent = data {
                 
-                completionHandler(dataReturned)
+                // Call parser with data and if successful (not nil) copy crew member names to currentCrew string array and fill the table
+                if let parsedCrewMembers = Astronaut.parseCurrentCrew(from: urlContent) {
+                    
+                    weakSelf?.currentCrew = parsedCrewMembers
+                    
+                    // Remove non-ISS people
+                    let ISSCrewOnly = weakSelf?.currentCrew?.filter { $0.spaceCraft == Constants.spacecraftID }
+                    
+                    // Sort by name and then by title
+                    weakSelf?.currentCrew = ISSCrewOnly?.sorted {$0.name < $1.name}
+                    weakSelf?.currentCrew?.sort() {$0.title < $1.title}
+                    weakSelf?.currentCrewSize = (weakSelf?.currentCrew!.count)!
+                    
+                    DispatchQueue.main.async {
+                        weakSelf?.spinner.stopAnimating()
+                        weakSelf?.refreshControl?.endRefreshing()
+                        weakSelf?.animate(table: self.crewTable)
+                        self.promptLabel.text = Constants.tapAnyCrewMemberPromptText
+                    }
+                    
+                    self.getCurrentCrewMembersAlreadyRun = true
+                    
+                } else {
+                    
+                    DispatchQueue.main.async {
+                        weakSelf?.spinner.stopAnimating()
+                        weakSelf?.refreshControl?.endRefreshing()
+                        weakSelf?.alert(for: "Can't get ISS crew info", message: "Tap Done, wait a few minutes, then try again")
+                    }
+                    
+                }
                 
             } else {
                 
                 DispatchQueue.main.async {
-                    self.spinner.stopAnimating()
-                    self.refreshControl?.endRefreshing()
-                    self.cannotConnectToInternetAlert()
-                    self.promptLabel.text = "Connection Error"
-                } // end of GCD closure
+                    weakSelf?.spinner.stopAnimating()
+                    weakSelf?.refreshControl?.endRefreshing()
+                    weakSelf?.cannotConnectToInternetAlert()
+                }
                 
             }
             
         }
         
-        getPassesDataFromAPI.resume()
+        // Start task
+        crewMembersTask.resume()
         
     }
     
     
-    /// This method adds an event to user's calendar if access is granted
-    private func addEvent(_ passEvent: Passes.Pass) {
+    /// Copy names to pasteboard
+    @IBAction private func copyCurrentCrewNamesToPasteboard(_ sender: UIBarButtonItem) {
         
-        let eventStore = EKEventStore()
-        if (EKEventStore.authorizationStatus(for: .event) != EKAuthorizationStatus.authorized) {
-            eventStore.requestAccess(to: .event) { (granted, error) -> Void in
-                if granted {
-                    self.createEvent(eventStore, passEvent: passEvent)
-                } else {
-                    DispatchQueue.main.async {
-                        self.alert(for: "Can't create event", message: "Access to your calendar was previously denied. Please update your Settings to change this")
-                    }
-                }
-            } // completion block closure
+        guard currentCrew != nil else { return }
+        
+        var crewListString = ""
+        for crewMember in currentCrew! {
+            crewListString += crewMember.description + Constants.newLine
+        }
+        UIPasteboard.general.string = crewListString                                      // Copy to general pasteboard
+        
+        alert(for: "\(currentCrewSize) ISS Crew Members\nCopied to Your Clipboard", message: crewListString)
+        
+    }
+      
+    
+    /// Build a rich label with leading text followed by an image and return as an attributed string
+    private func createStringWithRichContent(starting startOfText: String, and endingWithImageAtURL: String) -> NSMutableAttributedString {
+        
+        // Create an NSMutableAttributedString that we'll append the image to
+        let fullString = NSMutableAttributedString(string: startOfText)
+        
+        // Get image at URL represented by string
+        let imageURL = Foundation.URL(string: endingWithImageAtURL)
+        
+        if let imageData = try? Data(contentsOf: imageURL!) {
             
-        } else {
-            createEvent(eventStore, passEvent: passEvent)
+            let actualImage = UIImage(data: imageData, scale: 2)
+            
+            // Create the NSTextAttachment with the image
+            let imageAttachment = NSTextAttachment()
+            imageAttachment.image = actualImage
+            
+            // Wrap the attachment in its own attributed string so we can append it
+            let imageString = NSAttributedString(attachment: imageAttachment)
+            
+            // Add the NSTextAttachment wrapper at the end of the string
+            fullString.append(imageString)
+            
         }
         
-    }
-    
-    /// Create the calendar event
-    private func createEvent(_ eventStore: EKEventStore, passEvent: Passes.Pass) {
-        
-        // Create an event
-        let event = EKEvent(eventStore: eventStore)
-        event.title = "ISS Pass Starts"
-        event.calendar = eventStore.defaultCalendarForNewEvents
-        event.startDate = Date(timeIntervalSince1970: Double(passEvent.startUTC))
-        event.endDate = Date(timeIntervalSince1970: Double(passEvent.endUTC))
-        
-        // Set two alarms: one at 20 mins and the other at 60 mins before the pass
-        event.alarms = [EKAlarm(relativeOffset: -1200.0), EKAlarm(relativeOffset: -3600.0)]
-        
-        // Create entries for event location and notes
-        event.location = "Your Location: \(userCurrentCoordinatesString)"
-        let mag = passEvent.mag
-        let startAz = String(format: Globals.azimuthFormat, passEvent.startAz) + deg
-        let startEl = String(format: Globals.elevationFormat, passEvent.startEl) + deg
-        let maxAz = String(format: Globals.azimuthFormat, passEvent.maxAz) + deg
-        let maxEl = String(format: Globals.elevationFormat, passEvent.maxEl) + deg
-        let endAz = String(format: Globals.azimuthFormat, passEvent.endAz) + deg
-        let endEl = String(format: Globals.elevationFormat, passEvent.endEl) + deg
-        event.notes = "Max Magnitude: \(mag)\nStarting azimuth: \(startAz) \(passEvent.startAzCompass)\nStarting elevation: \(startEl)\nMax azimuth: \(maxAz) \(passEvent.maxAzCompass)\nMax elevation: \(maxEl)\nEnding azimuth: \(endAz) \(passEvent.endAzCompass)\nEnding elevation: \(endEl)"
-        
-        let whichEvent = EKSpan.thisEvent
-        do {
-            try eventStore.save(event, span: whichEvent)
-            DispatchQueue.main.async {
-                self.alert(for: "Event Saved!", message: "A pass was added to your calendar. You'll be alerted 1 hour before and again 20 minutes before it starts.")
-            }
-        } catch {
-            DispatchQueue.main.async {
-                self.alert(for: "Failed", message: "Could not add a pass to your calendar")
-            }
-        }
+        return fullString
         
     }
     
@@ -434,7 +263,8 @@ class PassesTableViewController: UITableViewController, CLLocationManagerDelegat
         guard segue.identifier != nil else { return }                                     // Prevents crash if a segue is unnamed
         
         switch segue.identifier {
-        case Constants.segueToHelpFromPasses :
+        
+        case Constants.segueToHelpFromCrew :
             
             DispatchQueue.main.async {
                 self.spinner.startAnimating()
@@ -442,12 +272,40 @@ class PassesTableViewController: UITableViewController, CLLocationManagerDelegat
             
             let navigationController = segue.destination as! UINavigationController
             let destinationVC = navigationController.topViewController as! HelpViewController
-            destinationVC.helpContentHTML = UserGuide.passesHelp
+            destinationVC.helpContentHTML = UserGuide.crewHelp 
             destinationVC.helpButtonInCallingVCSourceView = navigationController.navigationBar
             
             DispatchQueue.main.async {
                 self.spinner.stopAnimating()
             }
+            
+        case Constants.segueToFullBio :                                                  // Full bio button was tapped, so set the URL of the bio VC property using the selected row, then segue.
+            
+            DispatchQueue.main.async {
+                self.spinner.startAnimating()
+            }
+            
+            if let crewMember = tableView.indexPathForSelectedRow?.row {                // Prevents crash when returning from full bio and tapping button again because index is undefined.
+                index = crewMember
+                lastIndex = index
+            }
+            else {
+                index = lastIndex
+            }
+            
+            let navigationController = segue.destination as! UINavigationController
+            let destinationVC = navigationController.topViewController as! AstronautBioViewController
+            
+            if let bio = currentCrew?[index].bio {
+                destinationVC.bioURL = bio
+            } else {
+                destinationVC.bioURL = Constants.bioBackupURLString
+            }
+            
+            DispatchQueue.main.async {
+                self.spinner.stopAnimating()
+            }
+            
         default :
             break
         }
@@ -457,132 +315,76 @@ class PassesTableViewController: UITableViewController, CLLocationManagerDelegat
     
     /// Unwind segue
     @IBAction func unwindFromOtherVCs(unwindSegue: UIStoryboardSegue) {
-        
+
     }
     
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
+        dismiss(animated: true, completion: nil)
     }
-    
     
 }
 
 
-//  MARK: - Table extensions
-extension PassesTableViewController {
+// MARK: - Table view delegates
+
+
+extension CrewMembersTableViewController {
     
     override func numberOfSections(in tableView: UITableView) -> Int {
         
         return 1
-        
+    
     }
     
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
-        return numberOfOverheadTimesActuallyReported
+        return currentCrewSize
+    
+    }
+    
+    
+    // Get astronaut's image, if available
+    private func getAstronautImage(forCell index: Int) -> UIImage? {
+        
+        var imageToReturn: UIImage? = nil
+        
+        if let imageURL = URL(string: currentCrew![index].image!), let astonautImageData = try? Data(contentsOf: imageURL) {
+            imageToReturn = UIImage(data: astonautImageData)
+        }
+        
+        return imageToReturn
         
     }
     
     
-    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> AstronautTableViewCell {
         
-        /// Helper function to convert number of seconds into minutes and seconds and return in a string. Parameter numberOfSeconds: time in secondsReturns: string representation of time in minutes and seconds
-        func minsAndSecs(from numberOfSeconds: Int) -> String {
-            let dateComponentsFormatter = DateComponentsFormatter()
-            dateComponentsFormatter.allowedUnits = [.minute, .second]
-            dateComponentsFormatter.unitsStyle = .brief
-            
-            return dateComponentsFormatter.string(from: Double(numberOfSeconds)) ?? " "
-        }
+        let cell = tableView.dequeueReusableCell(withIdentifier: Constants.customCellIdentifier, for: indexPath) as! AstronautTableViewCell   // Custom cell class
+        cell.backgroundColor = UIColor.lightGray.withAlphaComponent(Theme.cellBackgroundColorAlpha)
         
-        
-        /// Helper function to get number of stars to display for this pass
-        func numberOfRatingStarsFor(thisMagnitude: Double) -> Int {
+        if currentCrewSize > 0 {
             
-            // Determine the rating based on the magnitude of this pass
-            switch thisMagnitude {                                                                            // Now determine number of stars to show
-            case _ where thisMagnitude <= RatingSystem.best.rawValue      : rating = RatingSystem.best.numberOfStars
-            case _ where thisMagnitude <= RatingSystem.better.rawValue    : rating = RatingSystem.better.numberOfStars
-            case _ where thisMagnitude <= RatingSystem.good.rawValue      : rating = RatingSystem.good.numberOfStars
-            case _ where thisMagnitude <= RatingSystem.fair.rawValue      : rating = RatingSystem.fair.numberOfStars
-            default                                                       : rating = RatingSystem.poor.numberOfStars
-            }
+            let index = indexPath.row
             
+            cell.astronautImage.image = getAstronautImage(forCell: index) ?? placeholderImage
             
-            return rating
+            let launchDate = currentCrew![index].launchDateFormatted
+            let title = currentCrew![index].title
+            let daysInSpace = currentCrew![indexPath.row].numberOfDaysInSpace()
+            let startOfLabelText = currentCrew![index].name + Globals.spacer
+            let flagImageURLString = currentCrew![index].flag
+            let expedition = currentCrew![index].expedition
+            let mission = currentCrew![index].mission ?? expedition!
+            let vehicle = currentCrew![index].launchVehicle
             
-        }
-        
-        
-        /// Helper function to clear data displayed in cell
-        func clearDataIn(thisCell cell: PassesTableViewCell) {
-            cell.passDate.text = ""
-            cell.durationLabel.text = ""
-            cell.magnitudeLabel.text = ""
-            cell.startTime.text = ""
-            cell.startAz.text = ""
-            cell.startEl.text = ""
-            cell.startComp.text = ""
-            cell.maxTime.text = ""
-            cell.maxAz.text = ""
-            cell.maxEl.text = ""
-            cell.maxComp.text = ""
-            cell.endTime.text = ""
-            cell.endAz.text = ""
-            cell.endEl.text = ""
-            cell.endComp.text = ""
-            cell.backgroundColor = UIColor(named: Theme.popupBgd)
-            cell.tintColor = UIColor(named: Theme.popupBgd)
-            cell.passDate.backgroundColor = UIColor(named: Theme.popupBgd)
-        }
-        
-        
-        let cell = tableView.dequeueReusableCell(withIdentifier: customCellIdentifier, for: indexPath) as! PassesTableViewCell
-        
-        if numberOfOverheadTimesActuallyReported > 0 {
+            cell.astronautName.text = startOfLabelText + flagImageURLString
             
-            // Set date of pass & set date label background color
-            cell.passDate.text = dateFormatterForDate.string(from: Date(timeIntervalSince1970: overheadTimesList[indexPath.row].startUTC))
-            cell.passDate.backgroundColor = UIColor(ciColor: .green)           // Set the date label background color to green for all cells
-            
-            // Duration & max magnitude
-            cell.durationLabel.text = "DUR: \(minsAndSecs(from: overheadTimesList[indexPath.row].duration))"
-            cell.magnitudeLabel.text = "MAG: \(overheadTimesList[indexPath.row].mag)"
-            
-            // Start of pass data
-            cell.startTime.text = dateFormatterForTime.string(from: Date(timeIntervalSince1970: overheadTimesList[indexPath.row].startUTC))
-            cell.startAz.text = String(format: Globals.azimuthFormat, overheadTimesList[indexPath.row].startAz) + deg
-            cell.startEl.text = String(format: Globals.elevationFormat, overheadTimesList[indexPath.row].startEl) + deg
-            cell.startComp.text = String(overheadTimesList[indexPath.row].startAzCompass)
-            
-            // Maximum elevation data
-            cell.maxTime.text = dateFormatterForTime.string(from: Date(timeIntervalSince1970: overheadTimesList[indexPath.row].maxUTC))
-            cell.maxAz.text = String(format: Globals.azimuthFormat, overheadTimesList[indexPath.row].maxAz) + deg
-            cell.maxEl.text = String(format: Globals.elevationFormat, overheadTimesList[indexPath.row].maxEl) + deg
-            cell.maxComp.text = String(overheadTimesList[indexPath.row].maxAzCompass)
-            
-            // End-of-pass data
-            cell.endTime.text = dateFormatterForTime.string(from: Date(timeIntervalSince1970: overheadTimesList[indexPath.row].endUTC))
-            cell.endAz.text = String(format: Globals.azimuthFormat, overheadTimesList[indexPath.row].endAz) + deg
-            cell.endEl.text = String(format: Globals.elevationFormat, overheadTimesList[indexPath.row].endEl) + deg
-            cell.endComp.text = String(overheadTimesList[indexPath.row].endAzCompass)
-            
-
-            // Show the correct number of rating stars based on the magnitude of the pass
-            let mag = overheadTimesList[indexPath.row].mag
-            let rating = numberOfRatingStarsFor(thisMagnitude: mag)
-            let totalStarsInRatingSystem = RatingSystem.allCases.count-1       // Subtract 1 because there is one less star that actually can show
-            for star in 0...(totalStarsInRatingSystem-1) {
-                cell.ratingStarView[star].image = star < rating ? ratingStar : noRatingStar
-            }
-            
-        } else {
-            
-            // If there there's no pass data show alert and clear cells, as any data in the table is invalid
-            alert(for: "No Visible Passes", message: "No visible passes were found during the next \(numberOfDays) days")
-            clearDataIn(thisCell: cell)
+            var temp = "Title: \(title)\nMission: \(mission)\nDays in space: \(daysInSpace)\n"
+            temp += "Launched on: \(launchDate)\nSpacecraft: \(vehicle)"
+            cell.astronautInfo.text = temp
             
         }
         
@@ -591,12 +393,47 @@ extension PassesTableViewController {
     }
     
     
-    /// Cell was selected, so add as event to calendar
+    //  If user scrolls the table and the short bio is presented, recenter the pop-up to keep the pop-up centered.
+    override func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        
+        centerPopover()
+        
+    }
+    
+    
+    private func centerPopover() {
+        
+        let parentBounds = view.bounds
+        let shortBioViewWidth = crewMemberDetailView.frame.width
+        let shortBioViewHeight = crewMemberDetailView.frame.height
+        let xPosition = parentBounds.midX - shortBioViewWidth / 2.0
+        let yPosition = parentBounds.midY - shortBioViewHeight / 2.0
+        crewMemberDetailView.frame = CGRect(x: xPosition, y: yPosition, width: shortBioViewWidth, height: shortBioViewHeight)
+        
+    }
+    
+    
+    // This delegate will display the detail view if the cell is tapped
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
-        // Make a copy of the selected pass and create a calendar event for it
-        let passToSave = overheadTimesList[indexPath.row]
-        addEvent(passToSave)
+        centerPopover()
+        
+        let index = indexPath.row
+        let startOfLabelText = currentCrew![index].name + Globals.spacer
+        let flagImageURLString = currentCrew![index].flag 
+        crewMemberDetailView.shortBioName?.text = startOfLabelText + flagImageURLString
+        crewMemberDetailView.shortBioInforomation?.text = currentCrew?[index].shortBioBlurb ?? "No short bio is available."
+        crewMemberDetailView.twitterHandleURL = currentCrew?[index].twitter
+        view.addSubview(crewMemberDetailView)
+        
+    }
+    
+    
+    
+    // Return the cell height for the cell
+    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        
+        return Constants.tableRowSize
         
     }
     
