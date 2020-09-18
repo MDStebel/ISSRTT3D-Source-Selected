@@ -130,7 +130,7 @@ class PassesTableViewController: UITableViewController, CLLocationManagerDelegat
         super .viewWillAppear(animated)
         
         // Set font and attributes for navigation bar
-        let titleFontSize = Globals.navigationBarTitleFontSize
+        let titleFontSize = Theme.navigationBarTitleFontSize
         if let titleFont = UIFont(name: Constants.fontForTitle, size: titleFontSize) {
             let attributes = [NSAttributedString.Key.font: titleFont, .foregroundColor: UIColor.white]
             navigationController?.navigationBar.titleTextAttributes = attributes
@@ -543,8 +543,9 @@ extension PassesTableViewController {
         
         if numberOfOverheadTimesActuallyReported > 0 {
             
-            // Date of pass
+            // Set date of pass & set date label background color
             cell.passDate.text = dateFormatterForDate.string(from: Date(timeIntervalSince1970: overheadTimesList[indexPath.row].startUTC))
+            cell.passDate.backgroundColor = UIColor(ciColor: .green)           // Set the date label background color to green for all cells
             
             // Duration & max magnitude
             cell.durationLabel.text = "DUR: \(minsAndSecs(from: overheadTimesList[indexPath.row].duration))"
@@ -568,11 +569,11 @@ extension PassesTableViewController {
             cell.endEl.text = String(format: Globals.elevationFormat, overheadTimesList[indexPath.row].endEl) + deg
             cell.endComp.text = String(overheadTimesList[indexPath.row].endAzCompass)
             
-            // Show the stars & set date label background color
+
+            // Show the correct number of rating stars based on the magnitude of the pass
             let mag = overheadTimesList[indexPath.row].mag
-            cell.passDate.backgroundColor = UIColor(ciColor: .green)           // Set the date label background color to green for all cells
             let rating = numberOfRatingStarsFor(thisMagnitude: mag)
-            let totalStarsInRatingSystem = RatingSystem.allCases.count-1       // Subtract additional 1 because there is one less star that actually can show
+            let totalStarsInRatingSystem = RatingSystem.allCases.count-1       // Subtract 1 because there is one less star that actually can show
             for star in 0...(totalStarsInRatingSystem-1) {
                 cell.ratingStarView[star].image = star < rating ? ratingStar : noRatingStar
             }
