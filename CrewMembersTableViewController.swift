@@ -570,7 +570,7 @@ extension PassesTableViewController {
             cell.endComp.text = String(overheadTimesList[indexPath.row].endAzCompass)
             
 
-            // Show the correct numbrer of rating stars based on the magnitude of the pass
+            // Show the correct number of rating stars based on the magnitude of the pass
             let mag = overheadTimesList[indexPath.row].mag
             let rating = numberOfRatingStarsFor(thisMagnitude: mag)
             let totalStarsInRatingSystem = RatingSystem.allCases.count-1       // Subtract 1 because there is one less star that actually can show
