@@ -9,6 +9,7 @@
 import UIKit
 
 
+/// Extension to UIColor that takes a hex-formatted color and returns a UIColor as an optional string representation
 extension UIColor {
     
     /// Property computed using default setting for alpha
@@ -21,7 +22,7 @@ extension UIColor {
     /// Method to convert from UIColor to hex string
     ///
     /// Returns optional string
-    /// - Parameter alpha: Value for alpha
+    /// - Parameter alpha: True if alpha component is provided
     func toHex(alpha: Bool = false) -> String? {
         guard let components = cgColor.components, components.count >= 3 else {
             return nil
