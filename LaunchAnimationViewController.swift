@@ -112,19 +112,18 @@ class LaunchAnimationViewController: UIViewController {
         super.viewDidAppear(animated)
         
         // Animate ISS graphic using the stack of transforms we created above. At completion, segue to the tracking VC
-        UIView.animate(withDuration: iconAnimationDuration, delay: 0, usingSpringWithDamping: 1.0, initialSpringVelocity: 0.2, options: .curveEaseInOut,
-                       animations: { [self] in
-                        launchScreenVersionLabel.text = "Version: \(Globals.versionNumber)  Build: \(Globals.buildNumber)  \(Globals.copyrightString)"
-                        ISSImage.transform = trans1
-                        ISSImage.alpha = 0.0
-                        curves.alpha = 0.0
-                        appNameTitleForLaunchAnimation.isHidden = false
-                        appNameTitleForLaunchAnimation.alpha = 1.0
-                        appNameTitleForLaunchAnimation.transform = trans2
-                       },
-                       completion: { [self] (completedOK) in
-                        performSegue(withIdentifier: segueToMainViewController, sender: self)
-                       })
+        UIView.animate(withDuration: iconAnimationDuration, delay: 0, usingSpringWithDamping: 1.0, initialSpringVelocity: 0.2, options: .curveEaseInOut, animations: { [self] in
+            launchScreenVersionLabel.text = "Version: \(Globals.versionNumber)  Build: \(Globals.buildNumber)  \(Globals.copyrightString)"
+            ISSImage.transform = trans1
+            ISSImage.alpha = 0.0
+            curves.alpha = 0.0
+            appNameTitleForLaunchAnimation.isHidden = false
+            appNameTitleForLaunchAnimation.alpha = 1.0
+            appNameTitleForLaunchAnimation.transform = trans2
+        },
+        completion: { [self] (completedOK) in
+            performSegue(withIdentifier: segueToMainViewController, sender: self)
+        })
         
     }
     
