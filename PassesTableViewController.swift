@@ -55,10 +55,10 @@ class PassesTableViewController: UITableViewController, CLLocationManagerDelegat
     }
     
     private var rating                                  = 0
-    private let baseURLForOverheadTimes                 = "---"     // API endpoint
+    private let baseURLForOverheadTimes                 = "---"                                     // API endpoint
     private let apiKey                                  = "---"                                     // API key
     private let altitude                                = 0
-    private let minObservationTime                      = 300                                                             // In seconds
+    private let minObservationTime                      = 300                                       // In seconds
     private let customCellIdentifier                    = "OverheadTimesCell"
     private let deg                                     = "°"
     private let newLine                                 = "\n"
@@ -190,6 +190,7 @@ class PassesTableViewController: UITableViewController, CLLocationManagerDelegat
             
             // Present alert to allow user to go to system Settings to change access tp Location Services
             let alert = UIAlertController(title: "Location Access Denied", message: "Access to your location was previously denied. Please update your iOS Settings to change this.", preferredStyle: .alert)
+            
             let goToSettingAction = UIAlertAction(title: "Go to Settings", style: .default) { (action) in
                 DispatchQueue.main.async {
                     let url = URL(string: UIApplication.openSettingsURLString)!
@@ -301,29 +302,29 @@ class PassesTableViewController: UITableViewController, CLLocationManagerDelegat
                 // Success!
                 overheadTimesList = passesDataSet.passes
                 
-                DispatchQueue.main.async {
-                    self.spinner.stopAnimating()
-                    self.refreshControl?.endRefreshing()
-                    self.animate(table: self.overheadTimes)
-                    self.userCurrentCoordinatesString = CoordinatesConversions.decimalCoordinatesToDegMinSec(latitude: self.userLatitude, longitude: self.userLongitude, format: Globals.coordinatesStringFormat)
-                    self.promptLabel.text = "\(self.numberOfOverheadTimesActuallyReported) \(self.numberOfOverheadTimesActuallyReported > 1 ? "passes" : "pass") over next \(self.numberOfDays) days from your location:\n\(self.userCurrentCoordinatesString)\nTap a pass to add a reminder to your calendar"
+                DispatchQueue.main.async { [self] in
+                    spinner.stopAnimating()
+                    refreshControl?.endRefreshing()
+                    animate(table: overheadTimes)
+                    userCurrentCoordinatesString = CoordinatesConversions.decimalCoordinatesToDegMinSec(latitude: userLatitude, longitude: userLongitude, format: Globals.coordinatesStringFormat)
+                    promptLabel.text = "\(numberOfOverheadTimesActuallyReported) \(numberOfOverheadTimesActuallyReported > 1 ? "passes" : "pass") over next \(numberOfDays) days from your location:\n\(userCurrentCoordinatesString)\nTap a pass to add a reminder to your calendar"
                 }
             } else {
-                DispatchQueue.main.async {
-                    self.spinner.stopAnimating()
-                    self.refreshControl?.endRefreshing()
-                    self.promptLabel.text = "No visible passes for the next \(self.numberOfDays) days"
-                    self.noPasesPopup(withTitle: "No Passes Found", withStyleToUse: .alert)
+                DispatchQueue.main.async { [self] in
+                    spinner.stopAnimating()
+                    refreshControl?.endRefreshing()
+                    promptLabel.text = "No visible passes for the next \(numberOfDays) days"
+                    noPasesPopup(withTitle: "No Passes Found", withStyleToUse: .alert)
                     
                 }
             }
         }
         catch {
-            DispatchQueue.main.async {
-                self.spinner.stopAnimating()
-                self.refreshControl?.endRefreshing()
-                self.promptLabel.text = "No visible passes for the next \(self.numberOfDays) days"
-                self.noPasesPopup(withTitle: "No Passes Found", withStyleToUse: .alert)
+            DispatchQueue.main.async { [self] in
+               spinner.stopAnimating()
+               refreshControl?.endRefreshing()
+               promptLabel.text = "No visible passes for the next \(numberOfDays) days"
+               noPasesPopup(withTitle: "No Passes Found", withStyleToUse: .alert)
             }
         }
         
@@ -333,9 +334,9 @@ class PassesTableViewController: UITableViewController, CLLocationManagerDelegat
     /// Get ISS passes
     private func getISSOverheadtimes(then completionHandler: @escaping completionHandler ) {
         
-        DispatchQueue.main.async {
-            self.spinner.startAnimating()
-            self.promptLabel.text = "Computing passes for the next \(self.numberOfDays) days"
+        DispatchQueue.main.async { [self] in
+            spinner.startAnimating()
+            promptLabel.text = "Computing passes for the next \(numberOfDays) days"
         }
         
         // Create the API URL request from endpoint. If not succesful, then return
@@ -352,12 +353,12 @@ class PassesTableViewController: UITableViewController, CLLocationManagerDelegat
                 
             } else {
                 
-                DispatchQueue.main.async {
-                    self.spinner.stopAnimating()
-                    self.refreshControl?.endRefreshing()
-                    self.cannotConnectToInternetAlert()
-                    self.promptLabel.text = "Connection Error"
-                } // end of GCD closure
+                DispatchQueue.main.async { [self] in
+                    spinner.stopAnimating()
+                    refreshControl?.endRefreshing()
+                    cannotConnectToInternetAlert()
+                    promptLabel.text = "Connection Error"
+                }
                 
             }
             
@@ -373,16 +374,15 @@ class PassesTableViewController: UITableViewController, CLLocationManagerDelegat
         
         let eventStore = EKEventStore()
         if (EKEventStore.authorizationStatus(for: .event) != EKAuthorizationStatus.authorized) {
-            eventStore.requestAccess(to: .event) { (granted, error) -> Void in
+            eventStore.requestAccess(to: .event) { [self] (granted, error) -> Void in
                 if granted {
-                    self.createEvent(eventStore, passEvent: passEvent)
+                    createEvent(eventStore, passEvent: passEvent)
                 } else {
                     DispatchQueue.main.async {
-                        self.alert(for: "Can't create event", message: "Access to your calendar was previously denied. Please update your Settings to change this")
+                        alert(for: "Can't create event", message: "Access to your calendar was previously denied. Please update your Settings to change this")
                     }
                 }
-            } // completion block closure
-            
+            }
         } else {
             createEvent(eventStore, passEvent: passEvent)
         }
@@ -448,6 +448,7 @@ class PassesTableViewController: UITableViewController, CLLocationManagerDelegat
             DispatchQueue.main.async {
                 self.spinner.stopAnimating()
             }
+            
         default :
             break
         }
@@ -465,7 +466,6 @@ class PassesTableViewController: UITableViewController, CLLocationManagerDelegat
         super.didReceiveMemoryWarning()
     }
     
-    
 }
 
 
@@ -480,7 +480,7 @@ extension PassesTableViewController {
     
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        
+
         return numberOfOverheadTimesActuallyReported
         
     }
@@ -509,7 +509,6 @@ extension PassesTableViewController {
             case _ where thisMagnitude <= RatingSystem.fair.rawValue      : rating = RatingSystem.fair.numberOfStars
             default                                                       : rating = RatingSystem.poor.numberOfStars
             }
-            
             
             return rating
             
@@ -569,7 +568,7 @@ extension PassesTableViewController {
             cell.endEl.text = String(format: Globals.elevationFormat, overheadTimesList[indexPath.row].endEl) + deg
             cell.endComp.text = String(overheadTimesList[indexPath.row].endAzCompass)
             
-
+            
             // Show the correct number of rating stars based on the magnitude of the pass
             let mag = overheadTimesList[indexPath.row].mag
             let rating = numberOfRatingStarsFor(thisMagnitude: mag)
