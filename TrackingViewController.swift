@@ -32,24 +32,24 @@ class TrackingViewController: UIViewController, MKMapViewDelegate, UIGestureReco
     /// Segue names
     private struct Segues {
         
-        static let helpSegue                    = "helpViewSegue"
+        static let NASATVSegue                  = "segueToNasaTV"
         static let crewSeque                    = "segueToCurrentCrew"
+        static let earthViewSegue               = "segueToStreamingVideo"
+        static let helpSegue                    = "helpViewSegue"
         static let passesSegue                  = "segueToPassTimes"
         static let settingsSegue                = "segueToSettings"
-        static let earthViewSegue               = "segueToStreamingVideo"
-        static let NASATVSegue                  = "segueToNasaTV"
         
     }
     
     /// Local constants
     private struct Constants {
-        static let fontForTitle                 = Theme.nasa
-        static let kilometersToMiles            = 0.621371192
-        static let zoomFactorStringFormat       = "Zoom: %2.2f°"
-        static let numberOfZoomIntervals        = 6
-        static let zoomScaleFactor              = 30.0
         static let animationOffsetY: CGFloat    = 90.0
         static let defaultTimerInterval         = 3.0
+        static let fontForTitle                 = Theme.nasa
+        static let kilometersToMiles            = 0.621371192
+        static let numberOfZoomIntervals        = 6
+        static let zoomFactorStringFormat       = "Zoom: %2.2f°"
+        static let zoomScaleFactor              = 30.0
     }
     
     private struct TrackingButtonImages {
@@ -257,10 +257,11 @@ class TrackingViewController: UIViewController, MKMapViewDelegate, UIGestureReco
     }
     
     private func setupMap() {
-        map.showsScale = true
-        map.isPitchEnabled = false
-        map.isRotateEnabled = false
         map.delegate = self
+        map.isPitchEnabled = true
+        map.isRotateEnabled = false
+        map.isZoomEnabled = true
+        map.showsScale = true
     }
     
     private func setupNumberFormatter() {
@@ -278,6 +279,19 @@ class TrackingViewController: UIViewController, MKMapViewDelegate, UIGestureReco
         appDelegate.referenceToViewController = self
     }
     
+    #warning("Add gestures!")
+//    private func setupGestureRecognizer() {
+//        let pinch = UIPanGestureRecognizer(target: self, action:  #selector(handlePinch))
+//        pinch.delegate = self
+//        map.addGestureRecognizer(pinch)
+//    }
+//
+//    @objc func handlePinch(_ recognizer: UIPinchGestureRecognizer) {
+//        if recognizer.state == .began {
+//            print("zoomed")
+//        }
+//    }
+    
     override func viewDidLoad() {
         
         super.viewDidLoad()
@@ -286,6 +300,7 @@ class TrackingViewController: UIViewController, MKMapViewDelegate, UIGestureReco
         setupDateFormatter()
         setupNumberFormatter()
         setupMap()
+//        setupGestureRecognizer()
         setupCoordinatesLabel()
         setUpZoomSlider(usingSavedZoomFactor: true) // Set up zoom factor using saved zoom factor, rather than default
         setDisplayConfiguration()                   // Start up with map in last-used map type and other display parameters.
@@ -293,6 +308,7 @@ class TrackingViewController: UIViewController, MKMapViewDelegate, UIGestureReco
         restoreUserSettings()                       // Restore user settings
         displayInfoBoxAndLandsatButton(false)       // Start up with map overlay info box and buttons off
         justStartedUp = true
+        
         
     }
     
@@ -738,15 +754,15 @@ class TrackingViewController: UIViewController, MKMapViewDelegate, UIGestureReco
         guard let segueInProcess = segue.identifier else { return } // Prevents crash if a segue is unnamed
         
         switch segueInProcess {
-            
+        
         case Segues.passesSegue :
             
             stopAction()                                            // Stop tracking if Passes segue was selected
-            
+        
         case Segues.crewSeque :
             
             stopAction()                                            // Stop tracking if Crew segue was selected
-            
+        
         case Segues.earthViewSegue :                                // Stop tracking and select live earth view channel
             
             stopAction()
@@ -756,7 +772,7 @@ class TrackingViewController: UIViewController, MKMapViewDelegate, UIGestureReco
             destinationVC.title = destinationVC.channelSelected.rawValue
             
         case Segues.NASATVSegue :                                   // Stop tracking and select NASA TV channel
-
+            
             stopAction()
             let navigationController = segue.destination as! UINavigationController
             let destinationVC = navigationController.topViewController as! LiveVideoViewController
@@ -768,7 +784,7 @@ class TrackingViewController: UIViewController, MKMapViewDelegate, UIGestureReco
             let navigationController = segue.destination as! UINavigationController
             let destinationVC = navigationController.topViewController as! SettingsTableViewController
             destinationVC.settingsButtonInCallingVCSourceView = settingsButton
-
+            
         case Segues.helpSegue :                                     // Keep tracking, set popover arrow to point to middle, below help button
             
             let navigationController = segue.destination as! UINavigationController
@@ -776,7 +792,7 @@ class TrackingViewController: UIViewController, MKMapViewDelegate, UIGestureReco
             destinationVC.helpContentHTML = UserGuide.helpContentHTML
             destinationVC.helpButtonInCallingVCSourceView = helpButton
             destinationVC.title = "User Guide"
-         
+            
         default :
             
             stopAction()
@@ -847,11 +863,21 @@ class TrackingViewController: UIViewController, MKMapViewDelegate, UIGestureReco
     
     
     override func didReceiveMemoryWarning() {
+        
         super.didReceiveMemoryWarning()
         
         stopAction()
         
     }
     
+    
+//    func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool {
+//        return true
+//    }
+
+//    func mapViewDidChangeVisibleRegion(_ mapView: MKMapView) {
+//        print("Region changed!")
+//    }
+
     
 }
