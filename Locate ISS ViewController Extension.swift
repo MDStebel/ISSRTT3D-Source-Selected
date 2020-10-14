@@ -12,11 +12,11 @@ import MapKit
 
 extension TrackingViewController {
     
-    /// Update the info box data
+    /// Update the info box data 
     private func updateCoordinatesDisplay() {
         
-        coordinatesLabel?.text = positionString
         altitudeLabel?.text = altString
+        coordinatesLabel?.text = positionString
         velocityLabel?.text = velString
         
     }
@@ -43,7 +43,7 @@ extension TrackingViewController {
     }
     
     
-    /// Setup the overlays and any buttons that depend on settings
+    /// Set up the overlays and any buttons that depend on settings
     fileprivate func setupAllOverlaysAndButtons() {
         
         DispatchQueue.main.async {
@@ -51,7 +51,7 @@ extension TrackingViewController {
             self.setDisplayConfiguration()
             
             if Globals.zoomFactorWasResetInSettings {           // If reset was pressed in Settings, or if the zoom scale factor was changed, this flag will be set.
-                // So, reset zoom to default values for the selected scale factor and call zoomValueChanged method.
+                                                                // So, reset zoom to default values for the selected scale factor and call zoomValueChanged method.
                 self.setUpZoomSlider(usingSavedZoomFactor: false)
                 self.zoomValueChanged(self.zoomSlider)
             }
@@ -77,9 +77,10 @@ extension TrackingViewController {
                 self.clearOrbitTrackButton.isEnabled = false
             }
             
-            self.cursor.isHidden = false                        // Show marker now
+            self.cursor.isHidden = false                        // Now, show the marker
             
         }
+        
     }
     
     
@@ -123,27 +124,23 @@ extension TrackingViewController {
                         // Draw ground track, if enabled
                         self?.drawOrbitGroundTrackLine()
                         
-                    } // end of GCD closure
+                    }
                     
                 } else {
                     
                     DispatchQueue.main.async {
-                        
                         self?.stopAction()
                         self!.alert(for: "Can't get ISS location", message: "Wait a few minutes\nand then tap ▶︎ again.")
-                        
-                    } // end of GCD closure
+                    }
                     
                 }
                 
             } else {
                 
                 DispatchQueue.main.async {
-                    
                     self?.stopAction()
                     self!.cannotConnectToInternetAlert()
-                    
-                } // end of GCD closure
+                }
                 
             }
             
