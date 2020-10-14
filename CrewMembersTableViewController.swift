@@ -17,24 +17,24 @@ class CrewMembersTableViewController: UITableViewController, TableAnimatable {
     
     /// Constants
     private struct Constants {
-        static let segueToHelpFromCrew          = "segueToHelpFromCrew"
-        static let segueToFullBio               = "segueToFullBio"
-        static let customCellIdentifier         = "crewMemberCell"
-        static let crewAPIEndpointURLString     = "---"                         // API endpoint
         static let bioBackupURLString           = "---"   // Backup URL is used if a bio URL is not returned in the JSON file
-        static let newLine                      = "\n"
-        static let tableRowSize: CGFloat        = 180
+        static let crewAPIEndpointURLString     = "---"   // API endpoint
+        static let customCellIdentifier         = "crewMemberCell"
         static let fontForTitle                 = Theme.nasa
-        static let updatingDataPromptText       = "Updating crew data..."
-        static let tapAnyCrewMemberPromptText   = "Tap any crew member for bios & tweets"
+        static let newLine                      = "\n"
+        static let segueToFullBio               = "segueToFullBio"
+        static let segueToHelpFromCrew          = "segueToHelpFromCrew"
         static let spacecraftID                 = "International Space Station"
+        static let tableRowSize: CGFloat        = 180
+        static let tapAnyCrewMemberPromptText   = "Tap any crew member for bios & tweets"
+        static let updatingDataPromptText       = "Updating crew data..."
     }
     
     private var currentCrew: [Astronaut]?       = []
     private var currentCrewSize                 = 0
     private var getCurrentCrewMembersAlreadyRun = false
-    private var lastIndex                       = 0
     private var index                           = 0
+    private var lastIndex                       = 0
     
     /// Placeholder image to use if there's no image for an astronaut returned by the API call
     private let placeholderImage                = #imageLiteral(resourceName: "astronaut_filled_Grey")
@@ -161,7 +161,7 @@ class CrewMembersTableViewController: UITableViewController, TableAnimatable {
             
             if let urlContent = data {
                 
-                // Call parser with data and if successful (not nil) copy crew member names to currentCrew string array and fill the table
+                // Parse data and if successful (not nil) copy crew member names to currentCrew string array and fill the table
                 if let parsedCrewMembers = Astronaut.parseCurrentCrew(from: urlContent) {
                     
                     weakSelf?.currentCrew = parsedCrewMembers
@@ -226,8 +226,12 @@ class CrewMembersTableViewController: UITableViewController, TableAnimatable {
         
     }
       
-    
-    /// Build a rich label with leading text followed by an image and return as an attributed string
+
+    /// Build a label with leading text followed by an image and return as an attributed string
+    /// - Parameters:
+    ///   - startOfText: String to add image to
+    ///   - endingWithImageAtURL: URL of image
+    /// - Returns: Label with image
     private func createStringWithRichContent(starting startOfText: String, and endingWithImageAtURL: String) -> NSMutableAttributedString {
         
         // Create an NSMutableAttributedString that we'll append the image to
