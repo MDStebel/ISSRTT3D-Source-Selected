@@ -59,24 +59,34 @@ struct Astronaut {
     }
     
     
-    /// This computed property returns a date formatted according to output date format string in Globals
+    /// This computed property returns a date formatted according to output date format string in Globals. If not successful, return an empty string
     var launchDateFormatted: String {
-        return DateFormatter().convert(from: launchDate, fromStringFormat: Globals.dateFormatStringEuropeanForm, toStringFormat: Globals.outputDateFormatStringShortForm)!
+        return DateFormatter().convert(from: launchDate, fromStringFormat: Globals.dateFormatStringEuropeanForm, toStringFormat: Globals.outputDateFormatStringShortForm) ?? ""
     }
     
     
     // MARK: - Methods
     
     
-    /// Method to calculate and return the number of days astronaut has been in space (today - launch date)
+    
+    /// Method to calculate the number of days an astronaut has been in space (today - launch date).
+    /// If there's an error in the JSON data, this will detect it and return 0 days.
+    /// - Returns: Number of days since launch
     func numberOfDaysInSpace() -> Int {
         
         let todaysDate = Date()
+        
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = Globals.outputDateFormatStringShortForm
-        let startDate = dateFormatter.date(from: launchDateFormatted)
-        return Int(Double(todaysDate.timeIntervalSince(startDate!)) / Globals.numberOfSecondsInADay )
-
+        let launchedOn = launchDateFormatted
+        
+        if launchedOn != "" {
+            let startDate = dateFormatter.date(from: launchedOn)
+            return Int(Double(todaysDate.timeIntervalSince(startDate!)) / Globals.numberOfSecondsInADay )
+        } else {
+            return 0
+        }
+        
     }
     
     
