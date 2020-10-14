@@ -18,20 +18,19 @@ class LaunchAnimationViewController: UIViewController {
     // MARK: - Properties
     
     
-    private let segueToMainViewController = "mainViewControllerSegue"
-    
     private let iconAnimationDuration = 5.0
-    private let titleAnimationDuration = 5.0
     private let iconAnimationRotationAngle: CGFloat = -CGFloat.pi / 6.0    // In Radians
     private let iconAnimationScaleFactor: CGFloat = 0.5
+    private let segueToMainViewController = "mainViewControllerSegue"
+    private let titleAnimationDuration = 5.0
     private let titleScaleFactor: CGFloat = 0.33
     
-    private var xTrans: CGFloat = 0.0
-    private var yTrans: CGFloat = 0.0
     private var iconScaleFactor: CGFloat = 0.0
     private var scaleFactorForAppNameTitleForLaunchAnimation: CGFloat = 0.0
     private var trans1 = CGAffineTransform.identity
     private var trans2 = CGAffineTransform.identity
+    private var xTrans: CGFloat = 0.0
+    private var yTrans: CGFloat = 0.0
     
     
     // Hide the status bar for this VC
@@ -44,10 +43,9 @@ class LaunchAnimationViewController: UIViewController {
     
 
     @IBOutlet private var ISSImage: UIImageView!
-    
     @IBOutlet private var appNameTitleForLaunchAnimation: UILabel! {
         didSet {
-            // initially shrink title label, which will zoom in later
+            // Initially shrink title label, which will zoom in later
             scaleFactorForAppNameTitleForLaunchAnimation = titleScaleFactor
             trans2 = trans2.scaledBy(x: scaleFactorForAppNameTitleForLaunchAnimation, y: scaleFactorForAppNameTitleForLaunchAnimation)
             appNameTitleForLaunchAnimation.transform = trans2
@@ -55,9 +53,7 @@ class LaunchAnimationViewController: UIViewController {
             appNameTitleForLaunchAnimation.isHidden = true
         }
     }
-    
     @IBOutlet private var launchScreenVersionLabel: UILabel!
-    
     @IBOutlet private var curves: UIImageView!
     
     
@@ -67,7 +63,7 @@ class LaunchAnimationViewController: UIViewController {
     private func createTransformationsForISSIcon() {
         
         // Create a stack of transformations for the ISS graphic
-        if #available(iOS 13, *) {
+        if #available(iOS 13, *) {                  // If iOS 13 or greater
             
             xTrans = view.bounds.size.width + 20
             yTrans = view.bounds.size.height + 20
@@ -76,7 +72,7 @@ class LaunchAnimationViewController: UIViewController {
             trans1 = trans1.scaledBy(x: iconScaleFactor, y: iconScaleFactor)
             trans1 = trans1.rotated(by: iconAnimationRotationAngle)
         
-        } else {
+        } else {                                    // If before iOS 13
             
             xTrans = view.bounds.size.width - ISSImage.bounds.size.width / 2.0 - 15
             yTrans = view.bounds.size.height - ISSImage.bounds.size.height / 2.0 + 10
