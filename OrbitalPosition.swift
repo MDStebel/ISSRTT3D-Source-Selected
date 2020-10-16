@@ -19,7 +19,9 @@ struct OrbitalPosition {
     let time: Double
     
     
-    /// Parses JSON file with coordinates, altitude, velocity, and date & time from the data returned from the API
+    /// Parses JSON file with coordinates, altitude, velocity, and date & time from the data returned from the API.
+    /// - Parameter data: The data returned from API
+    /// - Returns: An OrbitalPosition instance
     static func parseLocationSpeedAndAltitude(from data: Data?) -> OrbitalPosition? {
         
         /// Type alias for a dictionary to make code easier to read
@@ -46,10 +48,9 @@ struct OrbitalPosition {
             return nil
         }
         
-    } // end parse location
+    }
     
-    
-} // end OrbitalPosition type
+}
 
 
 extension OrbitalPosition: CustomStringConvertible {
