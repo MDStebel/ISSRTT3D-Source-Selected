@@ -12,7 +12,6 @@ import UIKit
 extension TrackingViewController {
 
     /// Save current version.
-    ///
     /// Stores current app version data in the user's default database.
     func saveAppCurrentVersionNumber() {
         
@@ -29,8 +28,8 @@ extension TrackingViewController {
     
     
     /// Checks if app has been updated.
-    ///
-    /// Returns true if app was already installed and then updated. Requires that "App Version" and "App Build" keys were saved in the defaults instance of NSDefaults. If not, these are saved and method returns false.
+    /// Requires that "App Version" and "App Build" keys were saved in the defaults instance of UserDefaults. If not, these are saved and method returns false.
+    /// - Returns : True if app was already installed AND then updated.
     func hasAppBeenUpdated() -> Bool {
         
         /// An instance of UserDefaults to save and access user settings
