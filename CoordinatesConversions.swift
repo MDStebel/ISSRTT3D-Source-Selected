@@ -11,7 +11,12 @@ import Foundation
 
 struct CoordinatesConversions {
     
-    /// Convert map coordinates from decimal to degrees, minutes, seconds, and direction
+    /// Convert map coordinates from decimal to degrees, minutes, seconds, and direction.
+    /// - Parameters:
+    ///   - latitude: Latitude as a Double.
+    ///   - longitude: Longitude as a Double.
+    ///   - format: String containing the format to use in the conversion.
+    /// - Returns: The coordinates in deg min sec format.
     static func decimalCoordinatesToDegMinSec(latitude: Double, longitude: Double, format: String) -> String {
         
         var latSeconds = Int(latitude * 3600)
@@ -31,7 +36,13 @@ struct CoordinatesConversions {
     }
     
     
-    /// Convert map coordinates from degrees, minutes, seconds, and direction to decimal
+    /// Convert map coordinates from degrees, minutes, seconds, and direction to decimal.
+    /// - Parameters:
+    ///   - degrees: Degrees as a Double.
+    ///   - minutes: Minutes as a Double.
+    ///   - seconds: Seconds as a Double.
+    ///   - direction: Direction as a String (either "N" or "S").
+    /// - Returns: <#description#>
     static func degMinSecCoordinatesToDecimal(degrees: Double, minutes: Double, seconds: Double, direction: String) -> Double {
         
         let sign = (direction == "S" || direction == "W") ? -1.0 : 1.0
