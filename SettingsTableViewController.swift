@@ -14,16 +14,17 @@ class SettingsTableViewController: UITableViewController {
     // MARK: - Properties
     
     
-    private let websiteURL                  = "https://www.issrtt.com/#support"
-    private let urlForRating                = "itms://itunes.apple.com/WebObjects/MZStore.woa/wa/viewContentsUserReviews?type=Purple+Software&id=1079990061"
-    private let urlForMyOtherApps           = "itms://itunes.apple.com/us/developer/michael-stebel/id1027443988"
-    private let urlForFacebookLink          = "https://www.facebook.com/issrealtimetracker/"
+    private let buildNumber                 = Globals.buildNumber
+    private let copyrightNotice             = Globals.copyrightString
     private let defaultMapType              = 2                                                     // Hybrid map type is the default
     private let defaultMarkerType           = 0                                                     // ISS icon marker type is the default
     private let defaultZoomFactor           = 2                                                     // Medium zoom is the default
+    private let urlForFacebookLink          = "https://www.facebook.com/issrealtimetracker/"
+    private let urlForMyOtherApps           = "itms://itunes.apple.com/us/developer/michael-stebel/id1027443988"
+    private let urlForRating                = "itms://itunes.apple.com/WebObjects/MZStore.woa/wa/viewContentsUserReviews?type=Purple+Software&id=1079990061"
     private let versionNumber               = Globals.versionNumber
-    private let buildNumber                 = Globals.buildNumber
-    private let copyrightNotice             = Globals.copyrightString
+    private let websiteURL                  = "https://www.issrtt.com/#support"
+    
     private var dateAndTimeSaved: String?   = ""
     private var versionAndCopyrightFooter   = ""
     
@@ -50,13 +51,11 @@ class SettingsTableViewController: UITableViewController {
     @IBOutlet private var numberOfDaysOfPasses: UISegmentedControl! {
         // Set up segment labels from dictionary
         didSet{
-            for index in 0..<Globals.numberOfDaysDictionary.count {
-                numberOfDaysOfPasses.setTitle(Globals.numberOfDaysDictionary[index], forSegmentAt: index)
+            for index in 0..<Passes.numberOfDaysDictionary.count {
+                numberOfDaysOfPasses.setTitle(Passes.numberOfDaysDictionary[index], forSegmentAt: index)
             }
         }
     }
-    
-    
     @IBOutlet private var showOrbitGroundTrackLine: UISwitch!
     @IBOutlet private var showCoordinatesSwitch: UISwitch!
     @IBOutlet private var displayZoomFactorBelowMarkerSwitch: UISwitch!
