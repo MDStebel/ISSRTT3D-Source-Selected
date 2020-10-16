@@ -9,7 +9,7 @@
 import Foundation
 
 
-/// Passes model using the n2yo.com API
+/// Passes model
 struct Passes: Decodable {
     
     let info: Info
