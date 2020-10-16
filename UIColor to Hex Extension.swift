@@ -9,7 +9,7 @@
 import UIKit
 
 
-/// Extension to UIColor that takes a hex-formatted color and returns a UIColor as an optional string representation
+/// Extension to UIColor that converts UIColor to a hex string representation
 extension UIColor {
 
     /// Computed property using default setting for alpha. Returns optional string containing the hex value without alpha.
