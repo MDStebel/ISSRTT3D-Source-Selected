@@ -43,4 +43,14 @@ struct Passes: Decodable {
         
     }
     
+    /// Number of days to project that can be in the API request. Used in segmented switch in settings, etc.
+    static let numberOfDaysDictionary = [
+        0 : "2",
+        1 : "5",
+        2 : "10",
+        3 : "15",
+        4 : "20",
+        5 : "30"
+    ]
+    
 }
