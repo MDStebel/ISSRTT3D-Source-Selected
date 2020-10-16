@@ -68,7 +68,6 @@ struct Astronaut {
     // MARK: - Methods
     
     
-    
     /// Method to calculate the number of days an astronaut has been in space (today - launch date).
     /// If there's an error in the JSON data, this will detect it and return 0 days.
     /// - Returns: Number of days since launch
@@ -90,7 +89,9 @@ struct Astronaut {
     }
     
     
-    /// Parse JSON file with current crew names from my API and returns an optional array of Astronauts
+    /// Parses JSON file with current crew names from my API and returns an optional array of Astronauts.
+    /// - Parameter data: The data returned from API.
+    /// - Returns: Optional array of Astronauts.
     static func parseCurrentCrew(from data: Data?) -> [Astronaut]? {
         
         /// Type alias for a dictionary to make code easier to read
