@@ -14,9 +14,9 @@ struct UserGuide {
     
     // MARK: - Theme colors converted to CSS hex
     
-    private static let helpViewBackgroundColor = UIColor(named: Theme.usrGuide)?.toHex ?? "000000"
-    private static let tintColor = UIColor(named: Theme.tint)?.toHex ?? "ff0000"
-    private static let whiteColor = UIColor(named: Theme.white)?.toHex ?? "ffffff"
+    private static let helpViewBackgroundColor = UIColor(named: Theme.usrGuide)?.cgColor.toHex ?? "000000"
+    private static let tintColor = UIColor(named: Theme.tint)?.cgColor.toHex ?? "ff0000"
+    private static let whiteColor = UIColor(named: Theme.white)?.cgColor.toHex ?? "ffffff"
     
     
     // MARK: - Common code
@@ -356,34 +356,6 @@ struct UserGuide {
     <h4>Pull-to-Refresh</h4>
     <p>Pull down the table to refresh the data.</p>
     <p>Tap ⟵ icon to return to the map and resume tracking.</p>
-    \(tail)
-    """
-    
-    static let landsatImageHelp =
-    """
-    \(head)
-    <h2>Landsat 8 Imagery Help</h2>
-    <p>This function displays a NASA Landsat 8 image at the current map coordinates, if available. The image covers an area determined by the "Img Scale" selector in Settings. The coordinates, date and time the Landsat 8 image was captured (see notes) are displayed above the image, along with the scale in degrees and percentage of cloud cover. Tracking will be paused while the Landsat 8 image is being downloaded. This allows you to view the Landsat image and then return to the map and compare the two views.</p>
-    <h3>Change Image Scale</h3>
-    <p>To change the image scale, tap the scale button on the upper-right. To change the image scale so that the app remembers your setting for next time, change it in Settings.</p>
-    <h4>Save Landsat 8 Image in Photos</h4>
-    <p>Tap the image to save it to your photo library.</p>
-    <h5>Notes:</h5>
-    <ul>
-    <li>
-    <h6>If the ISS is over open ocean, or if Landsat 8 imagery is not available for the current map coordinates, no image will be displayed.</h6>
-    </li>
-    <li>
-    <h6>To display images with high cloud cover (&#8250;80%), turn this on in Settings. Otherwise, if ISS Real-Time Tracker determines that the image has more than 80% cloud cover, it will not be displayed.</h6>
-    </li>
-    <li>
-    <h6>The captured date refers to the date in which the image was captured by the satellite and saved in the NASA database. The image can be two or more years old.</h6>
-    </li>
-    <li>
-    <h6>You must give ISS Real-Time Tracker access to your photos to save an image. When asked to grant this permission, tap &quot;OK.&quot; You can change this permission in your Settings app.</h6>
-    </li>
-    </ul>
-    <p>Tap ⟵ to return to the map. Tap the Play button to resume tracking.</p>
     \(tail)
     """
     
