@@ -11,18 +11,15 @@ import UIKit
 
 /// Extension to UIColor that takes a hex-formatted color and returns a UIColor as an optional string representation
 extension UIColor {
-    
-    /// Property computed using default setting for alpha
-    ///
-    /// Returns optional string
+
+    /// Computed property using default setting for alpha. Returns optional string containing the hex value without alpha.
     var toHex: String? {
         toHex()
     }
     
-    /// Method to convert from UIColor to hex string
-    ///
-    /// Returns optional string
-    /// - Parameter alpha: True if alpha component is provided
+    /// Method to convert from UIColor to hex string.
+    /// - Parameter alpha: True if alpha component is provided.
+    /// - Returns: Optional string containing the hex value with alpha.
     func toHex(alpha: Bool = false) -> String? {
         guard let components = cgColor.components, components.count >= 3 else {
             return nil
@@ -31,10 +28,10 @@ extension UIColor {
         let r = Float(components[0])
         let g = Float(components[1])
         let b = Float(components[2])
-        var a = Float(1.0)
+        var a = Float(1.0)              // Default alpha
         
         if components.count >= 4 {
-            a = Float(components[3])
+            a = Float(components[3])    // Actual alpha value, if provided
         }
         
         if alpha {
