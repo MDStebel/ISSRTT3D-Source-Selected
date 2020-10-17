@@ -9,7 +9,7 @@
 import UIKit
 
 
-/// Extension to CGColor that converts a CGColor to a hex string representation
+// Extension to CGColor that converts a CGColor to a hex string representation
 extension CGColor {
 
     /// Computed property using default setting for alpha. Returns optional string containing the hex value without alpha.
@@ -22,7 +22,7 @@ extension CGColor {
     /// - Returns: Optional string containing the hex value with alpha.
     func toHex(alpha: Bool = false) -> String? {
         
-        guard let components = self.components, components.count >= 3 else {
+        guard let components = components, numberOfComponents >= 3 else {
             return nil
         }
         
