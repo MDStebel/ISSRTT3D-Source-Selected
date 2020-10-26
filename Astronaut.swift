@@ -70,7 +70,7 @@ struct Astronaut {
     
     /// Method to calculate the number of days an astronaut has been in space (today - launch date).
     /// If there's an error in the JSON data, this will detect it and return 0 days.
-    /// - Returns: Number of days since launch
+    /// - Returns: Number of days since launch.
     func numberOfDaysInSpace() -> Int {
         
         let todaysDate = Date()

@@ -42,13 +42,13 @@ extension TrackingViewController {
         
         let previousAppVersion  = defaults.object(forKey: "App Version") as? String ?? ""           // Get stored version and build, if they exist
         let previousAppBuild    = defaults.object(forKey: "App Build") as? String ?? ""
-
+        
         if previousAppVersion != currentAppVersion || previousAppBuild != currentBuild {            // App versions are different, thus the app has been updated
             wasUpdated = true
         }
         
         saveAppCurrentVersionNumber()
-
+        
         return wasUpdated
         
     }

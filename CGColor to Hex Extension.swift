@@ -9,7 +9,7 @@
 import UIKit
 
 
-// Extension to CGColor that converts a CGColor to a hex string representation
+// Extension to CGColor that converts a CGColor to a hex string representation with or without alpha
 extension CGColor {
 
     /// Computed property using default setting for alpha. Returns optional string containing the hex value without alpha.
@@ -29,7 +29,7 @@ extension CGColor {
         let r = Float(components[0])
         let g = Float(components[1])
         let b = Float(components[2])
-        var a = Float(1.0)              // Default alpha
+        var a = Float(1.0)              // Default alpha value
 
         if components.count >= 4 {
             a = Float(components[3])    // Actual alpha value, if provided

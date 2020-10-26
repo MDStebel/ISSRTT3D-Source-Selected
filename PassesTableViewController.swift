@@ -54,24 +54,25 @@ class PassesTableViewController: UITableViewController, CLLocationManagerDelegat
         static let fontForTitle                         = Theme.nasa
     }
     
-    private var rating                                  = 0
-    private let baseURLForOverheadTimes                 = "---"                                     // API endpoint
-    private let apiKey                                  = "---"                                     // API key
     private let altitude                                = 0
-    private let minObservationTime                      = 300                                       // In seconds
+    private let apiKey                                  = "BZQB9N-9FTL47-ZXK7MZ-3TLE"                                     // API key
+    private let baseURLForOverheadTimes                 = "https://api.n2yo.com/rest/v1/satellite/visualpasses/25544"     // API endpoint (new as of Nov 1, 2020)
     private let customCellIdentifier                    = "OverheadTimesCell"
     private let deg                                     = "°"
+    private let minObservationTime                      = 300                                                             // In seconds
     private let newLine                                 = "\n"
     private let noRatingStar                            = #imageLiteral(resourceName: "star-unfilled")
     private let ratingStar                              = #imageLiteral(resourceName: "star")
-    private var numberOfDays                            = 1
-    private var numberOfOverheadTimesActuallyReported   = 0
-    private var userCurrentCoordinatesString            = ""
+    
     private var dateFormatterForDate                    = DateFormatter()
     private var dateFormatterForTime                    = DateFormatter()
+    private var numberOfDays                            = 1
+    private var numberOfOverheadTimesActuallyReported   = 0
+    private var overheadTimesList                       = [Passes.Pass]()
+    private var rating                                  = 0
+    private var userCurrentCoordinatesString            = ""
     private var userLatitude                            = 0.0
     private var userLongitude                           = 0.0
-    private var overheadTimesList                       = [Passes.Pass]()
     
     private var ISSlocationManager: CLLocationManager!
     
@@ -109,7 +110,7 @@ class PassesTableViewController: UITableViewController, CLLocationManagerDelegat
     }
     
     private func getNumberOfDaysOfPassesToReturn() {
-        numberOfDays = Int(Globals.numberOfDaysDictionary[Globals.numberOfDaysOfPassesSelectedSegment] ?? String(Globals.numberOfDaysOfPassesDefaultSelectionSegment))!
+        numberOfDays = Int(Passes.numberOfDaysDictionary[Globals.numberOfDaysOfPassesSelectedSegment] ?? String(Globals.numberOfDaysOfPassesDefaultSelectionSegment))!
     }
     
     override func viewDidLoad() {
@@ -257,9 +258,9 @@ class PassesTableViewController: UITableViewController, CLLocationManagerDelegat
         )
         
         // Add number-of-days selections from the dictionary
-        for i in 0..<Int(Globals.numberOfDaysDictionary.count) {
-            alertController.addAction(UIAlertAction(title: "\(Globals.numberOfDaysDictionary[i]!) days", style: .default) { (choice) in
-                self.numberOfDays = Int(Globals.numberOfDaysDictionary[i]!)!
+        for i in 0..<Int(Passes.numberOfDaysDictionary.count) {
+            alertController.addAction(UIAlertAction(title: "\(Passes.numberOfDaysDictionary[i]!) days", style: .default) { (choice) in
+                self.numberOfDays = Int(Passes.numberOfDaysDictionary[i]!)!
                 self.restartGettingUserLocation()
                 }
             )
@@ -288,7 +289,8 @@ class PassesTableViewController: UITableViewController, CLLocationManagerDelegat
     }
     
     
-    /// Get data from JSON file
+    /// Decode the raw passes in the JSON data
+    /// - Parameter data: JSON passes data
     private func decodeJSONPasses(withData data: Data) {
         
         let decoder = JSONDecoder()
@@ -306,7 +308,7 @@ class PassesTableViewController: UITableViewController, CLLocationManagerDelegat
                     spinner.stopAnimating()
                     refreshControl?.endRefreshing()
                     animate(table: overheadTimes)
-                    userCurrentCoordinatesString = CoordinatesConversions.decimalCoordinatesToDegMinSec(latitude: userLatitude, longitude: userLongitude, format: Globals.coordinatesStringFormat)
+                    userCurrentCoordinatesString = CoordinateConversions.decimalCoordinatesToDegMinSec(latitude: userLatitude, longitude: userLongitude, format: Globals.coordinatesStringFormat)
                     promptLabel.text = "\(numberOfOverheadTimesActuallyReported) \(numberOfOverheadTimesActuallyReported > 1 ? "passes" : "pass") over next \(numberOfDays) days from your location:\n\(userCurrentCoordinatesString)\nTap a pass to add a reminder to your calendar"
                 }
             } else {
@@ -331,7 +333,8 @@ class PassesTableViewController: UITableViewController, CLLocationManagerDelegat
     }
     
     
-    /// Get ISS passes
+    /// Get the ISS passes as JSON from the REST API
+    /// - Parameter completionHandler: The function to handle to process the raw data returned
     private func getISSOverheadtimes(then completionHandler: @escaping completionHandler ) {
         
         DispatchQueue.main.async { [self] in
@@ -390,6 +393,9 @@ class PassesTableViewController: UITableViewController, CLLocationManagerDelegat
     }
     
     /// Create the calendar event
+    /// - Parameters:
+    ///   - eventStore: <#eventStore description#>
+    ///   - passEvent: <#passEvent description#>
     private func createEvent(_ eventStore: EKEventStore, passEvent: Passes.Pass) {
         
         // Create an event
@@ -499,6 +505,8 @@ extension PassesTableViewController {
         
         
         /// Helper function to get number of stars to display for this pass
+        /// - Parameter thisMagnitude: Magnitude of the pass
+        /// - Returns: Integer representing the rating stars
         func numberOfRatingStarsFor(thisMagnitude: Double) -> Int {
             
             // Determine the rating based on the magnitude of this pass

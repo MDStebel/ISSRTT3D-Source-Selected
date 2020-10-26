@@ -8,9 +8,14 @@
 
 import Foundation
 
+
 extension String {
     
-    /// Method to delete a prefix string from the beginning of a string
+    
+    /// Delete a prefix sustring from the beginning of a string.
+    /// Checks that prefix substring exists.
+    /// - Parameter prefix: Substring to remove.
+    /// - Returns: New string.
     func deletingPrefix(_ prefix: String) -> String {
         
         guard self.hasPrefix(prefix) else { return self }
