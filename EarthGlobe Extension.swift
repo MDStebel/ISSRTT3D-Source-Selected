@@ -48,7 +48,7 @@ extension EarthGlobe {
         let adjustedLon = lon - 180
         let orbitalCorrectionForLon = adjustedLon * Globals.degreesToRadians                                    // lon & lat are used here as the angular displacement from the origin (lon - origin = lon - 0 = lon)
         let orbitalCorrectionForLat = adjustedLat * Globals.degreesToRadians
-        let ISSOrbitInclinationInRadiansCorrected = Globals.ISSOrbitInclinationInRadians * headingFactor * 1.0 // Flip the orbital direction based on if it's heading generally north or south
+        let ISSOrbitInclinationInRadiansCorrected = Globals.ISSOrbitInclinationInRadians * headingFactor * 0.90 // Flip the orbital direction based on if it's heading generally north or south
         
         // Create 4x4 matrices for each rotation to be used below as rotation matrices and initialize each as the identity matrix
         var rotationMatrix1 = SCNMatrix4Identity
@@ -76,7 +76,7 @@ extension EarthGlobe {
 
         let adjustedLon = lon + 90
         let adjustedLat = lat
-        let distanceToTheSun = Float(10000)
+        let distanceToTheSun = Float(1000)
         let position = CoordinateConversions.convertLatLonCoordinatesToXYZ(adjustedLat, adjustedLon, alt: distanceToTheSun)
         sun.position = position
         
