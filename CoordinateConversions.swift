@@ -2,8 +2,8 @@
 //  CoordinateConversions.swift
 //  ISS Real-Time Tracker
 //
-//  Created by Michael Stebel on 2/16/16.
-//  Copyright © 2016-2020 Michael Stebel Consulting, LLC. All rights reserved.
+//  Created by Michael Stebel on 10/26/2020.
+//  Copyright © 2020 Michael Stebel Consulting, LLC. All rights reserved.
 //
 
 
@@ -61,19 +61,7 @@ struct CoordinateConversions {
         return jc
         
     }
-    
-    
-    /// Calculate the exact latitude where the Sun is currently over
-    /// - Returns: Latitude in degrees as a Float
-    static func getLatitudeOfSunAtCurrentTime() -> Float {
         
-        let meanLongitude = getGeometricMeanLongitudeOfSunAtCurrentTime()
-        let latitudeOfSun = asin(sin(meanLongitude * Globals.degreesToRadians) * sin(Globals.earthTiltInDegrees * Globals.degreesToRadians)) * Globals.radiansToDegrees
-        
-        return latitudeOfSun
-        
-    }
-    
     
     /// Calculate the exact geometric mean longitude of the Sun at the current time
     /// - Returns: The geometric mean longitude in degrees as a Float
@@ -82,9 +70,21 @@ struct CoordinateConversions {
         let now = Date()
         let jC = julianCentury(date: now)
 
-        let sunLongitude = Float((280.46646 + jC * (36000.76983 + jC * 0.0003032))).truncatingRemainder(dividingBy: 360)
+        let sunGeometricMeanLongitude = Float((280.46646 + jC * (36000.76983 + jC * 0.0003032))).truncatingRemainder(dividingBy: 360)
         
-        return Float(sunLongitude)
+        return Float(sunGeometricMeanLongitude)
+        
+    }
+    
+    
+    /// Calculate the exact latitude where the Sun is currently over
+    /// - Returns: Latitude in degrees as a Float
+    static func getLatitudeOfSunAtCurrentTime() -> Float {
+        
+        let geomMeanLongitude = getGeometricMeanLongitudeOfSunAtCurrentTime()
+        let latitudeOfSun = asin(sin(geomMeanLongitude * Globals.degreesToRadians) * sin(Globals.earthTiltInDegrees * Globals.degreesToRadians)) * Globals.radiansToDegrees
+        
+        return latitudeOfSun
         
     }
     
@@ -94,20 +94,15 @@ struct CoordinateConversions {
     /// - Returns: Longitude in degrees as a Float
     static func getLongitudeOfSunAtCurrentTime() -> Float {
 
-        var trueLon: Float
+        var GMT: Float
         
         // This block determines where on the Earth noon is currently in units of time displacement
         let localMins = Float(Calendar.current.component(.minute, from: Date()))
         let localHour = Float(Calendar.current.component(.hour, from: Date())) + Float(localMins / 60)
-        let secondsFromGMT = TimeZone.current.secondsFromGMT()
-        let noonHour = 12 - localHour + Float(secondsFromGMT / 3600)
-        
-        // This corrects for timezone
-        if noonHour <= 0 {
-            trueLon = (noonHour * Globals.degreesLongitudePerHour).truncatingRemainder(dividingBy: 180)
-        } else {
-            trueLon = 180 + (noonHour * Globals.degreesLongitudePerHour).truncatingRemainder(dividingBy: 180)
-        }
+        let secondsFromGMT = Float(TimeZone.current.secondsFromGMT())
+        GMT = localHour - Float(secondsFromGMT / 3600)
+        let noonHour = 12.0 - GMT
+        let trueLon = (noonHour * Globals.degreesLongitudePerHour).truncatingRemainder(dividingBy: 180)
         
         return trueLon
         
