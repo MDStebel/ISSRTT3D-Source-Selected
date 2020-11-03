@@ -1,4 +1,4 @@
-#  ISS Real-Time Tracker
+#  ISS Real-Time Tracker 3D
 
 ## App for iPhone, iPad, and iPod touch
 ## Selected source files
