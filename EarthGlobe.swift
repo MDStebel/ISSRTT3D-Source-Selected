@@ -4,36 +4,32 @@
 //
 //  Created by Michael Stebel on 8/7/16.
 //  Copyright © 2016-2020 Michael Stebel Consulting, LLC. All rights reserved.
-
 //  Portions Copyright © 2017 David Mojdehi
 //
-
 
 import SceneKit
 import QuartzCore
 
 
-let kAffectedBySpring = 1 << 1
-let kAmbientLightIntensity = CGFloat(200)                       // The default value is 1000
-let kCameraAltitude = Float(1.85)
-let kDayOfWinterStolsticeInYear = 356.0                         // The winter solstice is on approximately Dec 21, 22, or 23
-let kDaysInAYear = Globals.numberOfDaysInAYear
-let kDefaultCameraFov = CGFloat(30.0)
-let kDistanceToISSOrbit = Globals.ISSOrbitAltitudeInScene
-let kDragWidthInDegrees = 180.0                                 // The amount to rotate the globe on one edge-to-edge swipe (in degrees)
-let kGlobeDefaultRotationSpeedSeconds = 60.0                    // The speed of the default spin: 1 revolution in 60 seconds
-let kGlobeRadius = Globals.globeRadiusFactor
-let kGlowPointAltitude = Globals.orbitalAltitudeFactor
-let kGlowPointWidth = CGFloat(0.16)                             // The size factor for the marker
-let kMaxFov = CGFloat(40.0)                                     // Max zoom in degrees
-let kMaxLatLonPerUnity = 1.1
-let kMinFov = CGFloat(4.0)                                      // Min zoom in degrees
-let kMinLatLonPerUnity = -0.1
-let kSkyboxSize = CGFloat(1000.0)
-let kTiltOfEarthsAxisInDegrees = Globals.earthTiltInDegrees
-let kTiltOfEarthsAxisInRadians = Globals.earthTiltInRadians
-let kTiltOfEclipticFromGalacticPlaneDegrees = 60.2
-let kTiltOfEclipticFromGalacticPlaneRadians = Float(kTiltOfEclipticFromGalacticPlaneDegrees) * Globals.degreesToRadians
+let affectedBySpring = 1 << 1
+let ambientLightIntensity = CGFloat(90)                         // The default value is 1000
+let cameraAltitude = Float(1.85)
+let dayNumberOfWinterStolsticeInYear = 356.0                     // The winter solstice is on approximately Dec 21, 22, or 23
+let daysInAYear = Globals.numberOfDaysInAYear
+let defaultCameraFov = CGFloat(30)
+let distanceToISSOrbit = Globals.ISSOrbitAltitudeInScene
+let dragWidthInDegrees = 180.0                                   // The amount to rotate the globe on one edge-to-edge swipe (in degrees)
+let globeDefaultRotationSpeedInSeconds = 60.0                    // The speed of the default spin: 1 revolution in 60 seconds
+let globeRadius = Globals.globeRadiusFactor
+let glowPointAltitude = Globals.orbitalAltitudeFactor
+let glowPointWidth = CGFloat(0.16)                               // The size factor for the marker
+let maxFov = CGFloat(40.0)                                       // Max zoom in degrees
+let maxLatLonPerUnity = 1.1
+let minFov = CGFloat(10.0)                                       // Min zoom in degrees
+let minLatLonPerUnity = -0.1
+let sceneBoxSize = CGFloat(1000.0)
+let tiltOfEarthAxisInDegrees = Globals.earthTiltInDegrees
+let tiltOfEarthAxisInRadians = Globals.earthTiltInRadians
 
 
 /// The Earth Globe Model
@@ -57,43 +53,42 @@ class EarthGlobe {
     internal init() {
         
         // Create the globe
-        let globeShape = SCNSphere(radius: CGFloat(kGlobeRadius) )
-        globeShape.segmentCount = 30
-        // Texture revealed by diffuse light sources
+        let globeShape = SCNSphere(radius: CGFloat(globeRadius) )
+        globeShape.segmentCount = 192
         
-        // Use the high resolution image
+        // Use the high-resolution image
         guard let earthMaterial = globeShape.firstMaterial else { return }
+
+        // Texture revealed by diffuse light sources
         earthMaterial.diffuse.contents = "world-ultra.jpg"
         
         let emission = SCNMaterialProperty()
-        emission.contents = "earth-emissive.jpg"
+        emission.contents = "earth-emissive-1.jpg"
         earthMaterial.setValue(emission, forKey: "emissionTexture")
+        
+        /// OpenGL lighting map
         let shaderModifier =    """
                                 uniform sampler2D emissionTexture;
-
                                 vec3 light = _lightingContribution.diffuse;
-                                float lum = max(0.0, 1 - 16.0 * (0.2126*light.r + 0.7152*light.g + 0.0722*light.b));
-                                vec4 emission = texture2D(emissionTexture, _surface.diffuseTexcoord) * lum * 0.5;
+                                float lum = max(0.0, 1 - (0.2126 * light.r + 0.7152 * light.g + 0.0722 * light.b));
+                                vec4 emission = texture2D(emissionTexture, _surface.diffuseTexcoord) * lum * 1.0;
                                 _output.color += emission;
                                 """
         earthMaterial.shaderModifiers = [.fragment: shaderModifier]
         
         // Texture revealed by specular light sources
         //earthMaterial.specular.contents = "earth_lights.jpg"
-        //earthMaterial.shininess = 0.1
-        earthMaterial.specular.contents = "earth-specular.jpg"
+        earthMaterial.specular.contents = "earth-specular-1.jpg"
         earthMaterial.specular.intensity = 0.2
         
         // Oceans are reflective and land is matte
-        if #available(macOS 10.12, iOS 10.0, *) {
-            earthMaterial.metalness.contents = "metalness.png"
-            earthMaterial.roughness.contents = "roughness.png"
-        }
-        
+        earthMaterial.metalness.contents = "metalness-1.png"
+        earthMaterial.roughness.contents = "roughness-1.png"
+
         // Make the mountains appear taller
         // (gives them shadows from point lights, but doesn't make them stick up beyond the edges)
-        earthMaterial.normal.contents = "earth-bump.png"
-        earthMaterial.normal.intensity = 0.3
+        earthMaterial.normal.contents = "earth-bump-1.png"
+        earthMaterial.normal.intensity = 0.4
         
         //earthMaterial.reflective.contents = "envmap.jpg"
         //earthMaterial.reflective.intensity = 0.75
@@ -101,16 +96,12 @@ class EarthGlobe {
         globe.geometry = globeShape
         
         // Globe spins once per minute
-        let spinRotation = SCNAction.rotate(by: 2 * .pi, around: SCNVector3(0, 1, 0), duration: kGlobeDefaultRotationSpeedSeconds)
+        let spinRotation = SCNAction.rotate(by: 2 * .pi, around: SCNVector3(0, 1, 0), duration: globeDefaultRotationSpeedInSeconds)
         let spinAction = SCNAction.repeatForever(spinRotation)
         globe.runAction(spinAction)
         
-        
-        // Set up the Sun (i.e., the light source at the default position)
-        setupTheSun(lat: 0, lon: 0)
-        
-        
-        // Set up the nodes
+
+        // Set up the basic globe nodes
         scene.rootNode.addChildNode(userTilt)
         userTilt.addChildNode(userRotation)
         userRotation.addChildNode(globe)
@@ -118,92 +109,63 @@ class EarthGlobe {
     }
     
     
-    /// Move camera to given latitude and longitude
-    public func moveCameraToPointOnGlobe(lat: Float, lon: Float) {
+    /// Set up our scene
+    /// - Parameters:
+    ///   - theScene: The scene view to use
+    ///   - forARKit: True if this is used with ARKit
+    internal func setupInSceneView(_ theScene: SCNView, forARKit : Bool ) {
         
-        let newPosition = CoordinateConversions.convertLatLonCoordinatesToXYZ(lat, lon, alt: Globals.ISSOrbitAltitudeInScene)
-        let x = newPosition.x
-        let y = newPosition.y
-        cameraNode.position = SCNVector3(x: x, y: y, z: kGlobeRadius + kCameraAltitude)
+        theScene.scene = self.scene
+        theScene.autoenablesDefaultLighting = false
+        theScene.showsStatistics = false
         
-    }
-    
-    
-    internal func setupInSceneView(_ v: SCNView, forARKit : Bool ) {
-        
-        v.scene = self.scene
-        v.autoenablesDefaultLighting = false
-        v.showsStatistics = false
-        
-        self.gestureHost = v
+        self.gestureHost = theScene
         
         if forARKit {
             
-            v.allowsCameraControl = true
+            theScene.allowsCameraControl = true
             skybox.removeFromParentNode()
             
         } else {
             
             finishNonARSetup()
             
-            v.allowsCameraControl = false
+            theScene.allowsCameraControl = false
             
-            let pan = UIPanGestureRecognizer(target: self, action:#selector(EarthGlobe.onPanGesture(pan:) ) )
-            //            let pinch = UIPinchGestureRecognizer(target: self, action: #selector(SwiftGlobe.onPinchGesture(pinch:) ) )
-            v.addGestureRecognizer(pan)
-            //            v.addGestureRecognizer(pinch)
+            let pan = UIPanGestureRecognizer(target: self, action:#selector(EarthGlobe.onPanGesture(pan:)))
+            theScene.addGestureRecognizer(pan)
+//            let pinch = UIPinchGestureRecognizer(target: self, action: #selector(EarthGlobe.onPinchGesture(pinch:)))
+//            theScene.addGestureRecognizer(pinch)
             
         }
         
     }
     
     
-    
     private func finishNonARSetup() {
-        //----------------------------------------
-        // Add the galaxy skybox
-        // We make a custom skybox instead of using scene.background, so we can control the galaxy tilt
-        //        let cubemapTextures = ["eso0932a_front.png","eso0932a_right.png",
-        //                               "eso0932a_back.png", "eso0932a_left.png",
-        //                               "eso0932a_top.png", "eso0932a_bottom.png"]
-        //        let cubemapMaterials = cubemapTextures.map { (name) -> SCNMaterial in
-        //            let material = SCNMaterial()
-        //            material.diffuse.contents = name
-        //            material.isDoubleSided = true
-        //            material.lightingModel = .constant
-        //            return material
-        //        }
-        //        skybox.geometry = SCNBox(width: kSkyboxSize, height: kSkyboxSize, length: kSkyboxSize, chamferRadius: 0.0)
-        //        skybox.geometry!.materials = cubemapMaterials
-        //        skybox.eulerAngles = SCNVector3(x: kTiltOfEclipticFromGalacticPlaneRadians, y: 0.0, z: 0.0 )
-        //        scene.rootNode.addChildNode(skybox)
-        
-        // Give us some ambient light (to light the rest of the model)
+
+        // Provides ambient light to light the globe a bit in nighttime.
         let ambientLight = SCNLight()
         ambientLight.type = .ambient
-        ambientLight.intensity = kAmbientLightIntensity // default is 1000!
+        ambientLight.intensity = ambientLightIntensity // default is 1000!
         
-        //---------------------------------------
         // Create and add a camera to the scene
         // Set up a 'telephoto' shot (to avoid any fisheye effects)
-        // (telephoto: narrow field of view at a long distance
-        camera.fieldOfView = kDefaultCameraFov
-        camera.zFar = 10000
-        cameraNode.position = SCNVector3(x: 0, y: 0, z:  kGlobeRadius + kCameraAltitude )
+        // Telephoto: narrow field of view at a long distance
+        camera.fieldOfView = defaultCameraFov
+        camera.zFar = 1000
+        cameraNode.position = SCNVector3(x: 0, y: 0, z:  globeRadius + cameraAltitude )
         cameraNode.constraints = [ SCNLookAtConstraint(target: self.globe) ]
         cameraNode.light = ambientLight
         cameraNode.camera = camera
         scene.rootNode.addChildNode(cameraNode)
-    }
-    
-    
-    private func addPanGestures() {
         
     }
-    
+
     
     @objc fileprivate func onPanGesture(pan : UIPanGestureRecognizer) {
-        // we get here on a tap!
+        
+        // Handle panning and rotating
         guard let sceneView = pan.view else { return }
         let loc = pan.location(in: sceneView)
         
@@ -213,42 +175,27 @@ class EarthGlobe {
             guard pan.numberOfTouches == 1 else { return }
             self.handlePanCommon(loc, viewSize: sceneView.frame.size)
         }
+        
     }
     
     
-    @objc fileprivate func onPinchGesture(pinch: UIPinchGestureRecognizer){
+    @objc fileprivate func onPinchGesture(pinch: UIPinchGestureRecognizer) {
+        
         // Update the FOV of the camera
         if pinch.state == .began {
             self.lastFovBeforeZoom = self.camera.fieldOfView
         } else {
             if let lastFov = self.lastFovBeforeZoom {
                 var newFov = lastFov / CGFloat(pinch.scale)
-                if newFov < kMinFov {
-                    newFov = kMinFov
-                } else if newFov > kMaxFov {
-                    newFov = kMaxFov
+                if newFov < minFov {
+                    newFov = minFov
+                } else if newFov > maxFov {
+                    newFov = maxFov
                 }
-                
                 self.camera.fieldOfView =  newFov
             }
         }
-    }
-    
-    
-    // A simple zoom interface (for the watch)
-    public var zoomFov : CGFloat {
-        get {
-            return self.camera.fieldOfView
-        }
-        set(newFov) {
-            if newFov < kMinFov {
-                self.camera.fieldOfView = kMinFov
-            } else if newFov > kMaxFov {
-                self.camera.fieldOfView = kMaxFov
-            } else {
-                self.camera.fieldOfView = newFov
-            }
-        }
+        
     }
     
     
@@ -270,8 +217,8 @@ class EarthGlobe {
         if delta.width != 0.0 || delta.height != 0.0 {
             
             // As the user zooms in (smaller fieldOfView value), the finger travel is reduced
-            let fovProportion = (self.camera.fieldOfView - kMinFov) / (kMaxFov - kMinFov)
-            let fovProportionRadians = Float(fovProportion * CGFloat(kDragWidthInDegrees) ) * (.pi / 180)
+            let fovProportion = (self.camera.fieldOfView - minFov) / (maxFov - minFov)
+            let fovProportionRadians = Float(fovProportion * CGFloat(dragWidthInDegrees) ) * (.pi / 180)
             let rotationAboutAxis = Float(delta.width) * fovProportionRadians
             let tiltOfAxisItself = Float(delta.height) * fovProportionRadians
             

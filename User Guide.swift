@@ -68,18 +68,17 @@ struct UserGuide {
     """
     \(head)
     <h1>User Guide</h1>
-    <h6>Covers version \(Globals.versionNumber)</h6>
     <h2>Contents</h2>
     <p>Tap an item from the list below to jump to that section:</p>
     <h3><a href="#passes">Pass Predictions</a></h3>
     <h3><a href="#track">Real-Time Tracking</a></h3>
+    <h3><a href="#globe">3D Globe</a></h3>
     <h3><a href="#crew">Current Crew</a></h3>
     <h3><a href="#streaming">Live Earth View</a></h3>
     <h3><a href="#nasatv">NASA TV</a></h3>
     <h3><a href="#settings">Settings</a></h3>
-    <div id="passes">
+    <div id="passes"></div>
     <h2>Pass Predictions</h2>
-    </div>
     <p>Tapping the telescope icon at the bottom of the main screen starts the process of computing up-coming visible ISS passes. First, ISS Real-Time Tracker gets your current location's coordinates. Then, it computes the visible passes for that location. The default number of days to predict passes is set in Settings. The passes are listed in chronological order along with detailed viewing data.</p>
     <p>Data for each pass includes:</p>
     <ul>
@@ -128,7 +127,7 @@ struct UserGuide {
     <div id="track"></div>
     <h2>Tracking the ISS</h2>
     <p>To locate and track the International Space Station in real time, tap the play button at the bottom of the screen. To pause tracking, tap the pause button.</p>
-    <p>You can select from the following map types in Settings:</p>
+    <p>You can select from the following map types in Settings from the Tracking screen:</p>
     <ul>
     <li>
     <h5>Standard (shows names, roads, and borders)</h5>
@@ -170,11 +169,11 @@ struct UserGuide {
     </ul>
     <p>The time interval between map updates is automatically set from 1 to 6 seconds, based upon the zoom slider setting. With the slider all the way to the left, the update interval is set at 1 second. As you drag the slider right, it increases by 1 second up to a maximum interval of 6 seconds. This keeps the relative motion of the map roughly equal at all scales within a given range.</p>
     <h4>Ground Track</h4>
-    <p>The orbit ground track line is drawn by default. This shows the ground track of the ISS. You can turn this on/off in Settings. When this is on, the ground track clear button is displayed on the Tracking screen.</p>
+    <p>The orbit ground track line is drawn by default. This shows the ground track of the ISS. You can turn this on/off in Settings by tapping the settings icon from the Tracking screen. When the orbit track is on, the ground track clear button is displayed on the Tracking screen.</p>
     <h4>Interactive 3D Globe</h4>
-    <p>The globe shows the current position of the ISS and its orbital track. This is a photorealistic model of the Earth complete with accurate Sun position, specular reflections on the water, seasonal tilt, mountain shadows, and other details. Drag the globe to rotate and pan it. Auto-rotation is enabled by default and rotates the globe once per minute. To disable auto-rotation, as well as to enable/disable the globe entirely, go to Settings.</p>
+    <p>The globe shows the current position of the ISS and its orbital track. This is a photorealistic model of the Earth complete with accurate Sun subsolar position, specular reflections on the water, seasonal tilt, mountain shadows, and other details. Drag the globe to rotate and pan it. The circle represents the approximate ISS sighting range from ground level. Auto-rotation is enabled by default and rotates the globe once per minute. To disable auto-rotation, as well as to enable/disable the globe entirely, go to Settings. Tapping the expand icon on the globe overlay expands the globe to full-screen mode and hides the map.</p>
     <h4>Copy Info to the Clipboard</h4>
-    <p>Tap the copy button next to the info box on bottom of the map to copy the ISS's location, altitude, velocity, and associated time to the clipboard. You can then paste the data in another app.</p>
+    <p>Tap the copy icon next to the info box on bottom of the map to copy the ISS's location, altitude, velocity, and associated time to the clipboard. You can then paste the data in another app.</p>
     <h5>Notes:</h5>
     <ul>
     <li>
@@ -184,6 +183,15 @@ struct UserGuide {
     <h6>The music soundtrack will be disabled (not play) by default. Click the ♪ icon at the upper-right to toggle the soundtrack on/off.</h6>
     </li>
     </ul>
+    <div id="globe"></div>
+    <h2>3D Globe</h2>
+    <p>From the Tracking screen, tapping the expand icon on the globe overlay expands the globe to full-screen mode and hides the map.</p>
+    <p>The 3D interactive globe shows the current position of the ISS and its orbital track. This is a photorealistic model of the Earth complete with accurate Sun position, specular reflections on the water, seasonal tilt, mountain shadows, and other details.</p>
+    <p>The globe starts updating automatically when in full-screen mode.</p>
+    <p>Drag the globe to rotate and pan it.</p>
+    <p>The circle represents the approximate ISS sighting range from ground level.</>
+    <p>Auto-rotation is enabled by default and rotates the globe once per minute. To disable auto-rotation, as well as to enable/disable the globe entirely, go to Settings.</p>
+    <p>Tap the collapse icon to return to the map and resume tracking.</p>
     <div id="crew"></div>
     <h2>Crew</h2>
     <p>Tap the space suit button at the bottom of the screen to get a table of information about the current ISS crew.</p>
@@ -233,26 +241,25 @@ struct UserGuide {
     static let passesHelp =
     """
     \(head)
-      <h2>Pass Predictions</h2>
-    </div>
-    <p>This screen provides a table of up-coming visible ISS passes for your location. First, ISS Real-Time Tracker gets your current location's coordinates. Then, it computes the visible passes for that location. The default number of days to predict passes is set in Settings. The passes are listed in chronological order along with detailed viewing data.</p>
+    <h2>Pass Predictions</h2>
+    Tapping the telescope icon at the bottom of the main screen starts the process of computing up-coming visible ISS passes. First, ISS Real-Time Tracker gets your current location's coordinates. Then, it computes the visible passes for that location. The default number of days to predict passes is set in Settings. The passes are listed in chronological order along with detailed viewing data.</p>
     <p>Data for each pass includes:</p>
     <ul>
-      <li>
-        <h5>Date of the pass</h5>
-      </li>
-      <li>
-        <h5>Rating (0, 1, 2, 3, or 4 stars)</h5>
-      </li>
-      <li>
-        <h5>Visible duration (in minutes and seconds)</h5>
-      </li>
-      <li>
-        <h5>Max visual magnitude (using same scale as astronomical brightness, i.e., apparent magnitude)</h5>
-      </li>
-      <li>
-        <h5>Time, azimuth, elevation, and compass direction for the start time, max elevation time, and end time</h5>
-      </li>
+    <li>
+    <h5>Date of the pass</h5>
+    </li>
+    <li>
+    <h5>Rating (0, 1, 2, 3, or 4 stars)</h5>
+    </li>
+    <li>
+    <h5>Visible duration (in minutes and seconds)</h5>
+    </li>
+    <li>
+    <h5>Max visual magnitude (using same scale as astronomical brightness, i.e., apparent magnitude)</h5>
+    </li>
+    <li>
+    <h5>Time, azimuth, elevation, and compass direction for the start time, max elevation time, and end time</h5>
+    </li>
     </ul>
     <p>Each pass is rated based on its maximum magnitude (i.e., brightness). The brightest passes get the highest ratings. Passes are rated with 0, 1, 2, 3, or 4 stars corresponding to poor, fair, good, better, or best, respectively.</p>
     <h4>Adding a Pass Event to Your Calendar</h4>
@@ -263,21 +270,21 @@ struct UserGuide {
     <p>Pull down the table to refresh the data.</p>
     <h5>Notes:</h5>
     <ul>
-      <li>
-        <h6>The pass predictions become less certain the further out in time they go.</h6>
-      </li>
-      <li>
-        <h6>Overhead passes returned are only those visible from your location for at least 300 seconds (5 minutes) and where the ISS is illuminated by the Sun.</h6>
-      </li>
-      <li>
-        <h6>If there are buildings, trees, or other obstructions, and depending upon the weather and other viewing conditions, you may not be able to spot the station.</h6>
-      </li>
-      <li>
-        <h6>You must give ISS Real-Time Tracker access to your location. When asked, tap &quot;OK.&quot; You can change this permission in your device's Settings app.</h6>
-      </li>
-      <li>
-        <h6>Calendar events are saved in your default calendar.</h6>
-      </li>
+    <li>
+    <h6>The pass predictions become less certain the further out in time they go.</h6>
+    </li>
+    <li>
+    <h6>Overhead passes returned are only those visible from your location for at least 300 seconds (5 minutes) and where the ISS is illuminated by the Sun.</h6>
+    </li>
+    <li>
+    <h6>If there are buildings, trees, or other obstructions, and depending upon the weather and other viewing conditions, you may not be able to spot the station.</h6>
+    </li>
+    <li>
+    <h6>You must give ISS Real-Time Tracker access to your location. When asked, tap &quot;OK.&quot; You can change this permission in your device's Settings app.</h6>
+    </li>
+    <li>
+    <h6>Calendar events are saved in your default calendar.</h6>
+    </li>
     </ul>
     <p>Tap ⟵ to return to the map and resume tracking.</p>
     \(tail)
@@ -288,7 +295,7 @@ struct UserGuide {
     \(head)
     <h2>Tracking the ISS</h2>
     <p>To locate and track the International Space Station in real time, tap the play button at the bottom of the screen. To pause tracking, tap the pause button.</p>
-    <p>You can select from the following map types in Settings:</p>
+    <p>You can select from the following map types in Settings, by tapping the settings icon from the Tracking screen:</p>
     <ul>
     <li>
     <h5>Standard (shows names, roads, and borders)</h5>
@@ -330,11 +337,11 @@ struct UserGuide {
     </ul>
     <p>The time interval between map updates is automatically set from 1 to 6 seconds, based upon the zoom slider setting. With the slider all the way to the left, the update interval is set at 1 second. As you drag the slider right, it increases by 1 second up to a maximum interval of 6 seconds. This keeps the relative motion of the map roughly equal at all scales within a given range.</p>
     <h4>Ground Track</h4>
-    <p>The orbit ground track line is drawn by default. This shows the ground track of the ISS. You can turn this on/off in Settings. When this is on, the ground track clear button is displayed on the Tracking screen.</p>
+    <p>The orbit ground track line is drawn by default. This shows the ground track of the ISS. You can turn this on/off in Settings by tapping the settings icon from the Tracking screen. When the orbit track is on, the ground track clear button is displayed on the Tracking screen.</p>
     <h4>Interactive 3D Globe</h4>
-    <p>The globe shows the current position of the ISS and its orbital track. This is a photorealistic model of the Earth complete with accurate Sun position, specular reflections on the water, seasonal tilt, mountain shadows, and other details. Drag the globe to rotate and pan it. Auto-rotation is enabled by default and rotates the globe once per minute. To disable auto-rotation, as well as to enable/disable the globe entirely, go to Settings.</p>
+    <p>The globe shows the current position of the ISS and its orbital track. This is a photorealistic model of the Earth complete with accurate Sun position, specular reflections on the water, seasonal tilt, mountain shadows, and other details. Drag the globe to rotate and pan it. The circle represents the approximate ISS sighting range from ground level. Auto-rotation is enabled by default and rotates the globe once per minute. To disable auto-rotation, as well as to enable/disable the globe entirely, go to Settings. Tapping the expand icon on the globe overlay expands the globe to full-screen mode and hides the map.</p>
     <h4>Copy Info to the Clipboard</h4>
-    <p>Tap the copy button next to the info box on bottom of the map to copy the ISS's location, altitude, velocity, and associated time to the clipboard. You can then paste the data in another app.</p>
+    <p>Tap the copy icon next to the info box on bottom of the map to copy the ISS's location, altitude, velocity, and associated time to the clipboard. You can then paste the data in another app.</p>
     <h5>Notes:</h5>
     <ul>
     <li>
@@ -347,14 +354,27 @@ struct UserGuide {
     \(tail)
     """
     
+    static let fullGlobe =
+    """
+    \(head)
+    <h2>3D Globe</h2>
+    <p>From the Tracking screen, tapping the expand icon on the globe overlay expands the globe to full-screen mode and hides the map.</p>
+    <p>The 3D interactive globe shows the current position of the ISS and its orbital track. This is a photorealistic model of the Earth complete with accurate Sun subsolar position, specular reflections on the water, seasonal tilt, mountain shadows, and other details.</p>
+    <p>The globe starts updating automatically when in full-screen mode.</p>
+    <p>Drag the globe to rotate and pan it.</p>
+    <p>The circle represents the approximate ISS sighting range from ground level.</>
+    <p>Auto-rotation is enabled by default and rotates the globe once per minute. To disable auto-rotation, as well as to enable/disable the globe entirely, go to Settings.</p>
+    <p>Tap the collapse icon to return to the map and resume tracking.</p>
+    \(tail)
+    """
+    
     static let crewHelp =
     """
     \(head)
-    <h2>Crew Help</h2>
+    <h2>Crew Stats</h2>
     <p>This screen provides a table of information about the current ISS crew.</p>
     <h4>Crew Bios &amp; Tweets</h4>
     <p>Tap any cell in the table to pop-up the detail view for that crew member. This will display a brief bio. To view a full bio, tap the button on the bottom-left.</p>
-
     <p>To visit the crew member's Twitter feed, open their Twitter profile by tapping the Twitter button. If you do not have the Twitter app installed, it will open in Safari instead. If the crew member does not have a Twitter profile, the Twitter button will not be displayed. Return to ISS Real-Time Tracker by tapping "◀︎ ISS Tracker" on the top-left of Twitter.</p>
     <p>Tap X to close the pop-up and return to the crew table.</p>
     <h4>Copy Crew Data to the Clipboard</h4>

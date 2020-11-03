@@ -19,6 +19,7 @@ extension TrackingViewController {
     /// Constants for the user defaults keys
     private struct UserSettingsPropertyKeys {
         
+        static let autoRotateGlobe                                  = "Auto-Rotate Globe"
         static let blackScreenInEHDCExplanationPopupWillAppearKey   = "Black Screen"
         static let displayGlobeOverlayKey                           = "Display Globe Overlay"
         static let displayZoomFactorKey                             = "Display Zoom Factor"
@@ -32,7 +33,6 @@ extension TrackingViewController {
         static let showWhatsNewPopupKey                             = "Show Whats New"
         static let zoomRangeFactorKey                               = "Zoom Range Factor"
         static let zoomValueKey                                     = "Zoom Value"
-        static let autoRotateGlobe                                  = "Auto-Rotate Globe"
         
     }
     

@@ -4,8 +4,6 @@
 //
 //  Created by Michael Stebel on 8/7/16.
 //  Copyright © 2016-2020 Michael Stebel Consulting, LLC. All rights reserved.
-
-//  Portions Copyright © 2017 David Mojdehi
 //
 
 
@@ -13,37 +11,35 @@ import Foundation
 import SceneKit
 
 
-// Encapsulate individual glow points
-// Extend this to get different glow effects
+// Encapsulates individual markers
 class ISSMarkerForEarthGlobe {
-    
     
     var latitude: Float
     var longitude: Float
+    var image: String
     
-    let image = "iss_4_white"
-
-    // The SceneKit node for this point
+    // The SceneKit node for this marker
     internal var node: SCNNode!
     
-
-    init(lat: Float, lon: Float) {
+    init(using image: String, lat: Float, lon: Float, isInOrbit: Bool) {
         
+        self.image = image
         latitude = lat
         longitude = lon
-        let adjustedLon = longitude + 90       // The textures are centered on 0,0, so adjust by 90 degrees
+        let adjustedLon = longitude + 90                                                            // The textures are centered on 0,0, so adjust by 90 degrees
         
-        self.node = SCNNode(geometry: SCNPlane(width: kGlowPointWidth, height: kGlowPointWidth) )
+        let widthAndHeight = isInOrbit ? glowPointWidth : glowPointWidth * 2.25                     // Fudge the approximate diameter of the sighting circle
+        
+        self.node = SCNNode(geometry: SCNPlane(width: widthAndHeight, height: widthAndHeight) )
         self.node.geometry!.firstMaterial!.diffuse.contents = image
-        // Appear in daylight areas
-        self.node.geometry!.firstMaterial!.diffuse.intensity = 1.0
+        self.node.geometry!.firstMaterial!.diffuse.intensity = 1.0                                  // Appearance in daylight areas
         self.node.geometry!.firstMaterial!.emission.contents = image
-        // Appear in dark areas
-        self.node.geometry!.firstMaterial!.emission.intensity = 1.0
+        self.node.geometry!.firstMaterial!.emission.intensity = 1.0                                 // Appearance in nighttime areas
+        self.node.geometry!.firstMaterial!.isDoubleSided = true
         self.node.castsShadow = false
-
         
-        let position = CoordinateConversions.convertLatLonCoordinatesToXYZ(lat, adjustedLon, alt: Globals.ISSAltitudeFactor)
+        let altitude = isInOrbit ? Globals.ISSAltitudeFactor : Globals.globeRadiusFactor * 0.949    // If not in orbit, then this is the sighting circle and place it flush with the surface
+        let position = CoordinateCalculations.convertLatLonCoordinatesToXYZ(lat: lat, lon: adjustedLon, alt: altitude)
         self.node.position = position
         
         
@@ -59,11 +55,11 @@ class ISSMarkerForEarthGlobe {
         
     }
     
-    
+    /// Method to add a pulsing effect to the marker
     func addPulseAnimation() {
         
-        let scaleMin: Float = 0.80
-        let scaleMax: Float = 1.20
+        let scaleMin: Float = 0.85
+        let scaleMax: Float = 1.15
         let animation = CABasicAnimation(keyPath: "scale")
         animation.fromValue = SCNVector3(x: scaleMin, y: scaleMin, z: scaleMin)
         animation.toValue = SCNVector3(x: scaleMax, y: scaleMax, z: scaleMax)
@@ -72,7 +68,7 @@ class ISSMarkerForEarthGlobe {
         animation.repeatCount = Float.infinity
         animation.timingFunction = CAMediaTimingFunction(name: CAMediaTimingFunctionName.easeOut)
         node.addAnimation(animation, forKey: "throb")
-
+        
     }
     
 }

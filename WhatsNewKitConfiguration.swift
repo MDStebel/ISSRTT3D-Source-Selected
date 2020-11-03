@@ -20,9 +20,9 @@ private let whatsNew = WhatsNew(
     // The features and other information to showcase
     items: [
         WhatsNew.Item(
-            title: "New Feature!",
+            title: "Introducing 3D!",
             subtitle: """
-                      Photorealistic interactive 3D globe with ISS position, orbital track, & precise location of the Sun. Drag the globe to pan/rotate it. Enable/disable auto-rotate. You can also enable/disable the globe in Settings.
+                      This version introduces 3D tracking. Features photorealistic interactive 3D globe showing the real-time ISS position, orbital track, sighting circle, the tilt of the Earth, the precise location & reflection of the Sun at the subsolar point, the exact position and seasonal angle of the terminator, plus city lights at night. Expand the globe to full-screen mode. Drag the globe to pan/rotate it. Enable/disable auto-rotate. You can also enable/disable the globe in Settings.
                       """,
             image: UIImage(named: "icons8-megaphone_filled.imageset")
         ),
@@ -41,7 +41,7 @@ private let whatsNew = WhatsNew(
         WhatsNew.Item(
             title: "Built-In Help",
             subtitle: """
-                      To learn how to use this app, please tap on the '?' button (top-right). Each screen has its own help button that explains how to use a specfic feature.
+                      To learn how to use this app, please tap on the ? button (top-right). Each screen has its own help button that explains how to use a specfic feature.
                       """,
             image: UIImage(named: "icons8-help_filled")
         )
@@ -54,32 +54,45 @@ let detailButton = WhatsNewViewController.DetailButton(
     action: .website(url: "")
 )
 
-// Main font for items and other text
-private let mainFont = UIFont(name: Theme.appFont, size: 16)!
-private let itemTitleFont = UIFont(name: Theme.appFontBold, size: 20)!
-private let detailButtonFont = UIFont(name: Theme.appFont, size: 14)!
+// Fonts for items and other text
+private var mainFont                                = UIFont(name: Theme.appFont, size: 12)!
+private var itemTitleFont                           = UIFont(name: Theme.appFont, size: 12)!
+private var detailButtonFont                        = UIFont(name: Theme.appFont, size: 12)!
+
 
 // Set the ISSRTT custom theme
 private var myTheme = WhatsNewViewController.Theme { configuration in
+    
+    if Globals.isIPad {
+        mainFont = UIFont(name: Theme.appFont, size: 15)!
+        itemTitleFont = UIFont(name: Theme.appFontBold, size: 24)!
+        detailButtonFont = UIFont(name: Theme.appFont, size: 14)!
+    } else {
+        mainFont = UIFont(name: Theme.appFont, size: 13)!
+        itemTitleFont = UIFont(name: Theme.appFontBold, size: 18)!
+        detailButtonFont = UIFont(name: Theme.appFont, size: 12)!
+    }
+    
     configuration.backgroundColor                   = UIColor(named: Theme.usrGuide)!
-    configuration.tintColor                         = UIColor(named: Theme.tint)!
-    configuration.titleView.titleMode               = .fixed
-    configuration.titleView.titleFont               = UIFont(name: Theme.nasa, size: Theme.whatsNewTitleFontSize)!
-    configuration.titleView.titleColor              = UIColor(named: Theme.tint)!
-    configuration.titleView.secondaryColor          = .init(startIndex: 7, length: 3, color: UIColor(named: Theme.star)!)
-    configuration.titleView.animation               = .slideDown
-    configuration.itemsView.subtitleColor           = .white
-    configuration.itemsView.subtitleFont            = mainFont
-    configuration.itemsView.titleColor              = .white
-    configuration.itemsView.animation               = .slideLeft
-    configuration.completionButton.hapticFeedback   = .selection
-    configuration.detailButton?.titleFont           = detailButtonFont
     configuration.completionButton.animation        = .slideUp
     configuration.completionButton.backgroundColor  = UIColor(named: Theme.tint)!
+    configuration.completionButton.hapticFeedback   = .selection
     configuration.completionButton.titleColor       = .white
     configuration.detailButton                      = detailButton
     configuration.detailButton?.titleColor          = .lightGray
     configuration.detailButton?.titleFont           = detailButtonFont
+    configuration.itemsView.animation               = .slideLeft
+    configuration.itemsView.subtitleColor           = .white
+    configuration.itemsView.subtitleFont            = mainFont
+    configuration.itemsView.titleColor              = .white
+    configuration.itemsView.titleFont               = itemTitleFont
+    configuration.tintColor                         = UIColor(named: Theme.tint)!
+    configuration.titleView.animation               = .slideDown
+    configuration.titleView.secondaryColor          = .init(startIndex: 7, length: 3, color: UIColor(named: Theme.star)!)
+    configuration.titleView.titleColor              = UIColor(named: Theme.tint)!
+    configuration.titleView.titleFont               = UIFont(name: Theme.nasa, size: Theme.whatsNewTitleFontSize)!
+    configuration.titleView.titleMode               = .fixed
+    
 }
 
 // Assign to configuration

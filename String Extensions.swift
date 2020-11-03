@@ -11,7 +11,6 @@ import Foundation
 
 extension String {
     
-    
     /// Delete a prefix sustring from the beginning of a string.
     /// Checks that prefix substring exists.
     /// - Parameter prefix: Substring to remove.
