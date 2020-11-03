@@ -36,6 +36,7 @@ class TrackingViewController: UIViewController, MKMapViewDelegate, UIGestureReco
         static let NASATVSegue                  = "segueToNasaTV"
         static let crewSeque                    = "segueToCurrentCrew"
         static let earthViewSegue               = "segueToStreamingVideo"
+        static let globeSegue                   = "segueToFullGlobe"
         static let helpSegue                    = "helpViewSegue"
         static let passesSegue                  = "segueToPassTimes"
         static let settingsSegue                = "segueToSettings"
@@ -147,8 +148,8 @@ class TrackingViewController: UIViewController, MKMapViewDelegate, UIGestureReco
     }
     
     /// Endpoints for API
-    let apiEndpointAString                  = "---"
-    let apiEndpointBString                  = "---"
+    let apiEndpointAString                  = "https://api.wheretheiss.at/v1/satellites/25544"
+    let apiEndpointBString                  = "http://api.open-notify.org/iss-now.json"
     
     /// String format for zoom factor label
     var dateFormatter: DateFormatter?       = DateFormatter()         // This is declared as an optional so that we can test it for nil in save settings in case it wasn't set before being called
@@ -159,7 +160,6 @@ class TrackingViewController: UIViewController, MKMapViewDelegate, UIGestureReco
     private var alreadyAnimatedStartPrompt  = false
     private var altitudeInMiles             = ""
     private var justStartedUp               = false
-    private var timer                       = Timer()
     private var velocityInKmH               = ""
     private var velocityInMPH               = ""
     private var zoomInterval                = [Float]()
@@ -177,6 +177,7 @@ class TrackingViewController: UIViewController, MKMapViewDelegate, UIGestureReco
     var positionString                      = ""
     var ranAtLeastOnce                      = false
     var running: Bool?                      = false
+    var timer                       = Timer()
     var timerValue: TimeInterval            = 2.0
     var velString                           = ""
     
@@ -197,7 +198,7 @@ class TrackingViewController: UIViewController, MKMapViewDelegate, UIGestureReco
     private var altitudeInKm = "" {
         willSet {
             if let lat = Double(latitude), let lon = Double(longitude) {
-                positionString = "    Position: \(CoordinateConversions.decimalCoordinatesToDegMinSec(latitude: lat, longitude: lon, format: Globals.coordinatesStringFormat))"
+                positionString = "    Position: \(CoordinateCalculations.decimalCoordinatesToDegMinSec(latitude: lat, longitude: lon, format: Globals.coordinatesStringFormat))"
             } else {
                 positionString = Globals.spacer
             }
@@ -247,9 +248,10 @@ class TrackingViewController: UIViewController, MKMapViewDelegate, UIGestureReco
     @IBOutlet weak var coordinatesLabel: UILabel!
     @IBOutlet weak var altitudeLabel: UILabel!
     @IBOutlet weak var velocityLabel: UILabel!
-    @IBOutlet var copyButton: UIButton!
+    @IBOutlet weak var copyButton: UIButton!
 
     @IBOutlet weak var contextGlobeScene: SCNView!
+    @IBOutlet weak var globeExpandButton: UIButton!
     
     // MARK: - Methods
     
@@ -783,13 +785,17 @@ class TrackingViewController: UIViewController, MKMapViewDelegate, UIGestureReco
         
         switch segueInProcess {
         
-        case Segues.passesSegue :
+        case Segues.globeSegue :                                    // Stop tracking if Globe segue was selected
             
-            stopAction()                                            // Stop tracking if Passes segue was selected
+            stopAction()
         
-        case Segues.crewSeque :
+        case Segues.passesSegue :                                   // Stop tracking if Passes segue was selected
             
-            stopAction()                                            // Stop tracking if Crew segue was selected
+            stopAction()
+        
+        case Segues.crewSeque :                                     // Stop tracking if Crew segue was selected
+            
+            stopAction()
         
         case Segues.earthViewSegue :                                // Stop tracking and select live earth view channel
             
@@ -832,8 +838,6 @@ class TrackingViewController: UIViewController, MKMapViewDelegate, UIGestureReco
     
     /// Unwind segue
     @IBAction func unwindFromOtherVCs(unwindSegue: UIStoryboardSegue) {
-        
-//        startAction()
         
     }
     

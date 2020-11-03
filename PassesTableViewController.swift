@@ -55,8 +55,8 @@ class PassesTableViewController: UITableViewController, CLLocationManagerDelegat
     }
     
     private let altitude                                = 0
-    private let apiKey                                  = "---"                                     // API key
-    private let baseURLForOverheadTimes                 = "---"     // API endpoint (new as of Nov 1, 2020)
+    private let apiKey                                  = "BZQB9N-9FTL47-ZXK7MZ-3TLE"                                     // API key
+    private let baseURLForOverheadTimes                 = "https://api.n2yo.com/rest/v1/satellite/visualpasses/25544"     // API endpoint (new as of Nov 1, 2020)
     private let customCellIdentifier                    = "OverheadTimesCell"
     private let deg                                     = "°"
     private let minObservationTime                      = 300                                                             // In seconds
@@ -308,7 +308,7 @@ class PassesTableViewController: UITableViewController, CLLocationManagerDelegat
                     spinner.stopAnimating()
                     refreshControl?.endRefreshing()
                     animate(table: overheadTimes)
-                    userCurrentCoordinatesString = CoordinateConversions.decimalCoordinatesToDegMinSec(latitude: userLatitude, longitude: userLongitude, format: Globals.coordinatesStringFormat)
+                    userCurrentCoordinatesString = CoordinateCalculations.decimalCoordinatesToDegMinSec(latitude: userLatitude, longitude: userLongitude, format: Globals.coordinatesStringFormat)
                     promptLabel.text = "\(numberOfOverheadTimesActuallyReported) \(numberOfOverheadTimesActuallyReported > 1 ? "passes" : "pass") over next \(numberOfDays) days from your location:\n\(userCurrentCoordinatesString)\nTap a pass to add a reminder to your calendar"
                 }
             } else {

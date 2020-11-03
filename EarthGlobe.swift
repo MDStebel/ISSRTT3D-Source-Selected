@@ -19,7 +19,7 @@ let daysInAYear = Globals.numberOfDaysInAYear
 let defaultCameraFov = CGFloat(30)
 let distanceToISSOrbit = Globals.ISSOrbitAltitudeInScene
 let dragWidthInDegrees = 180.0                                   // The amount to rotate the globe on one edge-to-edge swipe (in degrees)
-let globeDefaultRotationSpeedInSeconds = 60.0                    // The speed of the default spin: 1 revolution in 60 seconds
+let globeDefaultRotationSpeedInSeconds = 90.0                    // 360° revolution in 90 seconds
 let globeRadius = Globals.globeRadiusFactor
 let glowPointAltitude = Globals.orbitalAltitudeFactor
 let glowPointWidth = CGFloat(0.16)                               // The size factor for the marker
@@ -60,10 +60,10 @@ class EarthGlobe {
         guard let earthMaterial = globeShape.firstMaterial else { return }
 
         // Texture revealed by diffuse light sources
-        earthMaterial.diffuse.contents = "world-ultra.jpg"
+        earthMaterial.diffuse.contents = "8081_earthmap_8190px.jpg"
         
         let emission = SCNMaterialProperty()
-        emission.contents = "earth-emissive-1.jpg"
+        emission.contents = "8081_earthlights_8190px"
         earthMaterial.setValue(emission, forKey: "emissionTexture")
         
         /// OpenGL lighting map
@@ -78,7 +78,7 @@ class EarthGlobe {
         
         // Texture revealed by specular light sources
         //earthMaterial.specular.contents = "earth_lights.jpg"
-        earthMaterial.specular.contents = "earth-specular-1.jpg"
+        earthMaterial.specular.contents = "8081_earthspec_512px.jpg"
         earthMaterial.specular.intensity = 0.2
         
         // Oceans are reflective and land is matte

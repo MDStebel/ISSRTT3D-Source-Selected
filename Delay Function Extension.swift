@@ -2,14 +2,13 @@
 //  Delay Function.swift
 //
 //  Created by Michael Stebel on 12/4/15.
-//  Copyright © 2016-2020 Michael Stebel Consulting, LLC. All rights reserved.
+//  Copyright © 2015-2020 Michael Stebel Consulting, LLC. All rights reserved.
 //
 
 import UIKit
 
 
 extension UIViewController {
-    
     
     /// Method to wait before executing a closure
     /// - Parameters:

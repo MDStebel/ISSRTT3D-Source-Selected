@@ -41,24 +41,26 @@ class AstronautBioViewController: UIViewController, WKUIDelegate, WKNavigationDe
     
     
     @IBAction private func reloadWebView(_ sender: AnyObject) {
-        
         bioWebView.reload()
-        
-    } // reload web view
+    }
     
     
     private func setupSpinner() {
+        
         // Set up spinner
         spinner.hidesWhenStopped = true
+        
         if #available(iOS 13.0, *) {
             spinner.style = UIActivityIndicatorView.Style.large
         } else {
             spinner.style = .whiteLarge
         }
+        
         spinner.color = UIColor(red: 1, green: 0.298, blue: 0.298, alpha: 1)
         let xPos = view.bounds.size.width / 2 - spinnerWidthAndHeight / 2
         let yPos = view.bounds.size.height / 2 - spinnerWidthAndHeight / 2
         spinner.frame = CGRect(x: xPos, y: yPos, width: spinnerWidthAndHeight, height: spinnerWidthAndHeight)
+        
     }
     
     
@@ -82,7 +84,7 @@ class AstronautBioViewController: UIViewController, WKUIDelegate, WKNavigationDe
         setupSpinner()
         setupWebViewForBio()
   
-    } // end view did load
+    }
     
     
     override func viewWillAppear(_ animated: Bool) {
@@ -104,7 +106,7 @@ class AstronautBioViewController: UIViewController, WKUIDelegate, WKNavigationDe
         
         loadWebView()
         
-    } // end view did appear
+    }
     
     
     private func loadWebView() {
@@ -125,7 +127,7 @@ class AstronautBioViewController: UIViewController, WKUIDelegate, WKNavigationDe
             
         }
         
-    } // end load web view
+    }
     
     
     // MARK: - WebKit Delegates

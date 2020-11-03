@@ -92,7 +92,7 @@ TRACKER
                 <placeholder placeholderIdentifier="IBFirstResponder" id="FH2-hf-wpo" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <tapGestureRecognizer id="ce2-I9-mj5"/>
             </objects>
-            <point key="canvasLocation" x="-2672" y="-3668"/>
+            <point key="canvasLocation" x="-2888" y="-3598"/>
         </scene>
         <!--Tracking View Controller-->
         <scene sceneID="tne-QT-ifu">
@@ -1175,7 +1175,7 @@ TRACKER
                 <placeholder placeholderIdentifier="IBFirstResponder" id="HeY-E6-t8C" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <exit id="KE2-yS-lMR" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="-2575.1999999999998" y="-1630.0492610837439"/>
+            <point key="canvasLocation" x="-3071" y="-1693"/>
         </scene>
         <!--Help-->
         <scene sceneID="lBM-mR-tUw">
@@ -1223,7 +1223,7 @@ TRACKER
                 <placeholder placeholderIdentifier="IBFirstResponder" id="BzW-4n-ocf" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <exit id="RWj-Gn-GrO" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="-2209" y="-164"/>
+            <point key="canvasLocation" x="-142" y="-135"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="mDs-Mc-3Jg">
@@ -1700,7 +1700,7 @@ TRACKER
                 <placeholder placeholderIdentifier="IBFirstResponder" id="JCA-ed-TWT" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <exit id="v27-2Q-D4J" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="-296" y="-1624"/>
+            <point key="canvasLocation" x="-932" y="-1699"/>
         </scene>
         <!--Crew-->
         <scene sceneID="xDe-RZ-xqm">
@@ -1965,7 +1965,7 @@ TRACKER
                     </connections>
                 </view>
             </objects>
-            <point key="canvasLocation" x="-1771.0144927536232" y="-1631.25"/>
+            <point key="canvasLocation" x="-2154" y="-1693"/>
         </scene>
         <!--AstronautBio-->
         <scene sceneID="Qb2-HR-8TG">
@@ -2010,7 +2010,7 @@ TRACKER
                 <placeholder placeholderIdentifier="IBFirstResponder" id="2gt-NH-r0D" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <exit id="0YK-NR-PdS" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="-3323" y="-788"/>
+            <point key="canvasLocation" x="-2863" y="-786"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="OJm-1l-fZ1">
@@ -2088,7 +2088,7 @@ TRACKER
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="4mi-zt-1F4" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-4194" y="-787"/>
+            <point key="canvasLocation" x="-3634" y="-788"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="J5X-9N-356">
@@ -2115,7 +2115,7 @@ TRACKER
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="x1n-GX-4bS" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1075" y="-832"/>
+            <point key="canvasLocation" x="-1463" y="-457"/>
         </scene>
         <!--Earth View-->
         <scene sceneID="h53-Kz-gr7">
@@ -2175,7 +2175,7 @@ TRACKER
                     </connections>
                 </tapGestureRecognizer>
             </objects>
-            <point key="canvasLocation" x="670" y="-1621"/>
+            <point key="canvasLocation" x="151" y="-1698"/>
         </scene>
         <!--3D Globe-->
         <scene sceneID="FFZ-eW-W62">
@@ -2274,7 +2274,7 @@ TRACKER
                 <placeholder placeholderIdentifier="IBFirstResponder" id="nDE-KW-MjK" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
                 <exit id="2Z1-xE-zUS" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="1893.8461538461538" y="-1637.2037914691941"/>
+            <point key="canvasLocation" x="1132" y="-1693"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="TJo-kv-MZz">
@@ -2322,12 +2322,12 @@ TRACKER
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="YP6-QJ-nms" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="537" y="-2559"/>
+            <point key="canvasLocation" x="472" y="-2559"/>
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
         <segue reference="xGF-6c-INn"/>
-        <segue reference="iJ8-s1-Dwi"/>
+        <segue reference="zUy-zC-FV2"/>
         <segue reference="qJ0-0D-oLu"/>
         <segue reference="wLn-Ki-0PH"/>
     </inferredMetricsTieBreakers>

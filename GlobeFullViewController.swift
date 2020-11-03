@@ -22,7 +22,7 @@ class GlobeFullViewController: UIViewController {
         static let segueToSettings          = "segueToSettings"
         static let fontForTitle             = Theme.nasa
         static let timerValue               = 3.0                           // Seconds between position updates
-        static let apiEndpointAString       = "---"
+        static let apiEndpointAString       = "https://api.wheretheiss.at/v1/satellites/25544"
     }
     
 

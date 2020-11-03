@@ -1,6 +1,6 @@
 //
 //  Animatable Table Protocol.swift
-//  ISS Tracker
+//  ISS Real-Time Tracker
 //
 //  Created by Michael Stebel on 10/10/16.
 //  Copyright © 2016-2020 Michael Stebel Consulting, LLC. All rights reserved.
