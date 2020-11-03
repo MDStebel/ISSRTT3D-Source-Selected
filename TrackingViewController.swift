@@ -148,7 +148,7 @@ class TrackingViewController: UIViewController, MKMapViewDelegate, UIGestureReco
     
     /// Endpoints for API
     let apiEndpointAString                  = "---"
-    let apiEndpointBString                  = "---n"
+    let apiEndpointBString                  = "---"
     
     /// String format for zoom factor label
     var dateFormatter: DateFormatter?       = DateFormatter()         // This is declared as an optional so that we can test it for nil in save settings in case it wasn't set before being called
