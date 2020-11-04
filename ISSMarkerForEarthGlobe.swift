@@ -28,7 +28,7 @@ class ISSMarkerForEarthGlobe {
         longitude = lon
         let adjustedLon = longitude + 90                                                            // The textures are centered on 0,0, so adjust by 90 degrees
         
-        let widthAndHeight = isInOrbit ? glowPointWidth : glowPointWidth * 2.25                     // Fudge the approximate diameter of the sighting circle
+        let widthAndHeight = isInOrbit ? EarthGlobe.glowPointWidth : EarthGlobe.glowPointWidth * 2.25                     // Fudge the approximate diameter of the sighting circle
         
         self.node = SCNNode(geometry: SCNPlane(width: widthAndHeight, height: widthAndHeight) )
         self.node.geometry!.firstMaterial!.diffuse.contents = image
@@ -54,6 +54,7 @@ class ISSMarkerForEarthGlobe {
         self.node.eulerAngles = SCNVector3(x: pitch, y: yaw, z: roll )
         
     }
+    
     
     /// Method to add a pulsing effect to the marker
     func addPulseAnimation() {

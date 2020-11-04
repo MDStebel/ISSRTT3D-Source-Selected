@@ -9,7 +9,7 @@
 import UIKit
 
 
-/// Theme used in the app
+/// Original theme used in the app
 struct Theme {
     
     static let appFont                                      = "Avenir Book"

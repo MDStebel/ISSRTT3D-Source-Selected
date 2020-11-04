@@ -26,7 +26,7 @@ class GlobeFullViewController: UIViewController {
     }
     
 
-    var globe                               = EarthGlobe()
+    var fullGlobe                           = EarthGlobe()
     var timer                               = Timer()
     var longitude                           = ""
     var latitude                            = ""
@@ -98,7 +98,7 @@ class GlobeFullViewController: UIViewController {
     /// Set up our scene
     func setupGlobeScene() {
         
-        globe.setupInSceneView(fullScreenGlobeView, forARKit: false)
+        fullGlobe.setupInSceneView(fullScreenGlobeView, forARKit: false)
         
         fullScreenGlobeView.backgroundColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0)      // Transparent background
         fullScreenGlobeView.layer.cornerRadius = 15
@@ -108,14 +108,14 @@ class GlobeFullViewController: UIViewController {
     
     
     /// Add the ISS position marker, orbital track, and current Sun position to the globe
-    func updateEarthGlobeScene() {
+    func updateFullEarthGlobeScene() {
         
         var headingFactor: Float = 1
         var showOrbit = false
         
-        globe.removeLastNode()                      // Remove the last marker node, so we don't smear them together
-        globe.removeLastNode()                      // Remove the last orbit track, so we don't smear them together as they precess
-        globe.removeLastNode()                      // Remove the viewing circle
+        fullGlobe.removeLastNode()                      // Remove the last marker node, so we don't smear them together
+        fullGlobe.removeLastNode()                      // Remove the last orbit track, so we don't smear them together as they precess
+        fullGlobe.removeLastNode()                      // Remove the viewing circle
         
         let lat = Float(latitude) ?? 0.0
         let lon = Float(longitude) ?? 0.0
@@ -125,7 +125,7 @@ class GlobeFullViewController: UIViewController {
             headingFactor = lat - lastLat < 0 ? -1 : 1
         }
         
-        lastLat = lat                           // Save last latitude to use in calculating north or south heading vector after the second track update
+        lastLat = lat                                   // Save last latitude to use in calculating north or south heading vector after the second track update
         
         // Get the latitude of the Sun at the current time
         let latitudeOfSunAtCurrentTime = CoordinateCalculations.getLatitudeOfSunAtCurrentTime()
@@ -133,13 +133,13 @@ class GlobeFullViewController: UIViewController {
         // Get the longitude of Sun at current time
         let subSolarLon = CoordinateCalculations.SubSolarLongitudeOfSunAtCurrentTime()
         
-        globe.setUpTheSun(lat: latitudeOfSunAtCurrentTime, lon: subSolarLon)
+        fullGlobe.setUpTheSun(lat: latitudeOfSunAtCurrentTime, lon: subSolarLon)
         if showOrbit {
-            globe.addOrbitTrackAroundTheGlobe(lat: lat, lon: lon, headingFactor: headingFactor)
+            fullGlobe.addOrbitTrackAroundTheGlobe(lat: lat, lon: lon, headingFactor: headingFactor)
         }
-        globe.addISSMarker(lat: lat, lon: lon)
-        globe.addViewingCircle(lat: lat, lon: lon)
-        globe.autoSpinGlobeRun(run: Globals.autoRotateGlobeEnabled)
+        fullGlobe.addISSMarker(lat: lat, lon: lon)
+        fullGlobe.addViewingCircle(lat: lat, lon: lon)
+        fullGlobe.autoSpinGlobeRun(run: Globals.autoRotateGlobeEnabled)
         
     }
     
@@ -147,7 +147,7 @@ class GlobeFullViewController: UIViewController {
     /// Prepare for seque
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         
-        guard segue.identifier != nil else { return }                                     // Prevents crash if a segue is unnamed
+        guard segue.identifier != nil else { return }   // Prevents crash if a segue is unnamed
         
         switch segue.identifier {
         

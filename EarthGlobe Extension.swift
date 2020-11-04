@@ -69,13 +69,13 @@ extension EarthGlobe {
         case _ where absLat <= 35.0 :
             orbitalCorrectionForInclination = pow(exponent, 1.5)
         case _ where absLat <= 45.0 :
-            orbitalCorrectionForInclination = pow(exponent, 2)
+            orbitalCorrectionForInclination = pow(exponent, 2.0)
         case _ where absLat <= 49.0 :
             orbitalCorrectionForInclination = pow(exponent, 2.5)
         case _ where absLat <= 51.0 :
-            orbitalCorrectionForInclination = pow(exponent, 3)
+            orbitalCorrectionForInclination = pow(exponent, 3.0)
         default :
-            orbitalCorrectionForInclination = pow(exponent, 4)
+            orbitalCorrectionForInclination = pow(exponent, 4.0)
         }
         let ISSOrbitInclinationInRadiansCorrected = pow(Globals.ISSOrbitInclinationInRadians, orbitalCorrectionForInclination) * headingFactor
         
@@ -194,6 +194,13 @@ extension EarthGlobe {
         let x = newPosition.x
         let y = newPosition.y
         cameraNode.position = SCNVector3(x: x, y: y, z: globeRadius + cameraAltitude)
+        
+    }
+    
+    
+    func SCNMatrix4RotateF(_ src: SCNMatrix4, _ angle : Float, _ x : Float, _ y : Float, _ z : Float) -> SCNMatrix4 {
+        
+        return SCNMatrix4Rotate(src, angle, x, y, z)
         
     }
     

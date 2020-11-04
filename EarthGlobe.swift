@@ -4,36 +4,35 @@
 //
 //  Created by Michael Stebel on 8/7/16.
 //  Copyright © 2016-2020 Michael Stebel Consulting, LLC. All rights reserved.
-//  Portions Copyright © 2017 David Mojdehi
 //
 
 import SceneKit
 import QuartzCore
 
 
-let affectedBySpring = 1 << 1
-let ambientLightIntensity = CGFloat(90)                         // The default value is 1000
-let cameraAltitude = Float(1.85)
-let dayNumberOfWinterStolsticeInYear = 356.0                     // The winter solstice is on approximately Dec 21, 22, or 23
-let daysInAYear = Globals.numberOfDaysInAYear
-let defaultCameraFov = CGFloat(30)
-let distanceToISSOrbit = Globals.ISSOrbitAltitudeInScene
-let dragWidthInDegrees = 180.0                                   // The amount to rotate the globe on one edge-to-edge swipe (in degrees)
-let globeDefaultRotationSpeedInSeconds = 90.0                    // 360° revolution in 90 seconds
-let globeRadius = Globals.globeRadiusFactor
-let glowPointAltitude = Globals.orbitalAltitudeFactor
-let glowPointWidth = CGFloat(0.16)                               // The size factor for the marker
-let maxFov = CGFloat(40.0)                                       // Max zoom in degrees
-let maxLatLonPerUnity = 1.1
-let minFov = CGFloat(10.0)                                       // Min zoom in degrees
-let minLatLonPerUnity = -0.1
-let sceneBoxSize = CGFloat(1000.0)
-let tiltOfEarthAxisInDegrees = Globals.earthTiltInDegrees
-let tiltOfEarthAxisInRadians = Globals.earthTiltInRadians
-
-
 /// The Earth Globe Model
 class EarthGlobe {
+    
+    static let glowPointWidth = CGFloat(0.16)                        // The size factor for the marker
+
+    let affectedBySpring = 1 << 1
+    let ambientLightIntensity = CGFloat(90)                          // The default value is 1000
+    let cameraAltitude = Float(1.85)
+    let dayNumberOfWinterStolsticeInYear = 356.0                     // The winter solstice is on approximately Dec 21, 22, or 23
+    let daysInAYear = Globals.numberOfDaysInAYear
+    let defaultCameraFov = CGFloat(30)
+    let distanceToISSOrbit = Globals.ISSOrbitAltitudeInScene
+    let dragWidthInDegrees = 180.0                                   // The amount to rotate the globe on one edge-to-edge swipe (in degrees)
+    let globeDefaultRotationSpeedInSeconds = 90.0                    // 360° revolution in 90 seconds
+    let globeRadius = Globals.globeRadiusFactor
+    let glowPointAltitude = Globals.orbitalAltitudeFactor
+    let maxFov = CGFloat(40.0)                                       // Max zoom in degrees
+    let maxLatLonPerUnity = 1.1
+    let minFov = CGFloat(10.0)                                       // Min zoom in degrees
+    let minLatLonPerUnity = -0.1
+    let sceneBoxSize = CGFloat(1000.0)
+    let tiltOfEarthAxisInDegrees = Globals.earthTiltInDegrees
+    let tiltOfEarthAxisInRadians = Globals.earthTiltInRadians
     
     var camera = SCNCamera()
     var cameraNode = SCNNode()
@@ -149,9 +148,7 @@ class EarthGlobe {
         ambientLight.type = .ambient
         ambientLight.intensity = ambientLightIntensity // default is 1000!
         
-        // Create and add a camera to the scene
-        // Set up a 'telephoto' shot (to avoid any fisheye effects)
-        // Telephoto: narrow field of view at a long distance
+        // Add the camera
         camera.fieldOfView = defaultCameraFov
         camera.zFar = 1000
         cameraNode.position = SCNVector3(x: 0, y: 0, z:  globeRadius + cameraAltitude )
@@ -238,9 +235,3 @@ class EarthGlobe {
     
 }
 
-
-func SCNMatrix4RotateF(_ src: SCNMatrix4, _ angle : Float, _ x : Float, _ y : Float, _ z : Float) -> SCNMatrix4 {
-    
-    return SCNMatrix4Rotate(src, angle, x, y, z)
-    
-}

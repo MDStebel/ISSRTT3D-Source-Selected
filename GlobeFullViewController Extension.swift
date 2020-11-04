@@ -36,7 +36,7 @@ extension GlobeFullViewController {
                     
                     // Update globe
                     DispatchQueue.main.async { [self] in
-                        self?.updateEarthGlobeScene()
+                        self?.updateFullEarthGlobeScene()
                         self?.isRunningLabel.text = "Running"
                     }
                     

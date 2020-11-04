@@ -148,8 +148,8 @@ class TrackingViewController: UIViewController, MKMapViewDelegate, UIGestureReco
     }
     
     /// Endpoints for API
-    let apiEndpointAString                  = "---"
-    let apiEndpointBString                  = "---"
+    let apiEndpointAString                  = "https://api.wheretheiss.at/v1/satellites/25544"
+    let apiEndpointBString                  = "http://api.open-notify.org/iss-now.json"
     
     /// String format for zoom factor label
     var dateFormatter: DateFormatter?       = DateFormatter()         // This is declared as an optional so that we can test it for nil in save settings in case it wasn't set before being called
