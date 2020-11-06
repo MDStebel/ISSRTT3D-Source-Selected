@@ -2192,21 +2192,15 @@ TRACKER
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Hubble Legacy Field Crop 2800px" translatesAutoresizingMaskIntoConstraints="NO" id="7EC-Ek-IrK">
                                 <rect key="frame" x="0.0" y="0.0" width="390" height="756"/>
                             </imageView>
-                            <view multipleTouchEnabled="YES" contentMode="scaleAspectFit" translatesAutoresizingMaskIntoConstraints="NO" id="MdU-s9-Ydq">
-                                <rect key="frame" x="0.0" y="174" width="390" height="408"/>
-                                <subviews>
-                                    <sceneKitView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleAspectFit" sceneName="fullGlobe" translatesAutoresizingMaskIntoConstraints="NO" id="pEZ-ao-oHi">
-                                        <rect key="frame" x="20" y="20" width="350" height="368"/>
-                                        <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                    </sceneKitView>
-                                </subviews>
-                                <color key="backgroundColor" white="1" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <sceneKitView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="redraw" sceneName="fullGlobe" translatesAutoresizingMaskIntoConstraints="NO" id="pEZ-ao-oHi">
+                                <rect key="frame" x="-6" y="0.0" width="402" height="714"/>
+                                <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </sceneKitView>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="M2A-FM-kEU" userLabel="Controls Background">
+                                <rect key="frame" x="0.0" y="0.0" width="390" height="60"/>
+                                <color key="backgroundColor" red="0.33333333329999998" green="0.33333334329999997" blue="0.33333334329999997" alpha="0.60217786819999997" colorSpace="custom" customColorSpace="calibratedRGB"/>
                                 <constraints>
-                                    <constraint firstItem="pEZ-ao-oHi" firstAttribute="centerX" secondItem="MdU-s9-Ydq" secondAttribute="centerX" id="35S-Hj-F66"/>
-                                    <constraint firstItem="pEZ-ao-oHi" firstAttribute="leading" secondItem="MdU-s9-Ydq" secondAttribute="leading" constant="20" id="72Q-Vu-xhY"/>
-                                    <constraint firstItem="pEZ-ao-oHi" firstAttribute="centerY" secondItem="MdU-s9-Ydq" secondAttribute="centerY" id="ABn-Su-ShD"/>
-                                    <constraint firstItem="pEZ-ao-oHi" firstAttribute="top" secondItem="MdU-s9-Ydq" secondAttribute="top" constant="20" id="YaM-KJ-dLA"/>
-                                    <constraint firstAttribute="width" secondItem="MdU-s9-Ydq" secondAttribute="height" multiplier="107:112" id="vvG-ig-bwD"/>
+                                    <constraint firstAttribute="height" constant="60" id="tZb-dE-uda"/>
                                 </constraints>
                             </view>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hQ2-HW-Qra" userLabel="Status">
@@ -2233,17 +2227,20 @@ TRACKER
                         </subviews>
                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
+                            <constraint firstItem="4tc-5W-dL4" firstAttribute="top" secondItem="pEZ-ao-oHi" secondAttribute="bottom" constant="8" id="0SX-cE-HQA"/>
+                            <constraint firstItem="pEZ-ao-oHi" firstAttribute="leading" secondItem="ouM-W8-b2U" secondAttribute="leading" constant="-6" id="2UI-ZL-fmL"/>
+                            <constraint firstItem="M2A-FM-kEU" firstAttribute="leading" secondItem="ouM-W8-b2U" secondAttribute="leading" id="75Q-KV-HHC"/>
                             <constraint firstAttribute="trailing" secondItem="7EC-Ek-IrK" secondAttribute="trailing" id="8Kn-Fa-Jcr"/>
                             <constraint firstItem="7EC-Ek-IrK" firstAttribute="top" secondItem="AO8-Xr-9Pk" secondAttribute="bottom" id="9dW-WF-Feb"/>
-                            <constraint firstItem="MdU-s9-Ydq" firstAttribute="top" relation="greaterThanOrEqual" secondItem="AO8-Xr-9Pk" secondAttribute="bottom" constant="2" id="EtA-ct-Ret"/>
                             <constraint firstAttribute="bottom" secondItem="7EC-Ek-IrK" secondAttribute="bottom" id="FbH-lH-OSz"/>
+                            <constraint firstAttribute="trailing" secondItem="pEZ-ao-oHi" secondAttribute="trailing" constant="-6" id="G8y-L4-swl"/>
+                            <constraint firstItem="M2A-FM-kEU" firstAttribute="top" secondItem="ouM-W8-b2U" secondAttribute="top" id="Gq5-HE-TSA"/>
                             <constraint firstItem="6eU-e1-Lr2" firstAttribute="top" secondItem="AO8-Xr-9Pk" secondAttribute="bottom" constant="10" id="Hfw-5z-QO6"/>
                             <constraint firstAttribute="trailingMargin" secondItem="6eU-e1-Lr2" secondAttribute="trailing" id="Hx4-P5-5pq"/>
                             <constraint firstItem="7EC-Ek-IrK" firstAttribute="leading" secondItem="ouM-W8-b2U" secondAttribute="leading" id="P3S-Un-hTx"/>
+                            <constraint firstItem="pEZ-ao-oHi" firstAttribute="top" secondItem="AO8-Xr-9Pk" secondAttribute="bottom" id="WnI-cO-WVL"/>
+                            <constraint firstAttribute="trailing" secondItem="M2A-FM-kEU" secondAttribute="trailing" id="XEy-j7-ef0"/>
                             <constraint firstItem="hQ2-HW-Qra" firstAttribute="leading" secondItem="ouM-W8-b2U" secondAttribute="leadingMargin" id="bIO-WE-u67"/>
-                            <constraint firstItem="MdU-s9-Ydq" firstAttribute="centerY" secondItem="7EC-Ek-IrK" secondAttribute="centerY" id="cSd-bJ-quT"/>
-                            <constraint firstAttribute="trailing" secondItem="MdU-s9-Ydq" secondAttribute="trailing" id="q99-kt-6Mn"/>
-                            <constraint firstItem="MdU-s9-Ydq" firstAttribute="leading" secondItem="ouM-W8-b2U" secondAttribute="leading" id="qmS-aP-aaQ"/>
                             <constraint firstItem="hQ2-HW-Qra" firstAttribute="top" secondItem="AO8-Xr-9Pk" secondAttribute="bottom" constant="10" id="vJE-c7-42f"/>
                         </constraints>
                     </view>
@@ -2266,6 +2263,7 @@ TRACKER
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="controlsBackground" destination="M2A-FM-kEU" id="cdv-ab-8kA"/>
                         <outlet property="fullScreenGlobeView" destination="pEZ-ao-oHi" id="wD3-s7-frE"/>
                         <outlet property="isRunningLabel" destination="hQ2-HW-Qra" id="ele-gd-0yW"/>
                         <outlet property="settingsButton" destination="YGX-4V-gkG" id="1Tc-Yo-ven"/>
@@ -2274,7 +2272,7 @@ TRACKER
                 <placeholder placeholderIdentifier="IBFirstResponder" id="nDE-KW-MjK" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
                 <exit id="2Z1-xE-zUS" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="1132" y="-1693"/>
+            <point key="canvasLocation" x="1130.7692307692307" y="-1693.3649289099526"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="TJo-kv-MZz">

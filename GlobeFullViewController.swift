@@ -18,26 +18,36 @@ class GlobeFullViewController: UIViewController {
     // MARK: - Properties
     
     struct Constants {
+        static let apiEndpointAString       = "https://api.wheretheiss.at/v1/satellites/25544"
+        static let fontForTitle             = Theme.nasa
         static let segueToHelpFromGlobe     = "segueToHelpFromGlobe"
         static let segueToSettings          = "segueToSettings"
-        static let fontForTitle             = Theme.nasa
         static let timerValue               = 3.0                           // Seconds between position updates
-        static let apiEndpointAString       = "https://api.wheretheiss.at/v1/satellites/25544"
     }
     
 
     var fullGlobe                           = EarthGlobe()
-    var timer                               = Timer()
-    var longitude                           = ""
-    var latitude                            = ""
     var lastLat: Float                      = 0
+    var latitude                            = ""
+    var longitude                           = ""
+    var timer                               = Timer()
+    
+    
+    // MARK: - Outlets
     
     
     @IBOutlet weak var fullScreenGlobeView: SCNView!
     @IBOutlet weak var settingsButton: UIBarButtonItem!
     @IBOutlet weak var isRunningLabel: UILabel! {
         didSet {
-            isRunningLabel.text = "Running"
+            isRunningLabel.text = ""
+        }
+    }
+    @IBOutlet var controlsBackground: UIView! {
+        didSet {
+            controlsBackground.layer.maskedCorners = [.layerMinXMaxYCorner, .layerMaxXMaxYCorner]
+            controlsBackground.layer.cornerRadius = 27
+            controlsBackground.layer.masksToBounds = true
         }
     }
     
@@ -45,10 +55,18 @@ class GlobeFullViewController: UIViewController {
     // MARK: - Methods
     
     
+    /// Set up a reference to this view controller. This allows AppDelegate to do stuff on it when it enters background.
+    private func setupAppDelegate() {
+        let appDelegate = UIApplication.shared.delegate! as! AppDelegate
+        appDelegate.referenceToGlobeFullViewController = self
+    }
+    
+    
     override func viewDidLoad() {
         
         super.viewDidLoad()
         
+        setupAppDelegate()
         setupGlobeScene()
 
     }
@@ -73,17 +91,22 @@ class GlobeFullViewController: UIViewController {
         
         super.viewDidAppear(animated)
         
-        earthGlobeLocateISS()       // Call once to update the globe before the timer starts in order to immediately show the ISS location, etc.
-        timerStartup()
-        
+        startUpdatingGlobe()
+
     }
     
     
     override func viewWillDisappear(_ animated: Bool) {
         
-        super.viewWillDisappear(animated)
-
-        timer.invalidate()
+        stopUpdatingGlobe()
+        
+    }
+    
+    
+    func startUpdatingGlobe() {
+        
+        earthGlobeLocateISS()       // Call once to update the globe before the timer starts in order to immediately show the ISS location, etc.
+        timerStartup()
         
     }
     
@@ -95,10 +118,17 @@ class GlobeFullViewController: UIViewController {
     }
     
     
-    /// Set up our scene
+    func stopUpdatingGlobe() {
+        
+        timer.invalidate()
+        
+    }
+    
+    
+    /// Set up the scene
     func setupGlobeScene() {
         
-        fullGlobe.setupInSceneView(fullScreenGlobeView, forARKit: false)
+        fullGlobe.setupInSceneView(fullScreenGlobeView, pinchGestureIsEnabled: false)
         
         fullScreenGlobeView.backgroundColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0)      // Transparent background
         fullScreenGlobeView.layer.cornerRadius = 15
@@ -140,6 +170,8 @@ class GlobeFullViewController: UIViewController {
         fullGlobe.addISSMarker(lat: lat, lon: lon)
         fullGlobe.addViewingCircle(lat: lat, lon: lon)
         fullGlobe.autoSpinGlobeRun(run: Globals.autoRotateGlobeEnabled)
+        
+        fullGlobe.camera.fieldOfView = 60
         
     }
     

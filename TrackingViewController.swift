@@ -296,20 +296,6 @@ class TrackingViewController: UIViewController, MKMapViewDelegate, UIGestureReco
     }
     
     
-    #warning("Add gestures!")
-//    private func setupGestureRecognizer() {
-//        let pinch = UIPanGestureRecognizer(target: self, action:  #selector(handlePinch))
-//        pinch.delegate = self
-//        map.addGestureRecognizer(pinch)
-//    }
-//
-//    @objc func handlePinch(_ recognizer: UIPinchGestureRecognizer) {
-//        if recognizer.state == .began {
-//            print("zoomed")
-//        }
-//    }
-    
-    
     override func viewDidLoad() {
         
         super.viewDidLoad()
@@ -318,7 +304,6 @@ class TrackingViewController: UIViewController, MKMapViewDelegate, UIGestureReco
         setupDateFormatter()
         setupNumberFormatter()
         setupMap()
-//        setupGestureRecognizer()
         setupContextGlobeScene()                    // Set up globe
         setupCoordinatesLabel(withTopCorners: true) // Set up the coordinates info box
         setUpZoomSlider(usingSavedZoomFactor: true) // Set up zoom factor using saved zoom factor, rather than default
@@ -901,15 +886,6 @@ class TrackingViewController: UIViewController, MKMapViewDelegate, UIGestureReco
         stopAction()
         
     }
-    
-    
-//    func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool {
-//        return true
-//    }
-
-//    func mapViewDidChangeVisibleRegion(_ mapView: MKMapView) {
-//        print("Region changed!")
-//    }
 
     
 }

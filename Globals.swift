@@ -44,6 +44,10 @@ struct Globals {
     static var versionNumber                                    = ""
     static var zoomFactorWasResetInSettings                     = false
     static var zoomRangeFactorSelection                         = 2
+    static var cameraAltitude                                   = Float(1.85)
+    static var defaultCameraFov                                 = CGFloat(30)
+    static var maxFov                                           = CGFloat(60.0)
+    static var minFov                                           = CGFloat(5.0)
 
     static let ISSAltitudeFactor                                = Float(orbitalAltitudeFactor * 1.015)
     static let ISSAltitudeInKM: Float                           = 425
@@ -55,6 +59,7 @@ struct Globals {
     static let dateFormatStringEuropeanForm                     = "yyyy-MM-dd"
     static let degreesLongitudePerHour: Float                   = 360 / 24
     static let degreesToRadians: Float                          = .pi / 180
+    static let e                                                = M_E
     static let earthRadiusInKM: Float                           = 6371
     static let earthTiltInDegrees: Float                        = 23.447
     static let earthTiltInRadians: Float                        = earthTiltInDegrees * degreesToRadians
@@ -69,8 +74,8 @@ struct Globals {
     static let numberOfMinutesInAnHour                          = 60.0
     static let numberOfSecondsInADay                            = numberOfSecondsInAnHour * numberOfHoursInADay
     static let numberOfSecondsInAnHour                          = 3600.0
-    static let numberofSecondsInAMinute                         = 60.0
-    static let orbitalAltitudeFactor                            = globeRadiusFactor * (1 + ISSAltitudeInKM / earthRadiusInKM)
+    static let numberOfSecondsInAMinute                         = 60.0
+    static let orbitalAltitudeFactor                            = globeRadiusFactor * (1 + ISSAltitudeInKM / earthRadiusInKM) * 1.02
     static let outputDateFormatString                           = "MMM-dd-YYYY 'at' hh:mma"
     static let outputDateFormatStringShortForm                  = "MMM-dd-yyyy"
     static let outputDateOnlyFormatString                       = "MMM-dd-YYY"

@@ -16,7 +16,7 @@ extension TrackingViewController {
     /// Create the context globe scene
     func setupContextGlobeScene() {
         
-        globe.setupInSceneView(contextGlobeScene, forARKit: false)
+        globe.setupInSceneView(contextGlobeScene, pinchGestureIsEnabled: false)
         
         contextGlobeScene.backgroundColor = UIColor(named: Theme.popupBgd)?.withAlphaComponent(0.50)
         contextGlobeScene.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]

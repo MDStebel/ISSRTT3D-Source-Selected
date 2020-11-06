@@ -13,22 +13,22 @@ import QuartzCore
 /// The Earth Globe Model
 class EarthGlobe {
     
-    static let glowPointWidth = CGFloat(0.16)                        // The size factor for the marker
+    static let glowPointWidth = CGFloat(0.16)                       // The size factor for the marker
 
     let affectedBySpring = 1 << 1
-    let ambientLightIntensity = CGFloat(90)                          // The default value is 1000
-    let cameraAltitude = Float(1.85)
-    let dayNumberOfWinterStolsticeInYear = 356.0                     // The winter solstice is on approximately Dec 21, 22, or 23
+    let ambientLightIntensity = CGFloat(100)                        // The default value is 1000
+    let cameraAltitude = Globals.cameraAltitude
+    let dayNumberOfWinterStolsticeInYear = 356.0                    // The winter solstice is on approximately Dec 21, 22, or 23
     let daysInAYear = Globals.numberOfDaysInAYear
-    let defaultCameraFov = CGFloat(30)
+    let defaultCameraFov = Globals.defaultCameraFov
     let distanceToISSOrbit = Globals.ISSOrbitAltitudeInScene
-    let dragWidthInDegrees = 180.0                                   // The amount to rotate the globe on one edge-to-edge swipe (in degrees)
-    let globeDefaultRotationSpeedInSeconds = 90.0                    // 360° revolution in 90 seconds
+    let dragWidthInDegrees = 180.0                                  // The amount to rotate the globe on one edge-to-edge swipe (in degrees)
+    let globeDefaultRotationSpeedInSeconds = 90.0                   // 360° revolution in 90 seconds
     let globeRadius = Globals.globeRadiusFactor
     let glowPointAltitude = Globals.orbitalAltitudeFactor
-    let maxFov = CGFloat(40.0)                                       // Max zoom in degrees
+    let maxFov = Globals.maxFov                                     // Max zoom in degrees
     let maxLatLonPerUnity = 1.1
-    let minFov = CGFloat(10.0)                                       // Min zoom in degrees
+    let minFov = Globals.minFov                                     // Min zoom in degrees
     let minLatLonPerUnity = -0.1
     let sceneBoxSize = CGFloat(1000.0)
     let tiltOfEarthAxisInDegrees = Globals.earthTiltInDegrees
@@ -85,12 +85,10 @@ class EarthGlobe {
         earthMaterial.roughness.contents = "roughness-1.png"
 
         // Make the mountains appear taller
-        // (gives them shadows from point lights, but doesn't make them stick up beyond the edges)
         earthMaterial.normal.contents = "earth-bump-1.png"
         earthMaterial.normal.intensity = 0.4
         
-        //earthMaterial.reflective.contents = "envmap.jpg"
-        //earthMaterial.reflective.intensity = 0.75
+        // Creates a realistic specular reflection that changes aspect based on angle
         earthMaterial.fresnelExponent = 2
         globe.geometry = globeShape
         
@@ -111,37 +109,33 @@ class EarthGlobe {
     /// Set up our scene
     /// - Parameters:
     ///   - theScene: The scene view to use
-    ///   - forARKit: True if this is used with ARKit
-    internal func setupInSceneView(_ theScene: SCNView, forARKit : Bool ) {
-        
+    ///   - pinchGestureIsEnabled: True if we're rendering the full globe and want to pinch to zoom
+    func setupInSceneView(_ theScene: SCNView, pinchGestureIsEnabled : Bool ) {
+        print("***Setting up")
         theScene.scene = self.scene
         theScene.autoenablesDefaultLighting = false
         theScene.showsStatistics = false
         
+        theScene.allowsCameraControl = true
         self.gestureHost = theScene
         
-        if forARKit {
-            
-            theScene.allowsCameraControl = true
-            skybox.removeFromParentNode()
-            
-        } else {
-            
-            finishNonARSetup()
-            
-            theScene.allowsCameraControl = false
-            
+        if pinchGestureIsEnabled {
             let pan = UIPanGestureRecognizer(target: self, action:#selector(EarthGlobe.onPanGesture(pan:)))
             theScene.addGestureRecognizer(pan)
-//            let pinch = UIPinchGestureRecognizer(target: self, action: #selector(EarthGlobe.onPinchGesture(pinch:)))
-//            theScene.addGestureRecognizer(pinch)
-            
+            let pinch = UIPinchGestureRecognizer(target: self, action: #selector(EarthGlobe.onPinchGesture(pinch:)))
+            theScene.addGestureRecognizer(pinch)
+            print("pinch enabled")
+        } else {
+            let pan = UIPanGestureRecognizer(target: self, action:#selector(EarthGlobe.onPanGesture(pan:)))
+            theScene.addGestureRecognizer(pan)
         }
+        
+        completeTheSetup()
         
     }
     
     
-    private func finishNonARSetup() {
+    private func completeTheSetup() {
 
         // Provides ambient light to light the globe a bit in nighttime.
         let ambientLight = SCNLight()
@@ -189,7 +183,7 @@ class EarthGlobe {
                 } else if newFov > maxFov {
                     newFov = maxFov
                 }
-                self.camera.fieldOfView =  newFov
+                self.camera.fieldOfView = newFov
             }
         }
         
@@ -215,7 +209,7 @@ class EarthGlobe {
             
             // As the user zooms in (smaller fieldOfView value), the finger travel is reduced
             let fovProportion = (self.camera.fieldOfView - minFov) / (maxFov - minFov)
-            let fovProportionRadians = Float(fovProportion * CGFloat(dragWidthInDegrees) ) * (.pi / 180)
+            let fovProportionRadians = Float(fovProportion * CGFloat(dragWidthInDegrees) ) * Globals.degreesToRadians
             let rotationAboutAxis = Float(delta.width) * fovProportionRadians
             let tiltOfAxisItself = Float(delta.height) * fovProportionRadians
             

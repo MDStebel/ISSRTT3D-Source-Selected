@@ -37,14 +37,14 @@ extension GlobeFullViewController {
                     // Update globe
                     DispatchQueue.main.async { [self] in
                         self?.updateFullEarthGlobeScene()
-                        self?.isRunningLabel.text = "Running"
+                        self?.isRunningLabel?.text = "Running"
                     }
                     
                 } else {
                     
                     DispatchQueue.main.async {
                         self?.alert(for: "Can't get ISS location", message: "Wait a few minutes\nand then tap ▶︎ again.")
-                        self?.isRunningLabel.text = "Not Running"
+                        self?.isRunningLabel?.text = "Not Running"
                     }
                     
                 }
@@ -53,7 +53,7 @@ extension GlobeFullViewController {
                 
                 DispatchQueue.main.async {
                     self?.cannotConnectToInternetAlert()
-                    self?.isRunningLabel.text = "Not Running"
+                    self?.isRunningLabel?.text = "Not Running"
                 }
                 
             }

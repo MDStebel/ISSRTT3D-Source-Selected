@@ -63,6 +63,19 @@ struct CoordinateCalculations {
         return jc
         
     }
+    
+    
+    /// Calculate the Sun equation of Center
+    /// - Parameter t: Julian century
+    /// - Returns: The Sun equation of Center in radians
+    static func sunEquationOfCenter(t: Double) -> Double {
+
+        let m = ((357.52911 + t * (35999.05029 - t * 0.0001537)))           // The Sun geometric mean anomaly in degrees
+        let cInRadians = sin(m * Double(Globals.degreesToRadians)) * (1.914602 - t * (0.004817 + 0.000014 * t)) + sin(2 * m * Double(Globals.degreesToRadians)) * (0.019993 - 0.000101 * t) + sin(3 * m * Double(Globals.degreesToRadians)) * 0.000289
+
+        return cInRadians
+        
+    }
         
     
     /// Calculate the exact geometric mean longitude of the Sun at the current time
@@ -81,7 +94,7 @@ struct CoordinateCalculations {
     }
     
     
-    /// Calculate the exact current latitude of the Sun
+    /// Calculate the current latitude of the Sun
     ///
     /// Based on the geometric mean longitude of the Sun
     /// - Returns: Latitude in degrees as a Float
@@ -89,7 +102,7 @@ struct CoordinateCalculations {
         
         let geomMeanLongitude = getGeometricMeanLongitudeOfSunAtCurrentTime()
         let latitudeOfSun = asin(sin(geomMeanLongitude * Globals.degreesToRadians) * sin(Globals.earthTiltInDegrees * Globals.degreesToRadians)) * Globals.radiansToDegrees
-        
+
         return latitudeOfSun
         
     }
@@ -142,23 +155,7 @@ struct CoordinateCalculations {
         return subSolarLon.truncatingRemainder(dividingBy: 180) + lonCorrection
         
     }
-    
-    
-    /// Compute the Sun's equation of center
-    ///
-    /// In two-body, Keplerian orbital mechanics, the equation of the center is the angular difference between the actual position of a body in its elliptical orbit and the position it would occupy if its motion were uniform, in a circular orbit of the same period.
-    /// - Parameter t: The number of Julian centuries since 2000
-    /// - Returns: The Sun center in radians.
-    static func sunEquationOfCenter(t: Double) -> Double {
-        
-        let m = (357.52911 + t * (35999.05029 - t * 0.0001537))             // The Sun mean anomaly
-        let c = sin(m) * (1.914602 - t * (0.004817 + 0.000014 * t)) + sin(2 * m) * (0.019993 - 0.000101 * t) + sin(3 * m) * 0.000289
-        let cInRadians = c * Double(Globals.degreesToRadians)
-        
-        return cInRadians
-        
-    }
-    
+ 
     
     /// Convert coordinates from decimal to degrees, minutes, seconds, and direction
     ///
