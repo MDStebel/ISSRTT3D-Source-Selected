@@ -1,6 +1,6 @@
 //
 //  HelpViewController.swift
-//  ISS Real-Time Tracker
+//  ISS Real-Time Tracker 3D
 //
 //  Copyright © 2016-2020 Michael Stebel Consulting, LLC. All rights reserved.
 //
@@ -10,7 +10,6 @@ import WebKit
 
 
 class HelpViewController: UIViewController, WKUIDelegate, WKNavigationDelegate {
-    
     
     // MARK: - Properties
     

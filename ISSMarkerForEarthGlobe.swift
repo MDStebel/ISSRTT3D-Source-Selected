@@ -1,6 +1,6 @@
 //
 //  ISSMarkerForEarthGlobe.swift
-//  ISS Real-Time Tracker
+//  ISS Real-Time Tracker 3D
 //
 //  Created by Michael Stebel on 8/7/16.
 //  Copyright © 2016-2020 Michael Stebel Consulting, LLC. All rights reserved.
@@ -26,19 +26,19 @@ class ISSMarkerForEarthGlobe {
         self.image = image
         latitude = lat
         longitude = lon
-        let adjustedLon = longitude + 90                                                            // The textures are centered on 0,0, so adjust by 90 degrees
+        let adjustedLon = longitude + 90                                                                // The textures are centered on 0,0, so adjust by 90 degrees
         
-        let widthAndHeight = isInOrbit ? EarthGlobe.glowPointWidth : EarthGlobe.glowPointWidth * 2.25                     // Fudge the approximate diameter of the sighting circle
+        let widthAndHeight = isInOrbit ? EarthGlobe.glowPointWidth : EarthGlobe.glowPointWidth * 2.25   // Fudge the approximate diameter of the sighting circle
         
         self.node = SCNNode(geometry: SCNPlane(width: widthAndHeight, height: widthAndHeight) )
         self.node.geometry!.firstMaterial!.diffuse.contents = image
-        self.node.geometry!.firstMaterial!.diffuse.intensity = 1.0                                  // Appearance in daylight areas
+        self.node.geometry!.firstMaterial!.diffuse.intensity = 1.0                                      // Appearance in daylight areas
         self.node.geometry!.firstMaterial!.emission.contents = image
-        self.node.geometry!.firstMaterial!.emission.intensity = 1.0                                 // Appearance in nighttime areas
+        self.node.geometry!.firstMaterial!.emission.intensity = 1.0                                     // Appearance in nighttime areas
         self.node.geometry!.firstMaterial!.isDoubleSided = true
         self.node.castsShadow = false
         
-        let altitude = isInOrbit ? Globals.ISSAltitudeFactor : Globals.globeRadiusFactor * 0.949    // If not in orbit, then this is the sighting circle and place it flush with the surface
+        let altitude = isInOrbit ? Globals.ISSAltitudeFactor : Globals.globeRadiusFactor * 0.949        // If not in orbit, then this is the sighting circle and place it flush with the surface
         let position = CoordinateCalculations.convertLatLonCoordinatesToXYZ(lat: lat, lon: adjustedLon, alt: altitude)
         self.node.position = position
         

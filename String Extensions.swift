@@ -1,6 +1,6 @@
 //
 //  String Extensions.swift
-//  ISS Real-Time Tracker
+//  ISS Real-Time Tracker 3D
 //
 //  Created by Michael Stebel on 5/11/19.
 //  Copyright © 2019-2020 Michael Stebel Photography, LLC. All rights reserved.

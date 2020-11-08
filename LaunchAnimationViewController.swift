@@ -1,6 +1,6 @@
 //
 //  LaunchAnimationViewController.swift
-//  ISS Real-Time Tracker
+//  ISS Real-Time Tracker 3D
 //
 //  Created by Michael Stebel on 10/31/16.
 //  Copyright © 2016-2020 Michael Stebel Consulting, LLC. All rights reserved.
@@ -13,7 +13,6 @@ import UIKit
 ///
 /// This is the entry view controller for the app. Animates then segues to tracking view controller.
 class LaunchAnimationViewController: UIViewController {
-
     
     // MARK: - Properties
     

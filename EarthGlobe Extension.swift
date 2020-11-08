@@ -1,6 +1,6 @@
 //
 //  EarthGlobe Extension.swift
-//  ISS Real-Time Tracker
+//  ISS Real-Time Tracker 3D
 //
 //  Created by Michael Stebel on 10/22/20.
 //  Copyright © 2020 Michael Stebel Consulting, LLC. All rights reserved.
@@ -10,7 +10,6 @@ import SceneKit
 
 
 extension EarthGlobe {
-    
     
     /// Adds the ISS position marker at the precise latitude and longitude to our globe scene
     /// - Parameters:
@@ -101,8 +100,8 @@ extension EarthGlobe {
     
     /// Set up the Sun
     /// - Parameters:
-    ///   - lat: Latitude in degrees
-    ///   - lon: Longitude in degress
+    ///   - lat: Subsolor point latitude in degrees
+    ///   - lon: Subsolor point longitude in degrees
     public func setUpTheSun(lat: Float, lon: Float) {
 
         let adjustedLon = lon + 90
@@ -187,7 +186,7 @@ extension EarthGlobe {
     }
     
     
-    /// Move camera to given latitude and longitude
+    /// Move camera to a given latitude and longitude
     public func moveCameraToPointOnGlobe(lat: Float, lon: Float) {
         
         let newPosition = CoordinateCalculations.convertLatLonCoordinatesToXYZ(lat: lat, lon: lon, alt: Globals.ISSOrbitAltitudeInScene)

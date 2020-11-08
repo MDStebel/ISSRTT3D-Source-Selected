@@ -1,6 +1,6 @@
 //
 //  Globals.swift
-//  ISS Real-Time Tracker
+//  ISS Real-Time Tracker 3D
 //
 //  Created by Michael Stebel on 6/16/16.
 //  Copyright © 2016-2020 Michael Stebel Consulting, LLC. All rights reserved.

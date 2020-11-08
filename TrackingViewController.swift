@@ -1,6 +1,6 @@
 //
 //  TrackingViewController.swift
-//  ISS Real-Time Tracker
+//  ISS Real-Time Tracker 3D
 //
 //  Created by Michael Stebel on 1/28/2016
 //  Copyright © 2016-2020 Michael Stebel Consulting. All rights reserved.
@@ -13,7 +13,6 @@ import SceneKit
 
 
 class TrackingViewController: UIViewController, MKMapViewDelegate, UIGestureRecognizerDelegate, AVAudioPlayerDelegate {
-    
     
     // MARK: - Types
     
@@ -40,6 +39,7 @@ class TrackingViewController: UIViewController, MKMapViewDelegate, UIGestureReco
         static let helpSegue                    = "helpViewSegue"
         static let passesSegue                  = "segueToPassTimes"
         static let settingsSegue                = "segueToSettings"
+        static let segueToFullGlobeFromTabBar   = "segueToFullGlobeFromTabBar"
         
     }
     
@@ -148,8 +148,8 @@ class TrackingViewController: UIViewController, MKMapViewDelegate, UIGestureReco
     }
     
     /// Endpoints for API
-    let apiEndpointAString                  = "---"
-    let apiEndpointBString                  = "---"
+    let apiEndpointAString                  = "https://api.wheretheiss.at/v1/satellites/25544"
+    let apiEndpointBString                  = "http://api.open-notify.org/iss-now.json"
     
     /// String format for zoom factor label
     var dateFormatter: DateFormatter?       = DateFormatter()         // This is declared as an optional so that we can test it for nil in save settings in case it wasn't set before being called
@@ -770,7 +770,7 @@ class TrackingViewController: UIViewController, MKMapViewDelegate, UIGestureReco
         
         switch segueInProcess {
         
-        case Segues.globeSegue :                                    // Stop tracking if Globe segue was selected
+        case Segues.globeSegue, Segues.segueToFullGlobeFromTabBar : // Stop tracking if Globe segue was selected from either the mini globe or tab bar button
             
             stopAction()
         

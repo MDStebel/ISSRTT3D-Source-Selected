@@ -1,6 +1,6 @@
 //
 //  TrackingViewController Extension for Globe.swift
-//  ISS Real-Time Tracker
+//  ISS Real-Time Tracker 3D
 //
 //  Created by Michael Stebel on 10/21/20.
 //  Copyright © 2020 Michael Stebel Consulting, LLC. All rights reserved.
@@ -11,7 +11,6 @@ import SceneKit
 
 /// Adds EarthGlobe functionality to the tracking map
 extension TrackingViewController {
-
     
     /// Create the context globe scene
     func setupContextGlobeScene() {
@@ -43,19 +42,22 @@ extension TrackingViewController {
             showOrbit = true
             headingFactor = lat - lastLat < 0 ? -1 : 1
         }
+        lastLat = lat                               // Saves last latitude to use in calculating north or south heading vector after the second track update
         
-        lastLat = lat                           // Save last latitude to use in calculating north or south heading vector after the second track update
-        
-        // Get the latitude of the Sun at the current time
+        // Get the latitude of the subsolar point at the current time
         let latitudeOfSunAtCurrentTime = CoordinateCalculations.getLatitudeOfSunAtCurrentTime()
         
-        // Get the longitude of Sun at current time
+        // Get the longitude of subsolar point at current time
         let subSolarLon = CoordinateCalculations.SubSolarLongitudeOfSunAtCurrentTime()
         
+        // Now, set up the Sun at the subsolar point
         globe.setUpTheSun(lat: latitudeOfSunAtCurrentTime, lon: subSolarLon)
+        
+        // If we're ready to show the orbit track, render it now
         if showOrbit {
             globe.addOrbitTrackAroundTheGlobe(lat: lat, lon: lon, headingFactor: headingFactor)
         }
+        
         globe.addISSMarker(lat: lat, lon: lon)
         globe.addViewingCircle(lat: lat, lon: lon)
         globe.autoSpinGlobeRun(run: Globals.autoRotateGlobeEnabled)

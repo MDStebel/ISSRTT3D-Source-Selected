@@ -1,6 +1,6 @@
 //
 //  CoordinateCalculations.swift
-//  ISS Real-Time Tracker
+//  ISS Real-Time Tracker 3D
 //
 //  Created by Michael Stebel on 10/26/20.
 //  Copyright © 2020 Michael Stebel Consulting, LLC. All rights reserved.
@@ -10,9 +10,8 @@
 import SceneKit
 
 
-/// A set of functions that provide solar coordinates and Julian calendar dates.
+/// A set of functions that provide astronomical calculations for solar coordinates, as well as Julian calendar dates.
 struct CoordinateCalculations {
-    
     
     /// Convert coordinates from lat, lon, altitude to SceneKit xyz cooridates
     /// - Parameters:

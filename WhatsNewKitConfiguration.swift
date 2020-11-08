@@ -1,6 +1,6 @@
 //
 //  WhatsNewKitConfiguration.swift
-//  ISS Real-Time Tracker
+//  ISS Real-Time Tracker 3D
 //
 //  Created by Michael Stebel on 10/3/19.
 //  Copyright © 2019-2020 Michael Stebel Consulting, LLC. All rights reserved.

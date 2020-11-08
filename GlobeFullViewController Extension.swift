@@ -1,6 +1,6 @@
 //
 //  GlobeFullViewController Extension.swift
-//  ISS Real-Time Tracker
+//  ISS Real-Time Tracker 3D
 //
 //  Created by Michael Stebel on 10/27/20.
 //  Copyright © 2020 Michael Stebel Consulting, LLC. All rights reserved.

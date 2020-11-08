@@ -1,6 +1,6 @@
 //
 //  OrbitalPosition.swift
-//  ISS Real-Time Tracker
+//  ISS Real-Time Tracker 3D
 //
 //  Created by Michael Stebel on 7/20/16.
 //  Copyright © 2016-2020 Michael Stebel Consulting, LLC. All rights reserved.

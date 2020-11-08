@@ -1,6 +1,6 @@
 //
 //  EarthGlobe.swift
-//  ISS Real-Time Tracker
+//  ISS Real-Time Tracker 3D
 //
 //  Created by Michael Stebel on 8/7/16.
 //  Copyright © 2016-2020 Michael Stebel Consulting, LLC. All rights reserved.
@@ -10,7 +10,7 @@ import SceneKit
 import QuartzCore
 
 
-/// The Earth Globe Model
+/// The 3D Interactive Earth Globe Model
 class EarthGlobe {
     
     static let glowPointWidth = CGFloat(0.16)                       // The size factor for the marker

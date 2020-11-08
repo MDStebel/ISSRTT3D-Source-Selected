@@ -1,6 +1,6 @@
 //
 //  Theme.swift
-//  ISS Real-Time Tracker
+//  ISS Real-Time Tracker 3D
 //
 //  Created by Michael Stebel on 9/15/20.
 //  Copyright © 2020 Michael Stebel Consulting, LLC. All rights reserved.

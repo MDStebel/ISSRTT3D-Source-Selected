@@ -1,6 +1,6 @@
 //
 //  SettingsHandler.swift
-//  ISS Real-Time Tracker
+//  ISS Real-Time Tracker 3D
 //
 //  Created by Michael Stebel on 8/5/16.
 //  Copyright © 2016-2020 Michael Stebel Consulting, LLC. All rights reserved.
@@ -11,7 +11,6 @@ import Foundation
 
 /// Extension to TrackingViewController to save and restore all user settings
 extension TrackingViewController {
-    
     
     // MARK: - Types
     
