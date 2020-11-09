@@ -111,7 +111,7 @@ class EarthGlobe {
     ///   - theScene: The scene view to use
     ///   - pinchGestureIsEnabled: True if we're rendering the full globe and want to pinch to zoom
     func setupInSceneView(_ theScene: SCNView, pinchGestureIsEnabled : Bool ) {
-        print("***Setting up")
+        
         theScene.scene = self.scene
         theScene.autoenablesDefaultLighting = false
         theScene.showsStatistics = false
@@ -119,15 +119,17 @@ class EarthGlobe {
         theScene.allowsCameraControl = true
         self.gestureHost = theScene
         
-        if pinchGestureIsEnabled {
-            let pan = UIPanGestureRecognizer(target: self, action:#selector(EarthGlobe.onPanGesture(pan:)))
-            theScene.addGestureRecognizer(pan)
-            let pinch = UIPinchGestureRecognizer(target: self, action: #selector(EarthGlobe.onPinchGesture(pinch:)))
-            theScene.addGestureRecognizer(pinch)
-            print("pinch enabled")
-        } else {
-            let pan = UIPanGestureRecognizer(target: self, action:#selector(EarthGlobe.onPanGesture(pan:)))
-            theScene.addGestureRecognizer(pan)
+        if !theScene.allowsCameraControl {                  // Only if we're controlling the camera
+            if pinchGestureIsEnabled {
+                let pan = UIPanGestureRecognizer(target: self, action:#selector(EarthGlobe.onPanGesture(pan:)))
+                theScene.addGestureRecognizer(pan)
+                let pinch = UIPinchGestureRecognizer(target: self, action: #selector(EarthGlobe.onPinchGesture(pinch:)))
+                theScene.addGestureRecognizer(pinch)
+                print("pinch enabled")
+            } else {
+                let pan = UIPanGestureRecognizer(target: self, action:#selector(EarthGlobe.onPanGesture(pan:)))
+                theScene.addGestureRecognizer(pan)
+            }
         }
         
         completeTheSetup()

@@ -22,14 +22,14 @@ private let whatsNew = WhatsNew(
         WhatsNew.Item(
             title: "Introducing 3D!",
             subtitle: """
-                      This version introduces 3D tracking. Features photorealistic interactive 3D globe showing the real-time ISS position, orbital track, sighting circle, the tilt of the Earth, the precise location & reflection of the Sun at the subsolar point, the exact position and seasonal angle of the terminator, plus city lights at night. Expand the globe to full-screen mode. Drag the globe to pan/rotate it. Pinch to zoom in/out. Enable/disable auto-rotate.
+                      Version 6.14 introduces 3D tracking. Features photorealistic interactive 3D globe showing the real-time ISS position, orbital track, sighting circle, the tilt of the Earth, the precise location & reflection of the Sun at the subsolar point, the exact position and seasonal angle of the terminator, plus city lights at night. Expand the globe to full-screen mode. Drag the globe to pan/rotate it. Pinch to zoom in/out. Enable/disable auto-rotate.
                       """,
             image: UIImage(named: "icons8-megaphone_filled.imageset")
         ),
         WhatsNew.Item(
             title: "Improvements & Fixes",
             subtitle: """
-                      Support for iPhone 12 series. Plus lots of user interface enhancements, performace improvements, and other under-the-hood stuff.
+                      Added globe button to tab bar. Expanded globe to fill screen in full-screen mode. Smoother globe panning, rotating and zooming.
                       """,
             image: UIImage(named: "icons8-bug_filled")
         ),
