@@ -54,8 +54,8 @@ class PassesTableViewController: UITableViewController, CLLocationManagerDelegat
     }
     
     private let altitude                                = 0
-    private let apiKey                                  = "BZQB9N-9FTL47-ZXK7MZ-3TLE"                                     // API key
-    private let baseURLForOverheadTimes                 = "https://api.n2yo.com/rest/v1/satellite/visualpasses/25544"     // API endpoint (new as of Nov 1, 2020)
+    private let apiKey                                  = "---"                                     // API key
+    private let baseURLForOverheadTimes                 = "---"     // API endpoint (new as of Nov 1, 2020)
     private let customCellIdentifier                    = "OverheadTimesCell"
     private let deg                                     = "°"
     private let minObservationTime                      = 300                                                             // In seconds
