@@ -11,7 +11,7 @@ import SceneKit
 import MapKit
 
 
-/// Full-screen 3D interactive globe
+/// Full-screen 3D interactive globe VC
 class GlobeFullViewController: UIViewController, EarthGlobeProtocol {
     
     // MARK: - Properties

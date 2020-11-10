@@ -10,8 +10,10 @@ import SceneKit
 import UIKit
 
 
-/// Protocols that provide methods to create the scene and update it
+/// A protocol that adds support for EarthGlobe with methods to create the scene and update it
 protocol EarthGlobeProtocol {
+    
+    var lastLat: Float { get set }
     
     func setupEarthGlobeScene(for globe: EarthGlobe, in scene: SCNView, hasTintedBackground: Bool)
     func updateEarthGlobeScene(in globe: EarthGlobe, latitude: String, longitude: String, lastLat: inout Float )
