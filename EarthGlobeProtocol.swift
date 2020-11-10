@@ -10,10 +10,10 @@ import SceneKit
 import UIKit
 
 
-/// Protocol that provides methods to create the scene and update it
+/// Protocols that provide methods to create the scene and update it
 protocol EarthGlobeProtocol {
     
-    func setupContextGlobeScene(for globe: EarthGlobe, in scene: SCNView, hasTintedBackground: Bool)
+    func setupEarthGlobeScene(for globe: EarthGlobe, in scene: SCNView, hasTintedBackground: Bool)
     func updateEarthGlobeScene(in globe: EarthGlobe, latitude: String, longitude: String, lastLat: inout Float )
     
 }
@@ -26,7 +26,7 @@ extension EarthGlobeProtocol {
     /// - Parameters:
     ///   - globe: Which globe instance to setup in the scenen
     ///   - scene: The scene to use
-    func setupContextGlobeScene(for globe: EarthGlobe, in scene: SCNView, hasTintedBackground: Bool) {
+    func setupEarthGlobeScene(for globe: EarthGlobe, in scene: SCNView, hasTintedBackground: Bool) {
         
         globe.setupInSceneView(scene, pinchGestureIsEnabled: false)
         
@@ -71,7 +71,7 @@ extension EarthGlobeProtocol {
         let latitudeOfSunAtCurrentTime = CoordinateCalculations.getLatitudeOfSunAtCurrentTime()
         
         // Get the longitude of subsolar point at current time
-        let subSolarLon = CoordinateCalculations.SubSolarLongitudeOfSunAtCurrentTime()
+        let subSolarLon = CoordinateCalculations.getSubSolarLongitudeOfSunAtCurrentTime()
         
         // Now, set up the Sun at the subsolar point
         globe.setUpTheSun(lat: latitudeOfSunAtCurrentTime, lon: subSolarLon)

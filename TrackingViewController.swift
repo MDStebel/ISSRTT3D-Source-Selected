@@ -304,7 +304,7 @@ class TrackingViewController: UIViewController, MKMapViewDelegate, UIGestureReco
         setupDateFormatter()
         setupNumberFormatter()
         setupMap()
-        setupContextGlobeScene(for: globe, in: contextGlobeScene, hasTintedBackground: true)        // Set up globe scene
+        setupEarthGlobeScene(for: globe, in: contextGlobeScene, hasTintedBackground: true)        // Set up globe scene
         setupCoordinatesLabel(withTopCorners: true)                                                 // Set up the coordinates info box
         setUpZoomSlider(usingSavedZoomFactor: true)                                                 // Set up zoom factor using saved zoom factor, rather than default
         setDisplayConfiguration()                                                                   // Start up with map in last-used map type and other display parameters.

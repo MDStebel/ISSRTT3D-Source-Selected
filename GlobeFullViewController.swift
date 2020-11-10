@@ -66,7 +66,7 @@ class GlobeFullViewController: UIViewController, EarthGlobeProtocol {
         super.viewDidLoad()
         
         setupAppDelegate()
-        setupContextGlobeScene(for: fullGlobe, in: fullScreenGlobeView, hasTintedBackground: false)
+        setupEarthGlobeScene(for: fullGlobe, in: fullScreenGlobeView, hasTintedBackground: false)
 
     }
     
