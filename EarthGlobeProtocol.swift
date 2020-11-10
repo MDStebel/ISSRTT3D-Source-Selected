@@ -10,7 +10,7 @@ import SceneKit
 import UIKit
 
 
-/// Protocols that provide methods to create the scene and update it
+/// Protocol that provides methods to create the scene and update it
 protocol EarthGlobeProtocol {
     
     func setupContextGlobeScene(for globe: EarthGlobe, in scene: SCNView, hasTintedBackground: Bool)
