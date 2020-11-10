@@ -35,8 +35,8 @@ extension GlobeFullViewController {
                     
                     
                     // Update globe
-                    DispatchQueue.main.async { [self] in
-                        self?.updateFullEarthGlobeScene()
+                    DispatchQueue.main.async {
+                        self?.updateEarthGlobeScene(in: self!.fullGlobe, latitude: self!.latitude, longitude: self!.longitude, lastLat: &self!.lastLat)
                         self?.isRunningLabel?.text = "Running"
                     }
                     

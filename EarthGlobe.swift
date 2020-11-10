@@ -53,7 +53,7 @@ class EarthGlobe {
         
         // Create the globe
         let globeShape = SCNSphere(radius: CGFloat(globeRadius) )
-        globeShape.segmentCount = 192
+        globeShape.segmentCount = 256
         
         // Use the high-resolution image
         guard let earthMaterial = globeShape.firstMaterial else { return }
@@ -91,11 +91,6 @@ class EarthGlobe {
         // Creates a realistic specular reflection that changes aspect based on angle
         earthMaterial.fresnelExponent = 2
         globe.geometry = globeShape
-        
-        // Globe spins once per minute
-        let spinRotation = SCNAction.rotate(by: 2 * .pi, around: SCNVector3(0, 1, 0), duration: globeDefaultRotationSpeedInSeconds)
-        let spinAction = SCNAction.repeatForever(spinRotation)
-        globe.runAction(spinAction)
         
 
         // Set up the basic globe nodes

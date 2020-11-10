@@ -129,7 +129,7 @@ extension TrackingViewController {
                             self?.setupCoordinatesLabel(withTopCorners: false)
                             self?.contextGlobeScene.isHidden = false
                             self?.globeExpandButton.isHidden = false
-                            self?.updateEarthGlobeScene()
+                            self?.updateEarthGlobeScene(in: self!.globe, latitude: self!.latitude, longitude: self!.longitude, lastLat: &self!.lastLat)
                         } else {
                             self?.setupCoordinatesLabel(withTopCorners: true)
                             self?.contextGlobeScene.isHidden = true

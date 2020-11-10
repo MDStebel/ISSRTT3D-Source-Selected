@@ -12,12 +12,12 @@ import MapKit
 
 
 /// Full-screen 3D interactive globe
-class GlobeFullViewController: UIViewController {
+class GlobeFullViewController: UIViewController, EarthGlobeProtocol {
     
     // MARK: - Properties
     
     struct Constants {
-        static let apiEndpointAString       = "---"
+        static let apiEndpointAString       = "https://api.wheretheiss.at/v1/satellites/25544"
         static let fontForTitle             = Theme.nasa
         static let segueToHelpFromGlobe     = "segueToHelpFromGlobe"
         static let segueToSettings          = "segueToSettings"
@@ -66,7 +66,7 @@ class GlobeFullViewController: UIViewController {
         super.viewDidLoad()
         
         setupAppDelegate()
-        setupGlobeScene()
+        setupContextGlobeScene(for: fullGlobe, in: fullScreenGlobeView, hasTintedBackground: false)
 
     }
     
@@ -113,7 +113,7 @@ class GlobeFullViewController: UIViewController {
     
     
     private func timerStartup() {
-        
+
         timer = Timer.scheduledTimer(timeInterval: Constants.timerValue, target: self, selector: #selector(earthGlobeLocateISS), userInfo: nil, repeats: true)
         
     }
@@ -122,60 +122,6 @@ class GlobeFullViewController: UIViewController {
     func stopUpdatingGlobe() {
         
         timer.invalidate()
-        
-    }
-    
-    
-    /// Set up the scene
-    func setupGlobeScene() {
-        
-        fullGlobe.setupInSceneView(fullScreenGlobeView, pinchGestureIsEnabled: false)
-        
-        fullScreenGlobeView.backgroundColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0)      // Transparent background
-        fullScreenGlobeView.layer.cornerRadius = 15
-        fullScreenGlobeView.layer.masksToBounds = true
-
-    }
-    
-    
-    /// Add the ISS position marker, orbital track, and current Sun position to the globe
-    func updateFullEarthGlobeScene() {
-        
-        var headingFactor: Float = 1
-        var showOrbit = false
-        
-        fullGlobe.removeLastNode()                      // Remove the last marker node, so we don't smear them together
-        fullGlobe.removeLastNode()                      // Remove the last orbit track, so we don't smear them together as they precess
-        fullGlobe.removeLastNode()                      // Remove the viewing circle
-        
-        let lat = Float(latitude) ?? 0.0
-        let lon = Float(longitude) ?? 0.0
-        
-        if lastLat != 0 {
-            showOrbit = true
-            headingFactor = lat - lastLat < 0 ? -1 : 1
-        }
-        lastLat = lat                                   // Save last latitude to use in calculating north or south heading vector after the second track update
-        
-        // Get the latitude of the subsolar point at the current time
-        let latitudeOfSunAtCurrentTime = CoordinateCalculations.getLatitudeOfSunAtCurrentTime()
-        
-        // Get the longitude of subsolar point at current time
-        let subSolarLon = CoordinateCalculations.SubSolarLongitudeOfSunAtCurrentTime()
-        
-        // Now, set up the Sun at the subsolar point
-        fullGlobe.setUpTheSun(lat: latitudeOfSunAtCurrentTime, lon: subSolarLon)
-        
-        // If we're ready to show the orbit track, render it now
-        if showOrbit {
-            fullGlobe.addOrbitTrackAroundTheGlobe(lat: lat, lon: lon, headingFactor: headingFactor)
-        }
-        
-        fullGlobe.addISSMarker(lat: lat, lon: lon)
-        fullGlobe.addViewingCircle(lat: lat, lon: lon)
-        fullGlobe.autoSpinGlobeRun(run: Globals.autoRotateGlobeEnabled)
-        
-        fullGlobe.camera.fieldOfView = 60
         
     }
     

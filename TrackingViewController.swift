@@ -12,7 +12,7 @@ import AVFoundation
 import SceneKit
 
 
-class TrackingViewController: UIViewController, MKMapViewDelegate, UIGestureRecognizerDelegate, AVAudioPlayerDelegate {
+class TrackingViewController: UIViewController, MKMapViewDelegate, UIGestureRecognizerDelegate, AVAudioPlayerDelegate, EarthGlobeProtocol {
     
     // MARK: - Types
     
@@ -148,8 +148,8 @@ class TrackingViewController: UIViewController, MKMapViewDelegate, UIGestureReco
     }
     
     /// Endpoints for API
-    let apiEndpointAString                  = "---"
-    let apiEndpointBString                  = "---"
+    let apiEndpointAString                  = "https://api.wheretheiss.at/v1/satellites/25544"
+    let apiEndpointBString                  = "http://api.open-notify.org/iss-now.json"
     
     /// String format for zoom factor label
     var dateFormatter: DateFormatter?       = DateFormatter()         // This is declared as an optional so that we can test it for nil in save settings in case it wasn't set before being called
@@ -304,13 +304,13 @@ class TrackingViewController: UIViewController, MKMapViewDelegate, UIGestureReco
         setupDateFormatter()
         setupNumberFormatter()
         setupMap()
-        setupContextGlobeScene()                    // Set up globe
-        setupCoordinatesLabel(withTopCorners: true) // Set up the coordinates info box
-        setUpZoomSlider(usingSavedZoomFactor: true) // Set up zoom factor using saved zoom factor, rather than default
-        setDisplayConfiguration()                   // Start up with map in last-used map type and other display parameters.
-        setupSoundTrackMusicPlayer()                // Set up the player for the soundtrack
-        restoreUserSettings()                       // Restore user settings
-        displayInfoBoxAndLandsatButton(false)       // Start up with map overlay info box and buttons off
+        setupContextGlobeScene(for: globe, in: contextGlobeScene, hasTintedBackground: true)        // Set up globe scene
+        setupCoordinatesLabel(withTopCorners: true)                                                 // Set up the coordinates info box
+        setUpZoomSlider(usingSavedZoomFactor: true)                                                 // Set up zoom factor using saved zoom factor, rather than default
+        setDisplayConfiguration()                                                                   // Start up with map in last-used map type and other display parameters.
+        setupSoundTrackMusicPlayer()                                                                // Set up the player for the soundtrack
+        restoreUserSettings()                                                                       // Restore user settings
+        displayInfoBoxAndLandsatButton(false)                                                       // Start up with map overlay info box and buttons off
         justStartedUp = true
         
     }
