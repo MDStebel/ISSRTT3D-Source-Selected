@@ -64,7 +64,7 @@ class LiveVideoViewController: UIViewController, WKUIDelegate, WKNavigationDeleg
         
         super.viewDidLoad()
 
-        setupWebView()
+        setUpWebView()
         getHDEVUrl(then: loadWebView)       // Get URL of the stream from my website, and if successful, execute callback
 
     }
@@ -84,7 +84,7 @@ class LiveVideoViewController: UIViewController, WKUIDelegate, WKNavigationDeleg
     }
     
     
-    private func setupWebView() {
+    private func setUpWebView() {
         
         let webConfiguration = WKWebViewConfiguration()
         webConfiguration.mediaTypesRequiringUserActionForPlayback = .audio

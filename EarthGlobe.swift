@@ -2,21 +2,19 @@
 //  EarthGlobe.swift
 //  ISS Real-Time Tracker 3D
 //
-//  Created by Michael Stebel on 8/7/16.
-//  Copyright © 2016-2020 Michael Stebel Consulting, LLC. All rights reserved.
+//  Created by Michael Stebel on 10/22/20.
+//  Copyright © 2020 Michael Stebel Consulting, LLC. All rights reserved.
 //
 
 import SceneKit
-import QuartzCore
 
 
 /// The 3D Interactive Earth Globe Model
 class EarthGlobe {
     
-    static let glowPointWidth = CGFloat(0.16)                       // The size factor for the marker
+    static let glowPointWidth: CGFloat = 0.16                       // The size factor for the marker
 
-    let affectedBySpring = 1 << 1
-    let ambientLightIntensity = CGFloat(100)                        // The default value is 1000
+    let ambientLightIntensity: CGFloat = 100                        // The default value is 1000
     let cameraAltitude = Globals.cameraAltitude
     let dayNumberOfWinterStolsticeInYear = 356.0                    // The winter solstice is on approximately Dec 21, 22, or 23
     let daysInAYear = Globals.numberOfDaysInAYear
@@ -30,7 +28,7 @@ class EarthGlobe {
     let maxLatLonPerUnity = 1.1
     let minFov = Globals.minFov                                     // Min zoom in degrees
     let minLatLonPerUnity = -0.1
-    let sceneBoxSize = CGFloat(1000.0)
+    let sceneBoxSize: CGFloat = 1000.0
     let tiltOfEarthAxisInDegrees = Globals.earthTiltInDegrees
     let tiltOfEarthAxisInRadians = Globals.earthTiltInRadians
     
@@ -38,6 +36,7 @@ class EarthGlobe {
     var cameraNode = SCNNode()
     var gestureHost : SCNView?
     var globe = SCNNode()
+    var globeSegmentCount = 512
     var lastFovBeforeZoom : CGFloat?
     var lastPanLoc : CGPoint?
     var orbitTrack = SCNTorus()
@@ -53,7 +52,7 @@ class EarthGlobe {
         
         // Create the globe
         let globeShape = SCNSphere(radius: CGFloat(globeRadius) )
-        globeShape.segmentCount = 256
+        globeShape.segmentCount = globeSegmentCount
         
         // Use the high-resolution image
         guard let earthMaterial = globeShape.firstMaterial else { return }
@@ -195,20 +194,20 @@ class EarthGlobe {
     public func handlePanCommon(_ loc: CGPoint, viewSize: CGSize) {
         guard let lastPanLoc = lastPanLoc else { return }
         
-        // Measure the movement change
+        // Determine the movement change
         let delta = CGSize(width: (lastPanLoc.x - loc.x) / viewSize.width, height: (lastPanLoc.y - loc.y) / viewSize.height)
         
-        //  DeltaX = amount of rotation to apply (about the world axis)
-        //  DeltaY = amount of tilt to apply (to the axis itself)
+        //  DeltaX = amount of rotation to apply (about the Earth's axis)
+        //  DeltaY = amount of tilt to apply (to the Earth's axis)
         if delta.width != 0.0 || delta.height != 0.0 {
             
-            // As the user zooms in (smaller fieldOfView value), the finger travel is reduced
+            // As the user zooms in (smaller fieldOfView value), reduce finger travel
             let fovProportion = (self.camera.fieldOfView - minFov) / (maxFov - minFov)
-            let fovProportionRadians = Float(fovProportion * CGFloat(dragWidthInDegrees) ) * Globals.degreesToRadians
+            let fovProportionRadians = Float(fovProportion * CGFloat(dragWidthInDegrees)) * Globals.degreesToRadians
             let rotationAboutAxis = Float(delta.width) * fovProportionRadians
             let tiltOfAxisItself = Float(delta.height) * fovProportionRadians
             
-            // First, apply the rotation
+            // Apply the rotation
             let rotate = SCNMatrix4RotateF(userRotation.worldTransform, -rotationAboutAxis, 0.0, 1.0, 0.0)
             userRotation.setWorldTransform(rotate)
             
@@ -223,4 +222,3 @@ class EarthGlobe {
     }
     
 }
-

@@ -44,12 +44,12 @@ struct Globals {
     static var versionNumber                                    = ""
     static var zoomFactorWasResetInSettings                     = false
     static var zoomRangeFactorSelection                         = 2
-    static var cameraAltitude                                   = Float(1.85)
-    static var defaultCameraFov                                 = CGFloat(30)
-    static var maxFov                                           = CGFloat(60.0)
-    static var minFov                                           = CGFloat(5.0)
+    static var cameraAltitude: Float                            = 1.85
+    static var defaultCameraFov: CGFloat                        = 30
+    static var maxFov: CGFloat                                  = 60.0
+    static var minFov: CGFloat                                  = 5.0
 
-    static let ISSAltitudeFactor                                = Float(orbitalAltitudeFactor * 1.015)
+    static let ISSAltitudeFactor: Float                         = orbitalAltitudeFactor * 1.015
     static let ISSAltitudeInKM: Float                           = 425
     static let ISSOrbitAltitudeInScene                          = orbitalAltitudeFactor
     static let ISSOrbitInclinationInDegrees: Float              = 51.64

@@ -48,16 +48,18 @@ private let whatsNew = WhatsNew(
     ]
 )
 
+
 // Initialize a detail button
 let detailButton = WhatsNewViewController.DetailButton(
     title: "ISS Real-Time Tracker Version \(WhatsNew.Version.current())",
     action: .website(url: "")
 )
 
+
 // Fonts for items and other text
-private var mainFont                                = UIFont(name: Theme.appFont, size: 12)!
-private var itemTitleFont                           = UIFont(name: Theme.appFont, size: 12)!
 private var detailButtonFont                        = UIFont(name: Theme.appFont, size: 12)!
+private var itemTitleFont                           = UIFont(name: Theme.appFont, size: 12)!
+private var mainFont                                = UIFont(name: Theme.appFont, size: 12)!
 
 
 // Set the ISSRTT custom theme

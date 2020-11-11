@@ -17,16 +17,16 @@ class GlobeFullViewController: UIViewController, EarthGlobeProtocol {
     // MARK: - Properties
     
     struct Constants {
-        static let apiEndpointAString       = "---"
+        static let apiEndpointAString       = "https://api.wheretheiss.at/v1/satellites/25544"
         static let fontForTitle             = Theme.nasa
         static let segueToHelpFromGlobe     = "segueToHelpFromGlobe"
         static let segueToSettings          = "segueToSettings"
-        static let timerValue               = 3.0                           // Seconds between position updates
+        static let timerValue               = 3.0                           // Number of seconds between position updates
     }
     
 
     var fullGlobe                           = EarthGlobe()
-    var lastLat: Float                      = 0
+    var lastLat: Float                      = 0                             // To conform with the EarthGlobeProtocol, will save the last latitude
     var latitude                            = ""
     var longitude                           = ""
     var timer                               = Timer()
@@ -55,7 +55,7 @@ class GlobeFullViewController: UIViewController, EarthGlobeProtocol {
     
     
     /// Set up a reference to this view controller. This allows AppDelegate to do stuff on it when it enters background.
-    private func setupAppDelegate() {
+    private func setUpAppDelegate() {
         let appDelegate = UIApplication.shared.delegate! as! AppDelegate
         appDelegate.referenceToGlobeFullViewController = self
     }
@@ -65,8 +65,8 @@ class GlobeFullViewController: UIViewController, EarthGlobeProtocol {
         
         super.viewDidLoad()
         
-        setupAppDelegate()
-        setupEarthGlobeScene(for: fullGlobe, in: fullScreenGlobeView, hasTintedBackground: false)
+        setUpAppDelegate()
+        setUpEarthGlobeScene(for: fullGlobe, in: fullScreenGlobeView, hasTintedBackground: false)
 
     }
     

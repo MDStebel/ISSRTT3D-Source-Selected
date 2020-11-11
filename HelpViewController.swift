@@ -39,7 +39,7 @@ class HelpViewController: UIViewController, WKUIDelegate, WKNavigationDelegate {
     // MARK: - Methods
     
     
-    private func setupViewForHelp() {
+    private func setUpViewForHelp() {
         
         helpTextWebView.uiDelegate = self
         helpTextWebView.navigationDelegate = self
@@ -59,7 +59,7 @@ class HelpViewController: UIViewController, WKUIDelegate, WKNavigationDelegate {
         popoverPresentationController?.permittedArrowDirections = UIPopoverArrowDirection([.up])
         popoverPresentationController?.sourceRect = CGRect(x: -1.00, y: 3.0, width: helpButtonInCallingVCSourceView.bounds.width, height: helpButtonInCallingVCSourceView.bounds.height)
         
-        setupViewForHelp()
+        setUpViewForHelp()
         
     }
     

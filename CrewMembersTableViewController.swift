@@ -16,8 +16,8 @@ class CrewMembersTableViewController: UITableViewController, TableAnimatable {
     
     /// Constants
     private struct Constants {
-        static let bioBackupURLString           = "---"   // Backup URL is used if a bio URL is not returned in the JSON file
-        static let crewAPIEndpointURLString     = "---"                         // API endpoint
+        static let bioBackupURLString           = "https://www.issrtt.com/issrtt-astronaut-bio-not-found"   // Backup URL is used if a bio URL is not returned in the JSON file
+        static let crewAPIEndpointURLString     = "https://issrttapi.com/crew.json"                         // API endpoint
         static let customCellIdentifier         = "crewMemberCell"
         static let fontForTitle                 = Theme.nasa
         static let newLine                      = "\n"
@@ -71,7 +71,7 @@ class CrewMembersTableViewController: UITableViewController, TableAnimatable {
     override func viewDidLoad() {
         
         super.viewDidLoad()
-        setupRefreshControl()
+        setUpRefreshControl()
         
     } 
     
@@ -115,7 +115,7 @@ class CrewMembersTableViewController: UITableViewController, TableAnimatable {
     
     
     /// Set up refresh contol to allow pull-to-refresh in table view
-    private func setupRefreshControl() {
+    private func setUpRefreshControl() {
         
         refreshControl = UIRefreshControl()
         refreshControl?.tintColor = UIColor(named: Theme.tint)
@@ -210,8 +210,8 @@ class CrewMembersTableViewController: UITableViewController, TableAnimatable {
     }
     
     
-    /// Copy names to pasteboard
-    @IBAction private func copyCurrentCrewNamesToPasteboard(_ sender: UIBarButtonItem) {
+    /// Copy crew names to clipboard
+    @IBAction private func copyCurrentCrewNamesToClipboard(_ sender: UIBarButtonItem) {
         
         guard currentCrew != nil else { return }
         

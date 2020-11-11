@@ -49,19 +49,19 @@ class PassesTableViewController: UITableViewController, CLLocationManagerDelegat
     
     
     private struct Constants {
-        static let segueToHelpFromPasses                = "segueToHelpFromPasses"
+        static let altitude                             = 0
+        static let apiKey                               = "BZQB9N-9FTL47-ZXK7MZ-3TLE"                                     // API key
+        static let baseURLForOverheadTimes              = "https://api.n2yo.com/rest/v1/satellite/visualpasses/25544"     // API endpoint (new as of Nov 1, 2020)
+        static let customCellIdentifier                 = "OverheadTimesCell"
+        static let deg                                  = "°"
         static let fontForTitle                         = Theme.nasa
+        static let minObservationTime                   = 300                                                             // In seconds
+        static let newLine                              = "\n"
+        static let noRatingStar                         = #imageLiteral(resourceName: "star-unfilled")
+        static let ratingStar                           = #imageLiteral(resourceName: "star")
+        static let segueToHelpFromPasses                = "segueToHelpFromPasses"
     }
     
-    private let altitude                                = 0
-    private let apiKey                                  = "---"                                     // API key
-    private let baseURLForOverheadTimes                 = "---"     // API endpoint (new as of Nov 1, 2020)
-    private let customCellIdentifier                    = "OverheadTimesCell"
-    private let deg                                     = "°"
-    private let minObservationTime                      = 300                                                             // In seconds
-    private let newLine                                 = "\n"
-    private let noRatingStar                            = #imageLiteral(resourceName: "star-unfilled")
-    private let ratingStar                              = #imageLiteral(resourceName: "star")
     
     private var dateFormatterForDate                    = DateFormatter()
     private var dateFormatterForTime                    = DateFormatter()
@@ -103,7 +103,7 @@ class PassesTableViewController: UITableViewController, CLLocationManagerDelegat
     // MARK: - Methods
     
     
-    private func setupDateFormatter() {
+    private func setUpDateFormatter() {
         dateFormatterForDate.dateFormat = Globals.outputDateOnlyFormatString
         dateFormatterForTime.dateFormat = Globals.outputTimeOnlyFormatString
     }
@@ -117,9 +117,9 @@ class PassesTableViewController: UITableViewController, CLLocationManagerDelegat
         super.viewDidLoad()
 
         spinner.hidesWhenStopped = true
-        setupDateFormatter()
+        setUpDateFormatter()
         getNumberOfDaysOfPassesToReturn()
-        setupRefreshControl()
+        setUpRefreshControl()
         setUpLocationManager()
         checkCLAccess()
         
@@ -148,7 +148,7 @@ class PassesTableViewController: UITableViewController, CLLocationManagerDelegat
     
     
     /// Set up refresh contol to allow pull-to-refresh in table view
-    private func setupRefreshControl() {
+    private func setUpRefreshControl() {
         
         refreshControl = UIRefreshControl()
         refreshControl?.tintColor = UIColor(named: Theme.tint)
@@ -342,7 +342,7 @@ class PassesTableViewController: UITableViewController, CLLocationManagerDelegat
         }
         
         // Create the API URL request from endpoint. If not succesful, then return
-        let URLrequestString = baseURLForOverheadTimes + "/\(userLatitude)/\(userLongitude)/\(altitude)/\(numberOfDays)/\(minObservationTime)/&apiKey=\(apiKey)"
+        let URLrequestString = Constants.baseURLForOverheadTimes + "/\(userLatitude)/\(userLongitude)/\(Constants.altitude)/\(numberOfDays)/\(Constants.minObservationTime)/&apiKey=\(Constants.apiKey)"
         
         guard let URLRequest = URL(string: URLrequestString) else { return }
         
@@ -410,12 +410,12 @@ class PassesTableViewController: UITableViewController, CLLocationManagerDelegat
         // Create entries for event location and notes
         event.location = "Your Location: \(userCurrentCoordinatesString)"
         let mag = passEvent.mag
-        let startAz = String(format: Globals.azimuthFormat, passEvent.startAz) + deg
-        let startEl = String(format: Globals.elevationFormat, passEvent.startEl) + deg
-        let maxAz = String(format: Globals.azimuthFormat, passEvent.maxAz) + deg
-        let maxEl = String(format: Globals.elevationFormat, passEvent.maxEl) + deg
-        let endAz = String(format: Globals.azimuthFormat, passEvent.endAz) + deg
-        let endEl = String(format: Globals.elevationFormat, passEvent.endEl) + deg
+        let startAz = String(format: Globals.azimuthFormat, passEvent.startAz) + Constants.deg
+        let startEl = String(format: Globals.elevationFormat, passEvent.startEl) + Constants.deg
+        let maxAz = String(format: Globals.azimuthFormat, passEvent.maxAz) + Constants.deg
+        let maxEl = String(format: Globals.elevationFormat, passEvent.maxEl) + Constants.deg
+        let endAz = String(format: Globals.azimuthFormat, passEvent.endAz) + Constants.deg
+        let endEl = String(format: Globals.elevationFormat, passEvent.endEl) + Constants.deg
         event.notes = "Max Magnitude: \(mag)\nStarting azimuth: \(startAz) \(passEvent.startAzCompass)\nStarting elevation: \(startEl)\nMax azimuth: \(maxAz) \(passEvent.maxAzCompass)\nMax elevation: \(maxEl)\nEnding azimuth: \(endAz) \(passEvent.endAzCompass)\nEnding elevation: \(endEl)"
         
         let whichEvent = EKSpan.thisEvent
@@ -545,7 +545,7 @@ extension PassesTableViewController {
         }
         
         
-        let cell = tableView.dequeueReusableCell(withIdentifier: customCellIdentifier, for: indexPath) as! PassesTableViewCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: Constants.customCellIdentifier, for: indexPath) as! PassesTableViewCell
         
         if numberOfOverheadTimesActuallyReported > 0 {
             
@@ -559,20 +559,20 @@ extension PassesTableViewController {
             
             // Start of pass data
             cell.startTime.text = dateFormatterForTime.string(from: Date(timeIntervalSince1970: overheadTimesList[indexPath.row].startUTC))
-            cell.startAz.text = String(format: Globals.azimuthFormat, overheadTimesList[indexPath.row].startAz) + deg
-            cell.startEl.text = String(format: Globals.elevationFormat, overheadTimesList[indexPath.row].startEl) + deg
+            cell.startAz.text = String(format: Globals.azimuthFormat, overheadTimesList[indexPath.row].startAz) + Constants.deg
+            cell.startEl.text = String(format: Globals.elevationFormat, overheadTimesList[indexPath.row].startEl) + Constants.deg
             cell.startComp.text = String(overheadTimesList[indexPath.row].startAzCompass)
             
             // Maximum elevation data
             cell.maxTime.text = dateFormatterForTime.string(from: Date(timeIntervalSince1970: overheadTimesList[indexPath.row].maxUTC))
-            cell.maxAz.text = String(format: Globals.azimuthFormat, overheadTimesList[indexPath.row].maxAz) + deg
-            cell.maxEl.text = String(format: Globals.elevationFormat, overheadTimesList[indexPath.row].maxEl) + deg
+            cell.maxAz.text = String(format: Globals.azimuthFormat, overheadTimesList[indexPath.row].maxAz) + Constants.deg
+            cell.maxEl.text = String(format: Globals.elevationFormat, overheadTimesList[indexPath.row].maxEl) + Constants.deg
             cell.maxComp.text = String(overheadTimesList[indexPath.row].maxAzCompass)
             
             // End-of-pass data
             cell.endTime.text = dateFormatterForTime.string(from: Date(timeIntervalSince1970: overheadTimesList[indexPath.row].endUTC))
-            cell.endAz.text = String(format: Globals.azimuthFormat, overheadTimesList[indexPath.row].endAz) + deg
-            cell.endEl.text = String(format: Globals.elevationFormat, overheadTimesList[indexPath.row].endEl) + deg
+            cell.endAz.text = String(format: Globals.azimuthFormat, overheadTimesList[indexPath.row].endAz) + Constants.deg
+            cell.endEl.text = String(format: Globals.elevationFormat, overheadTimesList[indexPath.row].endEl) + Constants.deg
             cell.endComp.text = String(overheadTimesList[indexPath.row].endAzCompass)
             
             
@@ -581,7 +581,7 @@ extension PassesTableViewController {
             let rating = numberOfRatingStarsFor(thisMagnitude: mag)
             let totalStarsInRatingSystem = RatingSystem.allCases.count-1       // Subtract 1 because there is one less star that actually can show
             for star in 0...(totalStarsInRatingSystem-1) {
-                cell.ratingStarView[star].image = star < rating ? ratingStar : noRatingStar
+                cell.ratingStarView[star].image = star < rating ? Constants.ratingStar : Constants.noRatingStar
             }
             
         } else {

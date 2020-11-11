@@ -15,7 +15,7 @@ protocol EarthGlobeProtocol: UIViewController {
     
     var lastLat: Float { get set }
     
-    func setupEarthGlobeScene(for globe: EarthGlobe, in scene: SCNView, hasTintedBackground: Bool)
+    func setUpEarthGlobeScene(for globe: EarthGlobe, in scene: SCNView, hasTintedBackground: Bool)
     func updateEarthGlobeScene(in globe: EarthGlobe, latitude: String, longitude: String, lastLat: inout Float )
     
 }
@@ -28,7 +28,7 @@ extension EarthGlobeProtocol {
     /// - Parameters:
     ///   - globe: Which globe instance to set up in the scene
     ///   - scene: The scene to use
-    func setupEarthGlobeScene(for globe: EarthGlobe, in scene: SCNView, hasTintedBackground: Bool) {
+    func setUpEarthGlobeScene(for globe: EarthGlobe, in scene: SCNView, hasTintedBackground: Bool) {
         
         globe.setupInSceneView(scene, pinchGestureIsEnabled: false)
         

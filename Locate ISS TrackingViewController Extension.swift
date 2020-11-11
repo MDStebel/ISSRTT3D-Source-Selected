@@ -48,7 +48,7 @@ extension TrackingViewController {
         
         DispatchQueue.main.async {
             
-            self.setDisplayConfiguration()
+            self.setUpDisplayConfiguration()
             
             if Globals.zoomFactorWasResetInSettings {           // If reset was pressed in Settings, or if the zoom scale factor was changed, this flag will be set.
                 // So, reset zoom to default values for the selected scale factor and call zoomValueChanged method.
@@ -90,7 +90,7 @@ extension TrackingViewController {
         setupAllOverlaysAndButtons()
         
         // Make sure we can create the URL
-        guard let apiEndpointURL = URL(string: apiEndpointAString) else { return }
+        guard let apiEndpointURL = URL(string: Constants.apiEndpointAString) else { return }
         
         /// Task to get JSON data from API by sending request to API endpoint, parse response for ISS data, and then display ISS position, etc.
         let locateAndDisplayISSPositionTask = URLSession.shared.dataTask(with: apiEndpointURL) { [ weak self ] (data, response, error) -> Void in
@@ -126,13 +126,13 @@ extension TrackingViewController {
                         
                         // Update globe with ISS position and orbital track, if enabled
                         if Globals.displayGlobe {
-                            self?.setupCoordinatesLabel(withTopCorners: false)
-                            self?.contextGlobeScene.isHidden = false
+                            self?.setUpCoordinatesLabel(withTopCorners: false)
+                            self?.globeScene.isHidden = false
                             self?.globeExpandButton.isHidden = false
                             self?.updateEarthGlobeScene(in: self!.globe, latitude: self!.latitude, longitude: self!.longitude, lastLat: &self!.lastLat)
                         } else {
-                            self?.setupCoordinatesLabel(withTopCorners: true)
-                            self?.contextGlobeScene.isHidden = true
+                            self?.setUpCoordinatesLabel(withTopCorners: true)
+                            self?.globeScene.isHidden = true
                             self?.globeExpandButton.isHidden = true
                         }
                         

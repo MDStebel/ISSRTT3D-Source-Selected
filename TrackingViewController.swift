@@ -6,10 +6,10 @@
 //  Copyright © 2016-2020 Michael Stebel Consulting. All rights reserved.
 //
 
-import UIKit
-import MapKit
 import AVFoundation
+import MapKit
 import SceneKit
+import UIKit
 
 
 class TrackingViewController: UIViewController, MKMapViewDelegate, UIGestureRecognizerDelegate, AVAudioPlayerDelegate, EarthGlobeProtocol {
@@ -44,11 +44,15 @@ class TrackingViewController: UIViewController, MKMapViewDelegate, UIGestureReco
     }
     
     /// Local constants
-    private struct Constants {
+    struct Constants {
         static let animationOffsetY: CGFloat    = 90.0
+        static let apiEndpointAString           = "https://api.wheretheiss.at/v1/satellites/25544"
+        static let apiEndpointBString           = "http://api.open-notify.org/iss-now.json"
         static let defaultTimerInterval         = 3.0
         static let fontForTitle                 = Theme.nasa
         static let kilometersToMiles            = 0.621371192
+        static let linefeed                     = "\n"
+        static let numberFormatter              = NumberFormatter()
         static let numberOfZoomIntervals        = 6
         static let zoomFactorStringFormat       = "Zoom: %2.2f°"
         static let zoomScaleFactor              = 30.0
@@ -66,6 +70,7 @@ class TrackingViewController: UIViewController, MKMapViewDelegate, UIGestureReco
     
     
     // MARK: - Properties
+    
     
     
     // Change status bar to light color for this VC
@@ -147,16 +152,10 @@ class TrackingViewController: UIViewController, MKMapViewDelegate, UIGestureReco
         return MKCoordinateRegion.init(center: location, span: span)
     }
     
-    /// Endpoints for API
-    let apiEndpointAString                  = "---"
-    let apiEndpointBString                  = "---"
-    
+   
     /// String format for zoom factor label
     var dateFormatter: DateFormatter?       = DateFormatter()         // This is declared as an optional so that we can test it for nil in save settings in case it wasn't set before being called
-    
-    private let numberFormatter             = NumberFormatter()
-    private let linefeed                    = "\n"
-    
+       
     private var alreadyAnimatedStartPrompt  = false
     private var altitudeInMiles             = ""
     private var justStartedUp               = false
@@ -183,15 +182,15 @@ class TrackingViewController: UIViewController, MKMapViewDelegate, UIGestureReco
     
     var altitude                            = "" {
         didSet{
-            altitudeInMiles = numberFormatter.string(from: NSNumber(value: Double(altitude)! * Constants.kilometersToMiles))!
-            altitudeInKm = numberFormatter.string(from: NSNumber(value: Double(altitude)!))!
+            altitudeInMiles = Constants.numberFormatter.string(from: NSNumber(value: Double(altitude)! * Constants.kilometersToMiles))!
+            altitudeInKm = Constants.numberFormatter.string(from: NSNumber(value: Double(altitude)!))!
             altString = "    Altitude: \(altitudeInKm) km  (\(altitudeInMiles) miles)"
         }
     }
     var velocity = "" {
         didSet {
-            velocityInMPH = numberFormatter.string(from: NSNumber(value: Double(velocity)! * Constants.kilometersToMiles))!
-            velocityInKmH = numberFormatter.string(from: NSNumber(value: Double(velocity)!))!
+            velocityInMPH = Constants.numberFormatter.string(from: NSNumber(value: Double(velocity)! * Constants.kilometersToMiles))!
+            velocityInKmH = Constants.numberFormatter.string(from: NSNumber(value: Double(velocity)!))!
             velString = "    Velocity: \(velocityInKmH) km/h  (\(velocityInMPH) mph)"
         }
     }
@@ -250,7 +249,7 @@ class TrackingViewController: UIViewController, MKMapViewDelegate, UIGestureReco
     @IBOutlet weak var velocityLabel: UILabel!
     @IBOutlet weak var copyButton: UIButton!
 
-    @IBOutlet weak var contextGlobeScene: SCNView!
+    @IBOutlet weak var globeScene: SCNView!
     @IBOutlet weak var globeExpandButton: UIButton!
     
     // MARK: - Methods
@@ -258,7 +257,7 @@ class TrackingViewController: UIViewController, MKMapViewDelegate, UIGestureReco
     
     /// Set up rounded top corners for the coordinates label box
     /// - Parameter withTopCorners: True if we want the top to have rounded corners
-    func setupCoordinatesLabel(withTopCorners: Bool) {
+    func setUpCoordinatesLabel(withTopCorners: Bool) {
         if withTopCorners {
         coordinatesLabel.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
         coordinatesLabel.layer.cornerRadius = 10
@@ -269,7 +268,7 @@ class TrackingViewController: UIViewController, MKMapViewDelegate, UIGestureReco
     }
     
     
-    private func setupMap() {
+    private func setUpMap() {
         map.delegate = self
         map.isPitchEnabled = true
         map.isRotateEnabled = false
@@ -278,19 +277,19 @@ class TrackingViewController: UIViewController, MKMapViewDelegate, UIGestureReco
     }
     
     
-    private func setupNumberFormatter() {
-        numberFormatter.numberStyle = NumberFormatter.Style.decimal
-        numberFormatter.maximumFractionDigits = 0
+    private func setUpNumberFormatter() {
+        Constants.numberFormatter.numberStyle = NumberFormatter.Style.decimal
+        Constants.numberFormatter.maximumFractionDigits = 0
     }
     
     
-    private func setupDateFormatter() {
+    private func setUpDateFormatter() {
         dateFormatter?.dateFormat = Globals.outputDateFormatString
     }
     
     
     /// Set up a reference to this view controller. This allows AppDelegate to do stuff on it when it enters background.
-    private func setupAppDelegate() {
+    private func setUpAppDelegate() {
         let appDelegate = UIApplication.shared.delegate! as! AppDelegate
         appDelegate.referenceToViewController = self
     }
@@ -300,15 +299,15 @@ class TrackingViewController: UIViewController, MKMapViewDelegate, UIGestureReco
         
         super.viewDidLoad()
         
-        setupAppDelegate()
-        setupDateFormatter()
-        setupNumberFormatter()
-        setupMap()
-        setupEarthGlobeScene(for: globe, in: contextGlobeScene, hasTintedBackground: true)        // Set up globe scene
-        setupCoordinatesLabel(withTopCorners: true)                                                 // Set up the coordinates info box
+        setUpAppDelegate()
+        setUpDateFormatter()
+        setUpNumberFormatter()
+        setUpMap()
+        setUpEarthGlobeScene(for: globe, in: globeScene, hasTintedBackground: true)        // Set up globe scene
+        setUpCoordinatesLabel(withTopCorners: true)                                                 // Set up the coordinates info box
         setUpZoomSlider(usingSavedZoomFactor: true)                                                 // Set up zoom factor using saved zoom factor, rather than default
-        setDisplayConfiguration()                                                                   // Start up with map in last-used map type and other display parameters.
-        setupSoundTrackMusicPlayer()                                                                // Set up the player for the soundtrack
+        setUpDisplayConfiguration()                                                                   // Start up with map in last-used map type and other display parameters.
+        setUpSoundTrackMusicPlayer()                                                                // Set up the player for the soundtrack
         restoreUserSettings()                                                                       // Restore user settings
         displayInfoBoxAndLandsatButton(false)                                                       // Start up with map overlay info box and buttons off
         justStartedUp = true
@@ -374,19 +373,19 @@ class TrackingViewController: UIViewController, MKMapViewDelegate, UIGestureReco
     }
     
     
-    /// Copy position information to pasteboard
-    @IBAction func copyCoordinatesToPasteboard(_ sender: Any) {
+    /// Copy position information to clipboard
+    @IBAction func copyCoordinatesToClipboard(_ sender: Any) {
         guard !positionString.isEmpty else { return }
         
         // Build the string
         let dateAndTime = (dateFormatter?.string(from: Date(timeIntervalSince1970: Double(atDateAndTime)!)))!
-        let part1 = positionString + linefeed + altString + linefeed
-        let part2 = velString + linefeed + "  Time: " + dateAndTime
+        let part1 = positionString + Constants.linefeed + altString + Constants.linefeed
+        let part2 = velString + Constants.linefeed + "  Time: " + dateAndTime
         let dataToBeCopiedString = part1 + part2
         
         UIPasteboard.general.string = dataToBeCopiedString      // Copy to general pasteboard
         
-        alert(for: "Current ISS Position" + linefeed + "Copied to Your Clipboard", message: dataToBeCopiedString)
+        alert(for: "Current ISS Position" + Constants.linefeed + "Copied to Your Clipboard", message: dataToBeCopiedString)
     }
     
     
@@ -571,7 +570,7 @@ class TrackingViewController: UIViewController, MKMapViewDelegate, UIGestureReco
         
         let integerTimerInterval = Int(timerInterval)
         
-        zoomFactorLabel.text! = "Scale: \(zoomRangeFactorLabel) \(linefeed)" + String(format: Constants.zoomFactorStringFormat, round(zoomSlider.value * 100.0) / 100.0) + "\(linefeed)Interval: \(integerTimerInterval)" + "\(integerTimerInterval > 1 ? " secs." : " sec.")"
+        zoomFactorLabel.text! = "Scale: \(zoomRangeFactorLabel) \(Constants.linefeed)" + String(format: Constants.zoomFactorStringFormat, round(zoomSlider.value * 100.0) / 100.0) + "\(Constants.linefeed)Interval: \(integerTimerInterval)" + "\(integerTimerInterval > 1 ? " secs." : " sec.")"
         
     }
     
@@ -600,7 +599,7 @@ class TrackingViewController: UIViewController, MKMapViewDelegate, UIGestureReco
     /// Set up the map.
     ///
     /// Sets the map type and associated parameters basedon selector control in Settings. Sets cursor and zoomFactorLabel color to black or white, and coordinatesLabel to red or white depending upon map type.
-    func setDisplayConfiguration() {
+    func setUpDisplayConfiguration() {
         
         switch Globals.mapTypeSelection {
         
@@ -828,7 +827,7 @@ class TrackingViewController: UIViewController, MKMapViewDelegate, UIGestureReco
     
     
     /// Set up audio player to play soundtrack without stopping any audio that was playing when app launched
-    private func setupSoundTrackMusicPlayer() {
+    private func setUpSoundTrackMusicPlayer() {
         
         if let bundlePath = Bundle.main.path(forResource: soundtrackFilePathString, ofType: nil) {
             
@@ -868,7 +867,7 @@ class TrackingViewController: UIViewController, MKMapViewDelegate, UIGestureReco
     /// Clear the ground track plot line
     @IBAction func clearOrbitGroundTrack(_ sender: UIButton) {
 
-        let alertController = UIAlertController(title: "Clear Ground Track", message: "Are you sure you wish to" + linefeed + "clear the ground track?" + linefeed + linefeed + "Note: You can turn off the" + linefeed + "ground track line in Settings.", preferredStyle: .alert)
+        let alertController = UIAlertController(title: "Clear Ground Track", message: "Are you sure you wish to" + Constants.linefeed + "clear the ground track?" + Constants.linefeed + Constants.linefeed + "Note: You can turn off the" + Constants.linefeed + "ground track line in Settings.", preferredStyle: .alert)
         alertController.addAction(UIAlertAction(title: "Clear", style: .destructive) { (clearIt) in
             self.map.removeOverlays(self.map.overlays)  // Need to remove all MKMap overlays, as multitple polylines are overlayed on the map as location is updated
             }

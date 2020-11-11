@@ -84,7 +84,7 @@ extension EarthGlobe {
         var rotationMatrix3 = SCNMatrix4Identity
         
         // Create the rotation matrices for the orbital inclination to align relative to the globe and the current ISS position
-        rotationMatrix1 = SCNMatrix4RotateF(rotationMatrix1, ISSOrbitInclinationInRadiansCorrected , 0, 0, 1)   // Z rotation
+        rotationMatrix1 = SCNMatrix4RotateF(rotationMatrix1, ISSOrbitInclinationInRadiansCorrected , 0, 0, 1)   // z rotation
         rotationMatrix2 = SCNMatrix4RotateF(rotationMatrix2, orbitalCorrectionForLon, 0, 1, 0)                  // y rotation
         rotationMatrix3 = SCNMatrix4RotateF(rotationMatrix3, orbitalCorrectionForLat, 1, 0, 0)                  // x rotation
         
