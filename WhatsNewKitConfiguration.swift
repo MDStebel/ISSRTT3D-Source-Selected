@@ -29,7 +29,7 @@ private let whatsNew = WhatsNew(
         WhatsNew.Item(
             title: "Improvements & Fixes",
             subtitle: """
-                      Added globe button to tab bar. Expanded globe to fill screen in full-screen mode. Smoother globe panning, rotating and zooming.
+                      In this release, 6.14.2, fixed bug in globe panning and improved globe performance.
                       """,
             image: UIImage(named: "icons8-bug_filled")
         ),

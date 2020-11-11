@@ -10,7 +10,7 @@ import SceneKit
 import UIKit
 
 
-/// Protocol that adds support for EarthGlobe to a UIViewController class with properties and methods to create the scene and update it
+/// Protocol that adds EarthGlobe support to a UIViewController subclass, with properties and methods to create the scene and update it
 protocol EarthGlobeProtocol: UIViewController {
     
     var lastLat: Float { get set }
@@ -26,7 +26,7 @@ extension EarthGlobeProtocol {
     
     /// Create the context globe scene
     /// - Parameters:
-    ///   - globe: Which globe instance to setup in the scenen
+    ///   - globe: Which globe instance to set up in the scene
     ///   - scene: The scene to use
     func setupEarthGlobeScene(for globe: EarthGlobe, in scene: SCNView, hasTintedBackground: Bool) {
         
@@ -52,7 +52,7 @@ extension EarthGlobeProtocol {
     ///   - longitude: The longitude
     ///   - lastLat: The last latitude as a mutating parameter
     func updateEarthGlobeScene(in globe: EarthGlobe, latitude: String, longitude: String, lastLat: inout Float ) {
-
+        
         var headingFactor: Float = 1
         var showOrbitNow = false
         

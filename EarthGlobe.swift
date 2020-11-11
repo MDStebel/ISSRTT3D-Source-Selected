@@ -114,18 +114,16 @@ class EarthGlobe {
         theScene.allowsCameraControl = true
         self.gestureHost = theScene
         
-        if !theScene.allowsCameraControl {                  // Only if we're controlling the camera
             if pinchGestureIsEnabled {
                 let pan = UIPanGestureRecognizer(target: self, action:#selector(EarthGlobe.onPanGesture(pan:)))
                 theScene.addGestureRecognizer(pan)
                 let pinch = UIPinchGestureRecognizer(target: self, action: #selector(EarthGlobe.onPinchGesture(pinch:)))
                 theScene.addGestureRecognizer(pinch)
                 print("pinch enabled")
-            } else {
+            } else {                            // Handle pinch gestures with default handler, but use the following code for panning gesture handling
                 let pan = UIPanGestureRecognizer(target: self, action:#selector(EarthGlobe.onPanGesture(pan:)))
                 theScene.addGestureRecognizer(pan)
             }
-        }
         
         completeTheSetup()
         
@@ -137,7 +135,7 @@ class EarthGlobe {
         // Provides ambient light to light the globe a bit in nighttime.
         let ambientLight = SCNLight()
         ambientLight.type = .ambient
-        ambientLight.intensity = ambientLightIntensity // default is 1000!
+        ambientLight.intensity = ambientLightIntensity
         
         // Add the camera
         camera.fieldOfView = defaultCameraFov
