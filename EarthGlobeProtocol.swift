@@ -1,6 +1,6 @@
 //
 //  EarthGlobeProtocol.swift
-//  ISS Tracker
+//  ISS Real-Time Tracker 3D
 //
 //  Created by Michael Stebel on 11/10/20.
 //  Copyright © 2020 Michael Stebel Consulting, LLC. All rights reserved.
@@ -10,8 +10,8 @@ import SceneKit
 import UIKit
 
 
-/// A protocol that adds support for EarthGlobe with methods to create the scene and update it
-protocol EarthGlobeProtocol {
+/// Protocol that adds support for EarthGlobe to a UIViewController class with properties and methods to create the scene and update it
+protocol EarthGlobeProtocol: UIViewController {
     
     var lastLat: Float { get set }
     
@@ -89,5 +89,4 @@ extension EarthGlobeProtocol {
         
     }
     
-   
 }
