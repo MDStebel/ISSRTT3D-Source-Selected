@@ -16,8 +16,8 @@ class CrewMembersTableViewController: UITableViewController, TableAnimatable {
     
     /// Constants
     private struct Constants {
-        static let bioBackupURLString           = "https://www.issrtt.com/issrtt-astronaut-bio-not-found"   // Backup URL is used if a bio URL is not returned in the JSON file
-        static let crewAPIEndpointURLString     = "https://issrttapi.com/crew.json"                         // API endpoint
+        static let bioBackupURLString           = "---"   // Backup URL is used if a bio URL is not returned in the JSON file
+        static let crewAPIEndpointURLString     = "---"                         // API endpoint
         static let customCellIdentifier         = "crewMemberCell"
         static let fontForTitle                 = Theme.nasa
         static let newLine                      = "\n"
@@ -273,9 +273,9 @@ class CrewMembersTableViewController: UITableViewController, TableAnimatable {
                 self.spinner.startAnimating()
             }
             
-            let navigationController = segue.destination as! UINavigationController
-            let destinationVC = navigationController.topViewController as! HelpViewController
-            destinationVC.helpContentHTML = UserGuide.crewHelp 
+            let navigationController                      = segue.destination as! UINavigationController
+            let destinationVC                             = navigationController.topViewController as! HelpViewController
+            destinationVC.helpContentHTML                 = UserGuide.crewHelp
             destinationVC.helpButtonInCallingVCSourceView = navigationController.navigationBar
             
             DispatchQueue.main.async {
@@ -370,24 +370,24 @@ extension CrewMembersTableViewController {
         
         if currentCrewSize > 0 {
             
-            let index = indexPath.row
+            let index                 = indexPath.row
             
             cell.astronautImage.image = getAstronautImage(forCell: index) ?? placeholderImage
             
-            let launchDate = currentCrew![index].launchDateFormatted
-            let title = currentCrew![index].title
-            let daysInSpace = currentCrew![indexPath.row].numberOfDaysInSpace()
-            let startOfLabelText = currentCrew![index].name + Globals.spacer
-            let flagImageURLString = currentCrew![index].flag
-            let expedition = currentCrew![index].expedition
-            let mission = currentCrew![index].mission ?? expedition!
-            let vehicle = currentCrew![index].launchVehicle
+            let launchDate            = currentCrew![index].launchDateFormatted
+            let title                 = currentCrew![index].title
+            let daysInSpace           = currentCrew![indexPath.row].numberOfDaysInSpace()
+            let startOfLabelText      = currentCrew![index].name + Globals.spacer
+            let flagImageURLString    = currentCrew![index].flag
+            let expedition            = currentCrew![index].expedition
+            let mission               = currentCrew![index].mission ?? expedition!
+            let vehicle               = currentCrew![index].launchVehicle
             
-            cell.astronautName.text = startOfLabelText + flagImageURLString
+            cell.astronautName.text   = startOfLabelText + flagImageURLString
             
-            var temp = "Title: \(title)\nMission: \(mission)\nDays in space: \(daysInSpace)\n"
+            var temp                  = "Title: \(title)\nMission: \(mission)\nDays in space: \(daysInSpace)\n"
             temp += "Launched on: \(launchDate)\nSpacecraft: \(vehicle)"
-            cell.astronautInfo.text = temp
+            cell.astronautInfo.text   = temp
             
         }
         
@@ -406,11 +406,11 @@ extension CrewMembersTableViewController {
     
     private func centerPopover() {
         
-        let parentBounds = view.bounds
-        let shortBioViewWidth = crewMemberDetailView.frame.width
-        let shortBioViewHeight = crewMemberDetailView.frame.height
-        let xPosition = parentBounds.midX - shortBioViewWidth / 2.0
-        let yPosition = parentBounds.midY - shortBioViewHeight / 2.0
+        let parentBounds           = view.bounds
+        let shortBioViewWidth      = crewMemberDetailView.frame.width
+        let shortBioViewHeight     = crewMemberDetailView.frame.height
+        let xPosition              = parentBounds.midX - shortBioViewWidth / 2.0
+        let yPosition              = parentBounds.midY - shortBioViewHeight / 2.0
         crewMemberDetailView.frame = CGRect(x: xPosition, y: yPosition, width: shortBioViewWidth, height: shortBioViewHeight)
         
     }
@@ -421,12 +421,13 @@ extension CrewMembersTableViewController {
         
         centerPopover()
         
-        let index = indexPath.row
-        let startOfLabelText = currentCrew![index].name + Globals.spacer
-        let flagImageURLString = currentCrew![index].flag 
-        crewMemberDetailView.shortBioName?.text = startOfLabelText + flagImageURLString
+        let index                                       = indexPath.row
+        let startOfLabelText                            = currentCrew![index].name + Globals.spacer
+        let flagImageURLString                          = currentCrew![index].flag
+        crewMemberDetailView.shortBioName?.text         = startOfLabelText + flagImageURLString
         crewMemberDetailView.shortBioInforomation?.text = currentCrew?[index].shortBioBlurb ?? "No short bio is available."
-        crewMemberDetailView.twitterHandleURL = currentCrew?[index].twitter
+        crewMemberDetailView.twitterHandleURL           = currentCrew?[index].twitter
+        
         view.addSubview(crewMemberDetailView)
         
     }
