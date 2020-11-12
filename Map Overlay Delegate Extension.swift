@@ -14,10 +14,10 @@ extension TrackingViewController {
     
     func mapView(_ mapView: MKMapView, rendererFor overlay: MKOverlay) -> MKOverlayRenderer {
         
-        let renderer = MKPolylineRenderer(overlay: overlay)
+        let renderer         = MKPolylineRenderer(overlay: overlay)
         renderer.strokeColor = UIColor(named: Theme.tint)?.withAlphaComponent(0.75)
-        renderer.lineWidth = 5.0
-        renderer.lineCap = .butt
+        renderer.lineWidth   = 5.0
+        renderer.lineCap     = .butt
         
         return renderer
         

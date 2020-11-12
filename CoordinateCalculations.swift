@@ -21,20 +21,20 @@ struct CoordinateCalculations {
     /// - Returns: Position as a SCNVector3
     static func convertLatLonCoordinatesToXYZ(lat: Float, lon: Float, alt: Float) -> SCNVector3 {
         
-        let cosLat = cosf(lat * Globals.degreesToRadians)
-        let sinLat = sinf(lat * Globals.degreesToRadians)
-        let cosLon = cosf(lon * Globals.degreesToRadians)
-        let sinLon = sinf(lon * Globals.degreesToRadians)
-        let x = alt * cosLat * cosLon
-        let y = alt * cosLat * sinLon
-        let z = alt * sinLat
+        let cosLat    = cosf(lat * Globals.degreesToRadians)
+        let sinLat    = sinf(lat * Globals.degreesToRadians)
+        let cosLon    = cosf(lon * Globals.degreesToRadians)
+        let sinLon    = sinf(lon * Globals.degreesToRadians)
+        let x         = alt * cosLat * cosLon
+        let y         = alt * cosLat * sinLon
+        let z         = alt * sinLat
         
         // Map to position on a sphere
         let sceneKitX = -x
         let sceneKitY = z
         let sceneKitZ = y
         
-        let position = SCNVector3(x: sceneKitX, y: sceneKitY, z: sceneKitZ )
+        let position  = SCNVector3(x: sceneKitX, y: sceneKitY, z: sceneKitZ )
         return position
         
     }
@@ -83,8 +83,8 @@ struct CoordinateCalculations {
     /// - Returns: The geometric mean longitude in degrees as a Float
     static func getGeometricMeanLongitudeOfSunAtCurrentTime() -> Float {
      
-        let now = Date()
-        let jC = julianCentury(date: now)
+        let now                       = Date()
+        let jC                        = julianCentury(date: now)
 
         let sunGeometricMeanLongitude = Float((280.46646 + jC * (36000.76983 + jC * 0.0003032))).truncatingRemainder(dividingBy: 360)
         
@@ -118,17 +118,17 @@ struct CoordinateCalculations {
         var lonCorrection: Float
         
         // This determines current local and GMT time
-        let localMins = Float(Calendar.current.component(.minute, from: Date()))
-        let localHour = Float(Calendar.current.component(.hour, from: Date())) + localMins / Float(Globals.numberOfMinutesInAnHour)
+        let localMins      = Float(Calendar.current.component(.minute, from: Date()))
+        let localHour      = Float(Calendar.current.component(.hour, from: Date())) + localMins / Float(Globals.numberOfMinutesInAnHour)
         let secondsFromGMT = Float(TimeZone.current.secondsFromGMT())
         
         // Correct for time and day relative to GMT and the International Date Line
         if secondsFromGMT < 0 {
             timeCorrection = 1
-            dayCorrection = 0
+            dayCorrection  = 0
         } else {
             timeCorrection = -1
-            dayCorrection = -Float(Globals.numberOfHoursInADay)
+            dayCorrection  = -Float(Globals.numberOfHoursInADay)
         }
         
         // Calculate GMT
@@ -166,15 +166,15 @@ struct CoordinateCalculations {
     /// - Returns: The coordinates string in deg min sec format.
     static func decimalCoordinatesToDegMinSec(latitude: Double, longitude: Double, format: String) -> String {
         
-        var latSeconds = Int(latitude * 3600)
-        let latDegrees = latSeconds / 3600
-        latSeconds = abs(latSeconds % 3600)
-        let latMinutes = latSeconds / 60
+        var latSeconds  = Int(latitude * 3600)
+        let latDegrees  = latSeconds / 3600
+        latSeconds      = abs(latSeconds % 3600)
+        let latMinutes  = latSeconds / 60
         latSeconds %= 60
         
         var longSeconds = Int(longitude * 3600)
         let longDegrees = longSeconds / 3600
-        longSeconds = abs(longSeconds % 3600)
+        longSeconds     = abs(longSeconds % 3600)
         let longMinutes = longSeconds / 60
         longSeconds %= 60
         

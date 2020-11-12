@@ -32,7 +32,7 @@ struct Astronaut {
     let launchVehicle: String
     
     var shortAstronautDescription: String {
-        return name + "  " + (flag)
+        return name + Globals.spacer + (flag)
     }
 
     
@@ -106,18 +106,18 @@ struct Astronaut {
             {
                 for astronaut in astronauts  {
                     
-                    let name = astronaut["name"] as! String
-                    let title = astronaut["title"] as! String
-                    let country = astronaut["country"] as! String
-                    let countryFlag = astronaut["countryflag"] as! String
-                    let spaceCraft = astronaut["location"] as! String
-                    let launchDate = astronaut["launchdate"] as! String
-                    let bio = astronaut["biolink"] as! String
+                    let name          = astronaut["name"] as! String
+                    let title         = astronaut["title"] as! String
+                    let country       = astronaut["country"] as! String
+                    let countryFlag   = astronaut["countryflag"] as! String
+                    let spaceCraft    = astronaut["location"] as! String
+                    let launchDate    = astronaut["launchdate"] as! String
+                    let bio           = astronaut["biolink"] as! String
                     let shortBioBlurb = astronaut["bio"] as! String
-                    let image = astronaut["biophoto"] as! String
-                    let twitter = astronaut["twitter"] as! String
-                    let mission = astronaut["mission"] as? String
-                    let expedition = astronaut["expedition"] as? String
+                    let image         = astronaut["biophoto"] as! String
+                    let twitter       = astronaut["twitter"] as! String
+                    let mission       = astronaut["mission"] as? String
+                    let expedition    = astronaut["expedition"] as? String
                     let launchVehicle = astronaut["launchvehicle"] as! String
                     
                     crew.append(Astronaut(name: name, title: title, country: country, countryFlag: countryFlag, spaceCraft: spaceCraft, launchDate: launchDate, bio: bio, shortBioBlurb: shortBioBlurb, image: image, twitter: twitter, mission: mission, expedition: expedition, launchVehicle: launchVehicle))

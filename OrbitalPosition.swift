@@ -30,11 +30,11 @@ struct OrbitalPosition {
         do {
             
             if let json = try JSONSerialization.jsonObject(with: data!, options: []) as? JSONDictionary,
-                let lat = json["latitude"] as? Double,
-                let long = json["longitude"] as? Double,
+                let lat         = json["latitude"] as? Double,
+                let long        = json["longitude"] as? Double,
                 let dateAndTime = json["timestamp"] as? Double,
-                let altitude = json["altitude"] as? Double,
-                let velocity = json["velocity"] as? Double
+                let altitude    = json["altitude"] as? Double,
+                let velocity    = json["velocity"] as? Double
             {
                 return OrbitalPosition(latitude: lat, longitude: long, altitude: altitude, velocity: velocity, time: dateAndTime)
                 

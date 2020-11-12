@@ -17,7 +17,7 @@ class GlobeFullViewController: UIViewController, EarthGlobeProtocol {
     // MARK: - Properties
     
     struct Constants {
-        static let apiEndpointAString       = "---"
+        static let apiEndpointAString       = "https://api.wheretheiss.at/v1/satellites/25544"
         static let fontForTitle             = Theme.nasa
         static let segueToHelpFromGlobe     = "segueToHelpFromGlobe"
         static let segueToSettings          = "segueToSettings"
@@ -45,7 +45,7 @@ class GlobeFullViewController: UIViewController, EarthGlobeProtocol {
     @IBOutlet var controlsBackground: UIView! {
         didSet {
             controlsBackground.layer.maskedCorners = [.layerMinXMaxYCorner, .layerMaxXMaxYCorner]
-            controlsBackground.layer.cornerRadius = 27
+            controlsBackground.layer.cornerRadius  = 27
             controlsBackground.layer.masksToBounds = true
         }
     }
@@ -134,16 +134,16 @@ class GlobeFullViewController: UIViewController, EarthGlobeProtocol {
         switch segue.identifier {
         
         case Constants.segueToHelpFromGlobe :
-            let navigationController = segue.destination as! UINavigationController
-            let destinationVC = navigationController.topViewController as! HelpViewController
-            destinationVC.helpContentHTML = UserGuide.fullGlobe
+            let navigationController                      = segue.destination as! UINavigationController
+            let destinationVC                             = navigationController.topViewController as! HelpViewController
+            destinationVC.helpContentHTML                 = UserGuide.fullGlobe
             destinationVC.helpButtonInCallingVCSourceView = navigationController.navigationBar
             
         
-        case Constants.segueToSettings :                                 // Keep tracking, set popover arrow to point to middle, below settings button
+        case Constants.segueToSettings :                  // Keep tracking, set popover arrow to point to middle, below settings button
             
-            let navigationController = segue.destination as! UINavigationController
-            let destinationVC = navigationController.topViewController as! SettingsTableViewController
+            let navigationController                          = segue.destination as! UINavigationController
+            let destinationVC                                 = navigationController.topViewController as! SettingsTableViewController
             destinationVC.settingsButtonInCallingVCSourceView = navigationController.navigationBar
         
         default :

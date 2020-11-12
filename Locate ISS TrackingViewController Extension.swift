@@ -15,9 +15,9 @@ extension TrackingViewController {
     /// Update the info box data 
     private func updateCoordinatesDisplay() {
         
-        altitudeLabel?.text = altString
+        altitudeLabel?.text    = altString
         coordinatesLabel?.text = positionString
-        velocityLabel?.text = velString
+        velocityLabel?.text    = velString
         
     }
     
@@ -44,7 +44,7 @@ extension TrackingViewController {
     
     
     /// Set up the overlays and any buttons that depend on settings
-    fileprivate func setupAllOverlaysAndButtons() {
+    fileprivate func setUpAllOverlaysAndButtons() {
         
         DispatchQueue.main.async {
             
@@ -63,21 +63,21 @@ extension TrackingViewController {
             }
             
             if Globals.displayZoomFactorBelowMarkerIsOn {
-                self.zoomFactorLabel.isHidden = false
+                self.zoomFactorLabel.isHidden        = false
                 self.setupZoomFactorLabel(self.timerValue)
             } else {
-                self.zoomFactorLabel.isHidden = true
+                self.zoomFactorLabel.isHidden        = true
             }
             
             if Globals.orbitGroundTrackLineEnabled {
-                self.clearOrbitTrackButton.alpha = 1.0
+                self.clearOrbitTrackButton.alpha     = 1.0
                 self.clearOrbitTrackButton.isEnabled = true
             } else {
-                self.clearOrbitTrackButton.alpha = 0.65
+                self.clearOrbitTrackButton.alpha     = 0.65
                 self.clearOrbitTrackButton.isEnabled = false
             }
             
-            self.cursor.isHidden = false                        // Now, show the marker
+            self.cursor.isHidden                     = false    // Now, show the marker
             
         }
         
@@ -87,7 +87,7 @@ extension TrackingViewController {
     /// Method to get current ISS coordinates from JSON file and animate its display on map. Called by timer selector.
     @objc func locateISS() {
         
-        setupAllOverlaysAndButtons()
+        setUpAllOverlaysAndButtons()
         
         // Make sure we can create the URL
         guard let apiEndpointURL = URL(string: Constants.apiEndpointAString) else { return }
@@ -104,11 +104,11 @@ extension TrackingViewController {
                 if let parsedOrbitalPosition = OrbitalPosition.parseLocationSpeedAndAltitude(from: urlContent) {
                     
                     // Get current location
-                    self?.latitude = String(parsedOrbitalPosition.latitude)
-                    self?.longitude = String(parsedOrbitalPosition.longitude)
+                    self?.latitude      = String(parsedOrbitalPosition.latitude)
+                    self?.longitude     = String(parsedOrbitalPosition.longitude)
                     self?.atDateAndTime = String(parsedOrbitalPosition.time)
-                    self?.altitude = String(parsedOrbitalPosition.altitude)
-                    self?.velocity = String(parsedOrbitalPosition.velocity)
+                    self?.altitude      = String(parsedOrbitalPosition.altitude)
+                    self?.velocity      = String(parsedOrbitalPosition.velocity)
                     
                     // Update map and overlays in the main queue
                     DispatchQueue.main.async {

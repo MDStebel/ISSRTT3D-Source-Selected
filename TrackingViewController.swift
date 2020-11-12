@@ -46,8 +46,8 @@ class TrackingViewController: UIViewController, MKMapViewDelegate, UIGestureReco
     /// Local constants
     struct Constants {
         static let animationOffsetY: CGFloat    = 90.0
-        static let apiEndpointAString           = "---"
-        static let apiEndpointBString           = "---"
+        static let apiEndpointAString           = "https://api.wheretheiss.at/v1/satellites/25544"
+        static let apiEndpointBString           = "http://api.open-notify.org/iss-now.json"
         static let defaultTimerInterval         = 3.0
         static let fontForTitle                 = Theme.nasa
         static let kilometersToMiles            = 0.621371192
@@ -176,7 +176,7 @@ class TrackingViewController: UIViewController, MKMapViewDelegate, UIGestureReco
     var positionString                      = ""
     var ranAtLeastOnce                      = false
     var running: Bool?                      = false
-    var timer                       = Timer()
+    var timer                               = Timer()
     var timerValue: TimeInterval            = 2.0
     var velString                           = ""
     
@@ -303,10 +303,10 @@ class TrackingViewController: UIViewController, MKMapViewDelegate, UIGestureReco
         setUpDateFormatter()
         setUpNumberFormatter()
         setUpMap()
-        setUpEarthGlobeScene(for: globe, in: globeScene, hasTintedBackground: true)        // Set up globe scene
+        setUpEarthGlobeScene(for: globe, in: globeScene, hasTintedBackground: true)                 // Set up globe scene
         setUpCoordinatesLabel(withTopCorners: true)                                                 // Set up the coordinates info box
         setUpZoomSlider(usingSavedZoomFactor: true)                                                 // Set up zoom factor using saved zoom factor, rather than default
-        setUpDisplayConfiguration()                                                                   // Start up with map in last-used map type and other display parameters.
+        setUpDisplayConfiguration()                                                                 // Set up display with map in last-used map type and other display parameters
         setUpSoundTrackMusicPlayer()                                                                // Set up the player for the soundtrack
         restoreUserSettings()                                                                       // Restore user settings
         displayInfoBoxAndLandsatButton(false)                                                       // Start up with map overlay info box and buttons off
@@ -605,14 +605,14 @@ class TrackingViewController: UIViewController, MKMapViewDelegate, UIGestureReco
         
         case 0 :
             
-            map.mapType = .standard
-            zoomFactorLabel.textColor = UIColor.black
+            map.mapType                = .standard
+            zoomFactorLabel.textColor  = UIColor.black
             coordinatesLabel.textColor = UIColor.black
-            altitudeLabel.textColor = UIColor.black
-            velocityLabel.textColor = UIColor.black
-            cursor.alpha = 1.0
-            zoomFactorLabel.alpha = 1.0
-            copyButton.tintColor = UIColor.black
+            altitudeLabel.textColor    = UIColor.black
+            velocityLabel.textColor    = UIColor.black
+            cursor.alpha               = 1.0
+            zoomFactorLabel.alpha      = 1.0
+            copyButton.tintColor       = UIColor.black
             
             // Use appropriate cursor color for light or dark mode when using standard map mode
             if traitCollection.userInterfaceStyle == .light {
@@ -643,15 +643,15 @@ class TrackingViewController: UIViewController, MKMapViewDelegate, UIGestureReco
             
         case 1 :
             
-            map.mapType = .satellite
-            zoomFactorLabel.textColor = UIColor.white
+            map.mapType                = .satellite
+            zoomFactorLabel.textColor  = UIColor.white
             coordinatesLabel.textColor = UIColor.white
-            altitudeLabel.textColor = UIColor.white
-            velocityLabel.textColor = UIColor.white
-            cursor.alpha = 0.90
-            zoomFactorLabel.alpha = 0.90
-            copyButton.tintColor = UIColor.white
-            cursor.tintColor = .white
+            altitudeLabel.textColor    = UIColor.white
+            velocityLabel.textColor    = UIColor.white
+            cursor.alpha               = 0.90
+            zoomFactorLabel.alpha      = 0.90
+            copyButton.tintColor       = UIColor.white
+            cursor.tintColor           = .white
             
             switch Globals.markerType {
             
@@ -675,15 +675,15 @@ class TrackingViewController: UIViewController, MKMapViewDelegate, UIGestureReco
             
         case 2 :
             
-            map.mapType = .hybrid
-            zoomFactorLabel.textColor = UIColor.white
+            map.mapType                = .hybrid
+            zoomFactorLabel.textColor  = UIColor.white
             coordinatesLabel.textColor = UIColor.white
-            altitudeLabel.textColor = UIColor.white
-            velocityLabel.textColor = UIColor.white
-            cursor.alpha = 0.90
-            zoomFactorLabel.alpha = 0.90
-            copyButton.tintColor = UIColor.white
-            cursor.tintColor = .white
+            altitudeLabel.textColor    = UIColor.white
+            velocityLabel.textColor    = UIColor.white
+            cursor.alpha               = 0.90
+            zoomFactorLabel.alpha      = 0.90
+            copyButton.tintColor       = UIColor.white
+            cursor.tintColor           = .white
             
             switch Globals.markerType {
             
@@ -707,15 +707,15 @@ class TrackingViewController: UIViewController, MKMapViewDelegate, UIGestureReco
             
         default :
             
-            map.mapType = .satellite
-            zoomFactorLabel.textColor = UIColor.white
+            map.mapType                = .satellite
+            zoomFactorLabel.textColor  = UIColor.white
             coordinatesLabel.textColor = UIColor.white
-            altitudeLabel.textColor = UIColor.white
-            velocityLabel.textColor = UIColor.white
-            cursor.alpha = 0.90
-            zoomFactorLabel.alpha = 0.90
-            copyButton.tintColor = UIColor.white
-            cursor.tintColor = .white
+            altitudeLabel.textColor    = UIColor.white
+            velocityLabel.textColor    = UIColor.white
+            cursor.alpha               = 0.90
+            zoomFactorLabel.alpha      = 0.90
+            copyButton.tintColor       = UIColor.white
+            cursor.tintColor           = .white
             
             switch Globals.markerType {
             
@@ -748,14 +748,14 @@ class TrackingViewController: UIViewController, MKMapViewDelegate, UIGestureReco
         if isOn {
             
             coordinatesLabel.isHidden = false
-            altitudeLabel.isHidden = false
-            velocityLabel.isHidden = false
+            altitudeLabel.isHidden    = false
+            velocityLabel.isHidden    = false
             
         } else {
             
             coordinatesLabel.isHidden = true
-            altitudeLabel.isHidden = true
-            velocityLabel.isHidden = true
+            altitudeLabel.isHidden    = true
+            velocityLabel.isHidden    = true
             
         }
         
@@ -784,32 +784,32 @@ class TrackingViewController: UIViewController, MKMapViewDelegate, UIGestureReco
         case Segues.earthViewSegue :                                // Stop tracking and select live earth view channel
             
             stopAction()
-            let navigationController = segue.destination as! UINavigationController
-            let destinationVC = navigationController.topViewController as! LiveVideoViewController
-            destinationVC.channelSelected = .liveEarth
-            destinationVC.title = destinationVC.channelSelected.rawValue
+            let navigationController                          = segue.destination as! UINavigationController
+            let destinationVC                                 = navigationController.topViewController as! LiveVideoViewController
+            destinationVC.channelSelected                     = .liveEarth
+            destinationVC.title                               = destinationVC.channelSelected.rawValue
             
         case Segues.NASATVSegue :                                   // Stop tracking and select NASA TV channel
             
             stopAction()
-            let navigationController = segue.destination as! UINavigationController
-            let destinationVC = navigationController.topViewController as! LiveVideoViewController
-            destinationVC.channelSelected = .nasaTV
-            destinationVC.title = destinationVC.channelSelected.rawValue
+            let navigationController                          = segue.destination as! UINavigationController
+            let destinationVC                                 = navigationController.topViewController as! LiveVideoViewController
+            destinationVC.channelSelected                     = .nasaTV
+            destinationVC.title                               = destinationVC.channelSelected.rawValue
             
         case Segues.settingsSegue :                                 // Keep tracking, set popover arrow to point to middle, below settings button
             
-            let navigationController = segue.destination as! UINavigationController
-            let destinationVC = navigationController.topViewController as! SettingsTableViewController
+            let navigationController                          = segue.destination as! UINavigationController
+            let destinationVC                                 = navigationController.topViewController as! SettingsTableViewController
             destinationVC.settingsButtonInCallingVCSourceView = settingsButton
             
         case Segues.helpSegue :                                     // Keep tracking, set popover arrow to point to middle, below help button
             
-            let navigationController = segue.destination as! UINavigationController
-            let destinationVC = navigationController.topViewController as! HelpViewController
-            destinationVC.helpContentHTML = UserGuide.helpContentHTML
-            destinationVC.helpButtonInCallingVCSourceView = helpButton
-            destinationVC.title = "User Guide"
+            let navigationController                          = segue.destination as! UINavigationController
+            let destinationVC                                 = navigationController.topViewController as! HelpViewController
+            destinationVC.helpContentHTML                     = UserGuide.helpContentHTML
+            destinationVC.helpButtonInCallingVCSourceView     = helpButton
+            destinationVC.title                               = "User Guide"
             
         default :
             

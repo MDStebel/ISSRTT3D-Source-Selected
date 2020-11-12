@@ -16,8 +16,8 @@ class CrewMembersTableViewController: UITableViewController, TableAnimatable {
     
     /// Constants
     private struct Constants {
-        static let bioBackupURLString           = "---"   // Backup URL is used if a bio URL is not returned in the JSON file
-        static let crewAPIEndpointURLString     = "---"                         // API endpoint
+        static let bioBackupURLString           = "https://www.issrtt.com/issrtt-astronaut-bio-not-found"   // Backup URL is used if a bio URL is not returned in the JSON file
+        static let crewAPIEndpointURLString     = "https://issrttapi.com/crew.json"                         // API endpoint
         static let customCellIdentifier         = "crewMemberCell"
         static let fontForTitle                 = Theme.nasa
         static let newLine                      = "\n"
@@ -57,9 +57,9 @@ class CrewMembersTableViewController: UITableViewController, TableAnimatable {
     @IBOutlet var crewMemberDetailView: CrewMemberDetailView!
     @IBOutlet var promptLabel: UILabel! {
         didSet {
-            promptLabel.text = Constants.updatingDataPromptText
+            promptLabel.text                = Constants.updatingDataPromptText
             promptLabel.layer.maskedCorners = [.layerMinXMaxYCorner, .layerMaxXMaxYCorner]
-            promptLabel.layer.cornerRadius = 27
+            promptLabel.layer.cornerRadius  = 27
             promptLabel.layer.masksToBounds = true
         }
     }
@@ -81,11 +81,11 @@ class CrewMembersTableViewController: UITableViewController, TableAnimatable {
         super.viewWillAppear(animated)
 
         // Set font and attributes for navigation bar
-        let titleFontSize = Theme.navigationBarTitleFontSize
-        if let titleFont = UIFont(name: Constants.fontForTitle, size: titleFontSize) {
-            let attributes = [NSAttributedString.Key.font: titleFont, .foregroundColor: UIColor.white]
+        let titleFontSize                                           = Theme.navigationBarTitleFontSize
+        if let titleFont                                            = UIFont(name: Constants.fontForTitle, size: titleFontSize) {
+            let attributes                                          = [NSAttributedString.Key.font: titleFont, .foregroundColor: UIColor.white]
             navigationController?.navigationBar.titleTextAttributes = attributes
-            navigationController?.navigationBar.barTintColor = UIColor(named: Theme.tint)
+            navigationController?.navigationBar.barTintColor        = UIColor(named: Theme.tint)
         }
         
 //        // Use appropriate background color for light or dark mode

@@ -17,19 +17,19 @@ class LaunchAnimationViewController: UIViewController {
     // MARK: - Properties
     
     
-    private let iconAnimationDuration = 5.0
-    private let iconAnimationRotationAngle: CGFloat = -CGFloat.pi / 6.0    // In Radians
-    private let iconAnimationScaleFactor: CGFloat = 0.5
-    private let segueToMainViewController = "mainViewControllerSegue"
-    private let titleAnimationDuration = 5.0
-    private let titleScaleFactor: CGFloat = 0.33
+    private let iconAnimationDuration                                 = 5.0
+    private let iconAnimationRotationAngle: CGFloat                   = -CGFloat.pi / 6.0    // In Radians
+    private let iconAnimationScaleFactor: CGFloat                     = 0.5
+    private let segueToMainViewController                             = "mainViewControllerSegue"
+    private let titleAnimationDuration                                = 5.0
+    private let titleScaleFactor: CGFloat                             = 0.33
     
-    private var iconScaleFactor: CGFloat = 0.0
+    private var iconScaleFactor: CGFloat                              = 0.0
     private var scaleFactorForAppNameTitleForLaunchAnimation: CGFloat = 0.0
-    private var trans1 = CGAffineTransform.identity
-    private var trans2 = CGAffineTransform.identity
-    private var xTrans: CGFloat = 0.0
-    private var yTrans: CGFloat = 0.0
+    private var trans1                                                = CGAffineTransform.identity
+    private var trans2                                                = CGAffineTransform.identity
+    private var xTrans: CGFloat                                       = 0.0
+    private var yTrans: CGFloat                                       = 0.0
     
     
     // Hide the status bar for this VC
@@ -46,10 +46,10 @@ class LaunchAnimationViewController: UIViewController {
         didSet {
             // Initially shrink title label, which will zoom in later
             scaleFactorForAppNameTitleForLaunchAnimation = titleScaleFactor
-            trans2 = trans2.scaledBy(x: scaleFactorForAppNameTitleForLaunchAnimation, y: scaleFactorForAppNameTitleForLaunchAnimation)
-            appNameTitleForLaunchAnimation.transform = trans2
-            appNameTitleForLaunchAnimation.alpha = 0.0
-            appNameTitleForLaunchAnimation.isHidden = true
+            trans2                                       = trans2.scaledBy(x: scaleFactorForAppNameTitleForLaunchAnimation, y: scaleFactorForAppNameTitleForLaunchAnimation)
+            appNameTitleForLaunchAnimation.transform     = trans2
+            appNameTitleForLaunchAnimation.alpha         = 0.0
+            appNameTitleForLaunchAnimation.isHidden      = true
         }
     }
     @IBOutlet private var launchScreenVersionLabel: UILabel!
@@ -64,23 +64,24 @@ class LaunchAnimationViewController: UIViewController {
         // Create a stack of transformations for the ISS graphic
         if #available(iOS 13, *) {                  // If iOS 13 or greater
             
-            xTrans = view.bounds.size.width + 20
-            yTrans = view.bounds.size.height + 20
+            xTrans          = view.bounds.size.width + 20
+            yTrans          = view.bounds.size.height + 20
             iconScaleFactor = iconAnimationScaleFactor
-            trans1 = trans1.translatedBy(x: xTrans, y: -yTrans)
-            trans1 = trans1.scaledBy(x: iconScaleFactor, y: iconScaleFactor)
-            trans1 = trans1.rotated(by: iconAnimationRotationAngle)
+            trans1          = trans1.translatedBy(x: xTrans, y: -yTrans)
+            trans1          = trans1.scaledBy(x: iconScaleFactor, y: iconScaleFactor)
+            trans1          = trans1.rotated(by: iconAnimationRotationAngle)
         
-        } else {                                    // If before iOS 13
+        } else {                                    // If < iOS 13
             
-            xTrans = view.bounds.size.width - ISSImage.bounds.size.width / 2.0 - 15
-            yTrans = view.bounds.size.height - ISSImage.bounds.size.height / 2.0 + 10
+            xTrans          = view.bounds.size.width - ISSImage.bounds.size.width / 2.0 - 15
+            yTrans          = view.bounds.size.height - ISSImage.bounds.size.height / 2.0 + 10
             iconScaleFactor = 0.20
-            trans1 = trans1.translatedBy(x: xTrans, y: -yTrans)
-            trans1 = trans1.scaledBy(x: iconScaleFactor, y: iconScaleFactor)
-            trans1 = trans1.rotated(by: iconAnimationRotationAngle)
+            trans1          = trans1.translatedBy(x: xTrans, y: -yTrans)
+            trans1          = trans1.scaledBy(x: iconScaleFactor, y: iconScaleFactor)
+            trans1          = trans1.rotated(by: iconAnimationRotationAngle)
         
         }
+        
     }
     
     
@@ -108,12 +109,12 @@ class LaunchAnimationViewController: UIViewController {
         
         // Animate ISS graphic using the stack of transforms we created above. At completion, segue to the tracking VC
         UIView.animate(withDuration: iconAnimationDuration, delay: 0, usingSpringWithDamping: 1.0, initialSpringVelocity: 0.2, options: .curveEaseInOut, animations: { [self] in
-            launchScreenVersionLabel.text = "Version: \(Globals.versionNumber)  Build: \(Globals.buildNumber)  \(Globals.copyrightString)"
-            ISSImage.transform = trans1
-            ISSImage.alpha = 0.0
-            curves.alpha = 0.0
-            appNameTitleForLaunchAnimation.isHidden = false
-            appNameTitleForLaunchAnimation.alpha = 1.0
+            launchScreenVersionLabel.text            = "Version: \(Globals.versionNumber)  Build: \(Globals.buildNumber)  \(Globals.copyrightString)"
+            ISSImage.transform                       = trans1
+            ISSImage.alpha                           = 0.0
+            curves.alpha                             = 0.0
+            appNameTitleForLaunchAnimation.isHidden  = false
+            appNameTitleForLaunchAnimation.alpha     = 1.0
             appNameTitleForLaunchAnimation.transform = trans2
         },
         completion: { [self] (completedOK) in

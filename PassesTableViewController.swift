@@ -50,8 +50,8 @@ class PassesTableViewController: UITableViewController, CLLocationManagerDelegat
     
     private struct Constants {
         static let altitude                             = 0
-        static let apiKey                               = "---"                                     // API key
-        static let baseURLForOverheadTimes              = "---"     // API endpoint (new as of Nov 1, 2020)
+        static let apiKey                               = "BZQB9N-9FTL47-ZXK7MZ-3TLE"                                     // API key
+        static let baseURLForOverheadTimes              = "https://api.n2yo.com/rest/v1/satellite/visualpasses/25544"     // API endpoint (new as of Nov 1, 2020)
         static let customCellIdentifier                 = "OverheadTimesCell"
         static let deg                                  = "°"
         static let fontForTitle                         = Theme.nasa
@@ -90,9 +90,9 @@ class PassesTableViewController: UITableViewController, CLLocationManagerDelegat
     @IBOutlet private var overheadTimes: UITableView!
     @IBOutlet private var promptLabel: UILabel! {
         didSet {
-            promptLabel.text = "Getting your location..."
+            promptLabel.text                = "Getting your location..."
             promptLabel.layer.maskedCorners = [.layerMinXMaxYCorner, .layerMaxXMaxYCorner]
-            promptLabel.layer.cornerRadius = 27
+            promptLabel.layer.cornerRadius  = 27
             promptLabel.layer.masksToBounds = true
         }
     }
@@ -172,8 +172,8 @@ class PassesTableViewController: UITableViewController, CLLocationManagerDelegat
     /// Set up location manager
     private func setUpLocationManager() {
         
-        ISSlocationManager = CLLocationManager()            // Create a CLLocationManager instance to get user's location
-        ISSlocationManager.delegate = self
+        ISSlocationManager                 = CLLocationManager()            // Create a CLLocationManager instance to get user's location
+        ISSlocationManager.delegate        = self
         ISSlocationManager.desiredAccuracy = kCLLocationAccuracyBest
         ISSlocationManager.requestWhenInUseAuthorization()
         
@@ -278,8 +278,8 @@ class PassesTableViewController: UITableViewController, CLLocationManagerDelegat
     func locationManager(_ ISSLocationManager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         
         let userLocation = locations.first!
-        userLatitude = userLocation.coordinate.latitude
-        userLongitude = userLocation.coordinate.longitude
+        userLatitude     = userLocation.coordinate.latitude
+        userLongitude    = userLocation.coordinate.longitude
         
         getISSOverheadtimes(then: decodeJSONPasses)
         
@@ -393,30 +393,30 @@ class PassesTableViewController: UITableViewController, CLLocationManagerDelegat
     
     /// Create the calendar event
     /// - Parameters:
-    ///   - eventStore: <#eventStore description#>
-    ///   - passEvent: <#passEvent description#>
+    ///   - eventStore: The event store to use
+    ///   - passEvent: The passe as an event
     private func createEvent(_ eventStore: EKEventStore, passEvent: Passes.Pass) {
         
         // Create an event
-        let event = EKEvent(eventStore: eventStore)
-        event.title = "ISS Pass Starts"
-        event.calendar = eventStore.defaultCalendarForNewEvents
+        let event       = EKEvent(eventStore: eventStore)
+        event.title     = "ISS Pass Starts"
+        event.calendar  = eventStore.defaultCalendarForNewEvents
         event.startDate = Date(timeIntervalSince1970: Double(passEvent.startUTC))
-        event.endDate = Date(timeIntervalSince1970: Double(passEvent.endUTC))
+        event.endDate   = Date(timeIntervalSince1970: Double(passEvent.endUTC))
         
         // Set two alarms: one at 20 mins and the other at 60 mins before the pass
-        event.alarms = [EKAlarm(relativeOffset: -1200.0), EKAlarm(relativeOffset: -3600.0)]
+        event.alarms    = [EKAlarm(relativeOffset: -1200.0), EKAlarm(relativeOffset: -3600.0)]
         
         // Create entries for event location and notes
-        event.location = "Your Location: \(userCurrentCoordinatesString)"
-        let mag = passEvent.mag
-        let startAz = String(format: Globals.azimuthFormat, passEvent.startAz) + Constants.deg
-        let startEl = String(format: Globals.elevationFormat, passEvent.startEl) + Constants.deg
-        let maxAz = String(format: Globals.azimuthFormat, passEvent.maxAz) + Constants.deg
-        let maxEl = String(format: Globals.elevationFormat, passEvent.maxEl) + Constants.deg
-        let endAz = String(format: Globals.azimuthFormat, passEvent.endAz) + Constants.deg
-        let endEl = String(format: Globals.elevationFormat, passEvent.endEl) + Constants.deg
-        event.notes = "Max Magnitude: \(mag)\nStarting azimuth: \(startAz) \(passEvent.startAzCompass)\nStarting elevation: \(startEl)\nMax azimuth: \(maxAz) \(passEvent.maxAzCompass)\nMax elevation: \(maxEl)\nEnding azimuth: \(endAz) \(passEvent.endAzCompass)\nEnding elevation: \(endEl)"
+        event.location  = "Your Location: \(userCurrentCoordinatesString)"
+        let mag         = passEvent.mag
+        let startAz     = String(format: Globals.azimuthFormat, passEvent.startAz) + Constants.deg
+        let startEl     = String(format: Globals.elevationFormat, passEvent.startEl) + Constants.deg
+        let maxAz       = String(format: Globals.azimuthFormat, passEvent.maxAz) + Constants.deg
+        let maxEl       = String(format: Globals.elevationFormat, passEvent.maxEl) + Constants.deg
+        let endAz       = String(format: Globals.azimuthFormat, passEvent.endAz) + Constants.deg
+        let endEl       = String(format: Globals.elevationFormat, passEvent.endEl) + Constants.deg
+        event.notes     = "Max Magnitude: \(mag)\nStarting azimuth: \(startAz) \(passEvent.startAzCompass)\nStarting elevation: \(startEl)\nMax azimuth: \(maxAz) \(passEvent.maxAzCompass)\nMax elevation: \(maxEl)\nEnding azimuth: \(endAz) \(passEvent.endAzCompass)\nEnding elevation: \(endEl)"
         
         let whichEvent = EKSpan.thisEvent
         do {
@@ -436,7 +436,7 @@ class PassesTableViewController: UITableViewController, CLLocationManagerDelegat
     /// Prepare for seque
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         
-        guard segue.identifier != nil else { return }                                     // Prevents crash if a segue is unnamed
+        guard segue.identifier != nil else { return }     // Prevents crash if a segue is unnamed
         
         switch segue.identifier {
         case Constants.segueToHelpFromPasses :
@@ -445,9 +445,9 @@ class PassesTableViewController: UITableViewController, CLLocationManagerDelegat
                 self.spinner.startAnimating()
             }
             
-            let navigationController = segue.destination as! UINavigationController
-            let destinationVC = navigationController.topViewController as! HelpViewController
-            destinationVC.helpContentHTML = UserGuide.passesHelp
+            let navigationController                      = segue.destination as! UINavigationController
+            let destinationVC                             = navigationController.topViewController as! HelpViewController
+            destinationVC.helpContentHTML                 = UserGuide.passesHelp
             destinationVC.helpButtonInCallingVCSourceView = navigationController.navigationBar
             
             DispatchQueue.main.async {

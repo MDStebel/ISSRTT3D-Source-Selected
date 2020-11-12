@@ -41,12 +41,12 @@ class HelpViewController: UIViewController, WKUIDelegate, WKNavigationDelegate {
     
     private func setUpViewForHelp() {
         
-        helpTextWebView.uiDelegate = self
-        helpTextWebView.navigationDelegate = self
-        let webConfiguration = WKWebViewConfiguration()
+        helpTextWebView.uiDelegate                   = self
+        helpTextWebView.navigationDelegate           = self
+        let webConfiguration                         = WKWebViewConfiguration()
         webConfiguration.preferences.minimumFontSize = 12.0
-        helpTextWebView = WKWebView(frame: .zero, configuration: webConfiguration)
-        view = helpTextWebView
+        helpTextWebView                              = WKWebView(frame: .zero, configuration: webConfiguration)
+        view                                         = helpTextWebView
         
     }
     
@@ -68,11 +68,11 @@ class HelpViewController: UIViewController, WKUIDelegate, WKNavigationDelegate {
         super .viewWillAppear(animated)
         
         // Set font and attributes for navigation bar
-        let titleFontSize = Theme.navigationBarTitleFontSize
-        if let titleFont = UIFont(name: Constants.fontForTitle, size: titleFontSize) {
-            let attributes = [NSAttributedString.Key.font: titleFont, .foregroundColor: UIColor.white]
+        let titleFontSize                                           = Theme.navigationBarTitleFontSize
+        if let titleFont                                            = UIFont(name: Constants.fontForTitle, size: titleFontSize) {
+            let attributes                                          = [NSAttributedString.Key.font: titleFont, .foregroundColor: UIColor.white]
             navigationController?.navigationBar.titleTextAttributes = attributes
-            navigationController?.navigationBar.barTintColor = UIColor(named: Theme.tint)
+            navigationController?.navigationBar.barTintColor        = UIColor(named: Theme.tint)
         }
         
         helpTextWebView.loadHTMLString(helpContentHTML, baseURL: nil)

@@ -12,40 +12,41 @@ import SceneKit
 /// The 3D Interactive Earth Globe Model
 class EarthGlobe {
     
-    static let glowPointWidth: CGFloat = 0.16                       // The size factor for the marker
+    static let glowPointWidth: CGFloat     = 0.16                               // The size factor for the marker
 
-    let ambientLightIntensity: CGFloat = 100                        // The default value is 1000
-    let cameraAltitude = Globals.cameraAltitude
-    let dayNumberOfWinterStolsticeInYear = 356.0                    // The winter solstice is on approximately Dec 21, 22, or 23
-    let daysInAYear = Globals.numberOfDaysInAYear
-    let defaultCameraFov = Globals.defaultCameraFov
-    let distanceToISSOrbit = Globals.ISSOrbitAltitudeInScene
-    let dragWidthInDegrees = 180.0                                  // The amount to rotate the globe on one edge-to-edge swipe (in degrees)
-    let globeDefaultRotationSpeedInSeconds = 90.0                   // 360° revolution in 90 seconds
-    let globeRadius = Globals.globeRadiusFactor
-    let glowPointAltitude = Globals.orbitalAltitudeFactor
-    let maxFov = Globals.maxFov                                     // Max zoom in degrees
-    let maxLatLonPerUnity = 1.1
-    let minFov = Globals.minFov                                     // Min zoom in degrees
-    let minLatLonPerUnity = -0.1
-    let sceneBoxSize: CGFloat = 1000.0
-    let tiltOfEarthAxisInDegrees = Globals.earthTiltInDegrees
-    let tiltOfEarthAxisInRadians = Globals.earthTiltInRadians
+    let ambientLightIntensity: CGFloat     = 100                                // The default value is 1000
+    let cameraAltitude                     = Globals.cameraAltitude
+    let dayNumberOfWinterStolsticeInYear   = 356.0                              // The winter solstice is on approximately Dec 21, 22, or 23
+    let daysInAYear                        = Globals.numberOfDaysInAYear
+    let defaultCameraFov                   = Globals.defaultCameraFov
+    let distanceToISSOrbit                 = Globals.ISSOrbitAltitudeInScene
+    let dragWidthInDegrees                 = 180.0                              // The amount to rotate the globe on one edge-to-edge swipe (in degrees)
+    let globeDefaultRotationSpeedInSeconds = 90.0                               // 360° revolution in 90 seconds
+    let globeRadius                        = Globals.globeRadiusFactor
+    let glowPointAltitude                  = Globals.orbitalAltitudeFactor
+    let maxFov                             = Globals.maxFov                     // Max zoom in degrees
+    let maxLatLonPerUnity                  = 1.1
+    let minFov                             = Globals.minFov                     // Min zoom in degrees
+    let minLatLonPerUnity                  = -0.1
+    let sceneBoxSize: CGFloat              = 1000.0
+    let tiltOfEarthAxisInDegrees           = Globals.earthTiltInDegrees
+    let tiltOfEarthAxisInRadians           = Globals.earthTiltInRadians
     
-    var camera = SCNCamera()
-    var cameraNode = SCNNode()
-    var gestureHost : SCNView?
-    var globe = SCNNode()
-    var globeSegmentCount = 512
-    var lastFovBeforeZoom : CGFloat?
-    var lastPanLoc : CGPoint?
-    var orbitTrack = SCNTorus()
-    var scene = SCNScene()
-    var seasonalTilt = SCNNode()
-    var skybox = SCNNode()
-    var sun = SCNNode()
-    var userRotation = SCNNode()
-    var userTilt = SCNNode()
+    var camera                             = SCNCamera()
+    var cameraNode                         = SCNNode()
+    var globe                              = SCNNode()
+    var globeSegmentCount                  = 512
+    var orbitTrack                         = SCNTorus()
+    var scene                              = SCNScene()
+    var seasonalTilt                       = SCNNode()
+    var skybox                             = SCNNode()
+    var sun                                = SCNNode()
+    var userRotation                       = SCNNode()
+    var userTilt                           = SCNNode()
+
+    var gestureHost: SCNView?
+    var lastFovBeforeZoom: CGFloat?
+    var lastPanLoc: CGPoint?
     
     
     internal init() {
@@ -64,7 +65,7 @@ class EarthGlobe {
         emission.contents = "8081_earthlights_8190px"
         earthMaterial.setValue(emission, forKey: "emissionTexture")
         
-        /// OpenGL lighting map
+        /// OpenGL lighting map code
         let shaderModifier =    """
                                 uniform sampler2D emissionTexture;
                                 vec3 light = _lightingContribution.diffuse;
@@ -72,24 +73,23 @@ class EarthGlobe {
                                 vec4 emission = texture2D(emissionTexture, _surface.diffuseTexcoord) * lum * 1.0;
                                 _output.color += emission;
                                 """
-        earthMaterial.shaderModifiers = [.fragment: shaderModifier]
+        earthMaterial.shaderModifiers     = [.fragment: shaderModifier]
         
-        // Texture revealed by specular light sources
-        //earthMaterial.specular.contents = "earth_lights.jpg"
-        earthMaterial.specular.contents = "8081_earthspec_512px.jpg"
-        earthMaterial.specular.intensity = 0.2
+        // Texture is revealed by specular light sources
+        earthMaterial.specular.contents   = "8081_earthspec_512px.jpg"
+        earthMaterial.specular.intensity  = 0.2
         
         // Oceans are reflective and land is matte
-        earthMaterial.metalness.contents = "metalness-1.png"
-        earthMaterial.roughness.contents = "roughness-1.png"
+        earthMaterial.metalness.contents  = "metalness-1.png"
+        earthMaterial.roughness.contents  = "roughness-1.png"
 
         // Make the mountains appear taller
-        earthMaterial.normal.contents = "earth-bump-1.png"
-        earthMaterial.normal.intensity = 0.4
+        earthMaterial.normal.contents     = "earth-bump-1.png"
+        earthMaterial.normal.intensity    = 0.4
         
         // Creates a realistic specular reflection that changes aspect based on angle
-        earthMaterial.fresnelExponent = 2
-        globe.geometry = globeShape
+        earthMaterial.fresnelExponent     = 2
+        globe.geometry                    = globeShape
         
 
         // Set up the basic globe nodes

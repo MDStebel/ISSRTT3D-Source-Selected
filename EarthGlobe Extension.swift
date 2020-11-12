@@ -43,12 +43,12 @@ extension EarthGlobe {
     public func addOrbitTrackAroundTheGlobe(lat: Float, lon: Float, headingFactor: Float) {
         
         // Create a hi-res torus geometry with a small pipeRadius to be used as our orbital track around the globe
-        let orbitTrack = SCNTorus()
+        let orbitTrack                             = SCNTorus()
         orbitTrack.firstMaterial?.diffuse.contents = UIColor(named: Theme.tint)
-        orbitTrack.ringRadius = CGFloat(Globals.ISSOrbitAltitudeInScene)
-        orbitTrack.pipeRadius = 0.005
-        orbitTrack.ringSegmentCount = 192
-        orbitTrack.pipeSegmentCount = 96
+        orbitTrack.ringRadius                      = CGFloat(Globals.ISSOrbitAltitudeInScene)
+        orbitTrack.pipeRadius                      = 0.005
+        orbitTrack.ringSegmentCount                = 192
+        orbitTrack.pipeSegmentCount                = 96
         
         // Assign the torus as a node and add it as a child of globe
         let orbitTrackNode = SCNNode(geometry: orbitTrack)
@@ -104,20 +104,20 @@ extension EarthGlobe {
     ///   - lon: Subsolor point longitude in degrees
     public func setUpTheSun(lat: Float, lon: Float) {
 
-        let adjustedLon = lon + 90
-        let adjustedLat = lat
-        let distanceToTheSun = Float(1000)
-        let position = CoordinateCalculations.convertLatLonCoordinatesToXYZ(lat: adjustedLat, lon: adjustedLon, alt: distanceToTheSun)
-        sun.position = position
+        let adjustedLon        = lon + 90
+        let adjustedLat        = lat
+        let distanceToTheSun   = Float(1000)
+        let position           = CoordinateCalculations.convertLatLonCoordinatesToXYZ(lat: adjustedLat, lon: adjustedLon, alt: distanceToTheSun)
+        sun.position           = position
         
-        sun.light = SCNLight()
-        sun.light!.type = .omni
+        sun.light              = SCNLight()
+        sun.light!.type        = .omni
         sun.light!.castsShadow = false
         
         globe.addChildNode(sun)
 
-        sun.light!.temperature = 5600                       // Sun color temp at noon is 5600. White is 6500. Anything above 5000 is daylight.
-        sun.light!.intensity = 3000                         // The default is 1000
+        sun.light!.temperature = 5600                         // Sun color temp at noon is 5600. White is 6500. Anything above 5000 is daylight.
+        sun.light!.intensity   = 3000                         // The default is 1000
         
     }
     
