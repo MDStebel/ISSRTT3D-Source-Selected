@@ -50,8 +50,8 @@ class PassesTableViewController: UITableViewController, CLLocationManagerDelegat
     
     private struct Constants {
         static let altitude                             = 0
-        static let apiKey                               = "BZQB9N-9FTL47-ZXK7MZ-3TLE"                                     // API key
-        static let baseURLForOverheadTimes              = "https://api.n2yo.com/rest/v1/satellite/visualpasses/25544"     // API endpoint (new as of Nov 1, 2020)
+        static let apiKey                               = "---"                                     // API key
+        static let baseURLForOverheadTimes              = "---"     // API endpoint (new as of Nov 1, 2020)
         static let customCellIdentifier                 = "OverheadTimesCell"
         static let deg                                  = "°"
         static let fontForTitle                         = Theme.nasa
@@ -495,9 +495,9 @@ extension PassesTableViewController {
         
         /// Helper function to convert number of seconds into minutes and seconds and return in a string. Parameter numberOfSeconds: time in secondsReturns: string representation of time in minutes and seconds
         func minsAndSecs(from numberOfSeconds: Int) -> String {
-            let dateComponentsFormatter = DateComponentsFormatter()
+            let dateComponentsFormatter          = DateComponentsFormatter()
             dateComponentsFormatter.allowedUnits = [.minute, .second]
-            dateComponentsFormatter.unitsStyle = .brief
+            dateComponentsFormatter.unitsStyle   = .brief
             
             return dateComponentsFormatter.string(from: Double(numberOfSeconds)) ?? " "
         }
@@ -524,62 +524,63 @@ extension PassesTableViewController {
         
         /// Helper function to clear data displayed in cell
         func clearDataIn(thisCell cell: PassesTableViewCell) {
-            cell.passDate.text = ""
-            cell.durationLabel.text = ""
-            cell.magnitudeLabel.text = ""
-            cell.startTime.text = ""
-            cell.startAz.text = ""
-            cell.startEl.text = ""
-            cell.startComp.text = ""
-            cell.maxTime.text = ""
-            cell.maxAz.text = ""
-            cell.maxEl.text = ""
-            cell.maxComp.text = ""
-            cell.endTime.text = ""
-            cell.endAz.text = ""
-            cell.endEl.text = ""
-            cell.endComp.text = ""
-            cell.backgroundColor = UIColor(named: Theme.popupBgd)
-            cell.tintColor = UIColor(named: Theme.popupBgd)
-            cell.passDate.backgroundColor = UIColor(named: Theme.popupBgd)
+            cell.passDate.text                  = ""
+            cell.durationLabel.text             = ""
+            cell.magnitudeLabel.text            = ""
+            cell.startTime.text                 = ""
+            cell.startAz.text                   = ""
+            cell.startEl.text                   = ""
+            cell.startComp.text                 = ""
+            cell.maxTime.text                   = ""
+            cell.maxAz.text                     = ""
+            cell.maxEl.text                     = ""
+            cell.maxComp.text                   = ""
+            cell.endTime.text                   = ""
+            cell.endAz.text                     = ""
+            cell.endEl.text                     = ""
+            cell.endComp.text                   = ""
+            
+            cell.backgroundColor                = UIColor(named: Theme.popupBgd)
+            cell.tintColor                      = UIColor(named: Theme.popupBgd)
+            cell.passDate.backgroundColor       = UIColor(named: Theme.popupBgd)
         }
         
         
-        let cell = tableView.dequeueReusableCell(withIdentifier: Constants.customCellIdentifier, for: indexPath) as! PassesTableViewCell
+        let cell                                = tableView.dequeueReusableCell(withIdentifier: Constants.customCellIdentifier, for: indexPath) as! PassesTableViewCell
         
         if numberOfOverheadTimesActuallyReported > 0 {
             
             // Set date of pass & set date label background color
-            cell.passDate.text = dateFormatterForDate.string(from: Date(timeIntervalSince1970: overheadTimesList[indexPath.row].startUTC))
-            cell.passDate.backgroundColor = UIColor(ciColor: .green)           // Set the date label background color to green for all cells
+            cell.passDate.text                  = dateFormatterForDate.string(from: Date(timeIntervalSince1970: overheadTimesList[indexPath.row].startUTC))
+            cell.passDate.backgroundColor       = UIColor(ciColor: .green)           // Set the date label background color to green for all cells
             
             // Duration & max magnitude
-            cell.durationLabel.text = "DUR: \(minsAndSecs(from: overheadTimesList[indexPath.row].duration))"
-            cell.magnitudeLabel.text = "MAG: \(overheadTimesList[indexPath.row].mag)"
+            cell.durationLabel.text             = "DUR: \(minsAndSecs(from: overheadTimesList[indexPath.row].duration))"
+            cell.magnitudeLabel.text            = "MAG: \(overheadTimesList[indexPath.row].mag)"
             
             // Start of pass data
-            cell.startTime.text = dateFormatterForTime.string(from: Date(timeIntervalSince1970: overheadTimesList[indexPath.row].startUTC))
-            cell.startAz.text = String(format: Globals.azimuthFormat, overheadTimesList[indexPath.row].startAz) + Constants.deg
-            cell.startEl.text = String(format: Globals.elevationFormat, overheadTimesList[indexPath.row].startEl) + Constants.deg
-            cell.startComp.text = String(overheadTimesList[indexPath.row].startAzCompass)
+            cell.startTime.text                 = dateFormatterForTime.string(from: Date(timeIntervalSince1970: overheadTimesList[indexPath.row].startUTC))
+            cell.startAz.text                   = String(format: Globals.azimuthFormat, overheadTimesList[indexPath.row].startAz) + Constants.deg
+            cell.startEl.text                   = String(format: Globals.elevationFormat, overheadTimesList[indexPath.row].startEl) + Constants.deg
+            cell.startComp.text                 = String(overheadTimesList[indexPath.row].startAzCompass)
             
             // Maximum elevation data
-            cell.maxTime.text = dateFormatterForTime.string(from: Date(timeIntervalSince1970: overheadTimesList[indexPath.row].maxUTC))
-            cell.maxAz.text = String(format: Globals.azimuthFormat, overheadTimesList[indexPath.row].maxAz) + Constants.deg
-            cell.maxEl.text = String(format: Globals.elevationFormat, overheadTimesList[indexPath.row].maxEl) + Constants.deg
-            cell.maxComp.text = String(overheadTimesList[indexPath.row].maxAzCompass)
+            cell.maxTime.text                   = dateFormatterForTime.string(from: Date(timeIntervalSince1970: overheadTimesList[indexPath.row].maxUTC))
+            cell.maxAz.text                     = String(format: Globals.azimuthFormat, overheadTimesList[indexPath.row].maxAz) + Constants.deg
+            cell.maxEl.text                     = String(format: Globals.elevationFormat, overheadTimesList[indexPath.row].maxEl) + Constants.deg
+            cell.maxComp.text                   = String(overheadTimesList[indexPath.row].maxAzCompass)
             
             // End-of-pass data
-            cell.endTime.text = dateFormatterForTime.string(from: Date(timeIntervalSince1970: overheadTimesList[indexPath.row].endUTC))
-            cell.endAz.text = String(format: Globals.azimuthFormat, overheadTimesList[indexPath.row].endAz) + Constants.deg
-            cell.endEl.text = String(format: Globals.elevationFormat, overheadTimesList[indexPath.row].endEl) + Constants.deg
-            cell.endComp.text = String(overheadTimesList[indexPath.row].endAzCompass)
+            cell.endTime.text                   = dateFormatterForTime.string(from: Date(timeIntervalSince1970: overheadTimesList[indexPath.row].endUTC))
+            cell.endAz.text                     = String(format: Globals.azimuthFormat, overheadTimesList[indexPath.row].endAz) + Constants.deg
+            cell.endEl.text                     = String(format: Globals.elevationFormat, overheadTimesList[indexPath.row].endEl) + Constants.deg
+            cell.endComp.text                   = String(overheadTimesList[indexPath.row].endAzCompass)
             
             
             // Show the correct number of rating stars based on the magnitude of the pass
-            let mag = overheadTimesList[indexPath.row].mag
-            let rating = numberOfRatingStarsFor(thisMagnitude: mag)
-            let totalStarsInRatingSystem = RatingSystem.allCases.count-1       // Subtract 1 because there is one less star that actually can show
+            let mag                             = overheadTimesList[indexPath.row].mag
+            let rating                          = numberOfRatingStarsFor(thisMagnitude: mag)
+            let totalStarsInRatingSystem        = RatingSystem.allCases.count-1       // Subtract 1 because there is one less star that actually can show
             for star in 0...(totalStarsInRatingSystem-1) {
                 cell.ratingStarView[star].image = star < rating ? Constants.ratingStar : Constants.noRatingStar
             }
