@@ -16,8 +16,8 @@ class CrewMembersTableViewController: UITableViewController, TableAnimatable {
     
     /// Constants
     private struct Constants {
-        static let bioBackupURLString           = "---"   // Backup URL is used if a bio URL is not returned in the JSON file
-        static let crewAPIEndpointURLString     = "---"                         // API endpoint
+        static let bioBackupURLString           = "https://www.issrtt.com/issrtt-astronaut-bio-not-found"   // Backup URL is used if a bio URL is not returned in the JSON file
+        static let crewAPIEndpointURLString     = "https://issrttapi.com/crew.json"                         // API endpoint
         static let customCellIdentifier         = "crewMemberCell"
         static let fontForTitle                 = Theme.nasa
         static let newLine                      = "\n"
@@ -57,9 +57,9 @@ class CrewMembersTableViewController: UITableViewController, TableAnimatable {
     @IBOutlet var crewMemberDetailView: CrewMemberDetailView!
     @IBOutlet var promptLabel: UILabel! {
         didSet {
-            promptLabel.text                = Constants.updatingDataPromptText
+            promptLabel.text = Constants.updatingDataPromptText
             promptLabel.layer.maskedCorners = [.layerMinXMaxYCorner, .layerMaxXMaxYCorner]
-            promptLabel.layer.cornerRadius  = 27
+            promptLabel.layer.cornerRadius = 27
             promptLabel.layer.masksToBounds = true
         }
     }
@@ -81,11 +81,11 @@ class CrewMembersTableViewController: UITableViewController, TableAnimatable {
         super.viewWillAppear(animated)
 
         // Set font and attributes for navigation bar
-        let titleFontSize                                           = Theme.navigationBarTitleFontSize
-        if let titleFont                                            = UIFont(name: Constants.fontForTitle, size: titleFontSize) {
-            let attributes                                          = [NSAttributedString.Key.font: titleFont, .foregroundColor: UIColor.white]
+        let titleFontSize = Theme.navigationBarTitleFontSize
+        if let titleFont = UIFont(name: Constants.fontForTitle, size: titleFontSize) {
+            let attributes = [NSAttributedString.Key.font: titleFont, .foregroundColor: UIColor.white]
             navigationController?.navigationBar.titleTextAttributes = attributes
-            navigationController?.navigationBar.barTintColor        = UIColor(named: Theme.tint)
+            navigationController?.navigationBar.barTintColor = UIColor(named: Theme.tint)
         }
         
 //        // Use appropriate background color for light or dark mode
@@ -273,9 +273,9 @@ class CrewMembersTableViewController: UITableViewController, TableAnimatable {
                 self.spinner.startAnimating()
             }
             
-            let navigationController                      = segue.destination as! UINavigationController
-            let destinationVC                             = navigationController.topViewController as! HelpViewController
-            destinationVC.helpContentHTML                 = UserGuide.crewHelp
+            let navigationController = segue.destination as! UINavigationController
+            let destinationVC = navigationController.topViewController as! HelpViewController
+            destinationVC.helpContentHTML = UserGuide.crewHelp 
             destinationVC.helpButtonInCallingVCSourceView = navigationController.navigationBar
             
             DispatchQueue.main.async {
@@ -406,7 +406,7 @@ extension CrewMembersTableViewController {
     
     private func centerPopover() {
         
-        let parentBounds           = view.bounds
+        let parentBounds = view.bounds
         let shortBioViewWidth      = crewMemberDetailView.frame.width
         let shortBioViewHeight     = crewMemberDetailView.frame.height
         let xPosition              = parentBounds.midX - shortBioViewWidth / 2.0
@@ -423,11 +423,10 @@ extension CrewMembersTableViewController {
         
         let index                                       = indexPath.row
         let startOfLabelText                            = currentCrew![index].name + Globals.spacer
-        let flagImageURLString                          = currentCrew![index].flag
+        let flagImageURLString                          = currentCrew![index].flag 
         crewMemberDetailView.shortBioName?.text         = startOfLabelText + flagImageURLString
         crewMemberDetailView.shortBioInforomation?.text = currentCrew?[index].shortBioBlurb ?? "No short bio is available."
         crewMemberDetailView.twitterHandleURL           = currentCrew?[index].twitter
-        
         view.addSubview(crewMemberDetailView)
         
     }

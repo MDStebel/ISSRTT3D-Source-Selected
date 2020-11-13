@@ -86,14 +86,13 @@ class LiveVideoViewController: UIViewController, WKUIDelegate, WKNavigationDeleg
     
     private func setUpWebView() {
         
-        let webConfiguration                                      = WKWebViewConfiguration()
+        let webConfiguration = WKWebViewConfiguration()
         webConfiguration.mediaTypesRequiringUserActionForPlayback = .audio
 
-        webView                                                   = WKWebView(frame: .zero, configuration: webConfiguration)
-        webView.uiDelegate                                        = self
-        webView.navigationDelegate                                = self
-        
-        view                                                      = webView
+        webView = WKWebView(frame: .zero, configuration: webConfiguration)
+        webView.uiDelegate = self
+        webView.navigationDelegate = self
+        view = webView
         
     }
     

@@ -44,7 +44,7 @@ extension TrackingViewController {
     
     
     /// Set up the overlays and any buttons that depend on settings
-    fileprivate func setUpAllOverlaysAndButtons() {
+    fileprivate func setupAllOverlaysAndButtons() {
         
         DispatchQueue.main.async {
             
@@ -77,7 +77,7 @@ extension TrackingViewController {
                 self.clearOrbitTrackButton.isEnabled = false
             }
             
-            self.cursor.isHidden                     = false    // Now, show the marker
+            self.cursor.isHidden = false                        // Now, show the marker
             
         }
         
@@ -87,7 +87,7 @@ extension TrackingViewController {
     /// Method to get current ISS coordinates from JSON file and animate its display on map. Called by timer selector.
     @objc func locateISS() {
         
-        setUpAllOverlaysAndButtons()
+        setupAllOverlaysAndButtons()
         
         // Make sure we can create the URL
         guard let apiEndpointURL = URL(string: Constants.apiEndpointAString) else { return }
@@ -127,12 +127,12 @@ extension TrackingViewController {
                         // Update globe with ISS position and orbital track, if enabled
                         if Globals.displayGlobe {
                             self?.setUpCoordinatesLabel(withTopCorners: false)
-                            self?.globeScene.isHidden = false
+                            self?.globeScene.isHidden        = false
                             self?.globeExpandButton.isHidden = false
                             self?.updateEarthGlobeScene(in: self!.globe, latitude: self!.latitude, longitude: self!.longitude, lastLat: &self!.lastLat)
                         } else {
                             self?.setUpCoordinatesLabel(withTopCorners: true)
-                            self?.globeScene.isHidden = true
+                            self?.globeScene.isHidden        = true
                             self?.globeExpandButton.isHidden = true
                         }
                         

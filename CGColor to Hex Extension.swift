@@ -22,9 +22,7 @@ extension CGColor {
     /// - Returns: Optional string containing the hex value with alpha.
     func toHex(alpha: Bool = false) -> String? {
         
-        guard let components = components, numberOfComponents >= 3 else {
-            return nil
-        }
+        guard let components = components, numberOfComponents >= 3 else { return nil }
         
         let r = Float(components[0])
         let g = Float(components[1])

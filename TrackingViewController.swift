@@ -46,8 +46,8 @@ class TrackingViewController: UIViewController, MKMapViewDelegate, UIGestureReco
     /// Local constants
     struct Constants {
         static let animationOffsetY: CGFloat    = 90.0
-        static let apiEndpointAString           = "---"
-        static let apiEndpointBString           = "---"
+        static let apiEndpointAString           = "https://api.wheretheiss.at/v1/satellites/25544"
+        static let apiEndpointBString           = "http://api.open-notify.org/iss-now.json"
         static let defaultTimerInterval         = 3.0
         static let fontForTitle                 = Theme.nasa
         static let kilometersToMiles            = 0.621371192
@@ -183,15 +183,15 @@ class TrackingViewController: UIViewController, MKMapViewDelegate, UIGestureReco
     var altitude                            = "" {
         didSet{
             altitudeInMiles = Constants.numberFormatter.string(from: NSNumber(value: Double(altitude)! * Constants.kilometersToMiles))!
-            altitudeInKm = Constants.numberFormatter.string(from: NSNumber(value: Double(altitude)!))!
-            altString = "    Altitude: \(altitudeInKm) km  (\(altitudeInMiles) miles)"
+            altitudeInKm    = Constants.numberFormatter.string(from: NSNumber(value: Double(altitude)!))!
+            altString       = "    Altitude: \(altitudeInKm) km  (\(altitudeInMiles) miles)"
         }
     }
     var velocity = "" {
         didSet {
             velocityInMPH = Constants.numberFormatter.string(from: NSNumber(value: Double(velocity)! * Constants.kilometersToMiles))!
             velocityInKmH = Constants.numberFormatter.string(from: NSNumber(value: Double(velocity)!))!
-            velString = "    Velocity: \(velocityInKmH) km/h  (\(velocityInMPH) mph)"
+            velString     = "    Velocity: \(velocityInKmH) km/h  (\(velocityInMPH) mph)"
         }
     }
     private var altitudeInKm = "" {
@@ -269,16 +269,16 @@ class TrackingViewController: UIViewController, MKMapViewDelegate, UIGestureReco
     
     
     private func setUpMap() {
-        map.delegate = self
-        map.isPitchEnabled = true
+        map.delegate        = self
+        map.isPitchEnabled  = true
         map.isRotateEnabled = false
-        map.isZoomEnabled = true
-        map.showsScale = true
+        map.isZoomEnabled   = true
+        map.showsScale      = true
     }
     
     
     private func setUpNumberFormatter() {
-        Constants.numberFormatter.numberStyle = NumberFormatter.Style.decimal
+        Constants.numberFormatter.numberStyle           = NumberFormatter.Style.decimal
         Constants.numberFormatter.maximumFractionDigits = 0
     }
     
@@ -367,7 +367,7 @@ class TrackingViewController: UIViewController, MKMapViewDelegate, UIGestureReco
         animateStartPrompt()
         showWhatsNewIfNeeded()
         
-        map.isZoomEnabled = Globals.mapScrollingAndZoomIsEnabled
+        map.isZoomEnabled   = Globals.mapScrollingAndZoomIsEnabled
         map.isScrollEnabled = Globals.mapScrollingAndZoomIsEnabled
         
     }
@@ -378,10 +378,10 @@ class TrackingViewController: UIViewController, MKMapViewDelegate, UIGestureReco
         guard !positionString.isEmpty else { return }
         
         // Build the string
-        let dateAndTime = (dateFormatter?.string(from: Date(timeIntervalSince1970: Double(atDateAndTime)!)))!
-        let part1 = positionString + Constants.linefeed + altString + Constants.linefeed
-        let part2 = velString + Constants.linefeed + "  Time: " + dateAndTime
-        let dataToBeCopiedString = part1 + part2
+        let dateAndTime             = (dateFormatter?.string(from: Date(timeIntervalSince1970: Double(atDateAndTime)!)))!
+        let part1                   = positionString + Constants.linefeed + altString + Constants.linefeed
+        let part2                   = velString + Constants.linefeed + "  Time: " + dateAndTime
+        let dataToBeCopiedString    = part1 + part2
         
         UIPasteboard.general.string = dataToBeCopiedString      // Copy to general pasteboard
         
@@ -467,7 +467,7 @@ class TrackingViewController: UIViewController, MKMapViewDelegate, UIGestureReco
         // Don't leave without doing this!
         defer {
             map.isScrollEnabled = Globals.mapScrollingAndZoomIsEnabled
-            map.isZoomEnabled = Globals.mapScrollingAndZoomIsEnabled
+            map.isZoomEnabled   = Globals.mapScrollingAndZoomIsEnabled
         }
         
         if !running! {

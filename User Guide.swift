@@ -171,7 +171,7 @@ struct UserGuide {
     <h4>Ground Track</h4>
     <p>The orbit ground track line is drawn by default. This shows the ground track of the ISS. You can turn this on/off in Settings by tapping the settings icon from the Tracking screen. When the orbit track is on, the ground track clear button is displayed on the Tracking screen.</p>
     <h4>Interactive 3D Globe</h4>
-    <p>The globe shows the current position of the ISS and its orbital track. This is a photorealistic model of the Earth complete with accurate Sun subsolar position, specular reflections on the water, seasonal tilt, mountain shadows, and other details. Drag the globe to rotate and pan it. The circle represents the approximate ISS sighting range from ground level. Auto-rotation is enabled by default and rotates the globe once per minute. To disable auto-rotation, as well as to enable/disable the globe entirely, go to Settings. Tapping the expand icon on the globe overlay, or the globe button on the tab bar, expands the globe to full-screen mode and hides the map.</p>
+    <p>The globe shows the current position of the ISS and its orbital track. This is a photorealistic model of the Earth complete with accurate Sun subsolar position, specular reflections on the water, seasonal tilt, mountain shadows, and other details. Drag the globe to rotate and pan it. The circle represents the approximate ISS sighting range from ground level. Auto-rotation is enabled by default and rotates the globe once every 90 seconds. To disable auto-rotation, as well as to enable/disable the globe entirely, go to Settings. Tapping the expand icon on the globe overlay, or the globe button on the tab bar, expands the globe to full-screen mode and hides the map.</p>
     <h4>Copy Info to the Clipboard</h4>
     <p>Tap the copy icon next to the info box on bottom of the map to copy the ISS's location, altitude, velocity, and associated time to the clipboard. You can then paste the data in another app.</p>
     <h5>Notes:</h5>
@@ -188,9 +188,10 @@ struct UserGuide {
     <p>From the Tracking screen, tapping the expand icon on the globe overlay expands the globe to full-screen mode and hides the map.</p>
     <p>The 3D interactive globe shows the current position of the ISS and its orbital track. This is a photorealistic model of the Earth complete with accurate Sun position, specular reflections on the water, seasonal tilt, mountain shadows, and other details.</p>
     <p>The globe starts updating automatically when in full-screen mode.</p>
-    <p>Drag the globe to rotate and pan it.</p>
-    <p>The circle represents the approximate ISS sighting range from ground level.</>
-    <p>Auto-rotation is enabled by default and rotates the globe once per minute. To disable auto-rotation, as well as to enable/disable the globe entirely, go to Settings.</p>
+    <p>Drag the globe with one finger to rotate it.</p>
+    <p>Pinch the globe to zoom in/out.</p>
+    <p>Use two fingers to tilt the globe.</p>
+    <p>Auto-rotation is enabled by default and rotates the globe once every 90 seconds. To disable auto-rotation, as well as to enable/disable the globe entirely, go to Settings.</p>
     <p>Tap the collapse icon to return to the map and resume tracking.</p>
     <div id="crew"></div>
     <h2>Crew</h2>
@@ -361,10 +362,11 @@ struct UserGuide {
     <p>From the Tracking screen, tapping the expand icon on the globe overlay, or the globe button on the tab bar, expands the globe to full-screen mode and hides the map.</p>
     <p>The 3D interactive globe shows the current position of the ISS and its orbital track. This is a photorealistic model of the Earth complete with accurate Sun subsolar position, specular reflections on the water, seasonal tilt, mountain shadows, and other details.</p>
     <p>The globe starts updating automatically when in full-screen mode.</p>
-    <p>Drag the globe to rotate and pan it.</p>
+    <p>Drag the globe with one finger to rotate it.</p>
     <p>Pinch the globe to zoom in/out.</p>
+    <p>Use two fingers to tilt the globe.</p>
     <p>The circle represents the approximate ISS sighting range from ground level.</>
-    <p>Auto-rotation is enabled by default and rotates the globe once per minute. To disable auto-rotation, as well as to enable/disable the globe entirely, go to Settings.</p>
+    <p>Auto-rotation is enabled by default and rotates the globe once every 90 seconds. To disable auto-rotation, as well as to enable/disable the globe entirely, go to Settings.</p>
     <p>Tap the collapse icon to return to the map and resume tracking.</p>
     \(tail)
     """

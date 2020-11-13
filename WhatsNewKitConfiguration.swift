@@ -66,12 +66,12 @@ private var mainFont                                = UIFont(name: Theme.appFont
 private var myTheme = WhatsNewViewController.Theme { configuration in
     
     if Globals.isIPad {
-        mainFont = UIFont(name: Theme.appFont, size: 15)!
-        itemTitleFont = UIFont(name: Theme.appFontBold, size: 24)!
+        mainFont         = UIFont(name: Theme.appFont, size: 15)!
+        itemTitleFont    = UIFont(name: Theme.appFontBold, size: 24)!
         detailButtonFont = UIFont(name: Theme.appFont, size: 14)!
     } else {
-        mainFont = UIFont(name: Theme.appFont, size: 13)!
-        itemTitleFont = UIFont(name: Theme.appFontBold, size: 18)!
+        mainFont         = UIFont(name: Theme.appFont, size: 13)!
+        itemTitleFont    = UIFont(name: Theme.appFontBold, size: 18)!
         detailButtonFont = UIFont(name: Theme.appFont, size: 12)!
     }
     
@@ -101,4 +101,4 @@ private var myTheme = WhatsNewViewController.Theme { configuration in
 private let myConfiguration = WhatsNewViewController.Configuration(theme: myTheme)
 
 /// Initialize WhatsNewViewController with WhatsNew
-let whatsNewViewController = WhatsNewViewController(whatsNew: whatsNew, configuration: myConfiguration)
+let whatsNewViewController  = WhatsNewViewController(whatsNew: whatsNew, configuration: myConfiguration)

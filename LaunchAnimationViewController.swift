@@ -71,7 +71,7 @@ class LaunchAnimationViewController: UIViewController {
             trans1          = trans1.scaledBy(x: iconScaleFactor, y: iconScaleFactor)
             trans1          = trans1.rotated(by: iconAnimationRotationAngle)
         
-        } else {                                    // If < iOS 13
+        } else {                                    // If before iOS 13
             
             xTrans          = view.bounds.size.width - ISSImage.bounds.size.width / 2.0 - 15
             yTrans          = view.bounds.size.height - ISSImage.bounds.size.height / 2.0 + 10
@@ -81,7 +81,6 @@ class LaunchAnimationViewController: UIViewController {
             trans1          = trans1.rotated(by: iconAnimationRotationAngle)
         
         }
-        
     }
     
     
@@ -129,8 +128,8 @@ class LaunchAnimationViewController: UIViewController {
         
         if let (versionNumber, buildNumber, copyright) = getAppCurrentVersion() {
             Globals.copyrightString = copyright
-            Globals.versionNumber = versionNumber
-            Globals.buildNumber = buildNumber
+            Globals.versionNumber   = versionNumber
+            Globals.buildNumber     = buildNumber
         }
         
     }

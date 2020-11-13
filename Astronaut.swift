@@ -32,7 +32,7 @@ struct Astronaut {
     let launchVehicle: String
     
     var shortAstronautDescription: String {
-        return name + Globals.spacer + (flag)
+        return name + "  " + (flag)
     }
 
     

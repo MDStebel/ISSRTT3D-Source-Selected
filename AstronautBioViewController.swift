@@ -66,13 +66,12 @@ class AstronautBioViewController: UIViewController, WKUIDelegate, WKNavigationDe
     private func setupWebViewForBio() {
         
         // Set up webkit view
-        let webConfiguration          = WKWebViewConfiguration()
-        bioWebView                    = WKWebView(frame: .zero, configuration: webConfiguration)
-        bioWebView.uiDelegate         = self
+        let webConfiguration = WKWebViewConfiguration()
+        bioWebView = WKWebView(frame: .zero, configuration: webConfiguration)
+        bioWebView.uiDelegate = self
         bioWebView.navigationDelegate = self
-        bioWebView.addSubview(spinner)                               // Add spinner to web view
-        
-        view                          = bioWebView                   // Set view to web view
+        bioWebView.addSubview(spinner)      // Add spinner to web view
+        view = bioWebView                   // Set view to web view
         
     }
     

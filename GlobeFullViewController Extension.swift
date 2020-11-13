@@ -11,7 +11,7 @@ import UIKit
 
 extension GlobeFullViewController {
     
-    /// Method to get current ISS coordinates from JSON file and then update the globe. Called by timer selector.
+    /// Method to get current ISS coordinates from JSON file and show it on the globe. Called by timer selector.
     @objc func earthGlobeLocateISS() {
         
         

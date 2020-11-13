@@ -252,42 +252,42 @@ class SettingsTableViewController: UITableViewController {
     /// Reset all settings to their defaults
     @IBAction private func resetSettings(_ sender: UIBarButtonItem) {
         
-        Globals.showCoordinatesIsOn                  = true
-        showCoordinatesSwitch.isOn                   = true
+        Globals.showCoordinatesIsOn = true
+        showCoordinatesSwitch.isOn = true
         
-        Globals.displayZoomFactorBelowMarkerIsOn     = true
-        displayZoomFactorBelowMarkerSwitch.isOn      = true
+        Globals.displayZoomFactorBelowMarkerIsOn = true
+        displayZoomFactorBelowMarkerSwitch.isOn = true
         
-        Globals.mapScrollingAndZoomIsEnabled         = false
-        userMapScrollingEnbleSwitch.isOn             = false
+        Globals.mapScrollingAndZoomIsEnabled = false
+        userMapScrollingEnbleSwitch.isOn = false
 
-        Globals.showWhatsNewUponNextStartup          = false
-        showWhatsNewSwitch.isOn                      = false
+        Globals.showWhatsNewUponNextStartup = false
+        showWhatsNewSwitch.isOn = false
         
-        Globals.orbitGroundTrackLineEnabled          = true
-        showOrbitGroundTrackLine.isOn                = true
+        Globals.orbitGroundTrackLineEnabled = true
+        showOrbitGroundTrackLine.isOn = true
         
-        Globals.displayGlobe                         = true
-        displayGlobeSwitch.isOn                      = true
+        Globals.displayGlobe = true
+        displayGlobeSwitch.isOn = true
         
-        Globals.autoRotateGlobeEnabled               = true
-        autoRotateGlobeSwitch.isOn                   = true
+        Globals.autoRotateGlobeEnabled = true
+        autoRotateGlobeSwitch.isOn = true
         
-        Globals.mapTypeSelection                     = defaultMapType
-        mapTypeSelector.selectedSegmentIndex         = defaultMapType
+        Globals.mapTypeSelection = defaultMapType
+        mapTypeSelector.selectedSegmentIndex = defaultMapType
         
-        Globals.zoomRangeFactorSelection             = defaultZoomFactor
+        Globals.zoomRangeFactorSelection = defaultZoomFactor
         zoomRangeFactorSelector.selectedSegmentIndex = defaultZoomFactor
 
-        Globals.numberOfDaysOfPassesSelectedSegment  = Globals.numberOfDaysOfPassesDefaultSelectionSegment
-        numberOfDaysOfPasses.selectedSegmentIndex    = Globals.numberOfDaysOfPassesDefaultSelectionSegment
+        Globals.numberOfDaysOfPassesSelectedSegment = Globals.numberOfDaysOfPassesDefaultSelectionSegment
+        numberOfDaysOfPasses.selectedSegmentIndex = Globals.numberOfDaysOfPassesDefaultSelectionSegment
         
-        Globals.markerType                           = defaultMarkerType
-        markerTypeSelector.selectedSegmentIndex      = defaultMarkerType
+        Globals.markerType = defaultMarkerType
+        markerTypeSelector.selectedSegmentIndex = defaultMarkerType
         
-        Globals.zoomFactorWasResetInSettings         = true                     // Flag is set to indicate that main ViewController should check to restore zoom to its default values
+        Globals.zoomFactorWasResetInSettings = true                     // Flag is set to indicate that main ViewController should check to restore zoom to its default values
         
-        Globals.blackScreenInHDEVExplanationPopsUp   = true
+        Globals.blackScreenInHDEVExplanationPopsUp = true
         
     }
     
@@ -337,12 +337,12 @@ class SettingsTableViewController: UITableViewController {
             userMapScrollingEnbleSwitch.isOn = false
         }
         
-        markerTypeSelector?.selectedSegmentIndex      = Globals.markerType
-        numberOfDaysOfPasses?.selectedSegmentIndex    = Globals.numberOfDaysOfPassesSelectedSegment
+        markerTypeSelector?.selectedSegmentIndex = Globals.markerType
+        numberOfDaysOfPasses?.selectedSegmentIndex = Globals.numberOfDaysOfPassesSelectedSegment
         zoomRangeFactorSelector?.selectedSegmentIndex = Globals.zoomRangeFactorSelection
-        mapTypeSelector?.selectedSegmentIndex         = Globals.mapTypeSelection
-        dateAndTimeSaved                              = "Last saved: \(Globals.lastDateAndTimeSettingsWereSaved)"
-        versionAndCopyrightFooter                     = "Version: \(versionNumber)  Build: \(buildNumber)\n\(copyrightNotice)\n\nIncludes: WhatsNewKit © 2020 Sven Tiigi"
+        mapTypeSelector?.selectedSegmentIndex = Globals.mapTypeSelection
+        dateAndTimeSaved = "Last saved: \(Globals.lastDateAndTimeSettingsWereSaved)"
+        versionAndCopyrightFooter = "Version: \(versionNumber)  Build: \(buildNumber)\n\(copyrightNotice)\n\nIncludes: WhatsNewKit © 2020 Sven Tiigi"
 
     }
     
@@ -369,7 +369,7 @@ class SettingsTableViewController: UITableViewController {
         switch segue.identifier {
             
         case Constants.segueToHelpFromSettings :
-            let destinationVC             = segue.destination as! HelpViewController
+            let destinationVC = segue.destination as! HelpViewController
             destinationVC.helpContentHTML = UserGuide.settingsHelp
             
         default :

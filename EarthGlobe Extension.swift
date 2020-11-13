@@ -51,18 +51,18 @@ extension EarthGlobe {
         orbitTrack.pipeSegmentCount                = 96
         
         // Assign the torus as a node and add it as a child of globe
-        let orbitTrackNode = SCNNode(geometry: orbitTrack)
+        let orbitTrackNode          = SCNNode(geometry: orbitTrack)
         globe.addChildNode(orbitTrackNode)
         
         // Set the lat, lon, and inclination corrections that are be needed to align orbital properly to the ISS and its heading
         var orbitalCorrectionForInclination: Float
-        let adjustedLat = lat + 180
-        let adjustedLon = lon - 180
-        let orbitalCorrectionForLon = adjustedLon * Globals.degreesToRadians                                        // lon & lat used as angular displacement from the origin (lon-origin=lon-0=lon)
+        let adjustedLat             = lat + 180
+        let adjustedLon             = lon - 180
+        let orbitalCorrectionForLon = adjustedLon * Globals.degreesToRadians    // lon & lat used as angular displacement from the origin (lon-origin=lon-0=lon)
         let orbitalCorrectionForLat = adjustedLat * Globals.degreesToRadians
-        let absLat = abs(lat)
-        let exponent = Float.pi / 2.5 + absLat * Globals.degreesToRadians / Globals.ISSOrbitInclinationInRadians    // Adjustment to the inclination (z-axis) as we approach max latitudes.
-        switch absLat {                                                                                             // Apply a power function to the adjustment (an exponent) based on the latitude.
+        let absLat                  = abs(lat)
+        let exponent                = Float.pi / 2.5 + absLat * Globals.degreesToRadians / Globals.ISSOrbitInclinationInRadians  // Adjustment to the inclination (z-axis) as we approach max latitudes.
+        switch absLat {                                                         // Apply a power function to the adjustment (an exponent) based on the latitude.
         case _ where absLat <= 25.0 :
             orbitalCorrectionForInclination = exponent
         case _ where absLat <= 35.0 :
@@ -78,7 +78,7 @@ extension EarthGlobe {
         }
         let ISSOrbitInclinationInRadiansCorrected = pow(Globals.ISSOrbitInclinationInRadians, orbitalCorrectionForInclination) * headingFactor
         
-        // Create 4x4 transform matrices for each rotation to be used below as rotation matrices and initialize each as the identity matrix
+        // Create 4x4 transform matrices for each rotation and initialize them as the identity matrix
         var rotationMatrix1 = SCNMatrix4Identity
         var rotationMatrix2 = SCNMatrix4Identity
         var rotationMatrix3 = SCNMatrix4Identity
@@ -113,12 +113,11 @@ extension EarthGlobe {
         sun.light              = SCNLight()
         sun.light!.type        = .omni
         sun.light!.castsShadow = false
+        sun.light!.temperature = 5600                       // Sun color temp at noon is 5600. White is 6500. Anything above 5000 is daylight.
+        sun.light!.intensity   = 3000                       // The default is 1000
         
         globe.addChildNode(sun)
 
-        sun.light!.temperature = 5600                         // Sun color temp at noon is 5600. White is 6500. Anything above 5000 is daylight.
-        sun.light!.intensity   = 3000                         // The default is 1000
-        
     }
     
     
@@ -128,7 +127,7 @@ extension EarthGlobe {
         
         if run && !globe.hasActions {
             let spinRotation = SCNAction.rotate(by: 2 * .pi, around: SCNVector3(0, 1, 0), duration: globeDefaultRotationSpeedInSeconds)
-            let spinAction = SCNAction.repeatForever(spinRotation)
+            let spinAction   = SCNAction.repeatForever(spinRotation)
             globe.runAction(spinAction)
         } else if !run && globe.hasActions {
             globe.removeAllActions()
@@ -163,22 +162,20 @@ extension EarthGlobe {
         let position = CoordinateCalculations.convertLatLonCoordinatesToXYZ(lat: lat, lon: lon, alt: Globals.orbitalAltitudeFactor)
         
         // Determine how much we've moved
-        let currentPosition = node.position
-        let delta = CGSize(width: Double((currentPosition.x - position.x)) / 225.0, height: Double((currentPosition.y - position.y)) / 225.0 )
+        let currentPosition       = node.position
+        let delta                 = CGSize(width: Double((currentPosition.x - position.x)) / 225.0, height: Double((currentPosition.y - position.y)) / 225.0 )
         
-        //  DeltaX = amount of rotation to apply (about the world axis)
-        //  DelyaY = amount of tilt to apply (to the axis itself)
         if delta.width != 0.0 || delta.height != 0.0 {
 
             let rotationAboutAxis = Float(delta.width) * 2 * .pi
-            let tiltOfAxisItself = Float(delta.height) * 2 * .pi
+            let tiltOfAxisItself  = Float(delta.height) * 2 * .pi
             
             // First, apply the rotation
-            let rotate = SCNMatrix4RotateF(userRotation.worldTransform, -rotationAboutAxis, 0.0, 1.0, 0.0)
+            let rotate            = SCNMatrix4RotateF(userRotation.worldTransform, -rotationAboutAxis, 0.0, 1.0, 0.0)
             node.setWorldTransform(rotate)
             
             // Now, apply the tilt
-            let tilt = SCNMatrix4RotateF(userTilt.worldTransform, -tiltOfAxisItself, 1.0, 0.0, 0.0)
+            let tilt              = SCNMatrix4RotateF(userTilt.worldTransform, -tiltOfAxisItself, 1.0, 0.0, 0.0)
             node.setWorldTransform(tilt)
             
         }
@@ -189,9 +186,9 @@ extension EarthGlobe {
     /// Move camera to a given latitude and longitude
     public func moveCameraToPointOnGlobe(lat: Float, lon: Float) {
         
-        let newPosition = CoordinateCalculations.convertLatLonCoordinatesToXYZ(lat: lat, lon: lon, alt: Globals.ISSOrbitAltitudeInScene)
-        let x = newPosition.x
-        let y = newPosition.y
+        let newPosition     = CoordinateCalculations.convertLatLonCoordinatesToXYZ(lat: lat, lon: lon, alt: Globals.ISSOrbitAltitudeInScene)
+        let x               = newPosition.x
+        let y               = newPosition.y
         cameraNode.position = SCNVector3(x: x, y: y, z: globeRadius + cameraAltitude)
         
     }

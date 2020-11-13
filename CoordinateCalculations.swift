@@ -10,7 +10,7 @@
 import SceneKit
 
 
-/// A set of functions that provide astronomical calculations for solar coordinates, as well as Julian calendar dates.
+/// A set of functions that provide astronomical calculations for solar coordinates.
 struct CoordinateCalculations {
     
     /// Convert coordinates from lat, lon, altitude to SceneKit xyz cooridates
@@ -83,8 +83,8 @@ struct CoordinateCalculations {
     /// - Returns: The geometric mean longitude in degrees as a Float
     static func getGeometricMeanLongitudeOfSunAtCurrentTime() -> Float {
      
-        let now                       = Date()
-        let jC                        = julianCentury(date: now)
+        let now = Date()
+        let jC = julianCentury(date: now)
 
         let sunGeometricMeanLongitude = Float((280.46646 + jC * (36000.76983 + jC * 0.0003032))).truncatingRemainder(dividingBy: 360)
         
