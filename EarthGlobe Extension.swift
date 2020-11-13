@@ -17,7 +17,7 @@ extension EarthGlobe {
     ///   - lon: The current longitude as a decimal value
     public func addISSMarker(lat: Float, lon: Float) {
         
-        let ISS = ISSMarkerForEarthGlobe(using: "iss_4_white_without_circle", lat: lat, lon: lon, isInOrbit: true)
+        let ISS = ISSMarkerForEarthGlobe(using: "New-ISS-Marker-2400px-1", lat: lat, lon: lon, isInOrbit: true)
         self.addMarker(ISS, shouldPulse: true)
         
     }
@@ -113,8 +113,8 @@ extension EarthGlobe {
         sun.light              = SCNLight()
         sun.light!.type        = .omni
         sun.light!.castsShadow = false
-        sun.light!.temperature = 5600                       // Sun color temp at noon is 5600. White is 6500. Anything above 5000 is daylight.
-        sun.light!.intensity   = 3000                       // The default is 1000
+        sun.light!.temperature = 5600                       // The Sun's color temp at noon
+        sun.light!.intensity   = 3200
         
         globe.addChildNode(sun)
 

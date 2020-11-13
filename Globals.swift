@@ -46,8 +46,8 @@ struct Globals {
     static var zoomRangeFactorSelection                         = 2
     static var cameraAltitude: Float                            = 1.85
     static var defaultCameraFov: CGFloat                        = 30
-    static var maxFov: CGFloat                                  = 60.0
-    static var minFov: CGFloat                                  = 5.0
+    static var maxFov: CGFloat                                  = defaultCameraFov * 1.5
+    static var minFov: CGFloat                                  = defaultCameraFov * 0.5
 
     static let ISSAltitudeFactor: Float                         = orbitalAltitudeFactor * 1.015
     static let ISSAltitudeInKM: Float                           = 425
@@ -57,7 +57,7 @@ struct Globals {
     static let azimuthFormat                                    = "%3.0f"
     static let coordinatesStringFormat                          = "%3d°%02d'%02d\" %@  %3d°%02d'%02d\" %@"
     static let dateFormatStringEuropeanForm                     = "yyyy-MM-dd"
-    static let degreesLongitudePerHour: Float                   = 360 / 24
+    static let degreesLongitudePerHour: Float                   = 360.0 / 24.0
     static let degreesToRadians: Float                          = .pi / 180
     static let e                                                = M_E
     static let earthRadiusInKM: Float                           = 6371

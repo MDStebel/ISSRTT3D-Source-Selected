@@ -29,7 +29,7 @@ private let whatsNew = WhatsNew(
         WhatsNew.Item(
             title: "Improvements & Fixes",
             subtitle: """
-                      In this release, 6.14.2, fixed bug in globe panning and improved globe performance.
+                      In this release, 6.14.2, fixed bug in globe panning, updated ISS marker, and improved globe performance.
                       """,
             image: UIImage(named: "icons8-bug_filled")
         ),

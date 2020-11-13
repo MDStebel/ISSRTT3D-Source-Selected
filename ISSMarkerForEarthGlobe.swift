@@ -43,13 +43,15 @@ class ISSMarkerForEarthGlobe {
         self.node.position = position
         
         
-        // Compute the normal pitch, yaw & roll (facing away from the globe)
-        // Pitch (the x component) is the rotation about the node's x-axis (in radians)
+        // Compute the normal pitch, yaw & roll
+        // Pitch is the rotation about the node's x-axis in radians
         let pitch = -lat * Float(Globals.degreesToRadians)
-        // Yaw (the y component) is the rotation about the node's y-axis (in radians)
+       
+        // Yaw is the rotation about the node's y-axis in radians
         let yaw = lon * Float(Globals.degreesToRadians)
-        // Roll (the z component) is the rotation about the node's z-axis (in radians)
-        let roll : Float = 0.0
+       
+        // Roll is the rotation about the node's z-axis in radians
+        let roll: Float = 0.0
         
         self.node.eulerAngles = SCNVector3(x: pitch, y: yaw, z: roll )
         
@@ -59,8 +61,8 @@ class ISSMarkerForEarthGlobe {
     /// Method to add a pulsing effect to the marker
     func addPulseAnimation() {
         
-        let scaleMin: Float = 0.85
-        let scaleMax: Float = 1.15
+        let scaleMin: Float = 0.80
+        let scaleMax: Float = 1.05
         let animation = CABasicAnimation(keyPath: "scale")
         animation.fromValue = SCNVector3(x: scaleMin, y: scaleMin, z: scaleMin)
         animation.toValue = SCNVector3(x: scaleMax, y: scaleMax, z: scaleMax)
@@ -68,7 +70,7 @@ class ISSMarkerForEarthGlobe {
         animation.autoreverses = true
         animation.repeatCount = Float.infinity
         animation.timingFunction = CAMediaTimingFunction(name: CAMediaTimingFunctionName.easeOut)
-        node.addAnimation(animation, forKey: "throb")
+        node.addAnimation(animation, forKey: nil)
         
     }
     

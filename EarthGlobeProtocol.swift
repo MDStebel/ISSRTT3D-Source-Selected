@@ -85,7 +85,7 @@ extension EarthGlobeProtocol {
         
         globe.addISSMarker(lat: lat, lon: lon)
         globe.addViewingCircle(lat: lat, lon: lon)
-        globe.autoSpinGlobeRun(run: Globals.autoRotateGlobeEnabled)
+        globe.autoSpinGlobeRun(run: Globals.autoRotateGlobeEnabled)     // Autorotate if enabled in Settings
         
     }
     
