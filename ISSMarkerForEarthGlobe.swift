@@ -19,32 +19,30 @@ class ISSMarkerForEarthGlobe {
     var image: String
     
     // The SceneKit node for this marker
-    internal var node: SCNNode!
+    var node: SCNNode!
     
     init(using image: String, lat: Float, lon: Float, isInOrbit: Bool) {
         
         self.image = image
         latitude = lat
         longitude = lon
-        let adjustedLon = longitude + 90                                                                // The textures are centered on 0,0, so adjust by 90 degrees
+        let adjustedLon = longitude + 90                                                                // Textures are centered on 0,0, so adjust by 90 degrees
         
-        let widthAndHeight = isInOrbit ? EarthGlobe.glowPointWidth : EarthGlobe.glowPointWidth * 2.25   // Fudge the approximate diameter of the sighting circle
+        let widthAndHeight = isInOrbit ? EarthGlobe.markerWidth : EarthGlobe.markerWidth * 2.25         // Fudge the approximate diameter of the sighting circle
         
-        self.node = SCNNode(geometry: SCNPlane(width: widthAndHeight, height: widthAndHeight) )
-        self.node.geometry!.firstMaterial!.diffuse.contents = image
-        self.node.geometry!.firstMaterial!.diffuse.intensity = 1.0                                      // Appearance in daylight areas
-        self.node.geometry!.firstMaterial!.emission.contents = image
-        self.node.geometry!.firstMaterial!.emission.intensity = 1.0                                     // Appearance in nighttime areas
-        self.node.geometry!.firstMaterial!.isDoubleSided = true
-        self.node.castsShadow = false
+        node = SCNNode(geometry: SCNPlane(width: widthAndHeight, height: widthAndHeight))
+        node.geometry!.firstMaterial!.diffuse.contents = image
+        node.geometry!.firstMaterial!.diffuse.intensity = 1.0                                           // Appearance in daylight areas
+        node.geometry!.firstMaterial!.emission.contents = image
+        node.geometry!.firstMaterial!.emission.intensity = 0.75                                         // Appearance in nighttime areas (a bit less bright)
+        node.geometry!.firstMaterial!.isDoubleSided = true
+        node.castsShadow = false
         
         let altitude = isInOrbit ? Globals.ISSAltitudeFactor : Globals.globeRadiusFactor * 0.949        // If not in orbit, then this is the sighting circle and place it flush with the surface
         let position = CoordinateCalculations.convertLatLonCoordinatesToXYZ(lat: lat, lon: adjustedLon, alt: altitude)
         self.node.position = position
         
-        
-        // Compute the normal pitch, yaw & roll
-        // Pitch is the rotation about the node's x-axis in radians
+        // Compute the normal pitch, yaw & roll, where pitch is the rotation about the node's x-axis in radians
         let pitch = -lat * Float(Globals.degreesToRadians)
        
         // Yaw is the rotation about the node's y-axis in radians
@@ -53,7 +51,7 @@ class ISSMarkerForEarthGlobe {
         // Roll is the rotation about the node's z-axis in radians
         let roll: Float = 0.0
         
-        self.node.eulerAngles = SCNVector3(x: pitch, y: yaw, z: roll )
+        node.eulerAngles = SCNVector3(x: pitch, y: yaw, z: roll )
         
     }
     

@@ -63,6 +63,8 @@ struct Globals {
     static let earthRadiusInKM: Float                           = 6371
     static let earthTiltInDegrees: Float                        = 23.447
     static let earthTiltInRadians: Float                        = earthTiltInDegrees * degreesToRadians
+    static let eclipticTiltFromGalacticPlaneInDegrees: Float    = 60.5
+    static let eclipticTiltFromGalacticPlaneInRadians: Float    = eclipticTiltFromGalacticPlaneInDegrees * degreesToRadians
     static let elevationFormat                                  = "%2.1f"
     static let floatingPointWithThreePlusOneDecimalPlace        = "%3.1f"
     static let floatingPointWithTwoPlusOneDecimalPlace          = "%2.1f"
@@ -82,7 +84,5 @@ struct Globals {
     static let outputTimeOnlyFormatString                       = "hh:mma"
     static let radiansToDegrees: Float                          = 1 / degreesToRadians
     static let spacer                                           = "  "
-    static let tiltOfEclipticFromGalacticPlaneInDegrees: Float  = 60.2
-    static let tiltOfEclipticFromGalacticPlaneInRadians: Float  = tiltOfEclipticFromGalacticPlaneInDegrees * degreesToRadians
     
 }

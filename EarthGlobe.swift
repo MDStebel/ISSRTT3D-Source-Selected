@@ -12,7 +12,7 @@ import SceneKit
 /// The 3D Interactive Earth Globe Model
 class EarthGlobe {
     
-    static let glowPointWidth: CGFloat     = 0.16                               // The size factor for the marker
+    static let markerWidth: CGFloat     = 0.16                               // The size factor for the marker
 
     let ambientLightIntensity: CGFloat     = 100                                // The default value is 1000
     let cameraAltitude                     = Globals.cameraAltitude
@@ -21,6 +21,8 @@ class EarthGlobe {
     let defaultCameraFov                   = Globals.defaultCameraFov
     let distanceToISSOrbit                 = Globals.ISSOrbitAltitudeInScene
     let dragWidthInDegrees                 = 270.0                              // The amount to rotate the globe on one edge-to-edge swipe (in degrees)
+    let earthTiltInDegrees                 = Globals.earthTiltInDegrees
+    let earthTiltInRadians                 = Globals.earthTiltInRadians
     let globeDefaultRotationSpeedInSeconds = 90.0                               // 360° revolution in 90 seconds
     let globeRadius                        = Globals.globeRadiusFactor
     let glowPointAltitude                  = Globals.orbitalAltitudeFactor
@@ -29,8 +31,6 @@ class EarthGlobe {
     let minFov                             = Globals.minFov                     // Min zoom in degrees
     let minLatLonPerUnity                  = -0.1
     let sceneBoxSize: CGFloat              = 1000.0
-    let tiltOfEarthAxisInDegrees           = Globals.earthTiltInDegrees
-    let tiltOfEarthAxisInRadians           = Globals.earthTiltInRadians
     
     var camera                             = SCNCamera()
     var cameraNode                         = SCNNode()
@@ -39,7 +39,6 @@ class EarthGlobe {
     var orbitTrack                         = SCNTorus()
     var scene                              = SCNScene()
     var seasonalTilt                       = SCNNode()
-    var skybox                             = SCNNode()
     var sun                                = SCNNode()
     var userRotation                       = SCNNode()
     var userTilt                           = SCNNode()
@@ -48,7 +47,7 @@ class EarthGlobe {
     var lastFovBeforeZoom : CGFloat?
     var lastPanLoc : CGPoint?
     
-    internal init() {
+    init() {
         
         // Create the globe shape
         let globeShape                 = SCNSphere(radius: CGFloat(globeRadius) )
@@ -56,7 +55,7 @@ class EarthGlobe {
         
         guard let earthMaterial        = globeShape.firstMaterial else { return }
 
-        // Earth's texture is revealed by diffuse light sources
+        // The Earth's texture is revealed by diffuse light sources
         earthMaterial.diffuse.contents = "8081_earthmap_8190px.jpg"         // Use the high-resolution Earth image
         
         let emission                   = SCNMaterialProperty()
@@ -85,7 +84,7 @@ class EarthGlobe {
         earthMaterial.normal.contents     = "earth-bump-1.png"
         earthMaterial.normal.intensity    = 0.5
         
-        // Creates a realistic specular reflection that changes its aspect based on angle
+        // Create a realistic specular reflection that changes its aspect based on angle
         earthMaterial.fresnelExponent     = 1.75
         
         // Assign the shape to the globe's geometry property
@@ -105,12 +104,12 @@ class EarthGlobe {
     ///   - pinchGestureIsEnabled: True if we're rendering the full globe and want to pinch to zoom
     func setupInSceneView(_ theScene: SCNView, pinchGestureIsEnabled : Bool ) {
         
-        theScene.scene                      = self.scene
+        theScene.scene                      = scene
         theScene.autoenablesDefaultLighting = false
         theScene.showsStatistics            = false
         
         theScene.allowsCameraControl        = true
-        self.gestureHost                    = theScene
+        gestureHost                         = theScene
         
         if pinchGestureIsEnabled {
             let pan                         = UIPanGestureRecognizer(target: self, action:#selector(EarthGlobe.onPanGesture(pan:)))
@@ -129,19 +128,23 @@ class EarthGlobe {
     
     private func completeTheSetup() {
 
-        // Give the world some ambient light to illuminate the globe a bit in nighttime
-        let ambientLight       = SCNLight()
-        ambientLight.type      = .ambient
-        ambientLight.intensity = ambientLightIntensity
+        // Let's give the world a bit of ambient light to illuminate the globe when its in nighttime
+        let ambientLight            = SCNLight()
+        ambientLight.type           = .ambient
+        ambientLight.intensity      = ambientLightIntensity
         
         // Add the camera
-        camera.fieldOfView     = defaultCameraFov
-        camera.zFar            = 10000
-        cameraNode.position    = SCNVector3(x: 0, y: 0, z:  globeRadius + cameraAltitude )
-        cameraNode.constraints = [ SCNLookAtConstraint(target: self.globe) ]
-        cameraNode.light       = ambientLight
-        cameraNode.camera      = camera
+        camera.fieldOfView          = defaultCameraFov
+        camera.zFar                 = 10000
+        
+        let adjustedCameraAltitude  = globeRadius + cameraAltitude
+        cameraNode.position         = SCNVector3(x: 0, y: 0, z: adjustedCameraAltitude)
+        
+        cameraNode.constraints      = [SCNLookAtConstraint(target: globe)]
+        cameraNode.light            = ambientLight
+        cameraNode.camera           = camera
         scene.rootNode.addChildNode(cameraNode)
+
         
     }
 
@@ -156,7 +159,7 @@ class EarthGlobe {
             handlePanBegan(loc)
         } else {
             guard pan.numberOfTouches == 1 else { return }
-            self.handlePanCommon(loc, viewSize: sceneView.frame.size)
+            self.panHandler(loc, viewSize: sceneView.frame.size)
         }
         
     }
@@ -164,11 +167,11 @@ class EarthGlobe {
     
     @objc fileprivate func onPinchGesture(pinch: UIPinchGestureRecognizer) {
         
-        // Update the FOV of the camera
+        // Update the camera's field of view
         if pinch.state == .began {
-            self.lastFovBeforeZoom = self.camera.fieldOfView
+            lastFovBeforeZoom = camera.fieldOfView
         } else {
-            if let lastFov = self.lastFovBeforeZoom {
+            if let lastFov = lastFovBeforeZoom {
                 var newFov = lastFov / CGFloat(pinch.scale)
                 if newFov < minFov {
                     newFov = minFov
@@ -189,18 +192,19 @@ class EarthGlobe {
     }
     
     
-    public func handlePanCommon(_ loc: CGPoint, viewSize: CGSize) {
+    public func panHandler(_ loc: CGPoint, viewSize: CGSize) {
+        
         guard let lastPanLoc = lastPanLoc else { return }
         
         // Determine the movement change
         let delta = CGSize(width: (lastPanLoc.x - loc.x) / viewSize.width, height: (lastPanLoc.y - loc.y) / viewSize.height)
         
-        //  DeltaX = amount of rotation to apply (about the Earth's axis)
+        //  DeltaX = amount of rotation to apply (around the Earth's axis)
         //  DeltaY = amount of tilt to apply (to the Earth's axis)
         if delta.width != 0.0 || delta.height != 0.0 {
             
             // As the user zooms in (smaller fieldOfView value), reduce finger travel
-            let fovProportion        = (self.camera.fieldOfView - minFov) / (maxFov - minFov)
+            let fovProportion        = (camera.fieldOfView - minFov) / (maxFov - minFov)
             let fovProportionRadians = Float(fovProportion * CGFloat(dragWidthInDegrees)) * Globals.degreesToRadians
             let rotationAboutAxis    = Float(delta.width) * fovProportionRadians
             let tiltOfAxisItself     = Float(delta.height) * fovProportionRadians

@@ -29,7 +29,7 @@ extension TrackingViewController {
     
     /// Checks if app has been updated.
     /// Requires that "App Version" and "App Build" keys were saved in the defaults instance of UserDefaults. If not, these are saved and method returns false.
-    /// - Returns : True if app was already installed AND then updated.
+    /// - Returns : True if app was already installed AND then was updated.
     func hasAppBeenUpdated() -> Bool {
         
         /// An instance of UserDefaults to save and access user settings
