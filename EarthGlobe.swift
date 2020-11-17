@@ -12,7 +12,7 @@ import SceneKit
 /// The 3D Interactive Earth Globe Model
 class EarthGlobe {
     
-    static let markerWidth: CGFloat     = 0.16                               // The size factor for the marker
+    static let markerWidth: CGFloat        = 0.16                                  // The size factor for the marker
 
     let ambientLightIntensity: CGFloat     = 100                                // The default value is 1000
     let cameraAltitude                     = Globals.cameraAltitude
@@ -102,24 +102,24 @@ class EarthGlobe {
     /// - Parameters:
     ///   - theScene: The scene view to use
     ///   - pinchGestureIsEnabled: True if we're rendering the full globe and want to pinch to zoom
-    func setupInSceneView(_ theScene: SCNView, pinchGestureIsEnabled : Bool ) {
+    func setupInSceneView(_ theScene: SCNView, customPinchGestureIsEnabled: Bool ) {
         
         theScene.scene                      = scene
         theScene.autoenablesDefaultLighting = false
         theScene.showsStatistics            = false
         
         theScene.allowsCameraControl        = true
-        gestureHost                         = theScene
         
-        if pinchGestureIsEnabled {
-            let pan                         = UIPanGestureRecognizer(target: self, action:#selector(EarthGlobe.onPanGesture(pan:)))
-            theScene.addGestureRecognizer(pan)
-            let pinch                       = UIPinchGestureRecognizer(target: self, action: #selector(EarthGlobe.onPinchGesture(pinch:)))
-            theScene.addGestureRecognizer(pinch)
-        } else {                            // Handle pinch gestures with default handler, but use the following code for panning gesture handling
-            let pan                         = UIPanGestureRecognizer(target: self, action:#selector(EarthGlobe.onPanGesture(pan:)))
-            theScene.addGestureRecognizer(pan)
-        }
+//        gestureHost                         = theScene
+//        if customPinchGestureIsEnabled {    // Overrides build-in scene kit gesture handlers
+//            let pan                         = UIPanGestureRecognizer(target: self, action:#selector(EarthGlobe.onPanGesture(pan:)))
+//            theScene.addGestureRecognizer(pan)
+//            let pinch                       = UIPinchGestureRecognizer(target: self, action: #selector(EarthGlobe.onPinchGesture(pinch:)))
+//            theScene.addGestureRecognizer(pinch)
+//        } else {                            // Handle pinch gestures with default handler, but use the following code for panning gesture handling
+//            let pan                         = UIPanGestureRecognizer(target: self, action:#selector(EarthGlobe.onPanGesture(pan:)))
+//            theScene.addGestureRecognizer(pan)
+//        }
         
         completeTheSetup()
         
@@ -128,7 +128,7 @@ class EarthGlobe {
     
     private func completeTheSetup() {
 
-        // Let's give the world a bit of ambient light to illuminate the globe when its in nighttime
+        // Let's give the Earth a bit of ambient light to illuminate the globe when its in nighttime
         let ambientLight            = SCNLight()
         ambientLight.type           = .ambient
         ambientLight.intensity      = ambientLightIntensity
@@ -143,8 +143,8 @@ class EarthGlobe {
         cameraNode.constraints      = [SCNLookAtConstraint(target: globe)]
         cameraNode.light            = ambientLight
         cameraNode.camera           = camera
+        
         scene.rootNode.addChildNode(cameraNode)
-
         
     }
 
@@ -159,7 +159,7 @@ class EarthGlobe {
             handlePanBegan(loc)
         } else {
             guard pan.numberOfTouches == 1 else { return }
-            self.panHandler(loc, viewSize: sceneView.frame.size)
+            panHandler(loc, viewSize: sceneView.frame.size)
         }
         
     }

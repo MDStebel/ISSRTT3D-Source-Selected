@@ -50,8 +50,8 @@ class PassesTableViewController: UITableViewController, CLLocationManagerDelegat
     
     private struct Constants {
         static let altitude                             = 0
-        static let apiKey                               = "---"                                     // API key
-        static let baseURLForOverheadTimes              = "---"     // API endpoint (new as of Nov 1, 2020)
+        static let apiKey                               = "BZQB9N-9FTL47-ZXK7MZ-3TLE"                                     // API key
+        static let baseURLForOverheadTimes              = "https://api.n2yo.com/rest/v1/satellite/visualpasses/25544"     // API endpoint (new as of Nov 1, 2020)
         static let customCellIdentifier                 = "OverheadTimesCell"
         static let deg                                  = "°"
         static let fontForTitle                         = Theme.nasa
@@ -502,7 +502,6 @@ extension PassesTableViewController {
             return dateComponentsFormatter.string(from: Double(numberOfSeconds)) ?? " "
         }
         
-        
         /// Helper function to get number of stars to display for this pass
         /// - Parameter thisMagnitude: Magnitude of the pass
         /// - Returns: Integer representing the rating stars
@@ -520,7 +519,6 @@ extension PassesTableViewController {
             return rating
             
         }
-        
         
         /// Helper function to clear data displayed in cell
         func clearDataIn(thisCell cell: PassesTableViewCell) {
@@ -543,7 +541,6 @@ extension PassesTableViewController {
             cell.tintColor                                                         = UIColor(named: Theme.popupBgd)
             cell.passDate.backgroundColor                                          = UIColor(named: Theme.popupBgd)
         }
-        
         
         let cell                                                                   = tableView.dequeueReusableCell(withIdentifier: Constants.customCellIdentifier, for: indexPath) as! PassesTableViewCell
         
@@ -574,7 +571,6 @@ extension PassesTableViewController {
             cell.endAz.text                                                        = String(format: Globals.azimuthFormat, overheadTimesList[indexPath.row].endAz) + Constants.deg
             cell.endEl.text                                                        = String(format: Globals.elevationFormat, overheadTimesList[indexPath.row].endEl) + Constants.deg
             cell.endComp.text                                                      = String(overheadTimesList[indexPath.row].endAzCompass)
-            
             
             // Show the correct number of rating stars based on the magnitude of the pass
             let mag                                                                = overheadTimesList[indexPath.row].mag

@@ -22,14 +22,14 @@ private let whatsNew = WhatsNew(
         WhatsNew.Item(
             title: "Introducing 3D!",
             subtitle: """
-                      Version 6.14 introduces 3D tracking. Features photorealistic interactive 3D globe showing the real-time ISS position, orbital track, sighting circle, the tilt of the Earth, the precise location & reflection of the Sun at the subsolar point, the exact position and seasonal angle of the terminator, plus city lights at night. Expand the globe to full-screen mode. Drag the globe to pan/rotate it. Pinch to zoom in/out. Enable/disable auto-rotate.
+                      Version 6.14 introduced the photorealistic interactive 3D globe showing the real-time ISS position, orbital track, sighting circle, the tilt of the Earth, the precise location & reflection of the Sun at the subsolar point, terminator, topology, & artificial lights at night.
                       """,
             image: UIImage(named: "icons8-megaphone_filled.imageset")
         ),
         WhatsNew.Item(
             title: "Improvements & Fixes",
             subtitle: """
-                      In this release, 6.14.2, fixed bug in globe panning, updated ISS marker, and improved globe performance.
+                      New in this release, 6.14.3, significant improvements to gesture handling in the interactive 3D globe. Drag the globe with one finger to rotate the globe. Drag the globe with two fingers to move it around (translation). Use pinch gestures to zoom in/out of the globe. Rotate with two fingers to tilt the globe. In globe help has been improved.
                       """,
             image: UIImage(named: "icons8-bug_filled")
         ),

@@ -30,7 +30,7 @@ extension EarthGlobeProtocol {
     ///   - scene: The scene to use
     func setUpEarthGlobeScene(for globe: EarthGlobe, in scene: SCNView, hasTintedBackground: Bool) {
         
-        globe.setupInSceneView(scene, pinchGestureIsEnabled: false)
+        globe.setupInSceneView(scene, customPinchGestureIsEnabled: false)
         
         if hasTintedBackground {
             scene.backgroundColor = UIColor(named: Theme.popupBgd)?.withAlphaComponent(0.50)        // Tinted for map view overlay mode

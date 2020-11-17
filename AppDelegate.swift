@@ -58,7 +58,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Invalidate the timers and save user's settings when moving to inactive state
         referenceToViewController.stopAction()
         referenceToViewController.saveUserSettings()
-//        referenceToGlobeFullViewController.stopUpdatingGlobe()
+        referenceToGlobeFullViewController.stopUpdatingGlobe()
         
     }
     
@@ -70,7 +70,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Invalidate the timers and save user's settings when moving to inactive state
         referenceToViewController.stopAction()
         referenceToViewController.saveUserSettings()
-//        referenceToGlobeFullViewController.stopUpdatingGlobe()
+        referenceToGlobeFullViewController.stopUpdatingGlobe()
         
     }
     
@@ -85,6 +85,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
 
         referenceToViewController.restoreUserSettings()
+        referenceToGlobeFullViewController.startUpdatingGlobe()
         
     }
     
@@ -95,7 +96,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Invalidate the timers and save user's settings when moving to inactive state
         referenceToViewController.stopAction()
         referenceToViewController.saveUserSettings()
-//        referenceToGlobeFullViewController.stopUpdatingGlobe()
+        referenceToGlobeFullViewController.stopUpdatingGlobe()
         
     }
     

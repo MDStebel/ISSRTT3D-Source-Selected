@@ -72,7 +72,7 @@ struct UserGuide {
     <p>Tap an item from the list below to jump to that section:</p>
     <h3><a href="#passes">Pass Predictions</a></h3>
     <h3><a href="#track">Real-Time Tracking</a></h3>
-    <h3><a href="#globe">3D Globe</a></h3>
+    <h3><a href="#globe">Interactive 3D Globe</a></h3>
     <h3><a href="#crew">Current Crew</a></h3>
     <h3><a href="#streaming">Live Earth View</a></h3>
     <h3><a href="#nasatv">NASA TV</a></h3>
@@ -185,14 +185,37 @@ struct UserGuide {
     </ul>
     <div id="globe"></div>
     <h2>3D Globe</h2>
-    <p>From the Tracking screen, tapping the expand icon on the globe overlay expands the globe to full-screen mode and hides the map.</p>
-    <p>The 3D interactive globe shows the current position of the ISS and its orbital track. This is a photorealistic model of the Earth complete with accurate Sun position, specular reflections on the water, seasonal tilt, mountain shadows, and other details.</p>
+    <p>From the Tracking screen, tapping the expand icon on the globe overlay, or the globe button on the tab bar, expands the globe to full-screen mode and hides the map.</p>
+    <p>The 3D interactive globe shows the current position of the ISS and its orbital track. This is a photorealistic model of the Earth complete with accurate Sun subsolar position, specular reflections on the water, seasonal tilt, mountain shadows, and other details.</p>
     <p>The globe starts updating automatically when in full-screen mode.</p>
-    <p>Drag the globe with one finger to rotate it.</p>
-    <p>Pinch the globe to zoom in/out.</p>
-    <p>Use two fingers to tilt the globe.</p>
-    <p>Auto-rotation is enabled by default and rotates the globe once every 90 seconds. To disable auto-rotation, as well as to enable/disable the globe entirely, go to Settings.</p>
-    <p>Tap the collapse icon to return to the map and resume tracking.</p>
+    <h4>Using Gestures</h4>
+    <ul>
+    <li>
+    <h6>Drag the globe with one finger to rotate the globe.</h6>
+    </li>
+    <li>
+    <h6>Drag the globe with two fingers to move it around (translation).</h6>
+    </li>
+    <li>
+    <h6>Use pinch gestures to zoom in/out of the globe.</h6>
+    </li>
+    <li>
+    <h6>Rotate with two fingers to tilt the globe.</h6>
+    </li>
+    </ul>
+    <h5>Notes:</h5>
+    <ul>
+    <li>
+    <h6>The red circle represents the approximate ISS sighting range from ground level under perfect conditions. Use the Pass Predictor to get viewable passes from your exact location.</h6>
+    </li>
+    <li>
+    <h6>Auto-rotation is enabled by default and rotates the globe once every 90 seconds.</h6>
+    </li>
+    <li>
+    <h6>To disable auto-rotation, as well as to enable/disable the globe entirely, go to Settings.</p>
+    </li>
+    </ul>
+    <p>Tap the collapse icon on the upper-right of the scene to return to the map and resume tracking.</p>
     <div id="crew"></div>
     <h2>Crew</h2>
     <p>Tap the space suit button at the bottom of the screen to get a table of information about the current ISS crew.</p>
@@ -243,7 +266,7 @@ struct UserGuide {
     """
     \(head)
     <h2>Pass Predictions</h2>
-    Tapping the telescope icon at the bottom of the main screen starts the process of computing up-coming visible ISS passes. First, ISS Real-Time Tracker gets your current location's coordinates. Then, it computes the visible passes for that location. The default number of days to predict passes is set in Settings. The passes are listed in chronological order along with detailed viewing data.</p>
+    <p>Tapping the telescope icon at the bottom of the main screen starts the process of computing up-coming visible ISS passes. First, ISS Real-Time Tracker gets your current location's coordinates. Then, it computes the visible passes for that location. The default number of days to predict passes is set in Settings. The passes are listed in chronological order along with detailed viewing data.</p>
     <p>Data for each pass includes:</p>
     <ul>
     <li>
@@ -358,16 +381,38 @@ struct UserGuide {
     static let fullGlobe =
     """
     \(head)
-    <h2>3D Globe</h2>
+    <h2>Interactive 3D Globe</h2>
     <p>From the Tracking screen, tapping the expand icon on the globe overlay, or the globe button on the tab bar, expands the globe to full-screen mode and hides the map.</p>
     <p>The 3D interactive globe shows the current position of the ISS and its orbital track. This is a photorealistic model of the Earth complete with accurate Sun subsolar position, specular reflections on the water, seasonal tilt, mountain shadows, and other details.</p>
     <p>The globe starts updating automatically when in full-screen mode.</p>
-    <p>Drag the globe with one finger to rotate it.</p>
-    <p>Pinch the globe to zoom in/out.</p>
-    <p>Use two fingers to tilt the globe.</p>
-    <p>The circle represents the approximate ISS sighting range from ground level.</>
-    <p>Auto-rotation is enabled by default and rotates the globe once every 90 seconds. To disable auto-rotation, as well as to enable/disable the globe entirely, go to Settings.</p>
-    <p>Tap the collapse icon to return to the map and resume tracking.</p>
+    <h4>Using Gestures</h4>
+    <ul>
+    <li>
+    <h6>Drag the globe with one finger to rotate the globe.</h6>
+    </li>
+    <li>
+    <h6>Drag the globe with two fingers to move it around (translation).</h6>
+    </li>
+    <li>
+    <h6>Use pinch gestures to zoom in/out of the globe.</h6>
+    </li>
+    <li>
+    <h6>Rotate with two fingers to tilt the globe.</h6>
+    </li>
+    </ul>
+    <h5>Notes:</h5>
+    <ul>
+    <li>
+    <h6>The red circle represents the approximate ISS sighting range from ground level under perfect conditions. Use the Pass Predictor to get viewable passes from your exact location.</h6>
+    </li>
+    <li>
+    <h6>Auto-rotation is enabled by default and rotates the globe once every 90 seconds.</h6>
+    </li>
+    <li>
+    <h6>To disable auto-rotation, as well as to enable/disable the globe entirely, go to Settings.</p>
+    </li>
+    </ul>
+    <p>Tap the collapse icon on the upper-right of the scene to return to the map and resume tracking.</p>
     \(tail)
     """
     
