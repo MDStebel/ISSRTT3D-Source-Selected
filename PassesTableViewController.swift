@@ -165,7 +165,9 @@ class PassesTableViewController: UITableViewController, CLLocationManagerDelegat
     
     /// Selector for refresh control
     @objc func refreshTable(_ sender: Any) {
+        
         restartGettingUserLocation()
+
     }
     
         
@@ -307,7 +309,7 @@ class PassesTableViewController: UITableViewController, CLLocationManagerDelegat
                     spinner.stopAnimating()
                     refreshControl?.endRefreshing()
                     animate(table: overheadTimes)
-                    userCurrentCoordinatesString = CoordinateCalculations.decimalCoordinatesToDegMinSec(latitude: userLatitude, longitude: userLongitude, format: Globals.coordinatesStringFormat)
+                    userCurrentCoordinatesString = CoordinateConversions.decimalCoordinatesToDegMinSec(latitude: userLatitude, longitude: userLongitude, format: Globals.coordinatesStringFormat)
                     promptLabel.text = "\(numberOfOverheadTimesActuallyReported) \(numberOfOverheadTimesActuallyReported > 1 ? "passes" : "pass") over next \(numberOfDays) days from your location:\n\(userCurrentCoordinatesString)\nTap a pass to add a reminder to your calendar"
                 }
             } else {
@@ -505,7 +507,7 @@ extension PassesTableViewController {
         /// Helper function to get number of stars to display for this pass
         /// - Parameter thisMagnitude: Magnitude of the pass
         /// - Returns: Integer representing the rating stars
-        func numberOfRatingStarsFor(thisMagnitude: Double) -> Int {
+        func numberOfRatingStars(for thisMagnitude: Double) -> Int {
             
             // Determine the rating based on the magnitude of this pass
             switch thisMagnitude {                                        // Now determine number of stars to show
@@ -574,7 +576,7 @@ extension PassesTableViewController {
             
             // Show the correct number of rating stars based on the magnitude of the pass
             let mag                                                                = overheadTimesList[indexPath.row].mag
-            let rating                                                             = numberOfRatingStarsFor(thisMagnitude: mag)
+            let rating                                                             = numberOfRatingStars(for: mag)
             let totalStarsInRatingSystem                                           = RatingSystem.allCases.count-1       // Subtract 1 because there is one less star that actually can show
             for star in 0...(totalStarsInRatingSystem-1) {
                 cell.ratingStarView[star].image                                    = star < rating ? Constants.ratingStar : Constants.noRatingStar

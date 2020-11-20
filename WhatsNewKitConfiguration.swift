@@ -29,7 +29,7 @@ private let whatsNew = WhatsNew(
         WhatsNew.Item(
             title: "Improvements & Fixes",
             subtitle: """
-                      New in this release, 6.14.3, significant improvements to gesture handling in the interactive 3D globe. Drag the globe with one finger to rotate the globe. Drag the globe with two fingers to move it around (translation). Use pinch gestures to zoom in/out of the globe. Rotate with two fingers to tilt the globe. In globe help has been improved.
+                      New in this release, 6.14.4, ...
                       """,
             image: UIImage(named: "icons8-bug_filled")
         ),

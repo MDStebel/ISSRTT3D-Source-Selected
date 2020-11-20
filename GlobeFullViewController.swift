@@ -17,7 +17,7 @@ class GlobeFullViewController: UIViewController, EarthGlobeProtocol {
     // MARK: - Properties
     
     struct Constants {
-        static let apiEndpointAString       = "---"
+        static let apiEndpointAString       = "https://api.wheretheiss.at/v1/satellites/25544"
         static let fontForTitle             = Theme.nasa
         static let segueToHelpFromGlobe     = "segueToHelpFromGlobe"
         static let segueToSettings          = "segueToSettings"
@@ -39,7 +39,7 @@ class GlobeFullViewController: UIViewController, EarthGlobeProtocol {
     @IBOutlet weak var settingsButton: UIBarButtonItem!
     @IBOutlet weak var isRunningLabel: UILabel! {
         didSet {
-            isRunningLabel.text = ""
+            isRunningLabel.text = "Starting Up"
         }
     }
     @IBOutlet var controlsBackground: UIView! {
@@ -143,13 +143,13 @@ class GlobeFullViewController: UIViewController, EarthGlobeProtocol {
             
         
         case Constants.segueToSettings :                                 // Keep tracking, set popover arrow to point to middle, below settings button
-            
             let navigationController                          = segue.destination as! UINavigationController
             let destinationVC                                 = navigationController.topViewController as! SettingsTableViewController
             destinationVC.settingsButtonInCallingVCSourceView = navigationController.navigationBar
         
         default :
             break
+            
         }
         
     }

@@ -38,16 +38,16 @@ class TrackingViewController: UIViewController, MKMapViewDelegate, UIGestureReco
         static let globeSegue                   = "segueToFullGlobe"
         static let helpSegue                    = "helpViewSegue"
         static let passesSegue                  = "segueToPassTimes"
-        static let settingsSegue                = "segueToSettings"
         static let segueToFullGlobeFromTabBar   = "segueToFullGlobeFromTabBar"
+        static let settingsSegue                = "segueToSettings"
         
     }
     
     /// Local constants
     struct Constants {
         static let animationOffsetY: CGFloat    = 90.0
-        static let apiEndpointAString           = "---"
-        static let apiEndpointBString           = "---"
+        static let apiEndpointAString           = "https://api.wheretheiss.at/v1/satellites/25544"
+        static let apiEndpointBString           = "http://api.open-notify.org/iss-now.json"
         static let defaultTimerInterval         = 3.0
         static let fontForTitle                 = Theme.nasa
         static let kilometersToMiles            = 0.621371192
@@ -197,7 +197,7 @@ class TrackingViewController: UIViewController, MKMapViewDelegate, UIGestureReco
     private var altitudeInKm = "" {
         willSet {
             if let lat = Double(latitude), let lon = Double(longitude) {
-                positionString = "    Position: \(CoordinateCalculations.decimalCoordinatesToDegMinSec(latitude: lat, longitude: lon, format: Globals.coordinatesStringFormat))"
+                positionString = "    Position: \(CoordinateConversions.decimalCoordinatesToDegMinSec(latitude: lat, longitude: lon, format: Globals.coordinatesStringFormat))"
             } else {
                 positionString = Globals.spacer
             }
@@ -303,13 +303,14 @@ class TrackingViewController: UIViewController, MKMapViewDelegate, UIGestureReco
         setUpDateFormatter()
         setUpNumberFormatter()
         setUpMap()
-        setUpEarthGlobeScene(for: globe, in: globeScene, hasTintedBackground: true)                 // Set up globe scene
+        setUpEarthGlobeScene(for: globe, in: globeScene, hasTintedBackground: true)                 // Set up Earth model scene
         setUpCoordinatesLabel(withTopCorners: true)                                                 // Set up the coordinates info box
         setUpZoomSlider(usingSavedZoomFactor: true)                                                 // Set up zoom factor using saved zoom factor, rather than default
         setUpDisplayConfiguration()                                                                 // Set up display with map in last-used map type and other display parameters
         setUpSoundTrackMusicPlayer()                                                                // Set up the player for the soundtrack
         restoreUserSettings()                                                                       // Restore user settings
         displayInfoBoxAndLandsatButton(false)                                                       // Start up with map overlay info box and buttons off
+        
         justStartedUp = true
         
     }

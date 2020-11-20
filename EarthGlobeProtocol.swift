@@ -70,10 +70,10 @@ extension EarthGlobeProtocol {
         lastLat = lat                               // Saves last latitude to use in calculating north or south heading vector after the second track update
         
         // Get the latitude of the subsolar point at the current time
-        let latitudeOfSunAtCurrentTime = CoordinateCalculations.getLatitudeOfSunAtCurrentTime()
+        let latitudeOfSunAtCurrentTime = AstroCalculations.getLatitudeOfSunAtCurrentTime()
         
         // Get the longitude of subsolar point at current time
-        let subSolarLon = CoordinateCalculations.getSubSolarLongitudeOfSunAtCurrentTime()
+        let subSolarLon = AstroCalculations.getSubSolarLongitudeOfSunAtCurrentTime()
         
         // Now, set up the Sun at the subsolar point
         globe.setUpTheSun(lat: latitudeOfSunAtCurrentTime, lon: subSolarLon)

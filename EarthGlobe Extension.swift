@@ -9,6 +9,7 @@
 import SceneKit
 
 
+/// Handles the objects we're adding to the globe
 extension EarthGlobe {
     
     /// Adds the ISS position marker at the precise latitude and longitude to our globe scene
@@ -107,7 +108,7 @@ extension EarthGlobe {
         let adjustedLon        = lon + 90
         let adjustedLat        = lat
         let distanceToTheSun   = Float(1000)
-        let position           = CoordinateCalculations.convertLatLonCoordinatesToXYZ(lat: adjustedLat, lon: adjustedLon, alt: distanceToTheSun)
+        let position           = EarthGlobe.convertLatLonCoordinatesToXYZ(lat: adjustedLat, lon: adjustedLon, alt: distanceToTheSun)
         sun.position           = position
         
         sun.light              = SCNLight()
@@ -157,9 +158,36 @@ extension EarthGlobe {
     }
     
     
+    /// Map coordinates from lat, lon, altitude to SceneKit xyz cooridates
+    /// - Parameters:
+    ///   - lat: Latitude as a decimal
+    ///   - lon: Longitude as a decimal
+    ///   - alt: altitude
+    /// - Returns: Position as a SCNVector3
+    static func convertLatLonCoordinatesToXYZ(lat: Float, lon: Float, alt: Float) -> SCNVector3 {
+        
+        let cosLat    = cosf(lat * Globals.degreesToRadians)
+        let sinLat    = sinf(lat * Globals.degreesToRadians)
+        let cosLon    = cosf(lon * Globals.degreesToRadians)
+        let sinLon    = sinf(lon * Globals.degreesToRadians)
+        let x         = alt * cosLat * cosLon
+        let y         = alt * cosLat * sinLon
+        let z         = alt * sinLat
+        
+        // Map to position on a sphere
+        let sceneKitX = -x
+        let sceneKitY = z
+        let sceneKitZ = y
+        
+        let position  = SCNVector3(x: sceneKitX, y: sceneKitY, z: sceneKitZ )
+        return position
+        
+    }
+    
+    
     public func goToPointOnGlobe(node: SCNNode, lat: Float, lon: Float) {
         
-        let position = CoordinateCalculations.convertLatLonCoordinatesToXYZ(lat: lat, lon: lon, alt: Globals.orbitalAltitudeFactor)
+        let position = EarthGlobe.convertLatLonCoordinatesToXYZ(lat: lat, lon: lon, alt: Globals.orbitalAltitudeFactor)
         
         // Determine how much we've moved
         let currentPosition       = node.position
@@ -186,7 +214,7 @@ extension EarthGlobe {
     /// Move camera to a given latitude and longitude
     public func moveCameraToPointOnGlobe(lat: Float, lon: Float) {
         
-        let newPosition     = CoordinateCalculations.convertLatLonCoordinatesToXYZ(lat: lat, lon: lon, alt: Globals.ISSOrbitAltitudeInScene)
+        let newPosition     = EarthGlobe.convertLatLonCoordinatesToXYZ(lat: lat, lon: lon, alt: Globals.ISSOrbitAltitudeInScene)
         let x               = newPosition.x
         let y               = newPosition.y
         cameraNode.position = SCNVector3(x: x, y: y, z: globeRadius + cameraAltitude)

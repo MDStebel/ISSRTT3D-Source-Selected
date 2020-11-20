@@ -101,7 +101,7 @@ class LiveVideoViewController: UIViewController, WKUIDelegate, WKNavigationDeleg
     ///
     /// Gets HDEV URL to use from JSON data, then executes callback.
     /// - Parameter then: The completion handler method to call after we have the channel URL.
-    private func getHDEVUrl(then completionHandler: @escaping callBack ) {
+    private func getHDEVUrl(then completionHandler: @escaping callBack) {
         
         // Make sure we can create the URL
         guard let myJsonFile = URL(string: whichJsonFileToUse) else { return }

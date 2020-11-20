@@ -367,14 +367,11 @@ class SettingsTableViewController: UITableViewController {
         guard segue.identifier != nil else { return }                                     // Prevents crash if a segue is unnamed
         
         switch segue.identifier {
-            
         case Constants.segueToHelpFromSettings :
             let destinationVC = segue.destination as! HelpViewController
             destinationVC.helpContentHTML = UserGuide.settingsHelp
-            
         default :
             break
-            
         }
         
     }
