@@ -1,6 +1,6 @@
 //
 //  Coordinate Conversions.swift
-//  ISS Tracker 3D
+//  ISS Real-Time Tracker 3D
 //
 //  Created by Michael Stebel on 11/20/20.
 //  Copyright © 2020 Michael Stebel Consulting, LLC. All rights reserved.

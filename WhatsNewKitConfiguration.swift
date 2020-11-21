@@ -29,7 +29,7 @@ private let whatsNew = WhatsNew(
         WhatsNew.Item(
             title: "Improvements & Fixes",
             subtitle: """
-                      New in this release, 6.14.4, ...
+                      In this maintenance release, 6.14.4, squashed a bug that could rarely cause the 3D globe to report an error when the app returns from the background.
                       """,
             image: UIImage(named: "icons8-bug_filled")
         ),
