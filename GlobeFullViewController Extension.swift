@@ -11,9 +11,8 @@ import UIKit
 
 extension GlobeFullViewController {
     
-    /// Method to get current ISS coordinates from the API and update the globe. Called by timer selector.
+    /// Method to get current ISS coordinates from the API and update the globe. Can be called by a timer.
     @objc func earthGlobeLocateISS() {
-        
         
         // Make sure we can create the URL
         guard let apiEndpointURL = URL(string: Constants.apiEndpointAString) else { return }
@@ -21,8 +20,7 @@ extension GlobeFullViewController {
         /// Task to get JSON data from API by sending request to API endpoint, parse response for ISS data, and then display ISS position, etc.
         let globeUpdateTask = URLSession.shared.dataTask(with: apiEndpointURL) { [ weak self ] (data, response, error) -> Void in
             
-            // Uses a capture list to capture a weak reference to self
-            // This should prevent a retain cycle and allow ARC to release instance and reduce memory load.
+            // Uses a capture list to capture a weak reference to self. This should prevent a retain cycle and allow ARC to release instance and reduce memory load.
             
             if let urlContent = data {
                 
@@ -36,6 +34,11 @@ extension GlobeFullViewController {
                     
                     // Update globe
                     DispatchQueue.main.async {
+                        if Globals.globeBackgroundWasChanged {            // Background image may have been changed by user in Settings
+                            self!.setGlobeBackgroundImage()
+                            self!.spaceBackgroundImage.image = UIImage(named: self!.globeBackgroundImageName)
+                            Globals.globeBackgroundWasChanged = false
+                        }
                         self?.updateEarthGlobeScene(in: self!.fullGlobe, latitude: self!.latitude, longitude: self!.longitude, lastLat: &self!.lastLat)
                         self?.isRunningLabel?.text = "Running"
                     }

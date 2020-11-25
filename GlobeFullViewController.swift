@@ -17,7 +17,7 @@ class GlobeFullViewController: UIViewController, EarthGlobeProtocol {
     // MARK: - Properties
     
     struct Constants {
-        static let apiEndpointAString       = "---"
+        static let apiEndpointAString       = "https://api.wheretheiss.at/v1/satellites/25544"
         static let fontForTitle             = Theme.nasa
         static let segueToHelpFromGlobe     = "segueToHelpFromGlobe"
         static let segueToSettings          = "segueToSettings"
@@ -26,6 +26,7 @@ class GlobeFullViewController: UIViewController, EarthGlobeProtocol {
     
 
     var fullGlobe                           = EarthGlobe()
+    var globeBackgroundImageName            = ""
     var lastLat: Float                      = 0                             // To conform with the EarthGlobeProtocol, will save the last latitude
     var latitude                            = ""
     var longitude                           = ""
@@ -36,6 +37,7 @@ class GlobeFullViewController: UIViewController, EarthGlobeProtocol {
     
     
     @IBOutlet weak var fullScreenGlobeView: SCNView!
+    @IBOutlet weak var spaceBackgroundImage: UIImageView!
     @IBOutlet weak var settingsButton: UIBarButtonItem!
     @IBOutlet weak var isRunningLabel: UILabel! {
         didSet {
@@ -52,6 +54,22 @@ class GlobeFullViewController: UIViewController, EarthGlobeProtocol {
     
     
     // MARK: - Methods
+    
+    
+    /// Set the image to use for the background
+    /// - Parameter selection: Integer corresponding to the selected image index (based on slider control value, for example)
+    func setGlobeBackgroundImage() {
+        
+        switch Globals.globeBackgroundImageSelection {
+        case 0 :
+            globeBackgroundImageName = Globals.hubbleDeepField
+        case 1 :
+            globeBackgroundImageName = Globals.milkyWay
+        default :
+            globeBackgroundImageName = Globals.hubbleDeepField
+        }
+        
+    }
     
     
     /// Set up a reference to this view controller. This allows AppDelegate to do stuff on it when it enters background.
@@ -92,6 +110,7 @@ class GlobeFullViewController: UIViewController, EarthGlobeProtocol {
         
         super.viewDidAppear(animated)
         
+        Globals.globeBackgroundWasChanged = true
         startUpdatingGlobe()
 
     }

@@ -43,15 +43,14 @@ extension TrackingViewController {
     }
     
     
-    /// Set up the overlays and any buttons that depend on settings
-    fileprivate func setupAllOverlaysAndButtons() {
+    /// Set up the overlays and any buttons that depend on the user's settings
+    fileprivate func setUpAllOverlaysAndButtons() {
         
         DispatchQueue.main.async {
             
             self.setUpDisplayConfiguration()
             
-            if Globals.zoomFactorWasResetInSettings {           // If reset was pressed in Settings, or if the zoom scale factor was changed, this flag will be set.
-                // So, reset zoom to default values for the selected scale factor and call zoomValueChanged method.
+            if Globals.zoomFactorWasResetInSettings {           // If reset was pressed in Settings, or if the zoom scale factor was changed, this flag will be set. So, reset zoom to default values for the selected scale factor and call zoomValueChanged method.
                 self.setUpZoomSlider(usingSavedZoomFactor: false)
                 self.zoomValueChanged(self.zoomSlider)
             }
@@ -84,10 +83,10 @@ extension TrackingViewController {
     }
     
     
-    /// Method to get current ISS coordinates from JSON file and animate its display on map. Called by timer selector.
+    /// Method to get current ISS coordinates from JSON file and animate its display on map. Can be called by a timer.
     @objc func locateISS() {
         
-        setupAllOverlaysAndButtons()
+        setUpAllOverlaysAndButtons()
         
         // Make sure we can create the URL
         guard let apiEndpointURL = URL(string: Constants.apiEndpointAString) else { return }
@@ -95,8 +94,7 @@ extension TrackingViewController {
         /// Task to get JSON data from API by sending request to API endpoint, parse response for ISS data, and then display ISS position, etc.
         let locateAndDisplayISSPositionTask = URLSession.shared.dataTask(with: apiEndpointURL) { [ weak self ] (data, response, error) -> Void in
             
-            // Uses a capture list to capture a weak reference to self
-            // This should prevent a retain cycle and allow ARC to release instance and reduce memory load.
+            // Uses a capture list to capture a weak reference to self. This should prevent a retain cycle and allow ARC to release instance and reduce memory load.
             
             if let urlContent = data {
                 

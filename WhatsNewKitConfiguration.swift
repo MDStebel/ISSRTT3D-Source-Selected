@@ -29,7 +29,7 @@ private let whatsNew = WhatsNew(
         WhatsNew.Item(
             title: "Improvements & Fixes",
             subtitle: """
-                      In this maintenance release, 6.14.4, squashed a bug that could rarely cause the 3D globe to report an error when the app returns from the background.
+                      New in 6.14.5, choose between two space backgrounds for the fullscreen globe, the Hubble Deep Field (default) or the Milky Way. Change the background in Settings. Numerous under-the-hood improvements.
                       """,
             image: UIImage(named: "icons8-bug_filled")
         ),

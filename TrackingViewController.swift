@@ -46,8 +46,8 @@ class TrackingViewController: UIViewController, MKMapViewDelegate, UIGestureReco
     /// Local constants
     struct Constants {
         static let animationOffsetY: CGFloat    = 90.0
-        static let apiEndpointAString           = "---"
-        static let apiEndpointBString           = "---"
+        static let apiEndpointAString           = "https://api.wheretheiss.at/v1/satellites/25544"
+        static let apiEndpointBString           = "http://api.open-notify.org/iss-now.json"
         static let defaultTimerInterval         = 3.0
         static let fontForTitle                 = Theme.nasa
         static let kilometersToMiles            = 0.621371192
@@ -119,8 +119,11 @@ class TrackingViewController: UIViewController, MKMapViewDelegate, UIGestureReco
     }
     
     /// This computed property returns the value used for both the lat and long in the map span and the default value of the zoom slider
-    var zoomFactorDefaultValue: Double {
-        return zoomSliderMaxValue / 2.0
+    var zoomFactorDefaultValue: Float {
+        let zf = Float(zoomSliderMaxValue / 2.0)
+        Globals.zoomFactorDefaultValue = zf
+        
+        return zf
     }
     
     /// This computed property returns the allowed minimum zoom slider setting based on the device, for better performance on iPad
@@ -308,7 +311,7 @@ class TrackingViewController: UIViewController, MKMapViewDelegate, UIGestureReco
         setUpZoomSlider(usingSavedZoomFactor: true)                                                 // Set up zoom factor using saved zoom factor, rather than default
         setUpDisplayConfiguration()                                                                 // Set up display with map in last-used map type and other display parameters
         setUpSoundTrackMusicPlayer()                                                                // Set up the player for the soundtrack
-        restoreUserSettings()                                                                       // Restore user settings
+        SettingsDataModel.restoreUserSettings()                                                                       // Restore user settings
         displayInfoBoxAndLandsatButton(false)                                                       // Start up with map overlay info box and buttons off
         
         justStartedUp = true
@@ -384,7 +387,7 @@ class TrackingViewController: UIViewController, MKMapViewDelegate, UIGestureReco
         let part2                   = velString + Constants.linefeed + "  Time: " + dateAndTime
         let dataToBeCopiedString    = part1 + part2
         
-        UIPasteboard.general.string = dataToBeCopiedString      // Copy to general pasteboard
+        UIPasteboard.general.string = dataToBeCopiedString  // Copy to general pasteboard
         
         alert(for: "Current ISS Position" + Constants.linefeed + "Copied to Your Clipboard", message: dataToBeCopiedString)
     }
@@ -394,7 +397,8 @@ class TrackingViewController: UIViewController, MKMapViewDelegate, UIGestureReco
 
         stopAction()
         
-        delay(1.0) {                                // Delay 1 sec to make sure we don't violate the 1 second rate limit if moving the slider too fast
+        delay(1.0) {   // Delay 1 sec to make sure we don't violate the API's 1 second rate limit if moving the slider too fast
+            Globals.zoomFactorLastValue = sender.value
             self.zoomValueWasChanged = true
             self.timerValue = self.getTimerInterval()
             self.playAction()
@@ -559,7 +563,9 @@ class TrackingViewController: UIViewController, MKMapViewDelegate, UIGestureReco
         zoomSlider.maximumValue = Float(zoomSliderMaxValue)
         zoomSlider.minimumValue = Float(zoomSliderMinValue)
         
-        if !useSavedZoomFactor {
+        if useSavedZoomFactor {
+            zoomSlider.value = Globals.zoomFactorLastValue
+        } else {
             zoomSlider.value = Float(zoomFactorDefaultValue)
         }
         

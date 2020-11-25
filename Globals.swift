@@ -23,16 +23,23 @@ struct Globals {
     }
     
     static var autoRotateGlobeEnabled                           = true
+    static var globeBackgroundWasChanged              = true
     static var blackScreenInHDEVExplanationPopsUp               = true
     static var buildNumber                                      = ""
+    static var cameraAltitude: Float                            = 1.85
     static var copyrightString                                  = ""
+    static var defaultCameraFov: CGFloat                        = 30
     static var displayGlobe                                     = true
     static var displayZoomFactorBelowMarkerIsOn                 = true
+    static var globeBackgroundImageSelection                    = 0
+    static var globeBackgroundImageDefaultSelectionSegment      = 0
     static var globeRadiusFactor: Float                         = 0.555
     static var lastDateAndTimeSettingsWereSaved                 = ""
     static var mapScrollingAndZoomIsEnabled                     = false
     static var mapTypeSelection                                 = 2
     static var markerType                                       = 0
+    static var maxFov: CGFloat                                  = defaultCameraFov * 1.5
+    static var minFov: CGFloat                                  = defaultCameraFov * 0.5
     static var numberOfDaysOfPassesDefaultSelectionSegment      = 2
     static var numberOfDaysOfPassesSelectedSegment              = 0
     static var numberOfZoomFactors                              = 4
@@ -42,12 +49,10 @@ struct Globals {
     static var showWhatsNewUponNextStartup                      = false
     static var thisDevice                                       = ""
     static var versionNumber                                    = ""
+    static var zoomFactorDefaultValue: Float                    = 0
+    static var zoomFactorLastValue: Float                       = 0
     static var zoomFactorWasResetInSettings                     = false
     static var zoomRangeFactorSelection                         = 2
-    static var cameraAltitude: Float                            = 1.85
-    static var defaultCameraFov: CGFloat                        = 30
-    static var maxFov: CGFloat                                  = defaultCameraFov * 1.5
-    static var minFov: CGFloat                                  = defaultCameraFov * 0.5
 
     static let ISSAltitudeFactor: Float                         = orbitalAltitudeFactor * 1.015
     static let ISSAltitudeInKM: Float                           = 425
@@ -69,6 +74,8 @@ struct Globals {
     static let floatingPointWithThreePlusOneDecimalPlace        = "%3.1f"
     static let floatingPointWithTwoPlusOneDecimalPlace          = "%2.1f"
     static let issrttWebsite                                    = "https://www.issrtt.com"
+    static let hubbleDeepField                                  = "Hubble Legacy Field Crop 2800px.png"
+    static let milkyWay                                         = "Milky Way Correct Rotation in the Sky Square.png"
     static let noonTime: Float                                  = 12.00
     static let numberOfDaysInAYear                              = 365.0
     static let numberOfDaysInCentury                            = 36525

@@ -44,10 +44,11 @@ class SettingsTableViewController: UITableViewController {
     // MARK: - Outlets
     
     
-    @IBOutlet private var mapTypeSelector: UISegmentedControl!
-    @IBOutlet private var zoomRangeFactorSelector: UISegmentedControl!
-    @IBOutlet private var markerTypeSelector: UISegmentedControl!
-    @IBOutlet private var numberOfDaysOfPasses: UISegmentedControl! {
+    @IBOutlet private weak var backgroundSelector: UISegmentedControl!
+    @IBOutlet private weak var mapTypeSelector: UISegmentedControl!
+    @IBOutlet private weak var zoomRangeFactorSelector: UISegmentedControl!
+    @IBOutlet private weak var markerTypeSelector: UISegmentedControl!
+    @IBOutlet private weak var numberOfDaysOfPasses: UISegmentedControl! {
         // Set up segment labels from dictionary
         didSet{
             for index in 0..<Passes.numberOfDaysDictionary.count {
@@ -55,12 +56,12 @@ class SettingsTableViewController: UITableViewController {
             }
         }
     }
-    @IBOutlet private var showOrbitGroundTrackLine: UISwitch!
-    @IBOutlet private var displayGlobeSwitch: UISwitch!
-    @IBOutlet private var showCoordinatesSwitch: UISwitch!
-    @IBOutlet private var displayZoomFactorBelowMarkerSwitch: UISwitch!
-    @IBOutlet private var userMapScrollingEnbleSwitch: UISwitch!
-    @IBOutlet private var showWhatsNewSwitch: UISwitch!
+    @IBOutlet private weak var showOrbitGroundTrackLine: UISwitch!
+    @IBOutlet private weak var displayGlobeSwitch: UISwitch!
+    @IBOutlet private weak var showCoordinatesSwitch: UISwitch!
+    @IBOutlet private weak var displayZoomFactorBelowMarkerSwitch: UISwitch!
+    @IBOutlet private weak var userMapScrollingEnbleSwitch: UISwitch!
+    @IBOutlet private weak var showWhatsNewSwitch: UISwitch!
     @IBOutlet private weak var autoRotateGlobeSwitch: UISwitch!
     
     
@@ -75,7 +76,8 @@ class SettingsTableViewController: UITableViewController {
         popoverPresentationController?.permittedArrowDirections = UIPopoverArrowDirection([.up])
         popoverPresentationController?.sourceRect = CGRect(x: 1.00, y: 3.0, width: settingsButtonInCallingVCSourceView.bounds.width, height: settingsButtonInCallingVCSourceView.bounds.height)
         
-        Globals.zoomFactorWasResetInSettings = false
+        Globals.zoomFactorWasResetInSettings   = false
+        Globals.globeBackgroundWasChanged = true
         
     }
     
@@ -83,7 +85,7 @@ class SettingsTableViewController: UITableViewController {
     override func viewWillAppear(_ animated: Bool) {
         super .viewWillAppear(animated)
         
-        setSwitchesAndControls()
+        setUpSwitchesAndControlsFromSavedSettings()
         
         // Set font and attributes for navigation bar
         let titleFontSize = Theme.navigationBarTitleFontSize
@@ -159,7 +161,6 @@ class SettingsTableViewController: UITableViewController {
         
         if sender.isOn {
             Globals.mapScrollingAndZoomIsEnabled = true
-            
         } else {
             Globals.mapScrollingAndZoomIsEnabled = false
         }
@@ -169,16 +170,7 @@ class SettingsTableViewController: UITableViewController {
     
     @IBAction func markerTypeSelected(_ sender: UISegmentedControl) {
         
-        switch sender.selectedSegmentIndex {
-        case 0 :
-            Globals.markerType = 0
-        case 1 :
-            Globals.markerType = 1
-        case 2 :
-            Globals.markerType = 2
-        default :
-            Globals.markerType = 0
-        }
+        Globals.markerType = sender.selectedSegmentIndex
         
     }
     
@@ -199,6 +191,14 @@ class SettingsTableViewController: UITableViewController {
         
         Globals.zoomRangeFactorSelection = sender.selectedSegmentIndex
         Globals.zoomFactorWasResetInSettings = true
+        
+    }
+    
+    
+    @IBAction func backgroundImageWasSelected(_ sender: UISegmentedControl) {
+
+        Globals.globeBackgroundImageSelection = sender.selectedSegmentIndex
+        Globals.globeBackgroundWasChanged = true
         
     }
     
@@ -285,15 +285,18 @@ class SettingsTableViewController: UITableViewController {
         Globals.markerType = defaultMarkerType
         markerTypeSelector.selectedSegmentIndex = defaultMarkerType
         
-        Globals.zoomFactorWasResetInSettings = true                     // Flag is set to indicate that main ViewController should check to restore zoom to its default values
+        Globals.globeBackgroundImageSelection = Globals.globeBackgroundImageDefaultSelectionSegment
+        backgroundSelector.selectedSegmentIndex = Globals.globeBackgroundImageDefaultSelectionSegment
         
-        Globals.blackScreenInHDEVExplanationPopsUp = true
+        Globals.zoomFactorWasResetInSettings        = true       // Flag is set to indicate that TrackingViewController should check to restore zoom to its default values
+        Globals.globeBackgroundWasChanged = true
+        Globals.blackScreenInHDEVExplanationPopsUp  = true
         
     }
     
     
     /// Set switches and selectors to current settings
-    private func setSwitchesAndControls() {
+    private func setUpSwitchesAndControlsFromSavedSettings() {
         
         if Globals.showCoordinatesIsOn {
             showCoordinatesSwitch.isOn = true
@@ -341,6 +344,7 @@ class SettingsTableViewController: UITableViewController {
         numberOfDaysOfPasses?.selectedSegmentIndex = Globals.numberOfDaysOfPassesSelectedSegment
         zoomRangeFactorSelector?.selectedSegmentIndex = Globals.zoomRangeFactorSelection
         mapTypeSelector?.selectedSegmentIndex = Globals.mapTypeSelection
+        backgroundSelector?.selectedSegmentIndex = Globals.globeBackgroundImageSelection
         dateAndTimeSaved = "Last saved: \(Globals.lastDateAndTimeSettingsWereSaved)"
         versionAndCopyrightFooter = "Version: \(versionNumber)  Build: \(buildNumber)\n\(copyrightNotice)\n\nIncludes: WhatsNewKit © 2020 Sven Tiigi"
 

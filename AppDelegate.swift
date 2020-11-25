@@ -7,12 +7,12 @@
 //
 
 import UIKit
+import Foundation
 import StoreKit
 
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
-    
     
     // MARK: - Properties
     
@@ -20,7 +20,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?
     
     /// This property holds a reference to the tracking view controller
-    var referenceToViewController = TrackingViewController()
+    var referenceToViewController   = TrackingViewController()
     
     /// This property holds a reference to the tracking view controller
     var referenceToGlobeFullViewController = GlobeFullViewController()
@@ -29,23 +29,22 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     // MARK: - Methods
     
     
-    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
+    func application(_ application: UIApplication, willFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         
-        window?.tintColor = UIColor(named: Theme.tint)                          // Set the global tint color
+        window?.tintColor           = UIColor(named: Theme.tint)            // Set the global tint color
         
-        Globals.thisDevice = UIDevice.current.model                             // Get device model name
-        Globals.isIPad = Globals.thisDevice.hasPrefix("iPad")                   // Determine if device is an iPad and set this constant to true if so
+        Globals.thisDevice          = UIDevice.current.model                // Get device model name
+        Globals.isIPad              = Globals.thisDevice.hasPrefix("iPad")  // Determine if device is an iPad and set this constant to true if so
 
         // Request user review between shortestTime & longestTime of use
-        let shortestTime: UInt32 = 60   // in seconds
-        let longestTime: UInt32 = 300   // in seconds
-        guard let timeInterval = TimeInterval(exactly: arc4random_uniform(longestTime - shortestTime) + shortestTime) else { return true }
+        let shortestTime: UInt32    = 45                                    // In seconds
+        let longestTime: UInt32     = 300                                   // In seconds
+        guard let timeInterval      = TimeInterval(exactly: arc4random_uniform(longestTime - shortestTime) + shortestTime) else { return true }
         Timer.scheduledTimer(timeInterval: timeInterval, target: self, selector: #selector(AppDelegate.requestReview), userInfo: nil, repeats: false)
 
         return true
         
     }
-    
     
     @objc func requestReview() {
         SKStoreReviewController.requestReview()
@@ -58,7 +57,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         // Invalidate the timers and save user's settings when moving to inactive state
         referenceToViewController.stopAction()
-        referenceToViewController.saveUserSettings()
+        SettingsDataModel.saveUserSettings()
         
         if referenceToGlobeFullViewController.isViewLoaded {                // Only stop the globe if the view is loaded to avoid nil error
             referenceToGlobeFullViewController.stopUpdatingGlobe()
@@ -73,7 +72,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         // Invalidate the timers and save user's settings when moving to inactive state
         referenceToViewController.stopAction()
-        referenceToViewController.saveUserSettings()
+        SettingsDataModel.saveUserSettings()
         
         if referenceToGlobeFullViewController.isViewLoaded {                // Only stop the globe if the view is loaded to avoid nil error
             referenceToGlobeFullViewController.stopUpdatingGlobe()
@@ -91,10 +90,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func applicationDidBecomeActive(_ application: UIApplication) {
         // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
 
-        referenceToViewController.restoreUserSettings()
+        SettingsDataModel.restoreUserSettings()
         
         if referenceToGlobeFullViewController.isViewLoaded {                // Only start-up the globe if the view is loaded to avoid nil error
-            referenceToGlobeFullViewController.startUpdatingGlobe()
+            referenceToGlobeFullViewController.earthGlobeLocateISS()
         }
         
     }
@@ -105,7 +104,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         // Invalidate the timers and save user's settings when moving to inactive state
         referenceToViewController.stopAction()
-        referenceToViewController.saveUserSettings()
+        SettingsDataModel.saveUserSettings()
         
         if referenceToGlobeFullViewController.isViewLoaded {                // Only stop the globe if the view is loaded to avoid nil error
             referenceToGlobeFullViewController.stopUpdatingGlobe()
