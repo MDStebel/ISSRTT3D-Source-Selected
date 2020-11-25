@@ -73,8 +73,8 @@ struct Globals {
     static let elevationFormat                                  = "%2.1f"
     static let floatingPointWithThreePlusOneDecimalPlace        = "%3.1f"
     static let floatingPointWithTwoPlusOneDecimalPlace          = "%2.1f"
-    static let issrttWebsite                                    = "https://www.issrtt.com"
     static let hubbleDeepField                                  = "Hubble Legacy Field Crop 2800px.png"
+    static let issrttWebsite                                    = "https://www.issrtt.com"
     static let milkyWay                                         = "Milky Way Correct Rotation in the Sky Square.png"
     static let noonTime: Float                                  = 12.00
     static let numberOfDaysInAYear                              = 365.0
@@ -85,11 +85,13 @@ struct Globals {
     static let numberOfSecondsInAnHour                          = 3600.0
     static let numberOfSecondsInAMinute                         = 60.0
     static let orbitalAltitudeFactor                            = globeRadiusFactor * (1 + ISSAltitudeInKM / earthRadiusInKM) * 1.02
+    static let orionNebula                                      = "Orion Nebula.png"
     static let outputDateFormatString                           = "MMM-dd-YYYY 'at' hh:mma"
     static let outputDateFormatStringShortForm                  = "MMM-dd-yyyy"
     static let outputDateOnlyFormatString                       = "MMM-dd-YYY"
     static let outputTimeOnlyFormatString                       = "hh:mma"
     static let radiansToDegrees: Float                          = 1 / degreesToRadians
     static let spacer                                           = "  "
+    static let tarantulaNebula                                  = "Tarantula Nebula in the Large Magellanic Cloud.png"
     
 }

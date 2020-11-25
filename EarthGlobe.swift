@@ -26,6 +26,7 @@ class EarthGlobe {
     let globeDefaultRotationSpeedInSeconds = 90.0                               // 360° revolution in 90 seconds
     let globeRadius                        = Globals.globeRadiusFactor
     let glowPointAltitude                  = Globals.orbitalAltitudeFactor
+    let globeSegmentCount                  = 540
     let maxFov                             = Globals.maxFov                     // Max zoom in degrees
     let maxLatLonPerUnity                  = 1.1
     let minFov                             = Globals.minFov                     // Min zoom in degrees
@@ -35,7 +36,6 @@ class EarthGlobe {
     var camera                             = SCNCamera()
     var cameraNode                         = SCNNode()
     var globe                              = SCNNode()
-    var globeSegmentCount                  = 540
     var orbitTrack                         = SCNTorus()
     var scene                              = SCNScene()
     var seasonalTilt                       = SCNNode()

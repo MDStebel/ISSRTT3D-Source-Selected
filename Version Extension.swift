@@ -11,7 +11,7 @@ import UIKit
 extension UIViewController {
   
     /// Get the version and build numbers, and the copyright for the app.
-    /// - Returns: Tuple containing the version, build, and copyright
+    /// - Returns: Tuple containing the version, build, and copyright as strings
     func getAppCurrentVersion() -> (version: String, build: String, copyright: String)? {
         
         let currentVersion = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as! String

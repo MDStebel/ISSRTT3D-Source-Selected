@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import Foundation
 import StoreKit
 
 
@@ -22,7 +21,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     /// This property holds a reference to the tracking view controller
     var referenceToViewController   = TrackingViewController()
     
-    /// This property holds a reference to the tracking view controller
+    /// This property holds a reference to the Earth globe full view controller
     var referenceToGlobeFullViewController = GlobeFullViewController()
     
     
@@ -93,7 +92,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         SettingsDataModel.restoreUserSettings()
         
         if referenceToGlobeFullViewController.isViewLoaded {                // Only start-up the globe if the view is loaded to avoid nil error
-            referenceToGlobeFullViewController.earthGlobeLocateISS()
+            referenceToGlobeFullViewController.startUpdatingGlobe()
         }
         
     }

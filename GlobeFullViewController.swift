@@ -17,7 +17,7 @@ class GlobeFullViewController: UIViewController, EarthGlobeProtocol {
     // MARK: - Properties
     
     struct Constants {
-        static let apiEndpointAString       = "---"
+        static let apiEndpointAString       = "https://api.wheretheiss.at/v1/satellites/25544"
         static let fontForTitle             = Theme.nasa
         static let segueToHelpFromGlobe     = "segueToHelpFromGlobe"
         static let segueToSettings          = "segueToSettings"
@@ -56,7 +56,7 @@ class GlobeFullViewController: UIViewController, EarthGlobeProtocol {
     // MARK: - Methods
     
     
-    /// Set the image to use for the background
+    /// Set the space image to use for the background
     /// - Parameter selection: Integer corresponding to the selected image index (based on slider control value, for example)
     func setGlobeBackgroundImage() {
         
@@ -65,6 +65,10 @@ class GlobeFullViewController: UIViewController, EarthGlobeProtocol {
             globeBackgroundImageName = Globals.hubbleDeepField
         case 1 :
             globeBackgroundImageName = Globals.milkyWay
+        case 2 :
+            globeBackgroundImageName = Globals.orionNebula
+        case 3 :
+            globeBackgroundImageName = Globals.tarantulaNebula
         default :
             globeBackgroundImageName = Globals.hubbleDeepField
         }
@@ -127,6 +131,7 @@ class GlobeFullViewController: UIViewController, EarthGlobeProtocol {
     
     func startUpdatingGlobe() {
         
+        Globals.globeBackgroundWasChanged = true
         earthGlobeLocateISS()       // Call once to update the globe before the timer starts in order to immediately show the ISS location, etc.
         timerStartup()
         

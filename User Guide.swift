@@ -171,7 +171,7 @@ struct UserGuide {
     <h4>Ground Track</h4>
     <p>The orbit ground track line is drawn by default. This shows the ground track of the ISS. You can turn this on/off in Settings by tapping the settings icon from the Tracking screen. When the orbit track is on, the ground track clear button is displayed on the Tracking screen.</p>
     <h4>Interactive 3D Globe</h4>
-    <p>The globe shows the current position of the ISS and its orbital track. This is a photorealistic model of the Earth complete with accurate Sun subsolar position, specular reflections on the water, seasonal tilt, mountain shadows, and other details. Drag the globe to rotate and pan it. The circle represents the approximate ISS sighting range from ground level. Auto-rotation is enabled by default and rotates the globe once every 90 seconds. To disable auto-rotation, as well as to enable/disable the globe entirely, go to Settings. Tapping the expand icon on the globe overlay, or the globe button on the tab bar, expands the globe to full-screen mode and hides the map.</p>
+    <p>The globe shows the current position of the ISS and its orbital track. This is a photorealistic model of the Earth complete with accurate Sun subsolar position, specular reflections on the water, seasonal tilt, mountain shadows, and other details. Drag the globe to rotate and pan it. The circle represents the approximate ISS sighting range from ground level. Auto-rotation is enabled by default and rotates the globe once every 90 seconds. To disable auto-rotation, as well as to enable/disable the globe entirely, go to Settings. Tapping the expand icon on the globe overlay, or the globe button on the tab bar, expands the globe to fullscreen mode and hides the map.</p>
     <h4>Copy Info to the Clipboard</h4>
     <p>Tap the copy icon next to the info box on bottom of the map to copy the ISS's location, altitude, velocity, and associated time to the clipboard. You can then paste the data in another app.</p>
     <h5>Notes:</h5>
@@ -184,23 +184,39 @@ struct UserGuide {
     </li>
     </ul>
     <div id="globe"></div>
-    <h2>3D Globe</h2>
-    <p>From the Tracking screen, tapping the expand icon on the globe overlay, or the globe button on the tab bar, expands the globe to full-screen mode and hides the map.</p>
+    <h2>Interactive 3D Globe</h2>
+    <p>From the Tracking screen, tapping the expand icon on the globe overlay, or the globe button on the tab bar, expands the globe to fullscreen mode and hides the map.</p>
     <p>The 3D interactive globe shows the current position of the ISS and its orbital track. This is a photorealistic model of the Earth complete with accurate Sun subsolar position, specular reflections on the water, seasonal tilt, mountain shadows, and other details.</p>
     <p>The globe starts updating automatically when in full-screen mode.</p>
     <h4>Using Gestures</h4>
     <ul>
     <li>
-    <h6>Drag the globe with one finger to rotate the globe.</h6>
+    <h5>Drag the globe with one finger to rotate the globe.</h5>
     </li>
     <li>
-    <h6>Drag the globe with two fingers to move it around (translation).</h6>
+    <h5>Drag the globe with two fingers to move it around (translation).</h5>
     </li>
     <li>
-    <h6>Use pinch gestures to zoom in/out of the globe.</h6>
+    <h5>Use pinch gestures to zoom in/out of the globe.</h5>
     </li>
     <li>
-    <h6>Rotate with two fingers to tilt the globe.</h6>
+    <h5>Rotate with two fingers to tilt the globe.</h5>
+    </li>
+    </ul>
+    <h4>Choose Your Background</h4>
+    <p>From Settings you can select from four background images for your fullscreen globe. These are:
+    <ul>
+    <li>
+    <h5>Hubble Deep Field (the default)</h5>
+    </li>
+    <li>
+    <h5>Milky Way</h5>
+    </li>
+    <li>
+    <h5>Orion Nebula</h5>
+    </li>
+    <li>
+    <h5>Tarantula Nebula in the Large Magellanic Cloud</h5>
     </li>
     </ul>
     <h5>Notes:</h5>
@@ -363,7 +379,7 @@ struct UserGuide {
     <h4>Ground Track</h4>
     <p>The orbit ground track line is drawn by default. This shows the ground track of the ISS. You can turn this on/off in Settings by tapping the settings icon from the Tracking screen. When the orbit track is on, the ground track clear button is displayed on the Tracking screen.</p>
     <h4>Interactive 3D Globe</h4>
-    <p>The globe shows the current position of the ISS and its orbital track. This is a photorealistic model of the Earth complete with accurate Sun position, specular reflections on the water, seasonal tilt, mountain shadows, and other details. Drag the globe to rotate and pan it. Pinch to zoom in/out. The circle represents the approximate ISS sighting range from ground level. Auto-rotation is enabled by default and rotates the globe once per minute. To disable auto-rotation, as well as to enable/disable the globe entirely, go to Settings. Tapping the expand icon on the globe overlay expands the globe to full-screen mode and hides the map.</p>
+    <p>The globe shows the current position of the ISS and its orbital track. This is a photorealistic model of the Earth complete with accurate Sun position, specular reflections on the water, seasonal tilt, mountain shadows, and other details. Drag the globe to rotate and pan it. Pinch to zoom in/out. The circle represents the approximate ISS sighting range from ground level. Auto-rotation is enabled by default and rotates the globe once per minute. To disable auto-rotation, as well as to enable/disable the globe entirely, go to Settings. Tapping the expand icon on the globe overlay expands the globe to fullscreen mode and hides the map.</p>
     <h4>Copy Info to the Clipboard</h4>
     <p>Tap the copy icon next to the info box on bottom of the map to copy the ISS's location, altitude, velocity, and associated time to the clipboard. You can then paste the data in another app.</p>
     <h5>Notes:</h5>
@@ -382,22 +398,38 @@ struct UserGuide {
     """
     \(head)
     <h2>Interactive 3D Globe</h2>
-    <p>From the Tracking screen, tapping the expand icon on the globe overlay, or the globe button on the tab bar, expands the globe to full-screen mode and hides the map.</p>
+    <p>From the Tracking screen, tapping the expand icon on the globe overlay, or the globe button on the tab bar, expands the globe to fullscreen mode and hides the map.</p>
     <p>The 3D interactive globe shows the current position of the ISS and its orbital track. This is a photorealistic model of the Earth complete with accurate Sun subsolar position, specular reflections on the water, seasonal tilt, mountain shadows, and other details.</p>
     <p>The globe starts updating automatically when in full-screen mode.</p>
     <h4>Using Gestures</h4>
     <ul>
     <li>
-    <h6>Drag the globe with one finger to rotate the globe.</h6>
+    <h5>Drag the globe with one finger to rotate the globe.</h5>
     </li>
     <li>
-    <h6>Drag the globe with two fingers to move it around (translation).</h6>
+    <h5>Drag the globe with two fingers to move it around (translation).</h5>
     </li>
     <li>
-    <h6>Use pinch gestures to zoom in/out of the globe.</h6>
+    <h5>Use pinch gestures to zoom in/out of the globe.</h5>
     </li>
     <li>
-    <h6>Rotate with two fingers to tilt the globe.</h6>
+    <h5>Rotate with two fingers to tilt the globe.</h5>
+    </li>
+    </ul>
+    <h4>Choose Your Background</h4>
+    <p>From Settings you can select from four background images for your fullscreen globe. These are:
+    <ul>
+    <li>
+    <h5>Hubble Deep Field (the default)</h5>
+    </li>
+    <li>
+    <h5>Milky Way</h5>
+    </li>
+    <li>
+    <h5>Orion Nebula</h5>
+    </li>
+    <li>
+    <h5>Tarantula Nebula in the Large Magellanic Cloud</h5>
     </li>
     </ul>
     <h5>Notes:</h5>

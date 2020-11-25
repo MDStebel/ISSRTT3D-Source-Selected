@@ -20,16 +20,16 @@ private let whatsNew = WhatsNew(
     // The features and other information to showcase
     items: [
         WhatsNew.Item(
-            title: "Introducing 3D!",
+            title: "Choose Your Background!",
             subtitle: """
-                      Version 6.14 introduced the photorealistic interactive 3D globe showing the real-time ISS position, orbital track, sighting circle, the tilt of the Earth, the precise location & reflection of the Sun at the subsolar point, terminator, topology, & artificial lights at night.
+                      Select from 4 spectacular space images for your fullscreen 3D Earth globe: Hubble Deep Field, Milky Way, Orion Nebula, & Tarantula Nebula. Change the background in Settings.
                       """,
             image: UIImage(named: "icons8-megaphone_filled.imageset")
         ),
         WhatsNew.Item(
             title: "Improvements & Fixes",
             subtitle: """
-                      New in 6.14.5, choose between two space backgrounds for the fullscreen globe, the Hubble Deep Field (default) or the Milky Way. Change the background in Settings. Numerous under-the-hood improvements.
+                      Added feature to change the fullscreen 3D background in Settings. This release also has numerous under-the-hood improvements and bug fixes.
                       """,
             image: UIImage(named: "icons8-bug_filled")
         ),
