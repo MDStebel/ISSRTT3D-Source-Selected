@@ -36,7 +36,6 @@ extension GlobeFullViewController {
                     DispatchQueue.main.async {
                         if Globals.globeBackgroundWasChanged {            // Background image may have been changed by user in Settings
                             self!.setGlobeBackgroundImage()
-                            self!.spaceBackgroundImage.image = UIImage(named: self!.globeBackgroundImageName)
                             Globals.globeBackgroundWasChanged = false
                         }
                         self?.updateEarthGlobeScene(in: self!.fullGlobe, latitude: self!.latitude, longitude: self!.longitude, lastLat: &self!.lastLat)

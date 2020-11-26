@@ -289,7 +289,7 @@ class SettingsTableViewController: UITableViewController {
         backgroundSelector.selectedSegmentIndex = Globals.globeBackgroundImageDefaultSelectionSegment
         
         Globals.zoomFactorWasResetInSettings        = true       // Flag is set to indicate that TrackingViewController should check to restore zoom to its default values
-        Globals.globeBackgroundWasChanged = true
+        Globals.globeBackgroundWasChanged           = true
         Globals.blackScreenInHDEVExplanationPopsUp  = true
         
     }
