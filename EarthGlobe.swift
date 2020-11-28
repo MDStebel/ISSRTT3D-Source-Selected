@@ -12,7 +12,7 @@ import SceneKit
 /// The 3D Interactive Earth Globe Model
 class EarthGlobe {
     
-    static let markerWidth: CGFloat        = 0.16                                  // The size factor for the marker
+    static let markerWidth: CGFloat        = 0.16                               // The size factor for the marker
 
     let ambientLightIntensity: CGFloat     = 100                                // The default value is 1000
     let cameraAltitude                     = Globals.cameraAltitude
@@ -21,12 +21,10 @@ class EarthGlobe {
     let defaultCameraFov                   = Globals.defaultCameraFov
     let distanceToISSOrbit                 = Globals.ISSOrbitAltitudeInScene
     let dragWidthInDegrees                 = 270.0                              // The amount to rotate the globe on one edge-to-edge swipe (in degrees)
-    let earthTiltInDegrees                 = Globals.earthTiltInDegrees
-    let earthTiltInRadians                 = Globals.earthTiltInRadians
     let globeDefaultRotationSpeedInSeconds = 90.0                               // 360° revolution in 90 seconds
-    let globeRadius                        = Globals.globeRadiusFactor
-    let glowPointAltitude                  = Globals.orbitalAltitudeFactor
-    let globeSegmentCount                  = 540
+    let globeRadiusFactor                  = Globals.globeRadiusFactor
+    let globeSegmentCount                  = 720
+    let markerAltitude                     = Globals.orbitalAltitudeFactor
     let maxFov                             = Globals.maxFov                     // Max zoom in degrees
     let maxLatLonPerUnity                  = 1.1
     let minFov                             = Globals.minFov                     // Min zoom in degrees
@@ -35,10 +33,10 @@ class EarthGlobe {
     
     var camera                             = SCNCamera()
     var cameraNode                         = SCNNode()
+    var earthAxisTilt                      = SCNNode()
     var globe                              = SCNNode()
     var orbitTrack                         = SCNTorus()
     var scene                              = SCNScene()
-    var seasonalTilt                       = SCNNode()
     var sun                                = SCNNode()
     var userRotation                       = SCNNode()
     var userTilt                           = SCNNode()
@@ -50,7 +48,7 @@ class EarthGlobe {
     init() {
         
         // Create the globe shape
-        let globeShape                 = SCNSphere(radius: CGFloat(globeRadius) )
+        let globeShape                 = SCNSphere(radius: CGFloat(globeRadiusFactor) )
         globeShape.segmentCount        = globeSegmentCount
         
         guard let earthMaterial        = globeShape.firstMaterial else { return }
@@ -63,13 +61,13 @@ class EarthGlobe {
         earthMaterial.setValue(emission, forKey: "emissionTexture")
         
         /// OpenGL lighting map code
-        let shaderModifier =    """
-                                uniform sampler2D emissionTexture;
-                                vec3 light = _lightingContribution.diffuse;
-                                float lum = max(0.0, 1 - (0.2126 * light.r + 0.7152 * light.g + 0.0722 * light.b));
-                                vec4 emission = texture2D(emissionTexture, _surface.diffuseTexcoord) * lum * 1.0;
-                                _output.color += emission;
-                                """
+        let shaderModifier             = """
+                                         uniform sampler2D emissionTexture;
+                                         vec3 light = _lightingContribution.diffuse;
+                                         float lum = max(0.0, 1 - (0.2126 * light.r + 0.7152 * light.g + 0.0722 * light.b));
+                                         vec4 emission = texture2D(emissionTexture, _surface.diffuseTexcoord) * lum * 1.0;
+                                         _output.color += emission;
+                                         """
         earthMaterial.shaderModifiers     = [.fragment: shaderModifier]
         
         // Texture is revealed by specular light sources
@@ -137,7 +135,7 @@ class EarthGlobe {
         camera.fieldOfView          = defaultCameraFov
         camera.zFar                 = 10000
         
-        let adjustedCameraAltitude  = globeRadius + cameraAltitude
+        let adjustedCameraAltitude  = globeRadiusFactor + cameraAltitude
         cameraNode.position         = SCNVector3(x: 0, y: 0, z: adjustedCameraAltitude)
         
         cameraNode.constraints      = [SCNLookAtConstraint(target: globe)]

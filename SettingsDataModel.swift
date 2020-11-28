@@ -6,7 +6,7 @@
 //  Copyright © 2016-2020 Michael Stebel Consulting, LLC. All rights reserved.
 //
 
-import UIKit
+import Foundation
 
 
 /// Model for user settings data

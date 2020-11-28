@@ -23,7 +23,7 @@ struct Globals {
     }
     
     static var autoRotateGlobeEnabled                           = true
-    static var globeBackgroundWasChanged              = true
+    static var globeBackgroundWasChanged                        = true
     static var blackScreenInHDEVExplanationPopsUp               = true
     static var buildNumber                                      = ""
     static var cameraAltitude: Float                            = 1.85

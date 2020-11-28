@@ -217,7 +217,7 @@ extension EarthGlobe {
         let newPosition     = EarthGlobe.convertLatLonCoordinatesToXYZ(lat: lat, lon: lon, alt: Globals.ISSOrbitAltitudeInScene)
         let x               = newPosition.x
         let y               = newPosition.y
-        cameraNode.position = SCNVector3(x: x, y: y, z: globeRadius + cameraAltitude)
+        cameraNode.position = SCNVector3(x: x, y: y, z: globeRadiusFactor + cameraAltitude)
         
     }
     
