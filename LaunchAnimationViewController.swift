@@ -3,7 +3,7 @@
 //  ISS Real-Time Tracker 3D
 //
 //  Created by Michael Stebel on 10/31/16.
-//  Copyright © 2016-2020 Michael Stebel Consulting, LLC. All rights reserved.
+//  Copyright © 2016-2021 Michael Stebel Consulting, LLC. All rights reserved.
 //
 
 import UIKit
@@ -85,9 +85,11 @@ class LaunchAnimationViewController: UIViewController {
     
     
     private func createTransformationsForTitle() {
+        
         // Create a stack of transformations for the title
         scaleFactorForAppNameTitleForLaunchAnimation = 4.0
         trans2 = trans2.scaledBy(x: scaleFactorForAppNameTitleForLaunchAnimation, y: scaleFactorForAppNameTitleForLaunchAnimation)
+        
     }
     
     
@@ -117,7 +119,7 @@ class LaunchAnimationViewController: UIViewController {
             appNameTitleForLaunchAnimation.transform = trans2
         },
         completion: { [self] (completedOK) in
-            performSegue(withIdentifier: segueToMainViewController, sender: self)
+            performSegue(withIdentifier: segueToMainViewController, sender: self)           // Now, segue to the Tracking view controller
         })
         
     }
@@ -137,7 +139,7 @@ class LaunchAnimationViewController: UIViewController {
     
     override func didRotate(from fromInterfaceOrientation: UIInterfaceOrientation) {
         
-        // If we're using an iPhone and rotated during animation, a crash will occur. This prevents that from happening.
+        // If we're using an iPhone and rotated during animation, a crash may occur. This prevents that from happening.
         let currentDevice: UIDevice = UIDevice.current
         currentDevice.beginGeneratingDeviceOrientationNotifications()
         

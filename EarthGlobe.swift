@@ -3,7 +3,7 @@
 //  ISS Real-Time Tracker 3D
 //
 //  Created by Michael Stebel on 10/22/20.
-//  Copyright © 2020 Michael Stebel Consulting, LLC. All rights reserved.
+//  Copyright © 2020-2021 Michael Stebel Consulting, LLC. All rights reserved.
 //
 
 import SceneKit
@@ -23,7 +23,7 @@ class EarthGlobe {
     let dragWidthInDegrees                 = 270.0                              // The amount to rotate the globe on one edge-to-edge swipe (in degrees)
     let globeDefaultRotationSpeedInSeconds = 90.0                               // 360° revolution in 90 seconds
     let globeRadiusFactor                  = Globals.globeRadiusFactor
-    let globeSegmentCount                  = 720
+    let globeSegmentCount                  = 720                                // The number of subdivisions along the sphere's polar & azimuth angles, similar to the latitude & longitude system on a globe of the Earth
     let markerAltitude                     = Globals.orbitalAltitudeFactor
     let maxFov                             = Globals.maxFov                     // Max zoom in degrees
     let maxLatLonPerUnity                  = 1.1

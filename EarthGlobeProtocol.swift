@@ -3,7 +3,7 @@
 //  ISS Real-Time Tracker 3D
 //
 //  Created by Michael Stebel on 11/10/20.
-//  Copyright © 2020 Michael Stebel Consulting, LLC. All rights reserved.
+//  Copyright © 2020-2021 Michael Stebel Consulting, LLC. All rights reserved.
 //
 
 import SceneKit
@@ -33,14 +33,14 @@ extension EarthGlobeProtocol {
         globe.setupInSceneView(scene, customPinchGestureIsEnabled: false)
         
         if hasTintedBackground {
-            scene.backgroundColor = UIColor(named: Theme.popupBgd)?.withAlphaComponent(0.50)        // Tinted for map view overlay mode
+            scene.backgroundColor     = UIColor(named: Theme.popupBgd)?.withAlphaComponent(0.50)        // Tinted for map view overlay mode
             scene.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
         } else {
-            scene.backgroundColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0)                    // Transparent background for full-screen mode
+            scene.backgroundColor     = UIColor(red: 0, green: 0, blue: 0, alpha: 0)                    // Transparent background for full-screen mode
         }
         
-        scene.layer.cornerRadius = 15
-        scene.layer.masksToBounds = true
+        scene.layer.cornerRadius      = 15
+        scene.layer.masksToBounds     = true
         
     }
     
@@ -72,7 +72,7 @@ extension EarthGlobeProtocol {
         // Get the latitude of the subsolar point at the current time
         let latitudeOfSunAtCurrentTime = AstroCalculations.getLatitudeOfSunAtCurrentTime()
         
-        // Get the longitude of subsolar point at current time
+        // Get the longitude of the subsolar point at the current time
         let subSolarLon = AstroCalculations.getSubSolarLongitudeOfSunAtCurrentTime()
         
         // Now, set up the Sun at the subsolar point

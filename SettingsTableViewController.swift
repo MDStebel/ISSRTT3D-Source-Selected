@@ -3,7 +3,7 @@
 //  ISS Real-Time Tracker 3D
 //
 //  Created by Michael Stebel on 2/21/16.
-//  Copyright © 2016-2020 Michael Stebel Consulting, LLC. All rights reserved.
+//  Copyright © 2016-2021 Michael Stebel Consulting, LLC. All rights reserved.
 //
 
 import UIKit
@@ -48,6 +48,13 @@ class SettingsTableViewController: UITableViewController {
     @IBOutlet private weak var mapTypeSelector: UISegmentedControl!
     @IBOutlet private weak var zoomRangeFactorSelector: UISegmentedControl!
     @IBOutlet private weak var markerTypeSelector: UISegmentedControl!
+    @IBOutlet private weak var showOrbitGroundTrackLine: UISwitch!
+    @IBOutlet private weak var displayGlobeSwitch: UISwitch!
+    @IBOutlet private weak var showCoordinatesSwitch: UISwitch!
+    @IBOutlet private weak var displayZoomFactorBelowMarkerSwitch: UISwitch!
+    @IBOutlet private weak var userMapScrollingEnbleSwitch: UISwitch!
+    @IBOutlet private weak var showWhatsNewSwitch: UISwitch!
+    @IBOutlet private weak var autoRotateGlobeSwitch: UISwitch!
     @IBOutlet private weak var numberOfDaysOfPasses: UISegmentedControl! {
         // Set up segment labels from dictionary
         didSet{
@@ -56,13 +63,6 @@ class SettingsTableViewController: UITableViewController {
             }
         }
     }
-    @IBOutlet private weak var showOrbitGroundTrackLine: UISwitch!
-    @IBOutlet private weak var displayGlobeSwitch: UISwitch!
-    @IBOutlet private weak var showCoordinatesSwitch: UISwitch!
-    @IBOutlet private weak var displayZoomFactorBelowMarkerSwitch: UISwitch!
-    @IBOutlet private weak var userMapScrollingEnbleSwitch: UISwitch!
-    @IBOutlet private weak var showWhatsNewSwitch: UISwitch!
-    @IBOutlet private weak var autoRotateGlobeSwitch: UISwitch!
     
     
     // MARK: - Methods
@@ -252,45 +252,45 @@ class SettingsTableViewController: UITableViewController {
     /// Reset all settings to their defaults
     @IBAction private func resetSettings(_ sender: UIBarButtonItem) {
         
-        Globals.showCoordinatesIsOn = true
-        showCoordinatesSwitch.isOn = true
+        Globals.showCoordinatesIsOn                  = true
+        showCoordinatesSwitch.isOn                   = true
         
-        Globals.displayZoomFactorBelowMarkerIsOn = true
-        displayZoomFactorBelowMarkerSwitch.isOn = true
+        Globals.displayZoomFactorBelowMarkerIsOn     = true
+        displayZoomFactorBelowMarkerSwitch.isOn      = true
         
-        Globals.mapScrollingAndZoomIsEnabled = false
-        userMapScrollingEnbleSwitch.isOn = false
+        Globals.mapScrollingAndZoomIsEnabled         = false
+        userMapScrollingEnbleSwitch.isOn             = false
 
-        Globals.showWhatsNewUponNextStartup = false
-        showWhatsNewSwitch.isOn = false
+        Globals.showWhatsNewUponNextStartup          = false
+        showWhatsNewSwitch.isOn                      = false
         
-        Globals.orbitGroundTrackLineEnabled = true
-        showOrbitGroundTrackLine.isOn = true
+        Globals.orbitGroundTrackLineEnabled          = true
+        showOrbitGroundTrackLine.isOn                = true
         
-        Globals.displayGlobe = true
-        displayGlobeSwitch.isOn = true
+        Globals.displayGlobe                         = true
+        displayGlobeSwitch.isOn                      = true
         
-        Globals.autoRotateGlobeEnabled = true
-        autoRotateGlobeSwitch.isOn = true
+        Globals.autoRotateGlobeEnabled               = true
+        autoRotateGlobeSwitch.isOn                   = true
         
-        Globals.mapTypeSelection = defaultMapType
-        mapTypeSelector.selectedSegmentIndex = defaultMapType
+        Globals.mapTypeSelection                     = defaultMapType
+        mapTypeSelector.selectedSegmentIndex         = defaultMapType
         
-        Globals.zoomRangeFactorSelection = defaultZoomFactor
+        Globals.zoomRangeFactorSelection             = defaultZoomFactor
         zoomRangeFactorSelector.selectedSegmentIndex = defaultZoomFactor
 
-        Globals.numberOfDaysOfPassesSelectedSegment = Globals.numberOfDaysOfPassesDefaultSelectionSegment
-        numberOfDaysOfPasses.selectedSegmentIndex = Globals.numberOfDaysOfPassesDefaultSelectionSegment
+        Globals.numberOfDaysOfPassesSelectedSegment  = Globals.numberOfDaysOfPassesDefaultSelectionSegment
+        numberOfDaysOfPasses.selectedSegmentIndex    = Globals.numberOfDaysOfPassesDefaultSelectionSegment
         
-        Globals.markerType = defaultMarkerType
-        markerTypeSelector.selectedSegmentIndex = defaultMarkerType
+        Globals.markerType                           = defaultMarkerType
+        markerTypeSelector.selectedSegmentIndex      = defaultMarkerType
         
-        Globals.globeBackgroundImageSelection = Globals.globeBackgroundImageDefaultSelectionSegment
-        backgroundSelector.selectedSegmentIndex = Globals.globeBackgroundImageDefaultSelectionSegment
+        Globals.globeBackgroundImageSelection        = Globals.globeBackgroundImageDefaultSelectionSegment
+        backgroundSelector.selectedSegmentIndex      = Globals.globeBackgroundImageDefaultSelectionSegment
         
-        Globals.zoomFactorWasResetInSettings        = true       // Flag is set to indicate that TrackingViewController should check to restore zoom to its default values
-        Globals.globeBackgroundWasChanged           = true
-        Globals.blackScreenInHDEVExplanationPopsUp  = true
+        Globals.zoomFactorWasResetInSettings         = true       // Flag is set to indicate that TrackingViewController should check to restore zoom to its default values
+        Globals.globeBackgroundWasChanged            = true
+        Globals.blackScreenInHDEVExplanationPopsUp   = true
         
     }
     
@@ -299,54 +299,54 @@ class SettingsTableViewController: UITableViewController {
     private func setUpSwitchesAndControlsFromSavedSettings() {
         
         if Globals.showCoordinatesIsOn {
-            showCoordinatesSwitch.isOn = true
+            showCoordinatesSwitch.isOn                = true
         } else {
-            showCoordinatesSwitch.isOn = false
+            showCoordinatesSwitch.isOn                = false
         }
         
         if Globals.displayZoomFactorBelowMarkerIsOn {
-            displayZoomFactorBelowMarkerSwitch.isOn = true
+            displayZoomFactorBelowMarkerSwitch.isOn   = true
         } else {
-            displayZoomFactorBelowMarkerSwitch.isOn = false
+            displayZoomFactorBelowMarkerSwitch.isOn   = false
         }
 
         if Globals.showWhatsNewUponNextStartup {
-            showWhatsNewSwitch.isOn = true
+            showWhatsNewSwitch.isOn                   = true
         } else {
-            showWhatsNewSwitch.isOn = false
+            showWhatsNewSwitch.isOn                   = false
         }
         
         if Globals.orbitGroundTrackLineEnabled {
-            showOrbitGroundTrackLine.isOn = true
+            showOrbitGroundTrackLine.isOn             = true
         } else {
-            showOrbitGroundTrackLine.isOn = false
+            showOrbitGroundTrackLine.isOn             = false
         }
         
         if Globals.displayGlobe {
-            displayGlobeSwitch.isOn = true
+            displayGlobeSwitch.isOn                   = true
         } else {
-            displayGlobeSwitch.isOn = false
+            displayGlobeSwitch.isOn                   = false
         }
         
         if Globals.autoRotateGlobeEnabled {
-            autoRotateGlobeSwitch.isOn = true
+            autoRotateGlobeSwitch.isOn                = true
         } else {
-            autoRotateGlobeSwitch.isOn = false
+            autoRotateGlobeSwitch.isOn                = false
         }
         
         if Globals.mapScrollingAndZoomIsEnabled {
-            userMapScrollingEnbleSwitch.isOn = true
+            userMapScrollingEnbleSwitch.isOn          = true
         } else {
-            userMapScrollingEnbleSwitch.isOn = false
+            userMapScrollingEnbleSwitch.isOn          = false
         }
         
-        markerTypeSelector?.selectedSegmentIndex = Globals.markerType
-        numberOfDaysOfPasses?.selectedSegmentIndex = Globals.numberOfDaysOfPassesSelectedSegment
+        markerTypeSelector?.selectedSegmentIndex      = Globals.markerType
+        numberOfDaysOfPasses?.selectedSegmentIndex    = Globals.numberOfDaysOfPassesSelectedSegment
         zoomRangeFactorSelector?.selectedSegmentIndex = Globals.zoomRangeFactorSelection
-        mapTypeSelector?.selectedSegmentIndex = Globals.mapTypeSelection
-        backgroundSelector?.selectedSegmentIndex = Globals.globeBackgroundImageSelection
-        dateAndTimeSaved = "Last saved: \(Globals.lastDateAndTimeSettingsWereSaved)"
-        versionAndCopyrightFooter = "Version: \(versionNumber)  Build: \(buildNumber)\n\(copyrightNotice)\n\nIncludes: WhatsNewKit © 2020 Sven Tiigi"
+        mapTypeSelector?.selectedSegmentIndex         = Globals.mapTypeSelection
+        backgroundSelector?.selectedSegmentIndex      = Globals.globeBackgroundImageSelection
+        dateAndTimeSaved                              = "Last saved: \(Globals.lastDateAndTimeSettingsWereSaved)"
+        versionAndCopyrightFooter                     = "Version: \(versionNumber)  Build: \(buildNumber)\n\(copyrightNotice)\n\nIncludes: WhatsNewKit © 2020 Sven Tiigi"
 
     }
     

@@ -3,7 +3,7 @@
 //  ISS Real-Time Tracker 3D
 //
 //  Created by Michael Stebel on 1/28/16.
-//  Copyright © 2016-2020 Michael Stebel Consulting, LLC. All rights reserved.
+//  Copyright © 2016-2021 Michael Stebel Consulting, LLC. All rights reserved.
 //
 
 import UIKit
@@ -19,7 +19,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?
     
     /// This property holds a reference to the tracking view controller
-    var referenceToViewController   = TrackingViewController()
+    var referenceToViewController          = TrackingViewController()
     
     /// This property holds a reference to the Earth globe full view controller
     var referenceToGlobeFullViewController = GlobeFullViewController()

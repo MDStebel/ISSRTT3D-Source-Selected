@@ -2,7 +2,7 @@
 //  HelpViewController.swift
 //  ISS Real-Time Tracker 3D
 //
-//  Copyright © 2016-2020 Michael Stebel Consulting, LLC. All rights reserved.
+//  Copyright © 2016-2021 Michael Stebel Consulting, LLC. All rights reserved.
 //
 
 import UIKit
@@ -41,12 +41,12 @@ class HelpViewController: UIViewController, WKUIDelegate, WKNavigationDelegate {
     
     private func setUpViewForHelp() {
         
-        helpTextWebView.uiDelegate = self
-        helpTextWebView.navigationDelegate = self
-        let webConfiguration = WKWebViewConfiguration()
+        helpTextWebView.uiDelegate                   = self
+        helpTextWebView.navigationDelegate           = self
+        let webConfiguration                         = WKWebViewConfiguration()
         webConfiguration.preferences.minimumFontSize = 12.0
-        helpTextWebView = WKWebView(frame: .zero, configuration: webConfiguration)
-        view = helpTextWebView
+        helpTextWebView                              = WKWebView(frame: .zero, configuration: webConfiguration)
+        view                                         = helpTextWebView
         
     }
     
@@ -75,6 +75,7 @@ class HelpViewController: UIViewController, WKUIDelegate, WKNavigationDelegate {
             navigationController?.navigationBar.barTintColor = UIColor(named: Theme.tint)
         }
         
+        // Show the help content
         helpTextWebView.loadHTMLString(helpContentHTML, baseURL: nil)
         
     }
