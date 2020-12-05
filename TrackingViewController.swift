@@ -178,7 +178,11 @@ class TrackingViewController: UIViewController, MKMapViewDelegate, UIGestureReco
     var longitude                           = ""
     var positionString                      = ""
     var ranAtLeastOnce                      = false
-    var running: Bool?                      = false
+    var running: Bool?                      = false {
+        didSet {
+            globeStatusLabel?.text = running! ? "Running" : "Not running"
+        }
+    }
     var timer                               = Timer()
     var timerValue: TimeInterval            = 2.0
     var velString                           = ""
@@ -254,6 +258,11 @@ class TrackingViewController: UIViewController, MKMapViewDelegate, UIGestureReco
 
     @IBOutlet weak var globeScene: SCNView!
     @IBOutlet weak var globeExpandButton: UIButton!
+    @IBOutlet weak var globeStatusLabel: UILabel! {
+        didSet {
+            globeStatusLabel.text = "Not running"
+        }
+    }
     
     // MARK: - Methods
     
@@ -892,6 +901,5 @@ class TrackingViewController: UIViewController, MKMapViewDelegate, UIGestureReco
         stopAction()
         
     }
-
     
 }
