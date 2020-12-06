@@ -29,7 +29,7 @@ private let whatsNew = WhatsNew(
         WhatsNew.Item(
             title: "Improvements & Fixes",
             subtitle: """
-                      Added feature to change the fullscreen 3D background in Settings. This release also has numerous under-the-hood improvements and bug fixes.
+                      Bug fixes and other under-the-hood improvements.
                       """,
             image: UIImage(named: "icons8-bug_filled")
         ),

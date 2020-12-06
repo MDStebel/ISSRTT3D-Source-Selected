@@ -111,7 +111,7 @@ extension TrackingViewController {
                     // Update map and overlays in the main queue
                     DispatchQueue.main.async {
                         
-                        // Update map position
+                        // Update ISS position on the map
                         self?.map.setRegion(self!.region, animated: true)
                         
                         // Update the coordinates in the info box, if enabled
@@ -124,14 +124,16 @@ extension TrackingViewController {
                         
                         // Update globe with ISS position and orbital track, if enabled
                         if Globals.displayGlobe {
+                            self?.updateEarthGlobeScene(in: self!.globe, latitude: self!.latitude, longitude: self!.longitude, lastLat: &self!.lastLat)
                             self?.setUpCoordinatesLabel(withTopCorners: false)
                             self?.globeScene.isHidden        = false
                             self?.globeExpandButton.isHidden = false
-                            self?.updateEarthGlobeScene(in: self!.globe, latitude: self!.latitude, longitude: self!.longitude, lastLat: &self!.lastLat)
+                            self?.globeStatusLabel.isHidden  = false
                         } else {
                             self?.setUpCoordinatesLabel(withTopCorners: true)
                             self?.globeScene.isHidden        = true
                             self?.globeExpandButton.isHidden = true
+                            self?.globeStatusLabel.isHidden  = true
                         }
                         
                     }

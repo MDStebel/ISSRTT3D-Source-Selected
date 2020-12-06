@@ -1,6 +1,6 @@
 //
 //  TrackingViewController.swift
-//  ISS Real-Time Tracker 3D 
+//  ISS Real-Time Tracker 3D
 //
 //  Created by Michael Stebel on 1/28/2016
 //  Copyright © 2016-2021 Michael Stebel Consulting. All rights reserved.
@@ -46,8 +46,8 @@ class TrackingViewController: UIViewController, MKMapViewDelegate, UIGestureReco
     /// Local constants
     struct Constants {
         static let animationOffsetY: CGFloat    = 90.0
-        static let apiEndpointAString           = "---"
-        static let apiEndpointBString           = "---"
+        static let apiEndpointAString           = "https://api.wheretheiss.at/v1/satellites/25544"
+        static let apiEndpointBString           = "http://api.open-notify.org/iss-now.json"
         static let defaultTimerInterval         = 3.0
         static let fontForTitle                 = Theme.nasa
         static let kilometersToMiles            = 0.621371192
@@ -180,7 +180,9 @@ class TrackingViewController: UIViewController, MKMapViewDelegate, UIGestureReco
     var ranAtLeastOnce                      = false
     var running: Bool?                      = false {
         didSet {
-            globeStatusLabel?.text = running! ? "Running" : "Not running"
+            if let isRunning = running {
+                globeStatusLabel?.text = isRunning ? "Running" : "Not running"
+            }
         }
     }
     var timer                               = Timer()
@@ -406,7 +408,7 @@ class TrackingViewController: UIViewController, MKMapViewDelegate, UIGestureReco
 
         stopAction()
         
-        delay(1.0) {   // Delay 1 sec to make sure we don't violate the API's 1 second rate limit if moving the slider too fast
+        delay(1.0) {                // Delay 1 sec to make sure we don't violate the API's 1 second rate limit if moving the slider too fast
             Globals.zoomFactorLastValue = sender.value
             self.zoomValueWasChanged = true
             self.timerValue = self.getTimerInterval()
@@ -439,7 +441,7 @@ class TrackingViewController: UIViewController, MKMapViewDelegate, UIGestureReco
         }
         
         running = true
-        playButton.image = UIImage(named: TrackingButtonImages.pause, in: nil, compatibleWith: nil)    // While running, change play to pause
+        playButton.image = UIImage(named: TrackingButtonImages.pause, in: nil, compatibleWith: nil)     // While running, change play to pause
         
     }
     
@@ -901,5 +903,5 @@ class TrackingViewController: UIViewController, MKMapViewDelegate, UIGestureReco
         stopAction()
         
     }
-    
+
 }

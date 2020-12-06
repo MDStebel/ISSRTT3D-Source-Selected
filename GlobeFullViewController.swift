@@ -17,7 +17,7 @@ class GlobeFullViewController: UIViewController, EarthGlobeProtocol {
     // MARK: - Properties
     
     struct Constants {
-        static let apiEndpointAString       = "---"
+        static let apiEndpointAString       = "https://api.wheretheiss.at/v1/satellites/25544"
         static let fontForTitle             = Theme.nasa
         static let segueToHelpFromGlobe     = "segueToHelpFromGlobe"
         static let segueToSettings          = "segueToSettings"
@@ -73,7 +73,7 @@ class GlobeFullViewController: UIViewController, EarthGlobeProtocol {
             globeBackgroundImageName = Globals.hubbleDeepField
         }
         
-        spaceBackgroundImage.image = UIImage(named: globeBackgroundImageName)
+        spaceBackgroundImage?.image = UIImage(named: globeBackgroundImageName)
         
     }
     
@@ -151,6 +151,8 @@ class GlobeFullViewController: UIViewController, EarthGlobeProtocol {
         
         timer.invalidate()
         
+        isRunningLabel?.text = "Not Running"
+        
     }
     
     
@@ -186,5 +188,17 @@ class GlobeFullViewController: UIViewController, EarthGlobeProtocol {
 
     }
     
+    
+    override func didReceiveMemoryWarning() {
+        
+        super.didReceiveMemoryWarning()
+        
+        stopUpdatingGlobe()
+        delay(0.5) {
+            self.startUpdatingGlobe()
+        }
+        
+    }
+
     
 }
