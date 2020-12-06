@@ -17,7 +17,7 @@ class CrewMembersTableViewController: UITableViewController, TableAnimatable {
     /// Constants
     private struct Constants {
         static let bioBackupURLString           = "---"   // Backup URL is used if a bio URL is not returned in the JSON file
-        static let crewAPIEndpointURLString     = "---"                         // API endpoint
+        static let crewAPIEndpointURLString     = "---"   // API endpoint
         static let customCellIdentifier         = "crewMemberCell"
         static let fontForTitle                 = Theme.nasa
         static let newLine                      = "\n"
