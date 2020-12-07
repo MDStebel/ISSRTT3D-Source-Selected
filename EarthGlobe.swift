@@ -53,13 +53,13 @@ class EarthGlobe {
         guard let earthMaterial                        = globeShape.firstMaterial else { return }
 
         // The Earth's texture is revealed by diffuse light sources
-        earthMaterial.diffuse.contents                 = "8081_earthmap_8190px.jpg"         // Use the high-resolution Earth image
+        earthMaterial.diffuse.contents                 = "8081_earthmap_8190px"                 // Use the high-resolution Earth image
         
         let emission                                   = SCNMaterialProperty()
-        emission.contents                              = "8081_earthlights_8190px"          // Our city lights
+        emission.contents                              = "8081_earthlights_8190px"              // Our high-resolution city lights map
         earthMaterial.setValue(emission, forKey: "emissionTexture")
         
-        /// OpenGL lighting map code that brings forth our emitter
+        /// OpenGL lighting map C++ code that brings forth our emitter texture
         let shaderModifier                             = """
                                                          uniform sampler2D emissionTexture;
                                                          vec3 light = _lightingContribution.diffuse;
@@ -69,17 +69,19 @@ class EarthGlobe {
                                                          """
         earthMaterial.shaderModifiers                  = [.fragment: shaderModifier]
         
-        // Texture is revealed by specular light sources
-        earthMaterial.specular.contents                = "8081_earthspec_512px.jpg"
+        // Texture is revealed by the specular light sources
+        earthMaterial.specular.contents                = "8081_earthspec_4096px"                // High-resolution specular texture map
         earthMaterial.specular.intensity               = 0.2
         
-        // Water is reflective and land is not
-        earthMaterial.metalness.contents               = "metalness-1.png"
-        earthMaterial.roughness.contents               = "roughness-1.png"
+        // Earth's oceans and other watery areas are reflective
+        earthMaterial.metalness.contents               = "8081_earthmetalness_4096px"           // High-resolution reflectivity map
+        
+        // Land areas are not reflective
+        earthMaterial.roughness.contents               = "8081_earthroughness_4096px"           // High-resolution non-reflectivity map
 
-        // Make the mountains appear taller
-        earthMaterial.normal.contents                  = "earth-bump-1.png"
-        earthMaterial.normal.intensity                 = 0.5
+        // Use bump map (a "normal map") to make elevated areas (e.g., mountains) appear as relief
+        earthMaterial.normal.contents                  = "EarthBump_NormalMap_MDS_8190px-3"     // High-resolution normal map
+        earthMaterial.normal.intensity                 = 0.52
         
         // Create a realistic specular reflection that changes its aspect based on angle
         earthMaterial.fresnelExponent                  = 1.75
@@ -87,7 +89,7 @@ class EarthGlobe {
         // Assign the shape to the globe's geometry property
         globe.geometry                                 = globeShape
 
-        // Set up the basic globe nodes
+        // Finally, we set up the basic globe nodes. We'll add ISS marker, and other dynamic objects later.
         scene.rootNode.addChildNode(userTilt)
         userTilt.addChildNode(userRotation)
         userRotation.addChildNode(globe)

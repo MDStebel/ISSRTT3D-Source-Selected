@@ -29,13 +29,13 @@ private let whatsNew = WhatsNew(
         WhatsNew.Item(
             title: "Improvements & Fixes",
             subtitle: """
-                      Bug fixes and other under-the-hood improvements.
+                      New normal map used for the bump map. New specular, metallic, and roughness maps. These new maps improve the realism of the Earth globe.
                       """,
             image: UIImage(named: "icons8-bug_filled")
         ),
         WhatsNew.Item(
             title: "User Support",
-            subtitle: "If you have any questions or issues, please visit the support website at https://issrtt.com. You can get there easily from the Settings screen in the app.",
+            subtitle: "If you have any questions or issues, please visit the support website at https://issrtt.com. You can get there easily from Settings in the app.",
             image: UIImage(named: "icons8-customer_support")
         ),
         WhatsNew.Item(

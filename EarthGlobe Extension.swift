@@ -48,7 +48,7 @@ extension EarthGlobe {
         orbitTrack.firstMaterial?.diffuse.contents = UIColor(named: Theme.tint)
         orbitTrack.ringRadius                      = CGFloat(Globals.ISSOrbitAltitudeInScene)
         orbitTrack.pipeRadius                      = 0.005
-        orbitTrack.ringSegmentCount                = 192
+        orbitTrack.ringSegmentCount                = 256
         orbitTrack.pipeSegmentCount                = 96
         
         // Assign the torus as a node and add it as a child of globe
