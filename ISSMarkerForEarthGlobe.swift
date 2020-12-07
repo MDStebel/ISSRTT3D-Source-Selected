@@ -10,7 +10,7 @@
 import SceneKit
 
 
-/// Model for the markers added to the globe
+/// Model for the markers to be added to the Earth model
 class ISSMarkerForEarthGlobe {
     
     var image: String
@@ -53,14 +53,14 @@ class ISSMarkerForEarthGlobe {
     /// Method to add a pulsing effect to the marker
     func addPulseAnimation() {
         
-        let scaleMin: Float = 0.80
-        let scaleMax: Float = 1.05
-        let animation = CABasicAnimation(keyPath: "scale")
-        animation.fromValue = SCNVector3(x: scaleMin, y: scaleMin, z: scaleMin)
-        animation.toValue = SCNVector3(x: scaleMax, y: scaleMax, z: scaleMax)
-        animation.duration = 0.25
-        animation.autoreverses = true
-        animation.repeatCount = Float.infinity
+        let scaleMin: Float      = 0.80
+        let scaleMax: Float      = 1.05
+        let animation            = CABasicAnimation(keyPath: "scale")
+        animation.fromValue      = SCNVector3(x: scaleMin, y: scaleMin, z: scaleMin)
+        animation.toValue        = SCNVector3(x: scaleMax, y: scaleMax, z: scaleMax)
+        animation.duration       = 0.25
+        animation.autoreverses   = true
+        animation.repeatCount    = Float.infinity
         animation.timingFunction = CAMediaTimingFunction(name: CAMediaTimingFunctionName.easeOut)
         node.addAnimation(animation, forKey: nil)
         

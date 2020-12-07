@@ -26,9 +26,7 @@ class EarthGlobe {
     let globeSegmentCount                  = 720                                // The number of subdivisions along the sphere's polar & azimuth angles, similar to the latitude & longitude system on a globe of the Earth
     let markerAltitude                     = Globals.orbitalAltitudeFactor
     let maxFov                             = Globals.maxFov                     // Max zoom in degrees
-    let maxLatLonPerUnity                  = 1.1
     let minFov                             = Globals.minFov                     // Min zoom in degrees
-    let minLatLonPerUnity                  = -0.1
     let sceneBoxSize: CGFloat              = 1000.0
     
     var camera                             = SCNCamera()
@@ -45,48 +43,49 @@ class EarthGlobe {
     var lastFovBeforeZoom : CGFloat?
     var lastPanLoc : CGPoint?
     
+    
     init() {
         
-        // Create the globe shape
-        let globeShape                 = SCNSphere(radius: CGFloat(globeRadiusFactor) )
-        globeShape.segmentCount        = globeSegmentCount
+        // Create the globe shape upon which we'll build our Earth model
+        let globeShape                                 = SCNSphere(radius: CGFloat(globeRadiusFactor) )
+        globeShape.segmentCount                        = globeSegmentCount
         
-        guard let earthMaterial        = globeShape.firstMaterial else { return }
+        guard let earthMaterial                        = globeShape.firstMaterial else { return }
 
         // The Earth's texture is revealed by diffuse light sources
-        earthMaterial.diffuse.contents = "8081_earthmap_8190px.jpg"         // Use the high-resolution Earth image
+        earthMaterial.diffuse.contents                 = "8081_earthmap_8190px.jpg"         // Use the high-resolution Earth image
         
-        let emission                   = SCNMaterialProperty()
-        emission.contents              = "8081_earthlights_8190px"
+        let emission                                   = SCNMaterialProperty()
+        emission.contents                              = "8081_earthlights_8190px"          // Our city lights
         earthMaterial.setValue(emission, forKey: "emissionTexture")
         
-        /// OpenGL lighting map code
-        let shaderModifier             = """
-                                         uniform sampler2D emissionTexture;
-                                         vec3 light = _lightingContribution.diffuse;
-                                         float lum = max(0.0, 1 - (0.2126 * light.r + 0.7152 * light.g + 0.0722 * light.b));
-                                         vec4 emission = texture2D(emissionTexture, _surface.diffuseTexcoord) * lum * 1.0;
-                                         _output.color += emission;
-                                         """
-        earthMaterial.shaderModifiers     = [.fragment: shaderModifier]
+        /// OpenGL lighting map code that brings forth our emitter
+        let shaderModifier                             = """
+                                                         uniform sampler2D emissionTexture;
+                                                         vec3 light = _lightingContribution.diffuse;
+                                                         float lum = max(0.0, 1 - (0.2126 * light.r + 0.7152 * light.g + 0.0722 * light.b));
+                                                         vec4 emission = texture2D(emissionTexture, _surface.diffuseTexcoord) * lum * 1.0;
+                                                         _output.color += emission;
+                                                         """
+        earthMaterial.shaderModifiers                  = [.fragment: shaderModifier]
         
         // Texture is revealed by specular light sources
-        earthMaterial.specular.contents   = "8081_earthspec_512px.jpg"
-        earthMaterial.specular.intensity  = 0.2
+        earthMaterial.specular.contents                = "8081_earthspec_512px.jpg"
+        earthMaterial.specular.intensity               = 0.2
         
         // Water is reflective and land is not
-        earthMaterial.metalness.contents  = "metalness-1.png"
-        earthMaterial.roughness.contents  = "roughness-1.png"
+        earthMaterial.metalness.contents               = "metalness-1.png"
+        earthMaterial.roughness.contents               = "roughness-1.png"
 
         // Make the mountains appear taller
-        earthMaterial.normal.contents     = "earth-bump-1.png"
-        earthMaterial.normal.intensity    = 0.5
+        earthMaterial.normal.contents                  = "earth-bump-1.png"
+        earthMaterial.normal.intensity                 = 0.5
         
         // Create a realistic specular reflection that changes its aspect based on angle
-        earthMaterial.fresnelExponent     = 1.75
+        earthMaterial.fresnelExponent                  = 1.75
         
         // Assign the shape to the globe's geometry property
-        globe.geometry = globeShape
+        globe.geometry                                 = globeShape
 
         // Set up the basic globe nodes
         scene.rootNode.addChildNode(userTilt)
