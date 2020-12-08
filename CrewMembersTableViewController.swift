@@ -16,8 +16,8 @@ class CrewMembersTableViewController: UITableViewController, TableAnimatable {
     
     /// Constants
     private struct Constants {
-        static let bioBackupURLString           = "---"   // Backup URL is used if a bio URL is not returned in the JSON file
-        static let crewAPIEndpointURLString     = "---"   // API endpoint
+        static let bioBackupURLString           = "https://www.issrtt.com/issrtt-astronaut-bio-not-found"   // Backup URL is used if a bio URL is not returned in the JSON file
+        static let crewAPIEndpointURLString     = "https://issrttapi.com/crew.json"                         // API endpoint
         static let customCellIdentifier         = "crewMemberCell"
         static let fontForTitle                 = Theme.nasa
         static let newLine                      = "\n"
@@ -25,7 +25,7 @@ class CrewMembersTableViewController: UITableViewController, TableAnimatable {
         static let segueToHelpFromCrew          = "segueToHelpFromCrew"
         static let spacecraftID                 = "International Space Station"
         static let tableRowSize: CGFloat        = 180
-        static let tapAnyCrewMemberPromptText   = "Tap any crew member for bios & tweets"
+        static let tapAnyCrewMemberPromptText   = "Tap a crew member for bios & tweets"
         static let updatingDataPromptText       = "Updating crew data..."
     }
     
@@ -177,7 +177,7 @@ class CrewMembersTableViewController: UITableViewController, TableAnimatable {
                         weakSelf?.spinner.stopAnimating()
                         weakSelf?.refreshControl?.endRefreshing()
                         weakSelf?.animate(table: self.crewTable)
-                        self.promptLabel.text = Constants.tapAnyCrewMemberPromptText
+                        self.promptLabel.text = "\(self.currentCrewSize) current crew members\n\(Constants.tapAnyCrewMemberPromptText)"
                     }
                     
                     self.getCurrentCrewMembersAlreadyRun = true
@@ -385,9 +385,9 @@ extension CrewMembersTableViewController {
             
             cell.astronautName.text   = startOfLabelText + flagImageURLString
             
-            var temp                  = "Title: \(title)\nMission: \(mission)\nDays in space: \(daysInSpace)\n"
-            temp += "Launched on: \(launchDate)\nSpacecraft: \(vehicle)"
-            cell.astronautInfo.text   = temp
+            var dataString            = "Title:                   \(title)\nMission:             \(mission)\nDays in space:  \(daysInSpace)\n"
+            dataString += "Launched on:   \(launchDate)\nSpacecraft:        \(vehicle)"
+            cell.astronautInfo.text   = dataString
             
         }
         

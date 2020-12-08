@@ -21,7 +21,7 @@ class EarthGlobe {
     let defaultCameraFov                   = Globals.defaultCameraFov
     let distanceToISSOrbit                 = Globals.ISSOrbitAltitudeInScene
     let dragWidthInDegrees                 = 270.0                              // The amount to rotate the globe on one edge-to-edge swipe (in degrees)
-    let globeDefaultRotationSpeedInSeconds = 90.0                               // 360° revolution in 90 seconds
+    let globeDefaultRotationSpeedInSeconds = 120.0                              // 360° revolution in n-seconds
     let globeRadiusFactor                  = Globals.globeRadiusFactor
     let globeSegmentCount                  = 720                                // The number of subdivisions along the sphere's polar & azimuth angles, similar to the latitude & longitude system on a globe of the Earth
     let markerAltitude                     = Globals.orbitalAltitudeFactor
@@ -55,11 +55,12 @@ class EarthGlobe {
         // The Earth's texture is revealed by diffuse light sources
         earthMaterial.diffuse.contents                 = "8081_earthmap_8190px"                 // Use the high-resolution Earth image
         
+        /// Our emitter will show city lights as Earth passes into nighttime
         let emission                                   = SCNMaterialProperty()
         emission.contents                              = "8081_earthlights_8190px"              // Our high-resolution city lights map
         earthMaterial.setValue(emission, forKey: "emissionTexture")
         
-        /// OpenGL lighting map C++ code that brings forth our emitter texture
+        /// OpenGL/Metal lighting map C++ code that brings forth our emitter texture
         let shaderModifier                             = """
                                                          uniform sampler2D emissionTexture;
                                                          vec3 light = _lightingContribution.diffuse;
@@ -67,7 +68,7 @@ class EarthGlobe {
                                                          vec4 emission = texture2D(emissionTexture, _surface.diffuseTexcoord) * lum * 1.0;
                                                          _output.color += emission;
                                                          """
-        earthMaterial.shaderModifiers                  = [.fragment: shaderModifier]
+        earthMaterial.shaderModifiers                  = [.fragment: shaderModifier]            // Apply the shader modifier code
         
         // Texture is revealed by the specular light sources
         earthMaterial.specular.contents                = "8081_earthspec_4096px"                // High-resolution specular texture map

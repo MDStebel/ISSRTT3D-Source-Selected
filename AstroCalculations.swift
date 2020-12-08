@@ -51,7 +51,7 @@ struct AstroCalculations {
     
     /// Calculate the exact geometric mean longitude of the Sun at the current time
     ///
-    /// The mean longitude of the Sun, corrected for the aberration of light, is: The mean anomaly of the Sun (actually, of the Earth in its orbit around the Sun, but it is convenient to pretend the Sun orbits the Earth), is: Put and. in the range 0° to 360° by adding or subtracting multiples of 360° as needed.
+    /// The mean longitude of the Sun, corrected for the aberration of light. The mean anomaly of the Sun (actually, of the Earth in its orbit around the Sun, but it is convenient to pretend the Sun orbits the Earth). Put in the range 0° to 360° by adding or subtracting multiples of 360° as needed.
     /// - Returns: The geometric mean longitude in degrees as a Float
     static func getGeometricMeanLongitudeOfSunAtCurrentTime() -> Float {
      

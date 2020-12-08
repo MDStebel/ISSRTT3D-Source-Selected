@@ -36,7 +36,7 @@ class GlobeFullViewController: UIViewController, EarthGlobeProtocol {
     // MARK: - Outlets
     
     
-    @IBOutlet weak var fullScreenGlobeView: SCNView!
+    @IBOutlet var fullScreenGlobeView: SCNView!
     @IBOutlet weak var spaceBackgroundImage: UIImageView!
     @IBOutlet weak var settingsButton: UIBarButtonItem!
     @IBOutlet weak var isRunningLabel: UILabel! {

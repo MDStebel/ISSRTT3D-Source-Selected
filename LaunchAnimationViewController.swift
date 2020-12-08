@@ -9,7 +9,7 @@
 import UIKit
 
 
-/// Animate the launchscreen
+/// Animated launchscreen
 ///
 /// This is the entry view controller for the app. Animates then segues to tracking view controller.
 class LaunchAnimationViewController: UIViewController {
@@ -18,10 +18,10 @@ class LaunchAnimationViewController: UIViewController {
     
     
     private let iconAnimationDuration                                 = 5.0
-    private let iconAnimationRotationAngle: CGFloat                   = -CGFloat.pi / 6.0    // In Radians
+    private let iconAnimationRotationAngle: CGFloat                   = -CGFloat.pi / 6.0    // In radians
     private let iconAnimationScaleFactor: CGFloat                     = 0.5
     private let segueToMainViewController                             = "mainViewControllerSegue"
-    private let titleAnimationDuration                                = 5.0
+    private let titleAnimationDuration                                = 5.0                  // In seconds
     private let titleScaleFactor: CGFloat                             = 0.33
     
     private var iconScaleFactor: CGFloat                              = 0.0
@@ -137,6 +137,7 @@ class LaunchAnimationViewController: UIViewController {
     }
     
     
+    // Trick to get iPhone to stop animating launch by rotating phone (doesn't work on iPad)
     override func didRotate(from fromInterfaceOrientation: UIInterfaceOrientation) {
         
         // If we're using an iPhone and rotated during animation, a crash may occur. This prevents that from happening.

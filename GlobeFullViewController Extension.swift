@@ -31,13 +31,14 @@ extension GlobeFullViewController {
                     self?.latitude  = String(parsedOrbitalPosition.latitude)
                     self?.longitude = String(parsedOrbitalPosition.longitude)
                     
-                    
                     // Update globe
-                    DispatchQueue.main.async {
-                        if Globals.globeBackgroundWasChanged {            // Background image may have been changed by user in Settings
+                    if Globals.globeBackgroundWasChanged {            // Background image may have been changed by user in Settings. If so, change it.
+                        DispatchQueue.main.async {
                             self!.setGlobeBackgroundImage()
-                            Globals.globeBackgroundWasChanged = false
                         }
+                        Globals.globeBackgroundWasChanged = false
+                    }
+                    DispatchQueue.main.async {
                         self?.updateEarthGlobeScene(in: self!.fullGlobe, latitude: self!.latitude, longitude: self!.longitude, lastLat: &self!.lastLat)
                         self?.isRunningLabel?.text = "Running"
                     }
@@ -45,8 +46,8 @@ extension GlobeFullViewController {
                 } else {
                     
                     DispatchQueue.main.async {
-                        self?.alert(for: "Can't get ISS location", message: "Wait a few minutes\nand then tap ▶︎ again.")
-                        self?.isRunningLabel?.text = "Not Running"
+                        self?.alert(for: "Can't get ISS location", message: "Will automatically start again when available.")
+                        self?.isRunningLabel?.text = "Not running"
                     }
                     
                 }
@@ -54,8 +55,8 @@ extension GlobeFullViewController {
             } else {
                 
                 DispatchQueue.main.async {
-                    self?.cannotConnectToInternetAlert()
-                    self?.isRunningLabel?.text = "Not Running"
+                    self?.alert(for: "Can't connect to Internet", message: "Will automatically start again when connected.")
+                    self?.isRunningLabel?.text = "Not running"
                 }
                 
             }
