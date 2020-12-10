@@ -29,7 +29,7 @@ private let whatsNew = WhatsNew(
         WhatsNew.Item(
             title: "Improvements & Fixes",
             subtitle: """
-                      New normal map used for the bump map. New specular, metallic, and roughness maps. These new maps improve the realism of the Earth globe. Minor UI Tweaks. Improved error messages. Squashed a small bug (sorry, 🪲).
+                      Created a new normal map and implemented it as the bump map in the Earth model (for topography). New specular, metallic, and roughness maps as well. These improve the realism of the Earth globe.. New specular, metallic, and roughness maps as well. These improve the realism of the Earth globe. Improved globe background image switching performance. Improved tab bar iconography. Minor UI tweaks. Fixed two confusing error messages. Squashed small bug (sorry, 🪲).
                       """,
             image: UIImage(named: "icons8-bug_filled")
         ),
