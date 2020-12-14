@@ -32,20 +32,20 @@ class ISSMarkerForEarthGlobe {
         node.geometry!.firstMaterial!.isDoubleSided      = true
         node.castsShadow                                 = false
         
-        let altitude = isInOrbit ? Globals.ISSAltitudeFactor : Globals.globeRadiusFactor * 0.949                        // If not in orbit, then this is the sighting circle and place it flush with the surface
-        let position = EarthGlobe.convertLatLonCoordinatesToXYZ(lat: lat, lon: adjustedLon, alt: altitude)              // Map lat and lon to xyz coodinates on globe
+        let altitude       = isInOrbit ? Globals.ISSAltitudeFactor : Globals.globeRadiusFactor * 0.949                  // If not in orbit, then this is the sighting circle and place it flush with the surface
+        let position       = EarthGlobe.convertLatLonCoordinatesToXYZ(lat: lat, lon: adjustedLon, alt: altitude)        // Map lat and lon to xyz coodinates on globe
         self.node.position = position
         
         // Compute the normal pitch, yaw & roll, where pitch is the rotation about the node's x-axis in radians
-        let pitch = -lat * Float(Globals.degreesToRadians)
+        let pitch          = -lat * Float(Globals.degreesToRadians)
        
         // Yaw is the rotation about the node's y-axis in radians
-        let yaw = lon * Float(Globals.degreesToRadians)
+        let yaw            = lon * Float(Globals.degreesToRadians)
        
         // Roll is the rotation about the node's z-axis in radians
-        let roll: Float = 0.0
+        let roll: Float    = 0.0
         
-        node.eulerAngles = SCNVector3(x: pitch, y: yaw, z: roll )
+        node.eulerAngles   = SCNVector3(x: pitch, y: yaw, z: roll )
         
     }
     

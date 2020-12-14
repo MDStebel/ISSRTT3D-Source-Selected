@@ -83,6 +83,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func applicationWillEnterForeground(_ application: UIApplication) {
         // Called as part of the transition from the background to the inactive state; here you can undo many of the changes made on entering the background.
         
+        SettingsDataModel.restoreUserSettings()
+        
+        if referenceToGlobeFullViewController.isViewLoaded {                // Only start-up the globe if the view is loaded to avoid nil error
+            referenceToGlobeFullViewController.startUpdatingGlobe()
+        }
+        
     }
     
     
