@@ -23,13 +23,16 @@ class LaunchAnimationViewController: UIViewController {
     private let segueToMainViewController                             = "mainViewControllerSegue"
     private let titleAnimationDuration                                = 5.0                  // In seconds
     private let titleScaleFactor: CGFloat                             = 0.33
+    private let threeDScaleFactor: CGFloat                            = 0.05
     
-    private var iconScaleFactor: CGFloat                              = 0.0
-    private var scaleFactorForAppNameTitleForLaunchAnimation: CGFloat = 0.0
+    private var iconScaleFactor: CGFloat                              = 0
+    private var scaleFactorForAppNameTitleForLaunchAnimation: CGFloat = 0
+    private var scaleFactorFor3DTextImageForLaunchAnimation: CGFloat  = 0
     private var trans1                                                = CGAffineTransform.identity
     private var trans2                                                = CGAffineTransform.identity
-    private var xTrans: CGFloat                                       = 0.0
-    private var yTrans: CGFloat                                       = 0.0
+    private var trans3                                                = CGAffineTransform.identity
+    private var xTrans: CGFloat                                       = 0
+    private var yTrans: CGFloat                                       = 0
     
     
     // Hide the status bar for this VC
@@ -41,7 +44,9 @@ class LaunchAnimationViewController: UIViewController {
     // MARK: - Outlets
     
 
+    @IBOutlet private var curves: UIImageView!
     @IBOutlet private var ISSImage: UIImageView!
+    @IBOutlet private var launchScreenVersionLabel: UILabel!
     @IBOutlet private var appNameTitleForLaunchAnimation: UILabel! {
         didSet {
             // Initially shrink title label, which will zoom in later
@@ -52,8 +57,16 @@ class LaunchAnimationViewController: UIViewController {
             appNameTitleForLaunchAnimation.isHidden      = true
         }
     }
-    @IBOutlet private var launchScreenVersionLabel: UILabel!
-    @IBOutlet private var curves: UIImageView!
+    @IBOutlet weak var threeDTextImage: UIImageView! {
+        didSet {
+            // Initially shrink the image, which will zoom in later
+            scaleFactorFor3DTextImageForLaunchAnimation = threeDScaleFactor
+            trans3                                      = trans3.scaledBy(x: scaleFactorFor3DTextImageForLaunchAnimation, y: scaleFactorFor3DTextImageForLaunchAnimation)
+            threeDTextImage.transform                   = trans3
+            threeDTextImage.alpha                       = 0.0
+            threeDTextImage.isHidden                    = true
+        }
+    }
     
     
     // MARK: - Methods
@@ -93,12 +106,31 @@ class LaunchAnimationViewController: UIViewController {
     }
     
     
+    private func createTransformationsFor3D() {
+        
+        // Create a stack of transformations for the 3D text image
+        if Globals.isIPad {
+            scaleFactorFor3DTextImageForLaunchAnimation = 22
+            yTrans = threeDTextImage.bounds.size.height + 850
+            trans3 = trans3.translatedBy(x: 0, y: yTrans)
+        } else {
+            scaleFactorFor3DTextImageForLaunchAnimation = 12
+            yTrans = threeDTextImage.bounds.size.height + 10
+            trans3 = trans3.translatedBy(x: 0, y: yTrans)
+        }
+        
+        trans3 = trans3.scaledBy(x: scaleFactorFor3DTextImageForLaunchAnimation, y: scaleFactorFor3DTextImageForLaunchAnimation)
+        
+    }
+    
+    
     override func viewDidLoad() {
         
         super.viewDidLoad()
         
         createTransformationsForISSIcon()
         createTransformationsForTitle()
+        createTransformationsFor3D()
         getVersionAndCopyrightData()
         
     }
@@ -117,6 +149,10 @@ class LaunchAnimationViewController: UIViewController {
             appNameTitleForLaunchAnimation.isHidden  = false
             appNameTitleForLaunchAnimation.alpha     = 1.0
             appNameTitleForLaunchAnimation.transform = trans2
+            threeDTextImage.isHidden                 = false
+            threeDTextImage.alpha                    = 1.0
+            threeDTextImage.transform                = trans3
+            
         },
         completion: { [self] (completedOK) in
             performSegue(withIdentifier: segueToMainViewController, sender: self)           // Now, segue to the Tracking view controller
