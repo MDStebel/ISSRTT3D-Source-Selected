@@ -17,7 +17,7 @@ class GlobeFullViewController: UIViewController, EarthGlobeProtocol {
     // MARK: - Properties
     
     struct Constants {
-        static let apiEndpointAString       = "---"
+        static let apiEndpointAString       = "https://api.wheretheiss.at/v1/satellites/25544"
         static let fontForTitle             = Theme.nasa
         static let segueToHelpFromGlobe     = "segueToHelpFromGlobe"
         static let segueToSettings          = "segueToSettings"
@@ -31,6 +31,8 @@ class GlobeFullViewController: UIViewController, EarthGlobeProtocol {
     var latitude                            = ""
     var longitude                           = ""
     var timer                               = Timer()
+    
+    private var helpTitle                   = "3D Globe Help"
     
     
     // MARK: - Outlets
@@ -169,6 +171,7 @@ class GlobeFullViewController: UIViewController, EarthGlobeProtocol {
             let destinationVC                                 = navigationController.topViewController as! HelpViewController
             destinationVC.helpContentHTML                     = UserGuide.fullGlobe
             destinationVC.helpButtonInCallingVCSourceView     = navigationController.navigationBar
+            destinationVC.title                               = helpTitle
             
         
         case Constants.segueToSettings :                                 // Keep tracking, set popover arrow to point to middle, below settings button

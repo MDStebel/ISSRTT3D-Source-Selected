@@ -46,10 +46,11 @@ class TrackingViewController: UIViewController, MKMapViewDelegate, UIGestureReco
     /// Local constants
     struct Constants {
         static let animationOffsetY: CGFloat    = 90.0
-        static let apiEndpointAString           = "---"
-        static let apiEndpointBString           = "---"
+        static let apiEndpointAString           = "https://api.wheretheiss.at/v1/satellites/25544"
+        static let apiEndpointBString           = "http://api.open-notify.org/iss-now.json"
         static let defaultTimerInterval         = 3.0
         static let fontForTitle                 = Theme.nasa
+        static let helpTitle                    = "User Guide"
         static let kilometersToMiles            = 0.621371192
         static let linefeed                     = "\n"
         static let numberFormatter              = NumberFormatter()
@@ -827,7 +828,7 @@ class TrackingViewController: UIViewController, MKMapViewDelegate, UIGestureReco
             let destinationVC                                 = navigationController.topViewController as! HelpViewController
             destinationVC.helpContentHTML                     = UserGuide.helpContentHTML
             destinationVC.helpButtonInCallingVCSourceView     = helpButton
-            destinationVC.title                               = "User Guide"
+            destinationVC.title                               = Constants.helpTitle
             
         default :
             

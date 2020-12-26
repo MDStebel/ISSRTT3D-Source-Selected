@@ -23,7 +23,11 @@ class LiveVideoViewController: UIViewController, WKUIDelegate, WKNavigationDeleg
     
     
     /// Channel will be selected by caller during prepare for segue
-    var channelSelected: LiveTVChoices.Channels = .liveEarth
+    var channelSelected: LiveTVChoices.Channels = .liveEarth {
+        didSet {
+            helpTitle = "\(channelSelected.rawValue) Help"
+        }
+    }
 
     
     /// Selector containing the URL to access the JSON date containing the final URLs of the channels
@@ -31,8 +35,9 @@ class LiveVideoViewController: UIViewController, WKUIDelegate, WKNavigationDeleg
     
     
     /// Live video feed address
-    private var videoURL = ""
+    private var videoURL    = ""
     
+    private var helpTitle   = ""
     
     /// The web view
     private var webView: WKWebView! {
@@ -215,6 +220,7 @@ class LiveVideoViewController: UIViewController, WKUIDelegate, WKNavigationDeleg
             }
             
             destinationVC.helpButtonInCallingVCSourceView = navigationController.navigationBar
+            destinationVC.title                           = helpTitle
             
         default :
             break

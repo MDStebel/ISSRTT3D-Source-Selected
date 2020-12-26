@@ -16,8 +16,8 @@ class CrewMembersTableViewController: UITableViewController, TableAnimatable {
     
     /// Constants
     private struct Constants {
-        static let bioBackupURLString           = "---"                        // Backup URL is used if a bio URL is not returned in the JSON file
-        static let crewAPIEndpointURLString     = "---"                        // API endpoint
+        static let bioBackupURLString           = "https://www.issrtt.com/issrtt-astronaut-bio-not-found"   // Backup URL is used if a bio URL is not returned in the JSON file
+        static let crewAPIEndpointURLString     = "https://issrttapi.com/crew.json"                         // API endpoint
         static let customCellIdentifier         = "crewMemberCell"
         static let fontForTitle                 = Theme.nasa
         static let newLine                      = "\n"
@@ -32,6 +32,7 @@ class CrewMembersTableViewController: UITableViewController, TableAnimatable {
     private var currentCrew: [Astronaut]?       = []
     private var currentCrewSize                 = 0
     private var getCurrentCrewMembersAlreadyRun = false
+    private var helpTitle                       = "Crew Help"
     private var index                           = 0
     private var lastIndex                       = 0
     
@@ -277,6 +278,7 @@ class CrewMembersTableViewController: UITableViewController, TableAnimatable {
             let destinationVC = navigationController.topViewController as! HelpViewController
             destinationVC.helpContentHTML = UserGuide.crewHelp 
             destinationVC.helpButtonInCallingVCSourceView = navigationController.navigationBar
+            destinationVC.title = helpTitle
             
             DispatchQueue.main.async {
                 self.spinner.stopAnimating()

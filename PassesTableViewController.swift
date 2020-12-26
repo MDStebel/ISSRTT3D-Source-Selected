@@ -50,8 +50,8 @@ class PassesTableViewController: UITableViewController, CLLocationManagerDelegat
     
     private struct Constants {
         static let altitude                             = 0
-        static let apiKey                               = "---"                                     // API key
-        static let baseURLForOverheadTimes              = "---"     // API endpoint (new as of Nov 1, 2020)
+        static let apiKey                               = "BZQB9N-9FTL47-ZXK7MZ-3TLE"                                     // API key
+        static let baseURLForOverheadTimes              = "https://api.n2yo.com/rest/v1/satellite/visualpasses/25544"     // API endpoint (new as of Nov 1, 2020)
         static let customCellIdentifier                 = "OverheadTimesCell"
         static let deg                                  = "°"
         static let fontForTitle                         = Theme.nasa
@@ -65,6 +65,7 @@ class PassesTableViewController: UITableViewController, CLLocationManagerDelegat
     
     private var dateFormatterForDate                    = DateFormatter()
     private var dateFormatterForTime                    = DateFormatter()
+    private var helpTitle                               = "Passes Help"
     private var numberOfDays                            = 1
     private var numberOfOverheadTimesActuallyReported   = 0
     private var overheadTimesList                       = [Passes.Pass]()
@@ -447,10 +448,11 @@ class PassesTableViewController: UITableViewController, CLLocationManagerDelegat
                 self.spinner.startAnimating()
             }
             
-            let navigationController = segue.destination as! UINavigationController
-            let destinationVC = navigationController.topViewController as! HelpViewController
-            destinationVC.helpContentHTML = UserGuide.passesHelp
-            destinationVC.helpButtonInCallingVCSourceView = navigationController.navigationBar
+            let navigationController                        = segue.destination as! UINavigationController
+            let destinationVC                               = navigationController.topViewController as! HelpViewController
+            destinationVC.helpContentHTML                   = UserGuide.passesHelp
+            destinationVC.helpButtonInCallingVCSourceView   = navigationController.navigationBar
+            destinationVC.title                             = helpTitle
             
             DispatchQueue.main.async {
                 self.spinner.stopAnimating()

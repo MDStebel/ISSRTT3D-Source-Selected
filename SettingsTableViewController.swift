@@ -25,6 +25,7 @@ class SettingsTableViewController: UITableViewController {
     private let websiteURL                  = "https://www.issrtt.com/#support"
     
     private var dateAndTimeSaved: String?   = ""
+    private var helpTitle                   = "Settings Help"
     private var versionAndCopyrightFooter   = ""
     
     private struct Constants {
@@ -372,8 +373,10 @@ class SettingsTableViewController: UITableViewController {
         
         switch segue.identifier {
         case Constants.segueToHelpFromSettings :
-            let destinationVC = segue.destination as! HelpViewController
-            destinationVC.helpContentHTML = UserGuide.settingsHelp
+            let navigationController        = segue.destination as! UINavigationController
+            let destinationVC               = navigationController.topViewController as! HelpViewController
+            destinationVC.helpContentHTML   = UserGuide.settingsHelp
+            destinationVC.title             = helpTitle
         default :
             break
         }

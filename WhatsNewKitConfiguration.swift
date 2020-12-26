@@ -29,7 +29,7 @@ private let whatsNew = WhatsNew(
         WhatsNew.Item(
             title: "Improvements & Fixes",
             subtitle: """
-                      Refreshed the launch screen animation. Fixed bug in fullscreen 3D mode that could (rarely) cause an error when returning from background during app switching.
+                      Improved the help system and updated its content.
                       """,
             image: UIImage(named: "icons8-bug_filled")
         ),
