@@ -51,11 +51,11 @@ class PassesTableViewController: UITableViewController, CLLocationManagerDelegat
     private struct Constants {
         static let altitude                             = 0
         static let apiKey                               = "---"                                     // API key
-        static let baseURLForOverheadTimes              = "---"     // API endpoint (new as of Nov 1, 2020)
+        static let baseURLForOverheadTimes              = "---"                                     // API endpoint (new as of Nov 1, 2020)
         static let customCellIdentifier                 = "OverheadTimesCell"
         static let deg                                  = "°"
         static let fontForTitle                         = Theme.nasa
-        static let minObservationTime                   = 300                                                             // In seconds
+        static let minObservationTime                   = 300                                       // In seconds
         static let newLine                              = "\n"
         static let noRatingStar                         = #imageLiteral(resourceName: "star-unfilled")
         static let ratingStar                           = #imageLiteral(resourceName: "star")
@@ -97,7 +97,11 @@ class PassesTableViewController: UITableViewController, CLLocationManagerDelegat
             promptLabel.layer.masksToBounds = true
         }
     }
-    @IBOutlet private var spinner: UIActivityIndicatorView!
+    @IBOutlet private var spinner: UIActivityIndicatorView! {
+        didSet {
+            spinner.hidesWhenStopped = true
+        }
+    }
     @IBOutlet private var changeNumberOfDaysButton: UIBarButtonItem!
     
     
@@ -117,7 +121,6 @@ class PassesTableViewController: UITableViewController, CLLocationManagerDelegat
         
         super.viewDidLoad()
 
-        spinner.hidesWhenStopped = true
         setUpDateFormatter()
         getNumberOfDaysOfPassesToReturn()
         setUpRefreshControl()
