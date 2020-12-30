@@ -50,8 +50,8 @@ class PassesTableViewController: UITableViewController, CLLocationManagerDelegat
     
     private struct Constants {
         static let altitude                             = 0
-        static let apiKey                               = "---"     // API key
-        static let baseURLForOverheadTimes              = "---"     // API endpoint (new as of Nov 1, 2020)
+        static let apiKey                               = "BZQB9N-9FTL47-ZXK7MZ-3TLE"                                     // API key
+        static let baseURLForOverheadTimes              = "https://api.n2yo.com/rest/v1/satellite/visualpasses/25544"     // API endpoint (new as of Nov 1, 2020)
         static let customCellIdentifier                 = "OverheadTimesCell"
         static let deg                                  = "°"
         static let fontForTitle                         = Theme.nasa
@@ -175,7 +175,7 @@ class PassesTableViewController: UITableViewController, CLLocationManagerDelegat
     /// Set up location manager
     private func setUpLocationManager() {
         
-        ISSlocationManager                 = CLLocationManager()            // Create a CLLocationManager instance to get user's location
+        ISSlocationManager                 = CLLocationManager()                // Create a CLLocationManager instance to get user's location
         ISSlocationManager.delegate        = self
         ISSlocationManager.desiredAccuracy = kCLLocationAccuracyBest
         ISSlocationManager.requestWhenInUseAuthorization()
@@ -183,10 +183,14 @@ class PassesTableViewController: UITableViewController, CLLocationManagerDelegat
     }
     
     
-    /// Check that user has granted ISSRTT access
+    /// Check that user has granted ISSRTT3D access to location services
     private func checkCLAccess() {
         
-        if !canGetLocation() {
+        ISSlocationManager.requestWhenInUseAuthorization()                      // We want CL access when the app's in use
+        
+        let authStatus = ISSlocationManager.authorizationStatus
+        let canGetLocation = authStatus == .authorizedWhenInUse
+        if !canGetLocation {
             
             spinner.stopAnimating()
             promptLabel.text = "Access to your location was not granted"
@@ -203,7 +207,7 @@ class PassesTableViewController: UITableViewController, CLLocationManagerDelegat
             
             let cancelAction = UIAlertAction(title: "Cancel", style: .cancel) { (action) in
                 DispatchQueue.main.async {
-                    self.dismiss(animated: true, completion: nil)
+                    self.dismiss(animated: true, completion: nil)               // Return to main screen if user cancels
                 }
             }
             
@@ -215,29 +219,14 @@ class PassesTableViewController: UITableViewController, CLLocationManagerDelegat
             
         }
         
-        ISSlocationManager.startUpdatingLocation()          // Get locations
-        
-    }
-    
-    
-    /// Check authorization to access Location Services
-    private func canGetLocation() -> Bool {
-        
-        switch CLLocationManager.authorizationStatus() {
-        case .authorizedWhenInUse : return true
-        case .authorizedAlways : return true
-        case .denied : return false
-        case .notDetermined : return true
-        case .restricted : return false
-        @unknown default : return true
-        }
+        ISSlocationManager.startUpdatingLocation()                              // Now, we can  get locations
         
     }
     
     
     private func restartGettingUserLocation() {
         
-        ISSlocationManager.startUpdatingLocation()
+        checkCLAccess()
         
     }
     
@@ -250,6 +239,9 @@ class PassesTableViewController: UITableViewController, CLLocationManagerDelegat
     
     
     /// Give user opportunity to change number of days (this run only!) and try again
+    /// - Parameters:
+    ///   - title: Pop-up title
+    ///   - usingStyle: the alert style
     private func noPasesPopup(withTitle title: String, withStyleToUse usingStyle : UIAlertController.Style) {
         
         let alertController = UIAlertController(title: title, message: "Change number of days this time only by selecting below, or change for next time in Settings", preferredStyle: usingStyle)
@@ -286,7 +278,7 @@ class PassesTableViewController: UITableViewController, CLLocationManagerDelegat
         
         getISSOverheadtimes(then: decodeJSONPasses)
         
-        ISSLocationManager.stopUpdatingLocation()   // Now that we have user's location, we don't need it again, so stop updating location
+        ISSLocationManager.stopUpdatingLocation()                               // Now that we have user's location, we don't need it again, so stop updating location
         
     }
     

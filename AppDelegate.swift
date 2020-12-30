@@ -46,7 +46,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     @objc func requestReview() {
-        SKStoreReviewController.requestReview()
+        if let windowScene = window?.windowScene {
+            SKStoreReviewController.requestReview(in: windowScene)
+        }
     }
     
     
