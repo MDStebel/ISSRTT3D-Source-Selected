@@ -20,16 +20,16 @@ private let whatsNew = WhatsNew(
     // The features and other information to showcase
     items: [
         WhatsNew.Item(
-            title: "Choose Your Background!",
+            title: "You Control It",
             subtitle: """
-                      Select from 4 spectacular space images for your fullscreen 3D Earth globe: Hubble Deep Field, Milky Way, Orion Nebula, & Tarantula Nebula. Change the background in Settings.
+                      Use gestures to move around the 3D Earth model, zoom in/out, tilt, translate, autorotate, and more. Tap the help (?) button on the main screen or in the fullscreen 3D Globe to learn more.
                       """,
             image: UIImage(named: "icons8-megaphone_filled.imageset")
         ),
         WhatsNew.Item(
             title: "Improvements & Fixes",
             subtitle: """
-                      Improved the help system and updated its content.
+                      Rarely occuring non-fatal bug squashed.
                       """,
             image: UIImage(named: "icons8-bug_filled")
         ),

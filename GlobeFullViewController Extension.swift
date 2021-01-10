@@ -34,10 +34,11 @@ extension GlobeFullViewController {
                     // Update globe
                     if Globals.globeBackgroundWasChanged {            // Background image may have been changed by user in Settings. If so, change it.
                         DispatchQueue.main.async {
-                            self!.setGlobeBackgroundImage()
+                            self?.setGlobeBackgroundImage()
                         }
                         Globals.globeBackgroundWasChanged = false
                     }
+                    
                     DispatchQueue.main.async {
                         self?.updateEarthGlobeScene(in: self!.fullGlobe, latitude: self!.latitude, longitude: self!.longitude, lastLat: &self!.lastLat)
                         self?.isRunningLabel?.text = "Running"
