@@ -29,7 +29,7 @@ private let whatsNew = WhatsNew(
         WhatsNew.Item(
             title: "Improvements & Fixes",
             subtitle: """
-                      Rarely occuring non-fatal bug squashed.
+                      Changed passes calendar reminder alerts to 60 minutes, and 15 minutes before the start of the pass.
                       """,
             image: UIImage(named: "icons8-bug_filled")
         ),

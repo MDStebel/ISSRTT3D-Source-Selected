@@ -50,12 +50,12 @@ class PassesTableViewController: UITableViewController, CLLocationManagerDelegat
     
     private struct Constants {
         static let altitude                             = 0
-        static let apiKey                               = "---"                                     // API key
-        static let baseURLForOverheadTimes              = "---"                                     // API endpoint (new as of Nov 1, 2020)
+        static let apiKey                               = "BZQB9N-9FTL47-ZXK7MZ-3TLE"                                     // API key
+        static let baseURLForOverheadTimes              = "https://api.n2yo.com/rest/v1/satellite/visualpasses/25544"     // API endpoint (new as of Nov 1, 2020)
         static let customCellIdentifier                 = "OverheadTimesCell"
         static let deg                                  = "°"
         static let fontForTitle                         = Theme.nasa
-        static let minObservationTime                   = 300                                       // In seconds
+        static let minObservationTime                   = 300                                                             // In seconds
         static let newLine                              = "\n"
         static let noRatingStar                         = #imageLiteral(resourceName: "star-unfilled")
         static let ratingStar                           = #imageLiteral(resourceName: "star")
@@ -370,6 +370,7 @@ class PassesTableViewController: UITableViewController, CLLocationManagerDelegat
     
     
     /// This method adds an event to user's calendar if access is granted
+    /// - Parameter passEvent: The pass to add to the calendar
     private func addEvent(_ passEvent: Passes.Pass) {
         
         let eventStore = EKEventStore()
@@ -379,7 +380,7 @@ class PassesTableViewController: UITableViewController, CLLocationManagerDelegat
                     createEvent(eventStore, passEvent: passEvent)
                 } else {
                     DispatchQueue.main.async {
-                        alert(for: "Can't create event", message: "Access to your calendar was previously denied. Please update your Settings to change this")
+                        alert(for: "Can't create reminder", message: "Access to your calendar was previously denied. Please update your device Settings to change this")
                     }
                 }
             }
@@ -392,7 +393,7 @@ class PassesTableViewController: UITableViewController, CLLocationManagerDelegat
     /// Create the calendar event
     /// - Parameters:
     ///   - eventStore: EventStore to use
-    ///   - passEvent: Event to use
+    ///   - passEvent: The pass to add to the calendar
     private func createEvent(_ eventStore: EKEventStore, passEvent: Passes.Pass) {
         
         // Create an event
@@ -402,11 +403,13 @@ class PassesTableViewController: UITableViewController, CLLocationManagerDelegat
         event.startDate = Date(timeIntervalSince1970: Double(passEvent.startUTC))
         event.endDate = Date(timeIntervalSince1970: Double(passEvent.endUTC))
         
-        // Set two alarms: one at 20 mins and the other at 60 mins before the pass
-        event.alarms = [EKAlarm(relativeOffset: -1200.0), EKAlarm(relativeOffset: -3600.0)]
+        // Set two alarms: one at 15 mins and the other at 60 mins before the pass
+        event.alarms = [EKAlarm(relativeOffset: -900.0), EKAlarm(relativeOffset: -3600.0)]      // In seconds
         
-        // Create entries for event location and notes
+        // Create entries for event location
         event.location = "Your Location: \(userCurrentCoordinatesString)"
+        
+        // Add notes with viewing details
         let mag = passEvent.mag
         let startAz = String(format: Globals.azimuthFormat, passEvent.startAz) + Constants.deg
         let startEl = String(format: Globals.elevationFormat, passEvent.startEl) + Constants.deg
@@ -420,11 +423,11 @@ class PassesTableViewController: UITableViewController, CLLocationManagerDelegat
         do {
             try eventStore.save(event, span: whichEvent)
             DispatchQueue.main.async {
-                self.alert(for: "Event Saved!", message: "A pass was added to your calendar. You'll be alerted 1 hour before and again 20 minutes before it starts.")
+                self.alert(for: "Event Saved!", message: "A pass reminder was added to your calendar. You'll be alerted 1 hour in advance, and again 15 minutes before it begins.")
             }
         } catch {
             DispatchQueue.main.async {
-                self.alert(for: "Failed", message: "Could not add a pass to your calendar")
+                self.alert(for: "Failed", message: "Could not add the pass reminder to your calendar")
             }
         }
         
@@ -540,6 +543,7 @@ extension PassesTableViewController {
             cell.tintColor                                                         = UIColor(named: Theme.popupBgd)
             cell.passDate.backgroundColor                                          = UIColor(named: Theme.popupBgd)
         }
+        
         
         let cell                                                                   = tableView.dequeueReusableCell(withIdentifier: Constants.customCellIdentifier, for: indexPath) as! PassesTableViewCell
         
