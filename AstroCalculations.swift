@@ -82,6 +82,7 @@ struct AstroCalculations {
     /// Calculate the longitude of the Sun's current subsolar point
     ///
     /// The subsolar point is the location on the Earth where the Sun is directly overhead.
+    /// This is based on an empirical algorithm, which I developed.
     /// - Returns: The current subsolar longitude as a Float
     static func getSubSolarLongitudeOfSunAtCurrentTime() -> Float {
         

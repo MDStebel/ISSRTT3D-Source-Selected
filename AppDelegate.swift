@@ -45,7 +45,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
     }
     
-    
+    /// Selector called by timer for review
     @objc func requestReview() {
         if let windowScene = window?.windowScene {
             SKStoreReviewController.requestReview(in: windowScene)
