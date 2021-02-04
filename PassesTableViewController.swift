@@ -50,12 +50,12 @@ class PassesTableViewController: UITableViewController, CLLocationManagerDelegat
     
     private struct Constants {
         static let altitude                             = 0
-        static let apiKey                               = "---"                                     // API key
-        static let baseURLForOverheadTimes              = "---"                                     // API endpoint (new as of Nov 1, 2020)
+        static let apiKey                               = "BZQB9N-9FTL47-ZXK7MZ-3TLE"                                     // API key
+        static let baseURLForOverheadTimes              = "https://api.n2yo.com/rest/v1/satellite/visualpasses/25544"     // API endpoint (new as of Nov 1, 2020)
         static let customCellIdentifier                 = "OverheadTimesCell"
         static let deg                                  = "°"
         static let fontForTitle                         = Theme.nasa
-        static let minObservationTime                   = 300                                       // In seconds
+        static let minObservationTime                   = 300                                                             // In seconds
         static let newLine                              = "\n"
         static let noRatingStar                         = #imageLiteral(resourceName: "star-unfilled")
         static let ratingStar                           = #imageLiteral(resourceName: "star")
@@ -524,6 +524,7 @@ extension PassesTableViewController {
         
         /// Helper function to clear data displayed in cell
         func clearDataIn(thisCell cell: PassesTableViewCell) {
+            
             cell.passDate.text                                                     = ""
             cell.durationLabel.text                                                = ""
             cell.magnitudeLabel.text                                               = ""
@@ -542,9 +543,10 @@ extension PassesTableViewController {
             cell.backgroundColor                                                   = UIColor(named: Theme.popupBgd)
             cell.tintColor                                                         = UIColor(named: Theme.popupBgd)
             cell.passDate.backgroundColor                                          = UIColor(named: Theme.popupBgd)
+            
         }
         
-        
+        // Set up the cell
         let cell                                                                   = tableView.dequeueReusableCell(withIdentifier: Constants.customCellIdentifier, for: indexPath) as! PassesTableViewCell
         
         if numberOfOverheadTimesActuallyReported > 0 {

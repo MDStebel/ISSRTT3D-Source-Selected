@@ -29,19 +29,21 @@ private let whatsNew = WhatsNew(
         WhatsNew.Item(
             title: "Improvements & Fixes",
             subtitle: """
-                      Changed passes calendar reminder alerts to 60 minutes, and 15 minutes before the start of the pass.
+                      Squashed a tiny little bug that crept in with the last release.
                       """,
             image: UIImage(named: "icons8-bug_filled")
         ),
         WhatsNew.Item(
-            title: "User Support",
-            subtitle: "Have questions or issues? Visit my support website at https://issrtt.com. You can get there easily from Settings in the app.",
+            title: "Getting Support",
+            subtitle: """
+                      Have questions or issues? Use "Spacey" the chatbot on my support website at https://issrtt.com. You can get there easily from Settings. Just tap \(Globals.settingsChar) at the top-left.
+                      """,
             image: UIImage(named: "icons8-customer_support")
         ),
         WhatsNew.Item(
             title: "Built-In Help",
             subtitle: """
-                      To learn how to use this app, please tap on the ? button (top-right). Each screen has its own help button that explains how to use a specfic feature.
+                      To learn how to use this app, please tap on the \(Globals.helpChar) button (top-right). Each screen has its own help button that explains how to use a specfic feature.
                       """,
             image: UIImage(named: "icons8-help_filled")
         )

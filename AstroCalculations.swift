@@ -109,7 +109,7 @@ struct AstroCalculations {
         
         // Now, calculate the displacement between current GMT and noontime in hours
         let noonHourDisplacement = Globals.noonTime - GMT + dayCorrection
-     
+        
         // The subsolar longitude is the displacement in hours times the number of degrees per hour (360/24=15)
         let subSolarLon = noonHourDisplacement * Globals.degreesLongitudePerHour
         
@@ -123,10 +123,9 @@ struct AstroCalculations {
         } else {
             lonCorrection = 0
         }
-
+        
         return subSolarLon.truncatingRemainder(dividingBy: 180) + lonCorrection
         
     }
  
-    
 }
