@@ -37,7 +37,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
         // Request user review between shortestTime & longestTime of use
         let shortestTime: UInt32    = 50                                    // In seconds
-        let longestTime: UInt32     = 240                                   // In seconds
+        let longestTime: UInt32     = 300                                   // In seconds
         guard let timeInterval      = TimeInterval(exactly: arc4random_uniform(longestTime - shortestTime) + shortestTime) else { return true }
         Timer.scheduledTimer(timeInterval: timeInterval, target: self, selector: #selector(AppDelegate.requestReview), userInfo: nil, repeats: false)
 

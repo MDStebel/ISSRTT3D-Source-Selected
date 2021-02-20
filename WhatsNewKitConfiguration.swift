@@ -20,6 +20,13 @@ private let whatsNew = WhatsNew(
     // The features and other information to showcase
     items: [
         WhatsNew.Item(
+            title: "Improvements & Fixes",
+            subtitle: """
+            Tweaks to the astronomical algorithms used in the app. Added link to the "Science With Mikey" Facebook page in Settings.
+            """,
+            image: UIImage(named: "icons8-bug_filled")
+        ),
+        WhatsNew.Item(
             title: "You Control It",
             subtitle: """
                       Use gestures to move around the 3D Earth model, zoom in/out, tilt, translate, autorotate, and more. Tap the help (?) button on the main screen or in the fullscreen 3D Globe to learn more.
@@ -27,16 +34,9 @@ private let whatsNew = WhatsNew(
             image: UIImage(named: "icons8-megaphone_filled.imageset")
         ),
         WhatsNew.Item(
-            title: "Improvements & Fixes",
-            subtitle: """
-                      Squashed a tiny little bug that crept in with the last release.
-                      """,
-            image: UIImage(named: "icons8-bug_filled")
-        ),
-        WhatsNew.Item(
             title: "Getting Support",
             subtitle: """
-                      Have questions or issues? Use "Spacey" the chatbot on my support website at https://issrtt.com. You can get there easily from Settings. Just tap \(Globals.settingsChar) at the top-left.
+                      Have questions or issues? Use "Spacey" the chatbot at https://issrtt.com. You can get there easily from Settings. Just tap \(Globals.settingsChar) at the top-left.
                       """,
             image: UIImage(named: "icons8-customer_support")
         ),

@@ -91,21 +91,21 @@ struct AstroCalculations {
         var lonCorrection: Float
         
         // This determines current local and GMT time
-        let localMins      = Float(Calendar.current.component(.minute, from: Date()))
-        let localHour      = Float(Calendar.current.component(.hour, from: Date())) + localMins / Float(Globals.numberOfMinutesInAnHour)
+        let localMins = Float(Calendar.current.component(.minute, from: Date()))
+        let localHour = Float(Calendar.current.component(.hour, from: Date())) + localMins / Globals.numberOfMinutesInAnHour
         let secondsFromGMT = Float(TimeZone.current.secondsFromGMT())
         
         // Correct for time and day relative to GMT and the International Date Line
         if secondsFromGMT < 0 {
             timeCorrection = 1
-            dayCorrection  = 0
+            dayCorrection = 0
         } else {
             timeCorrection = -1
-            dayCorrection  = -Float(Globals.numberOfHoursInADay)
+            dayCorrection = -Globals.numberOfHoursInADay
         }
         
         // Calculate GMT
-        let GMT = localHour - Float(secondsFromGMT / Float(Globals.numberOfSecondsInAnHour) - timeCorrection *  Float(Globals.numberOfHoursInADay)).truncatingRemainder(dividingBy: Float(Globals.numberOfHoursInADay))
+        let GMT = localHour - secondsFromGMT / Globals.numberOfSecondsInAnHour - timeCorrection *  Globals.numberOfHoursInADay.truncatingRemainder(dividingBy: Globals.numberOfHoursInADay)
         
         // Now, calculate the displacement between current GMT and noontime in hours
         let noonHourDisplacement = Globals.noonTime - GMT + dayCorrection
@@ -113,17 +113,17 @@ struct AstroCalculations {
         // The subsolar longitude is the displacement in hours times the number of degrees per hour (360/24=15)
         let subSolarLon = noonHourDisplacement * Globals.degreesLongitudePerHour
         
-        // Now, determine if we've crossed the international date line. If so, we need to add 180 degrees
-        if subSolarLon < -179.9999 && GMT <= Globals.noonTime {
+        // Now, determine if we've crossed the international date line. If so, we need to add 180 degrees.
+        if subSolarLon < -180 && GMT <= Globals.noonTime {
             lonCorrection = 180
-        } else if subSolarLon < -179.9999 && GMT >= Globals.noonTime {
+        } else if subSolarLon < -180 && GMT >= Globals.noonTime {
             lonCorrection = localHour >= GMT ? 0 : 180
-        } else if GMT >= Float(Globals.numberOfHoursInADay) {
+        } else if GMT >= Globals.numberOfHoursInADay {
             lonCorrection = 180
         } else {
             lonCorrection = 0
         }
-        
+
         return subSolarLon.truncatingRemainder(dividingBy: 180) + lonCorrection
         
     }

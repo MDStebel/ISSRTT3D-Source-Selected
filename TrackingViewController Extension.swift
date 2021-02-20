@@ -113,12 +113,7 @@ extension TrackingViewController {
                         
                         // Update ISS position on the map
                         self?.map.setRegion(self!.region, animated: true)
-                        
-                        // Update the coordinates in the info box, if enabled
-                        if Globals.showCoordinatesIsOn {
-                            self?.updateCoordinatesDisplay()
-                        }
-                        
+                                                
                         // Draw ground track, if enabled
                         self?.drawOrbitGroundTrackLine()
                         
@@ -134,6 +129,11 @@ extension TrackingViewController {
                             self?.globeScene.isHidden        = true
                             self?.globeExpandButton.isHidden = true
                             self?.globeStatusLabel.isHidden  = true
+                        }
+                        
+                        // Update the coordinates in the info box, if enabled
+                        if Globals.showCoordinatesIsOn {
+                            self?.updateCoordinatesDisplay()
                         }
                         
                     }

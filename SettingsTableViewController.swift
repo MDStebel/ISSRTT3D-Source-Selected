@@ -18,7 +18,7 @@ class SettingsTableViewController: UITableViewController {
     private let defaultMapType              = 2                                                     // Hybrid map type is the default
     private let defaultMarkerType           = 0                                                     // ISS icon marker type is the default
     private let defaultZoomFactor           = 2                                                     // Medium zoom is the default
-    private let urlForFacebookLink          = "https://www.facebook.com/issrealtimetracker/"
+    private let urlForFacebookLink          = "https://www.facebook.com/sciencewithmikey"
     private let urlForMyOtherApps           = "itms://itunes.apple.com/us/developer/michael-stebel/id1027443988"
     private let urlForRating                = "itms://itunes.apple.com/WebObjects/MZStore.woa/wa/viewContentsUserReviews?type=Purple+Software&id=1079990061"
     private let versionNumber               = Globals.versionNumber

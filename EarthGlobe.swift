@@ -23,7 +23,7 @@ class EarthGlobe {
     let dragWidthInDegrees                 = 270.0                              // The amount to rotate the globe on one edge-to-edge swipe (in degrees)
     let globeDefaultRotationSpeedInSeconds = 120.0                              // 360° revolution in n-seconds
     let globeRadiusFactor                  = Globals.globeRadiusFactor
-    let globeSegmentCount                  = 720                                // The number of subdivisions along the sphere's polar & azimuth angles, similar to the latitude & longitude system on a globe of the Earth
+    let globeSegmentCount                  = 1024                               // The number of subdivisions along the sphere's polar & azimuth angles, similar to the latitude & longitude system on a globe of the Earth
     let markerAltitude                     = Globals.orbitalAltitudeFactor
     let maxFov                             = Globals.maxFov                     // Max zoom in degrees
     let minFov                             = Globals.minFov                     // Min zoom in degrees

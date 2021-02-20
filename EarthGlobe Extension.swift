@@ -48,8 +48,8 @@ extension EarthGlobe {
         orbitTrack.firstMaterial?.diffuse.contents = UIColor(named: Theme.tint)
         orbitTrack.ringRadius                      = CGFloat(Globals.ISSOrbitAltitudeInScene)
         orbitTrack.pipeRadius                      = 0.005
-        orbitTrack.ringSegmentCount                = 256
-        orbitTrack.pipeSegmentCount                = 96
+        orbitTrack.ringSegmentCount                = 512
+        orbitTrack.pipeSegmentCount                = 256
         
         // Assign the torus as a node and add it as a child of globe
         let orbitTrackNode          = SCNNode(geometry: orbitTrack)
@@ -158,11 +158,11 @@ extension EarthGlobe {
     }
     
     
-    /// Map coordinates from lat, lon, altitude to SceneKit xyz cooridates
+    /// Convert map coordinates from lat, lon, altitude to SceneKit x, y, z coordinates
     /// - Parameters:
     ///   - lat: Latitude as a decimal
     ///   - lon: Longitude as a decimal
-    ///   - alt: altitude
+    ///   - alt: altitude as a decimal
     /// - Returns: Position as a SCNVector3
     static func convertLatLonCoordinatesToXYZ(lat: Float, lon: Float, alt: Float) -> SCNVector3 {
         
@@ -174,7 +174,7 @@ extension EarthGlobe {
         let y         = alt * cosLat * sinLon
         let z         = alt * sinLat
         
-        // Map to position on a sphere
+        // Map to position on a SceneKit sphere
         let sceneKitX = -x
         let sceneKitY = z
         let sceneKitZ = y

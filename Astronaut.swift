@@ -80,7 +80,7 @@ struct Astronaut {
         
         if launchedOn != "" {
             let startDate = dateFormatter.date(from: launchedOn)
-            return Int(Double(todaysDate.timeIntervalSince(startDate!)) / Globals.numberOfSecondsInADay )
+            return Int(Float(todaysDate.timeIntervalSince(startDate!)) / Globals.numberOfSecondsInADay )
         } else {
             return 0
         }
