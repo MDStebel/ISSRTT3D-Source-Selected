@@ -19,7 +19,7 @@ struct AstroCalculations {
         
         let julianDateForJan011970 = 2440587.5
         
-        return julianDateForJan011970 + date.timeIntervalSince1970 / 86400
+        return julianDateForJan011970 + date.timeIntervalSince1970 / Double(Globals.numberOfSecondsInADay)
         
     }
     
@@ -58,7 +58,7 @@ struct AstroCalculations {
         let now = Date()
         let jC = julianCentury(date: now)
 
-        let sunGeometricMeanLongitude = Float((280.46646 + jC * (36000.76983 + jC * 0.0003032))).truncatingRemainder(dividingBy: 360)
+        let sunGeometricMeanLongitude = Float((280.46646 + jC * (36000.76983 + jC * 0.0003032))).truncatingRemainder(dividingBy: Globals.threeSixtyDegrees)
         
         return Float(sunGeometricMeanLongitude)
         
@@ -114,17 +114,17 @@ struct AstroCalculations {
         let subSolarLon = noonHourDisplacement * Globals.degreesLongitudePerHour
         
         // Now, determine if we've crossed the international date line. If so, we need to add 180 degrees.
-        if subSolarLon < -180 && GMT <= Globals.noonTime {
-            lonCorrection = 180
-        } else if subSolarLon < -180 && GMT >= Globals.noonTime {
-            lonCorrection = localHour >= GMT ? 0 : 180
+        if subSolarLon < -Globals.oneEightyDegrees && GMT <= Globals.noonTime {
+            lonCorrection = Globals.oneEightyDegrees
+        } else if subSolarLon < -Globals.oneEightyDegrees && GMT >= Globals.noonTime {
+            lonCorrection = localHour >= GMT ? 0 : Globals.oneEightyDegrees
         } else if GMT >= Globals.numberOfHoursInADay {
-            lonCorrection = 180
+            lonCorrection = Globals.oneEightyDegrees
         } else {
             lonCorrection = 0
         }
 
-        return subSolarLon.truncatingRemainder(dividingBy: 180) + lonCorrection
+        return subSolarLon.truncatingRemainder(dividingBy: Globals.oneEightyDegrees) + lonCorrection
         
     }
  

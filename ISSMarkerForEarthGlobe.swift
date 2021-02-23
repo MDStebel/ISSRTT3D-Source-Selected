@@ -21,7 +21,7 @@ class ISSMarkerForEarthGlobe {
     init(using image: String, lat: Float, lon: Float, isInOrbit: Bool) {
         
         self.image = image
-        let adjustedLon = lon + 90                                                                                      // Textures are centered on 0,0, so adjust by 90 degrees
+        let adjustedLon = lon + Globals.ninetyDegrees                                                                                      // Textures are centered on 0,0, so adjust by 90 degrees
         let widthAndHeight = isInOrbit ? EarthGlobe.markerWidth : EarthGlobe.markerWidth * 2.25                         // Fudge the approximate diameter of the sighting circle
         
         node = SCNNode(geometry: SCNPlane(width: widthAndHeight, height: widthAndHeight))

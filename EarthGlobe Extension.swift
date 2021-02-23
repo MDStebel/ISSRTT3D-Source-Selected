@@ -57,8 +57,8 @@ extension EarthGlobe {
         
         // Set the lat, lon, and inclination corrections that are be needed to align orbital properly to the ISS and its heading
         var orbitalCorrectionForInclination: Float
-        let adjustedLat             = lat + 180
-        let adjustedLon             = lon - 180
+        let adjustedLat             = lat + Globals.oneEightyDegrees
+        let adjustedLon             = lon - Globals.oneEightyDegrees
         let orbitalCorrectionForLon = adjustedLon * Globals.degreesToRadians    // lon & lat used as angular displacement from the origin (lon-origin=lon-0=lon)
         let orbitalCorrectionForLat = adjustedLat * Globals.degreesToRadians
         let absLat                  = abs(lat)
@@ -105,7 +105,7 @@ extension EarthGlobe {
     ///   - lon: Subsolor point longitude in degrees
     public func setUpTheSun(lat: Float, lon: Float) {
 
-        let adjustedLon        = lon + 90
+        let adjustedLon        = lon + Globals.ninetyDegrees
         let adjustedLat        = lat
         let distanceToTheSun   = Float(1000)
         let position           = EarthGlobe.convertLatLonCoordinatesToXYZ(lat: adjustedLat, lon: adjustedLon, alt: distanceToTheSun)
@@ -227,6 +227,5 @@ extension EarthGlobe {
         return SCNMatrix4Rotate(src, angle, x, y, z)
         
     }
-    
     
 }
