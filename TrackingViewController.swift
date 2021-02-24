@@ -46,8 +46,8 @@ class TrackingViewController: UIViewController, MKMapViewDelegate, UIGestureReco
     /// Local constants
     struct Constants {
         static let animationOffsetY: CGFloat    = 90.0
-        static let apiEndpointAString           = "---"
-        static let apiEndpointBString           = "---"
+        static let apiEndpointAString           = "https://api.wheretheiss.at/v1/satellites/25544"
+        static let apiEndpointBString           = "http://api.open-notify.org/iss-now.json"
         static let defaultTimerInterval         = 3.0
         static let fontForTitle                 = Theme.nasa
         static let helpTitle                    = "User Guide"
@@ -323,7 +323,7 @@ class TrackingViewController: UIViewController, MKMapViewDelegate, UIGestureReco
         setUpZoomSlider(usingSavedZoomFactor: true)                                                 // Set up zoom factor using saved zoom factor, rather than default
         setUpDisplayConfiguration()                                                                 // Set up display with map in last-used map type and other display parameters
         setUpSoundTrackMusicPlayer()                                                                // Set up the player for the soundtrack
-        SettingsDataModel.restoreUserSettings()                                                                       // Restore user settings
+        SettingsDataModel.restoreUserSettings()                                                     // Restore user settings
         displayInfoBoxAndLandsatButton(false)                                                       // Start up with map overlay info box and buttons off
         
         justStartedUp = true

@@ -15,7 +15,6 @@ class PassesTableViewController: UITableViewController, CLLocationManagerDelegat
     
     // MARK: - Rating System Enum
     
-    
     /// Defines the passes rating system
     ///
     /// This enum holds the max (i.e., lowest magnitude) values for the respective ratings and returns number of stars for each. Call: var nStars = RatingSystem.good.numberOfStars
@@ -41,7 +40,7 @@ class PassesTableViewController: UITableViewController, CLLocationManagerDelegat
                 return 4
             }
         }
-
+        
     }
     
     
@@ -50,8 +49,8 @@ class PassesTableViewController: UITableViewController, CLLocationManagerDelegat
     
     private struct Constants {
         static let altitude                             = 0
-        static let apiKey                               = "---"                                     // API key
-        static let baseURLForOverheadTimes              = "---"     // API endpoint (new as of Nov 1, 2020)
+        static let apiKey                               = "BZQB9N-9FTL47-ZXK7MZ-3TLE"                                     // API key
+        static let baseURLForOverheadTimes              = "https://api.n2yo.com/rest/v1/satellite/visualpasses/25544"     // API endpoint (new as of Nov 1, 2020)
         static let customCellIdentifier                 = "OverheadTimesCell"
         static let deg                                  = "°"
         static let fontForTitle                         = Theme.nasa
@@ -61,7 +60,6 @@ class PassesTableViewController: UITableViewController, CLLocationManagerDelegat
         static let ratingStar                           = #imageLiteral(resourceName: "star")
         static let segueToHelpFromPasses                = "segueToHelpFromPasses"
     }
-    
     
     private var dateFormatterForDate                    = DateFormatter()
     private var dateFormatterForTime                    = DateFormatter()
@@ -120,12 +118,11 @@ class PassesTableViewController: UITableViewController, CLLocationManagerDelegat
     override func viewDidLoad() {
         
         super.viewDidLoad()
-
+        
         setUpDateFormatter()
         getNumberOfDaysOfPassesToReturn()
         setUpRefreshControl()
         setUpLocationManager()
-        checkCLAccess()
         
     }
     
@@ -141,12 +138,12 @@ class PassesTableViewController: UITableViewController, CLLocationManagerDelegat
             navigationController?.navigationBar.barTintColor = UIColor(named: Theme.tint)
         }
         
-//        // Use appropriate background color for light or dark mode
-//        if traitCollection.userInterfaceStyle == .light {
-//            overheadTimes.backgroundColor = UIColor(named: "Alternate Background")
-//        } else {
-//            overheadTimes.backgroundColor = UIColor(named: "Flipside View Background Color")
-//        }
+        //        // Use appropriate background color for light or dark mode
+        //        if traitCollection.userInterfaceStyle == .light {
+        //            overheadTimes.backgroundColor = UIColor(named: "Alternate Background")
+        //        } else {
+        //            overheadTimes.backgroundColor = UIColor(named: "Flipside View Background Color")
+        //        }
         
     }
     
@@ -164,17 +161,17 @@ class PassesTableViewController: UITableViewController, CLLocationManagerDelegat
         
         // Configure refresh control
         refreshControl?.addTarget(self, action: #selector(refreshTable(_:)), for: .valueChanged)
-    
+        
     }
     
     /// Selector for refresh control
     @objc func refreshTable(_ sender: Any) {
         
         restartGettingUserLocation()
-
+        
     }
     
-        
+    
     /// Set up location manager
     private func setUpLocationManager() {
         
@@ -186,41 +183,8 @@ class PassesTableViewController: UITableViewController, CLLocationManagerDelegat
     }
     
     
-    /// Check that user has granted ISSRTT3D access to location services
-    private func checkCLAccess() {
-        
-        ISSlocationManager.requestWhenInUseAuthorization()                      // We want CL access when the app's in use
-        
-        let authStatus = ISSlocationManager.authorizationStatus
-        let canGetLocation = authStatus == .authorizedWhenInUse
-        if !canGetLocation {
-            
-            spinner.stopAnimating()
-            promptLabel.text = "Access to your location was not granted"
-            
-            // Present alert to allow user to go to system Settings to change access tp Location Services
-            let alert = UIAlertController(title: "Location Access Denied", message: "Access to your location was previously denied. Please update your iOS Settings to change this.", preferredStyle: .alert)
-            
-            let goToSettingAction = UIAlertAction(title: "Go to Settings", style: .default) { (action) in
-                DispatchQueue.main.async {
-                    let url = URL(string: UIApplication.openSettingsURLString)!
-                    UIApplication.shared.open(url, options: [:])
-                }
-            }
-            
-            let cancelAction = UIAlertAction(title: "Cancel", style: .cancel) { (action) in
-                DispatchQueue.main.async {
-                    self.dismiss(animated: true, completion: nil)               // Return to main screen if user cancels
-                }
-            }
-            
-            alert.addAction(goToSettingAction)
-            alert.addAction(cancelAction)
-            alert.preferredAction = goToSettingAction
-            
-            present(alert, animated: true)
-            
-        }
+    /// Start getting locations
+    private func startGettingLocations() {
         
         ISSlocationManager.startUpdatingLocation()                              // Now, we can  get locations
         
@@ -229,7 +193,7 @@ class PassesTableViewController: UITableViewController, CLLocationManagerDelegat
     
     private func restartGettingUserLocation() {
         
-        checkCLAccess()
+        startGettingLocations()
         
     }
     
@@ -251,7 +215,7 @@ class PassesTableViewController: UITableViewController, CLLocationManagerDelegat
         
         alertController.addAction(UIAlertAction(title: "Back", style: .cancel) { (dontShow) in
             self.dismiss(animated: true, completion: nil)
-            }
+        }
         )
         
         // Add number-of-days selections from the dictionary in the Passes model
@@ -259,7 +223,7 @@ class PassesTableViewController: UITableViewController, CLLocationManagerDelegat
             alertController.addAction(UIAlertAction(title: "\(Passes.numberOfDaysDictionary[i]!) days", style: .default) { (choice) in
                 self.numberOfDays = Int(Passes.numberOfDaysDictionary[i]!)!
                 self.restartGettingUserLocation()
-                }
+            }
             )
         }
         
@@ -268,20 +232,6 @@ class PassesTableViewController: UITableViewController, CLLocationManagerDelegat
         }
         
         self.present(alertController, animated: true, completion: nil)
-        
-    }
-    
-    
-    /// Location manager delegate
-    func locationManager(_ ISSLocationManager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        
-        let userLocation = locations.first!
-        userLatitude     = userLocation.coordinate.latitude
-        userLongitude    = userLocation.coordinate.longitude
-        
-        getISSOverheadtimes(then: decodeJSONPasses)
-        
-        ISSLocationManager.stopUpdatingLocation()                               // Now that we have user's location, we don't need it again, so stop updating location
         
     }
     
@@ -320,10 +270,10 @@ class PassesTableViewController: UITableViewController, CLLocationManagerDelegat
         }
         catch {
             DispatchQueue.main.async { [self] in
-               spinner.stopAnimating()
-               refreshControl?.endRefreshing()
-               promptLabel.text = "No visible passes for the next \(numberOfDays) days"
-               noPasesPopup(withTitle: "No Passes Found", withStyleToUse: .alert)
+                spinner.stopAnimating()
+                refreshControl?.endRefreshing()
+                promptLabel.text = "No visible passes for the next \(numberOfDays) days"
+                noPasesPopup(withTitle: "No Passes Found", withStyleToUse: .alert)
             }
         }
         
@@ -476,7 +426,7 @@ class PassesTableViewController: UITableViewController, CLLocationManagerDelegat
 }
 
 
-//  MARK: - Table extensions
+//  MARK: - Tableview delegate methods
 extension PassesTableViewController {
     
     override func numberOfSections(in tableView: UITableView) -> Int {
@@ -487,7 +437,7 @@ extension PassesTableViewController {
     
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-
+        
         return numberOfOverheadTimesActuallyReported
         
     }
@@ -604,6 +554,65 @@ extension PassesTableViewController {
         // Make a copy of the selected pass and create a calendar event for it
         let passToSave = overheadTimesList[indexPath.row]
         addEvent(passToSave)
+        
+    }
+    
+}
+
+
+// MARK: - Location Manager delegate methods
+extension PassesTableViewController {
+    
+    func locationManagerDidChangeAuthorization(_ manager: CLLocationManager) {
+        
+        let authStatus = ISSlocationManager.authorizationStatus
+        let canGetLocation = authStatus != .denied
+        if canGetLocation {
+            
+            ISSlocationManager.startUpdatingLocation()                              // Now, we can get locations
+            
+        } else {
+            
+            spinner.stopAnimating()
+            promptLabel.text = "Access to your location was not granted"
+            
+            // Present alert to allow user to go to system Settings to change access tp Location Services
+            let alert = UIAlertController(title: "Location Access Denied", message: "Access to your location was previously denied. Please update your iOS Settings to change this.", preferredStyle: .alert)
+            
+            let goToSettingAction = UIAlertAction(title: "Go to Settings", style: .default) { (action) in
+                DispatchQueue.main.async {
+                    let url = URL(string: UIApplication.openSettingsURLString)!
+                    UIApplication.shared.open(url, options: [:])
+                }
+            }
+            
+            let cancelAction = UIAlertAction(title: "Cancel", style: .cancel) { (action) in
+                DispatchQueue.main.async {
+                    self.dismiss(animated: true, completion: nil)                   // Return to main screen if user cancels
+                }
+            }
+            
+            alert.addAction(goToSettingAction)
+            alert.addAction(cancelAction)
+            alert.preferredAction = goToSettingAction
+            
+            present(alert, animated: true)
+            
+        }
+        
+    }
+    
+    
+    /// Location manager did update locations delegate
+    func locationManager(_ ISSLocationManager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        
+        let userLocation = locations.first!
+        userLatitude     = userLocation.coordinate.latitude
+        userLongitude    = userLocation.coordinate.longitude
+        
+        getISSOverheadtimes(then: decodeJSONPasses)                                 // Get passes from API, then run callback to decode/parse
+        
+        ISSLocationManager.stopUpdatingLocation()                                   // Now that we have user's location, we don't need it again, so stop updating location
         
     }
     

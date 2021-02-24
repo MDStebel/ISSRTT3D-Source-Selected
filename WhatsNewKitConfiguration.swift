@@ -22,8 +22,8 @@ private let whatsNew = WhatsNew(
         WhatsNew.Item(
             title: "Improvements & Fixes",
             subtitle: """
-            Tweaks to the astronomical algorithms used in the app. Added link to the "Science With Mikey" Facebook page in Settings.
-            """,
+                      Fixed an issue in which Passes would ask for permission to access the user's location twice. The Location Access Denied pop-up now only appears if the user turned off location services for the app in their device's privacy settings.
+                      """,
             image: UIImage(named: "icons8-bug_filled")
         ),
         WhatsNew.Item(
