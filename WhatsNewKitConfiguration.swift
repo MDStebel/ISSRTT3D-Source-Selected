@@ -11,7 +11,7 @@ import WhatsNewKit
 import UIKit
 
 
-// Initialize WhatsNew
+// Initialize a WhatsNew instance
 private let whatsNew = WhatsNew(
     
     // The Title
@@ -22,12 +22,12 @@ private let whatsNew = WhatsNew(
         WhatsNew.Item(
             title: "Improvements & Fixes",
             subtitle: """
-                      Fixed an issue in which Passes would ask for permission to access the user's location twice. The Location Access Denied pop-up now only appears if the user turned off location services for the app in their device's privacy settings.
+                      I improved on my previous subsolar point calculation algorithms. Increases the accuracy and efficiency of the calculations. It also uses more efficient algorithms for the equation of time, the mean anomaly, and the geometric mean longitude. The bottom line is that the real-time position of the Sun is now even more accurate.
                       """,
             image: UIImage(named: "icons8-bug_filled")
         ),
         WhatsNew.Item(
-            title: "You Control It",
+            title: "Navigating the 3D Earth Model",
             subtitle: """
                       Use gestures to move around the 3D Earth model, zoom in/out, tilt, translate, autorotate, and more. Tap the help (?) button on the main screen or in the fullscreen 3D Globe to learn more.
                       """,

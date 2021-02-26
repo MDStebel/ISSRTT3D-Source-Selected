@@ -2,7 +2,7 @@
 //  Globals.swift
 //  ISS Real-Time Tracker 3D
 //
-//  Created by Michael Stebel on 6/16/16.
+//  Created by Michael Stebel on 2/26/2021.
 //  Copyright © 2016-2021 Michael Stebel Consulting, LLC. All rights reserved.
 //
 
@@ -67,7 +67,7 @@ struct Globals {
     static let e                                                = M_E
     static let earthRadiusInKM: Float                           = 6378
     static let earthTiltInDegrees: Float                        = 23.43715
-    static let earthTiltInRadians: Float                        = earthTiltInDegrees * degreesToRadians
+    static let earthTiltInRadians: Float                        = 0.40905543478
     static let eclipticTiltFromGalacticPlaneInDegrees: Float    = 60.5
     static let eclipticTiltFromGalacticPlaneInRadians: Float    = eclipticTiltFromGalacticPlaneInDegrees * degreesToRadians
     static let elevationFormat                                  = "%2.1f"
@@ -76,16 +76,20 @@ struct Globals {
     static let helpChar                                         = "(?)"
     static let hubbleDeepField                                  = "Hubble Legacy Field Crop 2800px.png"
     static let issrttWebsite                                    = "https://www.issrtt.com"
+    static let julianDateForJan011970At0000GMT                  = 2440587.5
     static let milkyWay                                         = "Milky Way Correct Rotation in the Sky Square.png"
     static let ninetyDegrees: Float                             = 90
     static let noonTime: Float                                  = 12
+    static let numberOfDaysInACentury: Float                    = 36525
     static let numberOfDaysInAYear: Float                       = 365
-    static let numberOfDaysInCentury: Float                     = 36525
     static let numberOfHoursInADay: Float                       = 24
+    static let numberOfMinutesInADay: Float                     = 1440
     static let numberOfMinutesInAnHour: Float                   = 60
+    static let numberOfMinutesInAYear: Float                    = numberOfDaysInAYear * numberOfMinutesInADay
     static let numberOfSecondsInADay: Float                     = 86400
     static let numberOfSecondsInAnHour: Float                   = 3600
     static let numberOfSecondsInAMinute: Float                  = 60
+    static let numberOfSecondsInAYear: Float                    = numberOfSecondsInADay * numberOfDaysInAYear
     static let oneEightyDegrees: Float                          = 180
     static let orbitalAltitudeFactor                            = globeRadiusFactor * (1 + ISSAltitudeInKM / earthRadiusInKM) * 1.02
     static let orionNebula                                      = "Orion Nebula.png"
