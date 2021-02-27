@@ -141,7 +141,7 @@ struct AstroCalculations {
     
     /// Calculate the exact current latitude of the Sun for a given date
     ///
-    /// Based on the geometric mean longitude of the Sun.
+    /// Uses the geometric mean longitude of the Sun and equation of center.
     /// - Parameter date: A date as a Date type
     /// - Returns: Latitude in degrees as a Float
     static func latitudeOfSun(for date: Date) -> Float {
