@@ -18,10 +18,16 @@ class ISSMarkerForEarthGlobe {
     // The SceneKit node for this marker
     var node: SCNNode!
     
+    /// Initialize a marker for the Earth globe
+    /// - Parameters:
+    ///   - image: Image name to use as marker as a String
+    ///   - lat: Latitude of the marker's position on Earth as a Float
+    ///   - lon: Longitude of the marker's position on Earth as a Float
+    ///   - isInOrbit: Flag that indicates if the marker is above Earth or on its surface as a Bool
     init(using image: String, lat: Float, lon: Float, isInOrbit: Bool) {
         
         self.image = image
-        let adjustedLon = lon + Globals.ninetyDegrees                                                                                      // Textures are centered on 0,0, so adjust by 90 degrees
+        let adjustedLon = lon + Globals.ninetyDegrees                                                                   // Textures are centered on 0,0, so adjust by 90 degrees
         let widthAndHeight = isInOrbit ? EarthGlobe.markerWidth : EarthGlobe.markerWidth * 2.25                         // Fudge the approximate diameter of the sighting circle
         
         node = SCNNode(geometry: SCNPlane(width: widthAndHeight, height: widthAndHeight))
@@ -45,6 +51,7 @@ class ISSMarkerForEarthGlobe {
         // Roll is the rotation about the node's z-axis in radians
         let roll: Float    = 0.0
         
+        // Set the marker's orientation
         node.eulerAngles   = SCNVector3(x: pitch, y: yaw, z: roll )
         
     }

@@ -57,6 +57,7 @@ struct Globals {
     static let ISSAltitudeFactor: Float                         = orbitalAltitudeFactor * 1.015
     static let ISSAltitudeInKM: Float                           = 425
     static let ISSOrbitAltitudeInScene                          = orbitalAltitudeFactor
+    static let ISSIcon                                          = "New-ISS-Marker-2400px-1"
     static let ISSOrbitInclinationInDegrees: Float              = 51.64
     static let ISSOrbitInclinationInRadians: Float              = ISSOrbitInclinationInDegrees * degreesToRadians
     static let azimuthFormat                                    = "%3.0f"
@@ -102,5 +103,7 @@ struct Globals {
     static let spacer                                           = "  "
     static let tarantulaNebula                                  = "Tarantula Nebula in the Large Magellanic Cloud.png"
     static let threeSixtyDegrees: Float                         = 360
+    static let twoPi: Double                                    = .pi * 2
+    static let viewingCircleGraphic                             = "iss_4_visibility_circle"
     
 }

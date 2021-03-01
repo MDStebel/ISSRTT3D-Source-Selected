@@ -16,17 +16,19 @@ class EarthGlobe {
 
     let ambientLightIntensity: CGFloat     = 100                                // The default value is 1000
     let cameraAltitude                     = Globals.cameraAltitude
-    let dayNumberOfWinterStolsticeInYear   = 512.0                              // The winter solstice is on approximately Dec 21, 22, or 23
     let daysInAYear                        = Globals.numberOfDaysInAYear
     let defaultCameraFov                   = Globals.defaultCameraFov
     let distanceToISSOrbit                 = Globals.ISSOrbitAltitudeInScene
     let dragWidthInDegrees                 = 270.0                              // The amount to rotate the globe on one edge-to-edge swipe (in degrees)
     let globeDefaultRotationSpeedInSeconds = 120.0                              // 360° revolution in n-seconds
     let globeRadiusFactor                  = Globals.globeRadiusFactor
-    let globeSegmentCount                  = 1024                               // The number of subdivisions along the sphere's polar & azimuth angles, similar to the latitude & longitude system on a globe of the Earth
+    let globeSegmentCount                  = 1024                               // The number of subdivisions along the sphere's (Earth's) polar & azimuth angles, similar to the latitude & longitude system on a globe of the Earth
     let markerAltitude                     = Globals.orbitalAltitudeFactor
     let maxFov                             = Globals.maxFov                     // Max zoom in degrees
     let minFov                             = Globals.minFov                     // Min zoom in degrees
+    let pipeRadius                         = 0.005
+    let pipeSegmentCount                   = 256                                // The number of subdivisions around the ring (orbit)
+    let ringSegmentCount                   = 512                                // The number of subdivisions along the ring (orbit)
     let sceneBoxSize: CGFloat              = 1000.0
     
     var camera                             = SCNCamera()

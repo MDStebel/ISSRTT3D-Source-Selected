@@ -18,7 +18,7 @@ extension EarthGlobe {
     ///   - lon: The current longitude as a decimal value
     public func addISSMarker(lat: Float, lon: Float) {
         
-        let ISS = ISSMarkerForEarthGlobe(using: "New-ISS-Marker-2400px-1", lat: lat, lon: lon, isInOrbit: true)
+        let ISS = ISSMarkerForEarthGlobe(using: Globals.ISSIcon, lat: lat, lon: lon, isInOrbit: true)
         self.addMarker(ISS, shouldPulse: true)
         
     }
@@ -30,7 +30,7 @@ extension EarthGlobe {
     ///   - lon: The current longitude as a decimal value
     public func addViewingCircle(lat: Float, lon: Float) {
         
-        let viewingCircle = ISSMarkerForEarthGlobe(using: "iss_4_visibility_circle", lat: lat, lon: lon, isInOrbit: false)
+        let viewingCircle = ISSMarkerForEarthGlobe(using: Globals.viewingCircleGraphic, lat: lat, lon: lon, isInOrbit: false)
         self.addMarker(viewingCircle, shouldPulse: false)
         
     }
@@ -48,8 +48,8 @@ extension EarthGlobe {
         orbitTrack.firstMaterial?.diffuse.contents = UIColor(named: Theme.tint)
         orbitTrack.ringRadius                      = CGFloat(Globals.ISSOrbitAltitudeInScene)
         orbitTrack.pipeRadius                      = 0.005
-        orbitTrack.ringSegmentCount                = 512
-        orbitTrack.pipeSegmentCount                = 256
+        orbitTrack.ringSegmentCount                = ringSegmentCount
+        orbitTrack.pipeSegmentCount                = pipeSegmentCount
         
         // Assign the torus as a node and add it as a child of globe
         let orbitTrackNode          = SCNNode(geometry: orbitTrack)
@@ -127,7 +127,7 @@ extension EarthGlobe {
     public func autoSpinGlobeRun(run: Bool) {
         
         if run && !globe.hasActions {
-            let spinRotation = SCNAction.rotate(by: 2 * .pi, around: SCNVector3(0, 1, 0), duration: globeDefaultRotationSpeedInSeconds)
+            let spinRotation = SCNAction.rotate(by: CGFloat(Globals.twoPi), around: SCNVector3(0, 1, 0), duration: globeDefaultRotationSpeedInSeconds)
             let spinAction   = SCNAction.repeatForever(spinRotation)
             globe.runAction(spinAction)
         } else if !run && globe.hasActions {
@@ -195,8 +195,8 @@ extension EarthGlobe {
         
         if delta.width != 0.0 || delta.height != 0.0 {
 
-            let rotationAboutAxis = Float(delta.width) * 2 * .pi
-            let tiltOfAxisItself  = Float(delta.height) * 2 * .pi
+            let rotationAboutAxis = Float(delta.width) * Float(Globals.twoPi)
+            let tiltOfAxisItself  = Float(delta.height) * Float(Globals.twoPi)
             
             // First, apply the rotation
             let rotate            = SCNMatrix4RotateF(userRotation.worldTransform, -rotationAboutAxis, 0.0, 1.0, 0.0)
