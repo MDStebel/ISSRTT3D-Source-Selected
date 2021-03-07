@@ -17,7 +17,7 @@ class GlobeFullViewController: UIViewController, EarthGlobeProtocol {
     // MARK: - Properties
     
     struct Constants {
-        static let apiEndpointAString       = "---"
+        static let apiEndpointAString       = "https://api.wheretheiss.at/v1/satellites/25544"
         static let fontForTitle             = Theme.nasa
         static let segueToHelpFromGlobe     = "segueToHelpFromGlobe"
         static let segueToSettings          = "segueToSettings"
@@ -38,19 +38,19 @@ class GlobeFullViewController: UIViewController, EarthGlobeProtocol {
     // MARK: - Outlets
     
     
-    @IBOutlet var fullScreenGlobeView: SCNView!
     @IBOutlet var spaceBackgroundImage: UIImageView!
-    @IBOutlet weak var settingsButton: UIBarButtonItem!
-    @IBOutlet weak var isRunningLabel: UILabel! {
-        didSet {
-            isRunningLabel.text = "Starting Up"
-        }
-    }
+    @IBOutlet var fullScreenGlobeView: SCNView!
     @IBOutlet var controlsBackground: UIView! {
         didSet {
             controlsBackground.layer.maskedCorners = [.layerMinXMaxYCorner, .layerMaxXMaxYCorner]
             controlsBackground.layer.cornerRadius  = 27
             controlsBackground.layer.masksToBounds = true
+        }
+    }
+    @IBOutlet weak var settingsButton: UIBarButtonItem!
+    @IBOutlet weak var isRunningLabel: UILabel! {
+        didSet {
+            isRunningLabel.text = "Starting Up"
         }
     }
     

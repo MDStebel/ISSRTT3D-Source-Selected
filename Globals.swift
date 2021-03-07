@@ -54,12 +54,6 @@ struct Globals {
     static var zoomFactorWasResetInSettings                     = false
     static var zoomRangeFactorSelection                         = 2
 
-    static let ISSAltitudeFactor: Float                         = orbitalAltitudeFactor * 1.015
-    static let ISSAltitudeInKM: Float                           = 425
-    static let ISSOrbitAltitudeInScene                          = orbitalAltitudeFactor
-    static let ISSIcon                                          = "New-ISS-Marker-2400px-1"
-    static let ISSOrbitInclinationInDegrees: Float              = 51.64
-    static let ISSOrbitInclinationInRadians: Float              = ISSOrbitInclinationInDegrees * degreesToRadians
     static let azimuthFormat                                    = "%3.0f"
     static let coordinatesStringFormat                          = "%3d°%02d'%02d\" %@  %3d°%02d'%02d\" %@"
     static let dateFormatStringEuropeanForm                     = "yyyy-MM-dd"
@@ -76,6 +70,12 @@ struct Globals {
     static let floatingPointWithTwoPlusOneDecimalPlace          = "%2.1f"
     static let helpChar                                         = "(?)"
     static let hubbleDeepField                                  = "Hubble Legacy Field Crop 2800px.png"
+    static let ISSAltitudeFactor: Float                         = orbitalAltitudeFactor * 1.015
+    static let ISSAltitudeInKM: Float                           = 425
+    static let ISSOrbitAltitudeInScene                          = orbitalAltitudeFactor
+    static let ISSIcon                                          = "New-ISS-Marker-2400px-1"
+    static let ISSOrbitInclinationInDegrees: Float              = 51.64
+    static let ISSOrbitInclinationInRadians: Float              = ISSOrbitInclinationInDegrees * degreesToRadians
     static let issrttWebsite                                    = "https://www.issrtt.com"
     static let julianDateForJan011970At0000GMT                  = 2440587.5
     static let milkyWay                                         = "Milky Way Correct Rotation in the Sky Square.png"

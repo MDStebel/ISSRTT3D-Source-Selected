@@ -21,9 +21,9 @@ class LaunchAnimationViewController: UIViewController {
     private let iconAnimationRotationAngle: CGFloat                   = -CGFloat.pi / 6.0    // In radians
     private let iconAnimationScaleFactor: CGFloat                     = 0.5
     private let segueToMainViewController                             = "mainViewControllerSegue"
+    private let threeDScaleFactor: CGFloat                            = 0.05
     private let titleAnimationDuration                                = 5.0                  // In seconds
     private let titleScaleFactor: CGFloat                             = 0.33
-    private let threeDScaleFactor: CGFloat                            = 0.05
     
     private var iconScaleFactor: CGFloat                              = 0
     private var scaleFactorForAppNameTitleForLaunchAnimation: CGFloat = 0
@@ -142,13 +142,17 @@ class LaunchAnimationViewController: UIViewController {
         
         // Animate ISS graphic using the stack of transforms we created above. At completion, segue to the tracking VC
         UIView.animate(withDuration: iconAnimationDuration, delay: 0, usingSpringWithDamping: 1.0, initialSpringVelocity: 0.2, options: .curveEaseInOut, animations: { [self] in
+            // Animate the footer
             launchScreenVersionLabel.text            = "Version: \(Globals.versionNumber)  Build: \(Globals.buildNumber)  \(Globals.copyrightString)"
+            // Animate the ISS graphic
             ISSImage.transform                       = trans1
             ISSImage.alpha                           = 0.0
             curves.alpha                             = 0.0
+            // Animate the title
             appNameTitleForLaunchAnimation.isHidden  = false
             appNameTitleForLaunchAnimation.alpha     = 1.0
             appNameTitleForLaunchAnimation.transform = trans2
+            // Animate the 3D text image
             threeDTextImage.isHidden                 = false
             threeDTextImage.alpha                    = 1.0
             threeDTextImage.transform                = trans3
