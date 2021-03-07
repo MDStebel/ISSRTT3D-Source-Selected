@@ -38,9 +38,7 @@ extension EarthGlobeProtocol {
         } else {
             scene.backgroundColor     = UIColor(red: 0, green: 0, blue: 0, alpha: 0)                    // Transparent background for full-screen mode
         }
-        
-        scene.layer.masksToBounds     = true
-        
+ 
     }
     
     
