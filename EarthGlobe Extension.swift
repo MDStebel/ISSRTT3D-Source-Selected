@@ -47,23 +47,25 @@ extension EarthGlobe {
         let orbitTrack                             = SCNTorus()
         orbitTrack.firstMaterial?.diffuse.contents = UIColor(named: Theme.tint)
         orbitTrack.ringRadius                      = CGFloat(Globals.ISSOrbitAltitudeInScene)
-        orbitTrack.pipeRadius                      = 0.005
+        orbitTrack.pipeRadius                      = pipeRadius
         orbitTrack.ringSegmentCount                = ringSegmentCount
         orbitTrack.pipeSegmentCount                = pipeSegmentCount
         
         // Assign the torus as a node and add it as a child of globe
-        let orbitTrackNode          = SCNNode(geometry: orbitTrack)
+        let orbitTrackNode                         = SCNNode(geometry: orbitTrack)
         globe.addChildNode(orbitTrackNode)
         
         // Set the lat, lon, and inclination corrections that are be needed to align orbital properly to the ISS and its heading
         var orbitalCorrectionForInclination: Float
-        let adjustedLat             = lat + Float(Globals.oneEightyDegrees)
-        let adjustedLon             = lon - Float(Globals.oneEightyDegrees)
-        let orbitalCorrectionForLon = adjustedLon * Float(Globals.degreesToRadians)  // lon & lat used as angular displacement from the origin (lon-origin=lon-0=lon)
-        let orbitalCorrectionForLat = adjustedLat * Float(Globals.degreesToRadians)
-        let absLat                  = abs(lat)
-        let exponent                = Float.pi / 2.5 + absLat * Float(Globals.degreesToRadians) / Globals.ISSOrbitInclinationInRadians  // Adjustment to the inclination (z-axis) as we approach max latitudes.
-        switch absLat {                                                         // Apply a power function to the adjustment (an exponent) based on the latitude.
+        
+        let adjustedLat                            = lat + Float(Globals.oneEightyDegrees)
+        let adjustedLon                            = lon - Float(Globals.oneEightyDegrees)
+        let orbitalCorrectionForLon                = adjustedLon * Float(Globals.degreesToRadians)  // lon & lat used as angular displacement from the origin (lon-origin=lon-0=lon)
+        let orbitalCorrectionForLat                = adjustedLat * Float(Globals.degreesToRadians)
+        let absLat                                 = abs(lat)
+        let exponent                               = Float.pi / 2.5 + absLat * Float(Globals.degreesToRadians) / Globals.ISSOrbitInclinationInRadians  // Adjustment to the inclination (z-axis) as we approach max latitudes.
+        
+        switch absLat {  // Apply a power function to the adjustment (an exponent) based on the latitude.
         case _ where absLat <= 25.0 :
             orbitalCorrectionForInclination = exponent
         case _ where absLat <= 35.0 :
@@ -80,21 +82,21 @@ extension EarthGlobe {
         let ISSOrbitInclinationInRadiansCorrected = pow(Globals.ISSOrbitInclinationInRadians, orbitalCorrectionForInclination) * headingFactor
         
         // Create 4x4 transform matrices for each rotation and initialize them as the identity matrix
-        var rotationMatrix1 = SCNMatrix4Identity
-        var rotationMatrix2 = SCNMatrix4Identity
-        var rotationMatrix3 = SCNMatrix4Identity
+        var rotationMatrix1         = SCNMatrix4Identity
+        var rotationMatrix2         = SCNMatrix4Identity
+        var rotationMatrix3         = SCNMatrix4Identity
         
         // Create the rotation matrices for the orbital inclination to align relative to the globe and the current ISS position
-        rotationMatrix1 = SCNMatrix4RotateF(rotationMatrix1, ISSOrbitInclinationInRadiansCorrected , 0, 0, 1)   // z rotation
-        rotationMatrix2 = SCNMatrix4RotateF(rotationMatrix2, orbitalCorrectionForLon, 0, 1, 0)                  // y rotation
-        rotationMatrix3 = SCNMatrix4RotateF(rotationMatrix3, orbitalCorrectionForLat, 1, 0, 0)                  // x rotation
+        rotationMatrix1             = SCNMatrix4RotateF(rotationMatrix1, ISSOrbitInclinationInRadiansCorrected , 0, 0, 1)   // z rotation
+        rotationMatrix2             = SCNMatrix4RotateF(rotationMatrix2, orbitalCorrectionForLon, 0, 1, 0)                  // y rotation
+        rotationMatrix3             = SCNMatrix4RotateF(rotationMatrix3, orbitalCorrectionForLat, 1, 0, 0)                  // x rotation
         
         // Multiply the matrices together to make a composite matrix and use this as the transform matrix
-        let firstProduct = SCNMatrix4Mult(rotationMatrix3, rotationMatrix2)                                     // Note! The order of the matrix operands is NOT cummulative in multiplication
+        let firstProduct            = SCNMatrix4Mult(rotationMatrix3, rotationMatrix2)                          // Note! The order of the matrix operands is NOT cummulative in multiplication
         let compositeRotationMatrix = SCNMatrix4Mult(rotationMatrix1, firstProduct)                             // Note! The order of the matrix operands is NOT cummulative in multiplication
         
         // Apply the transform
-        orbitTrackNode.transform = compositeRotationMatrix
+        orbitTrackNode.transform    = compositeRotationMatrix
         
     }
     
