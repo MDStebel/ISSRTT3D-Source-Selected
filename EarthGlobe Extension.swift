@@ -109,15 +109,15 @@ extension EarthGlobe {
 
         let adjustedLon        = lon + Globals.ninetyDegrees
         let adjustedLat        = lat
-        let distanceToTheSun   = Float(1000)
+        let distanceToTheSun   = sunDistance
         let position           = EarthGlobe.convertLatLonCoordinatesToXYZ(lat: adjustedLat, lon: adjustedLon, alt: distanceToTheSun)
         sun.position           = position
         
         sun.light              = SCNLight()
         sun.light!.type        = .omni
         sun.light!.castsShadow = false
-        sun.light!.temperature = 5600                       // The Sun's color temp at noon
-        sun.light!.intensity   = 3200
+        sun.light!.temperature = sunlightTemp           // The Sun's color temp at noon in Kelvin
+        sun.light!.intensity   = sunlightIntensity      // Sunlight intensity in lumens
         
         globe.addChildNode(sun)
 

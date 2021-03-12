@@ -12,12 +12,12 @@ import UIKit
 /// Struct used as a namespace to hold global variables and constants
 struct Globals {
     
-    static var isIPad                                           = false {
+    static var isIPad                                        = false {
         didSet {
             if isIPad {
-                Theme.navigationBarTitleFontSize = Theme.navigationBarTitleFontSizeForIPad
+                Theme.navigationBarTitleFontSize             = Theme.navigationBarTitleFontSizeForIPad
             } else {
-                Theme.navigationBarTitleFontSize = Theme.navigationBarTitleFontSizeForIPhone
+                Theme.navigationBarTitleFontSize             = Theme.navigationBarTitleFontSizeForIPhone
             }
         }
     }

@@ -12,24 +12,31 @@ import SceneKit
 /// The 3D Interactive Earth Globe Model
 class EarthGlobe {
     
-    static let markerWidth: CGFloat        = 0.16                               // The size factor for the marker
+    
+    // MARK: - Properties
+    
+    
+    static let markerWidth: CGFloat        = 0.16                               // Size factor for the marker
 
-    let ambientLightIntensity: CGFloat     = 100                                // The default value is 1000
+    let ambientLightIntensity: CGFloat     = 100                                // Note: default value is 1000
     let cameraAltitude                     = Globals.cameraAltitude
     let daysInAYear                        = Globals.numberOfDaysInAYear
     let defaultCameraFov                   = Globals.defaultCameraFov
     let distanceToISSOrbit                 = Globals.ISSOrbitAltitudeInScene
-    let dragWidthInDegrees                 = 270.0                              // The amount to rotate the globe on one edge-to-edge swipe (in degrees)
+    let dragWidthInDegrees                 = 270.0                              // Amount to rotate the globe on one edge-to-edge swipe (in degrees)
     let globeDefaultRotationSpeedInSeconds = 120.0                              // 360° revolution in n-seconds
     let globeRadiusFactor                  = Globals.globeRadiusFactor
-    let globeSegmentCount                  = 1024                               // The number of subdivisions along the sphere's (Earth's) polar & azimuth angles, similar to the latitude & longitude system on a globe of the Earth
+    let globeSegmentCount                  = 1024                               // Number of subdivisions along the sphere's (Earth's) polar & azimuth angles, similar to latitude & longitude on a globe of the Earth
     let markerAltitude                     = Globals.orbitalAltitudeFactor
     let maxFov                             = Globals.maxFov                     // Max zoom in degrees
     let minFov                             = Globals.minFov                     // Min zoom in degrees
-    let pipeRadius                         = 0.005
-    let pipeSegmentCount                   = 256                                // The number of subdivisions around the ring (orbit)
-    let ringSegmentCount                   = 512                                // The number of subdivisions along the ring (orbit)
+    let pipeRadius: CGFloat                = 0.005
+    let pipeSegmentCount                   = 256                                // Number of subdivisions around the ring (orbit)
+    let ringSegmentCount                   = 512                                // Number of subdivisions along the ring (orbit)
     let sceneBoxSize: CGFloat              = 1000.0
+    let sunDistance: Float                 = 1000                               // Relative distance to the Sun
+    let sunlightIntensity: CGFloat         = 3200                               // Default value is 1000 lumens
+    let sunlightTemp: CGFloat              = 6000                               // Default value is 6500 Kelvin
     
     var camera                             = SCNCamera()
     var cameraNode                         = SCNNode()
@@ -45,6 +52,8 @@ class EarthGlobe {
     var lastFovBeforeZoom : CGFloat?
     var lastPanLoc : CGPoint?
     
+    
+    // MARK: - Methods
     
     init() {
         

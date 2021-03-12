@@ -9,7 +9,7 @@
 import Foundation
 
 
-/// Format converters for coordinates
+/// A set of format converters for latitude and longitude coordinates
 struct CoordinateConversions: ConvertsToDegreesMinutesSeconds {
     
     /// Convert coordinates from decimal to degrees, minutes, seconds, and direction
