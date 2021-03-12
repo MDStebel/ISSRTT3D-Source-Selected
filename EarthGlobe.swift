@@ -207,7 +207,7 @@ class EarthGlobe {
             
             // As the user zooms in (smaller fieldOfView value), reduce finger travel
             let fovProportion        = (camera.fieldOfView - minFov) / (maxFov - minFov)
-            let fovProportionRadians = Float(fovProportion * CGFloat(dragWidthInDegrees)) * Globals.degreesToRadians
+            let fovProportionRadians = Float(fovProportion * CGFloat(dragWidthInDegrees)) * Float(Globals.degreesToRadians)
             let rotationAboutAxis    = Float(delta.width) * fovProportionRadians
             let tiltOfAxisItself     = Float(delta.height) * fovProportionRadians
             

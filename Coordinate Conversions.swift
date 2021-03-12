@@ -26,13 +26,13 @@ struct CoordinateConversions: ConvertsToDegreesMinutesSeconds {
         let latDegrees  = latSeconds / Int(Globals.numberOfSecondsInAnHour)
         latSeconds      = abs(latSeconds % Int(Globals.numberOfSecondsInAnHour))
         let latMinutes  = latSeconds / Int(Globals.numberOfSecondsInAMinute)
-        latSeconds %= Int(Globals.numberOfSecondsInAMinute)
+        latSeconds      %= Int(Globals.numberOfSecondsInAMinute)
         
         var longSeconds = Int(longitude * Double(Globals.numberOfSecondsInAnHour))
         let longDegrees = longSeconds / Int(Globals.numberOfSecondsInAnHour)
         longSeconds     = abs(longSeconds % Int(Globals.numberOfSecondsInAnHour))
         let longMinutes = longSeconds / Int(Globals.numberOfSecondsInAMinute)
-        longSeconds %= Int(Globals.numberOfSecondsInAMinute)
+        longSeconds     %= Int(Globals.numberOfSecondsInAMinute)
         
         return String(format: format, abs(latDegrees), latMinutes, latSeconds, {return latDegrees >= 0 ? "N" : "S"}(), abs(longDegrees), longMinutes, longSeconds, {return longDegrees >= 0 ? "E" : "W"}())
         

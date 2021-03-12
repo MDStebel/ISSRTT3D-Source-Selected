@@ -31,14 +31,15 @@ extension GlobeFullViewController {
                     self?.latitude  = String(parsedOrbitalPosition.latitude)
                     self?.longitude = String(parsedOrbitalPosition.longitude)
                     
-                    // Update globe
-                    if Globals.globeBackgroundWasChanged {            // Background image may have been changed by user in Settings. If so, change it.
+                    // Update the scene
+                    // Background image may have been changed by user in Settings. If so, change it.
+                    if Globals.globeBackgroundWasChanged {
                         DispatchQueue.main.async {
                             self?.setGlobeBackgroundImage()
                         }
                         Globals.globeBackgroundWasChanged = false
                     }
-                    
+                    // Now, update globe
                     DispatchQueue.main.async {
                         self?.updateEarthGlobeScene(in: self!.fullGlobe, latitude: self!.latitude, longitude: self!.longitude, lastLat: &self!.lastLat)
                         self?.isRunningLabel?.text = "Running"

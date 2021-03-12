@@ -57,12 +57,12 @@ extension EarthGlobe {
         
         // Set the lat, lon, and inclination corrections that are be needed to align orbital properly to the ISS and its heading
         var orbitalCorrectionForInclination: Float
-        let adjustedLat             = lat + Globals.oneEightyDegrees
-        let adjustedLon             = lon - Globals.oneEightyDegrees
-        let orbitalCorrectionForLon = adjustedLon * Globals.degreesToRadians    // lon & lat used as angular displacement from the origin (lon-origin=lon-0=lon)
-        let orbitalCorrectionForLat = adjustedLat * Globals.degreesToRadians
+        let adjustedLat             = lat + Float(Globals.oneEightyDegrees)
+        let adjustedLon             = lon - Float(Globals.oneEightyDegrees)
+        let orbitalCorrectionForLon = adjustedLon * Float(Globals.degreesToRadians)  // lon & lat used as angular displacement from the origin (lon-origin=lon-0=lon)
+        let orbitalCorrectionForLat = adjustedLat * Float(Globals.degreesToRadians)
         let absLat                  = abs(lat)
-        let exponent                = Float.pi / 2.5 + absLat * Globals.degreesToRadians / Globals.ISSOrbitInclinationInRadians  // Adjustment to the inclination (z-axis) as we approach max latitudes.
+        let exponent                = Float.pi / 2.5 + absLat * Float(Globals.degreesToRadians) / Globals.ISSOrbitInclinationInRadians  // Adjustment to the inclination (z-axis) as we approach max latitudes.
         switch absLat {                                                         // Apply a power function to the adjustment (an exponent) based on the latitude.
         case _ where absLat <= 25.0 :
             orbitalCorrectionForInclination = exponent
@@ -166,10 +166,10 @@ extension EarthGlobe {
     /// - Returns: Position as a SCNVector3
     static func convertLatLonCoordinatesToXYZ(lat: Float, lon: Float, alt: Float) -> SCNVector3 {
         
-        let cosLat    = cosf(lat * Globals.degreesToRadians)
-        let sinLat    = sinf(lat * Globals.degreesToRadians)
-        let cosLon    = cosf(lon * Globals.degreesToRadians)
-        let sinLon    = sinf(lon * Globals.degreesToRadians)
+        let cosLat    = cosf(lat * Float(Globals.degreesToRadians))
+        let sinLat    = sinf(lat * Float(Globals.degreesToRadians))
+        let cosLon    = cosf(lon * Float(Globals.degreesToRadians))
+        let sinLon    = sinf(lon * Float(Globals.degreesToRadians))
         let x         = alt * cosLat * cosLon
         let y         = alt * cosLat * sinLon
         let z         = alt * sinLat

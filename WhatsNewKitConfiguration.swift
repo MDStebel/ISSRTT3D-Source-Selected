@@ -22,7 +22,7 @@ private let whatsNew = WhatsNew(
         WhatsNew.Item(
             title: "Improvements & Fixes",
             subtitle: """
-                      I improved on my previous subsolar point calculation algorithms. Increases the accuracy and efficiency of the calculations. It also uses more efficient algorithms for the equation of time, the mean anomaly, and the geometric mean longitude. The bottom line is that the real-time position of the Sun is now even more accurate.
+                      Improved table scrolling in Passes and Crew screens. Bug fixes and other under-the-hood stuff.
                       """,
             image: UIImage(named: "icons8-bug_filled")
         ),
@@ -34,18 +34,18 @@ private let whatsNew = WhatsNew(
             image: UIImage(named: "icons8-megaphone_filled.imageset")
         ),
         WhatsNew.Item(
-            title: "Getting Support",
-            subtitle: """
-                      Have questions or issues? Use "Spacey" the chatbot at https://issrtt.com. You can get there easily from Settings. Just tap \(Globals.settingsChar) at the top-left.
-                      """,
-            image: UIImage(named: "icons8-customer_support")
-        ),
-        WhatsNew.Item(
             title: "Built-In Help",
             subtitle: """
                       To learn how to use this app, please tap on the \(Globals.helpChar) button (top-right). Each screen has its own help button that explains how to use a specfic feature.
                       """,
             image: UIImage(named: "icons8-help_filled")
+        ),
+        WhatsNew.Item(
+            title: "Getting Support",
+            subtitle: """
+                      Have questions or issues? Use "Spacey" the chatbot at https://issrtt.com. You can get there easily from Settings. Just tap \(Globals.settingsChar) at the top-left.
+                      """,
+            image: UIImage(named: "icons8-customer_support")
         )
     ]
 )
