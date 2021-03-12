@@ -189,7 +189,7 @@ struct AstroCalculations {
         let GMT = (localHour - secondsFromGMT / Globals.numberOfSecondsInAnHour - timeCorrection * Globals.numberOfHoursInADay.truncatingRemainder(dividingBy: Globals.numberOfHoursInADay)).truncatingRemainder(dividingBy: Globals.numberOfHoursInADay)
         
         // Now, calculate the difference between current GMT and noontime in hours
-        let noonHourDelta = Globals.noonTime - GMT - eOT / Globals.numberOfMinutesInAnHour + dayCorrection
+        let noonHourDelta = min(Globals.noonTime - GMT - eOT / Globals.numberOfMinutesInAnHour + dayCorrection, 12.0) // Force to <= 12
         
         // The subsolar longitude is the difference in hours times the number of degrees per hour (360/24 = 15 deg/hr)
         let subSolarLon = noonHourDelta * Globals.degreesLongitudePerHour
@@ -199,8 +199,6 @@ struct AstroCalculations {
             lonCorrection = Globals.oneEightyDegrees
         } else if subSolarLon < -Globals.oneEightyDegrees && GMT >= Globals.noonTime {
             lonCorrection = localHour >= GMT ? 0 : Globals.oneEightyDegrees
-        } else if subSolarLon > Globals.oneEightyDegrees {
-            lonCorrection = -subSolarLon - -179.99       // Keeps longitude <= 180 in case of a rounding error
         } else if GMT >= Globals.numberOfHoursInADay {
             lonCorrection = Globals.oneEightyDegrees
         } else {
