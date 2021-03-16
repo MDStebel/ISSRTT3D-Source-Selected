@@ -30,6 +30,7 @@ extension EarthGlobeProtocol {
     /// - Parameters:
     ///   - globe: Which globe instance to set up in the scene
     ///   - scene: The scene to use
+    ///   - hasTintedBackground: Bool that is True if we're settin up the overlay globe on the tracking screen, or False if we're setting up the fullscreen globe
     func setUpEarthGlobeScene(for globe: EarthGlobe, in scene: SCNView, hasTintedBackground: Bool) {
         
         globe.setupInSceneView(scene, customPinchGestureIsEnabled: false)
@@ -37,6 +38,8 @@ extension EarthGlobeProtocol {
         if hasTintedBackground {
             scene.backgroundColor     = UIColor(named: Theme.popupBgd)?.withAlphaComponent(0.60)        // Tinted for map view overlay mode
             scene.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
+            scene.layer.cornerRadius  = 10
+            scene.layer.masksToBounds = true
         } else {
             scene.backgroundColor     = UIColor(red: 0, green: 0, blue: 0, alpha: 0)                    // Transparent background for full-screen mode
         }

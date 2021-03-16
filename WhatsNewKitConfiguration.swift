@@ -22,7 +22,7 @@ private let whatsNew = WhatsNew(
         WhatsNew.Item(
             title: "Improvements & Fixes",
             subtitle: """
-                      Improved table scrolling in Passes and Crew screens. Bug fixes and other under-the-hood stuff.
+                      Just some under-the-hood tune-ups.
                       """,
             image: UIImage(named: "icons8-bug_filled")
         ),

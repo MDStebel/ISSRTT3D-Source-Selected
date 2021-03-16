@@ -162,9 +162,9 @@ extension EarthGlobe {
     
     /// Convert map coordinates from lat, lon, altitude to SceneKit x, y, z coordinates
     /// - Parameters:
-    ///   - lat: Latitude as a decimal
-    ///   - lon: Longitude as a decimal
-    ///   - alt: altitude as a decimal
+    ///   - lat: Latitude as a decimal Float
+    ///   - lon: Longitude as a decimal Float
+    ///   - alt: altitude as a decimal Float
     /// - Returns: Position as a SCNVector3
     static func convertLatLonCoordinatesToXYZ(lat: Float, lon: Float, alt: Float) -> SCNVector3 {
         

@@ -14,10 +14,12 @@ import MapKit
 /// Full-screen 3D interactive globe VC
 class GlobeFullViewController: UIViewController, EarthGlobeProtocol {
     
+    
     // MARK: - Properties
     
+    
     struct Constants {
-        static let apiEndpointAString       = "---"
+        static let apiEndpointAString       = "https://api.wheretheiss.at/v1/satellites/25544"
         static let fontForTitle             = Theme.nasa
         static let segueToHelpFromGlobe     = "segueToHelpFromGlobe"
         static let segueToSettings          = "segueToSettings"

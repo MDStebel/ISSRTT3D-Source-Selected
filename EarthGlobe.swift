@@ -10,7 +10,7 @@ import SceneKit
 
 
 /// The 3D Interactive Earth Globe Model
-class EarthGlobe {
+final class EarthGlobe {
     
     
     // MARK: - Properties
@@ -33,7 +33,7 @@ class EarthGlobe {
     let pipeRadius: CGFloat                = 0.005
     let pipeSegmentCount                   = 256                                // Number of subdivisions around the ring (orbit)
     let ringSegmentCount                   = 512                                // Number of subdivisions along the ring (orbit)
-    let sceneBoxSize: CGFloat              = 1000.0
+    let sceneBoxSize: CGFloat              = 1000
     let sunDistance: Float                 = 1000                               // Relative distance to the Sun
     let sunlightIntensity: CGFloat         = 3200                               // Default value is 1000 lumens
     let sunlightTemp: CGFloat              = 6000                               // Default value is 6500 Kelvin
@@ -54,6 +54,7 @@ class EarthGlobe {
     
     
     // MARK: - Methods
+    
     
     init() {
         

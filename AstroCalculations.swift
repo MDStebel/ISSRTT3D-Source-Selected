@@ -12,6 +12,7 @@ import Foundation
 /// A set of functions that provide solar position calculations
 struct AstroCalculations {
     
+    
     /// Convert a given Gregorian date to a Julian date
     /// - Parameter date: Gregorian date to convert as a Date
     /// - Returns: Julian date as a Double
@@ -174,10 +175,9 @@ struct AstroCalculations {
         let localMins      = Double(Calendar.current.component(.minute, from: now))
         let localHour      = Double(Calendar.current.component(.hour, from: now)) + localMins / Globals.numberOfMinutesInAnHour   // The current time as a decimal value
         let secondsFromGMT = Double(TimeZone.current.secondsFromGMT())
-    //    let daylightSavingsTimeOffset = Double(TimeZone.current.daylightSavingTimeOffset())
         
         // Correct for time and day relative to GMT and the International Date Line
-        if secondsFromGMT < 0 {
+        if secondsFromGMT <= 0 {
             timeCorrection = 1
             dayCorrection  = 0
         } else {
@@ -189,7 +189,7 @@ struct AstroCalculations {
         let GMT = (localHour - secondsFromGMT / Globals.numberOfSecondsInAnHour - timeCorrection * Globals.numberOfHoursInADay.truncatingRemainder(dividingBy: Globals.numberOfHoursInADay)).truncatingRemainder(dividingBy: Globals.numberOfHoursInADay)
         
         // Now, calculate the difference between current GMT and noontime in hours
-        let noonHourDelta = min(Globals.noonTime - GMT - eOT / Globals.numberOfMinutesInAnHour + dayCorrection, 12.0) // Force to <= 12
+        let noonHourDelta = min(Globals.noonTime - GMT - eOT / Globals.numberOfMinutesInAnHour + dayCorrection, 12.0).truncatingRemainder(dividingBy: Globals.numberOfHoursInADay)  // Force to <= 12
         
         // The subsolar longitude is the difference in hours times the number of degrees per hour (360/24 = 15 deg/hr)
         let subSolarLon = noonHourDelta * Globals.degreesLongitudePerHour
