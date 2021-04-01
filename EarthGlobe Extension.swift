@@ -37,6 +37,8 @@ extension EarthGlobe {
     
     
     /// Create an orbital track around the globe at the exact ISS orbital inclination and current ISS location, heading, and altitude
+    ///
+    /// Uses an algorithm that keeps the orientation of the track at the right angle even though the position of the globe in the scene uses different coordinate system.
     /// - Parameters:
     ///   - lat: Latitude as a decimal value
     ///   - lon: Longitude as a decimal value
@@ -63,9 +65,9 @@ extension EarthGlobe {
         let orbitalCorrectionForLon                = adjustedLon * Float(Globals.degreesToRadians)  // lon & lat used as angular displacement from the origin (lon-origin=lon-0=lon)
         let orbitalCorrectionForLat                = adjustedLat * Float(Globals.degreesToRadians)
         let absLat                                 = abs(lat)
-        let exponent                               = Float.pi / 2.5 + absLat * Float(Globals.degreesToRadians) / Globals.ISSOrbitInclinationInRadians  // Adjustment to the inclination (z-axis) as we approach max latitudes.
+        let exponent                               = Float.pi / 2.5 + absLat * Float(Globals.degreesToRadians) / Globals.ISSOrbitInclinationInRadians  // Adjustment to the inclination (z-axis) as we approach max latitudes
         
-        switch absLat {  // Apply a power function to the adjustment (an exponent) based on the latitude.
+        switch absLat {  // Apply a power function to the adjustment (exponent) based on the latitude
         case _ where absLat <= 25.0 :
             orbitalCorrectionForInclination = exponent
         case _ where absLat <= 35.0 :
@@ -79,6 +81,7 @@ extension EarthGlobe {
         default :
             orbitalCorrectionForInclination = pow(exponent, 4.0)
         }
+        
         let ISSOrbitInclinationInRadiansCorrected = pow(Globals.ISSOrbitInclinationInRadians, orbitalCorrectionForInclination) * headingFactor
         
         // Create 4x4 transform matrices for each rotation and initialize them as the identity matrix

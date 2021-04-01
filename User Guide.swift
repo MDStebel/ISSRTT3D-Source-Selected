@@ -186,7 +186,7 @@ struct UserGuide {
     </ul>
     <div id="globe"></div>
     <h2>Interactive 3D Globe</h2>
-    <p>From the Tracking screen, tapping the expand icon on the globe overlay, or the globe button on the tab bar, expands the globe to fullscreen mode and hides the map.</p>
+    <p>From the Tracking screen, tapping the expand icon on the globe overlay, or the globe icon on the tab bar, expands the globe to fullscreen mode and hides the map.</p>
     <p>The 3D interactive globe shows the current position of the ISS and its orbital track. This is a photorealistic model of the Earth complete with accurate Sun subsolar position, specular reflections on the water, seasonal tilt, mountain shadows, and other details.</p>
     <p>The globe starts updating automatically when in full-screen mode.</p>
     <h4>Using Gestures</h4>
@@ -235,7 +235,7 @@ struct UserGuide {
     <p>Tap the collapse icon on the upper-right of the scene to return to the map and resume tracking.</p>
     <div id="crew"></div>
     <h2>Crew</h2>
-    <p>Tap the team button at the bottom of the screen to get a table of information about the current ISS crew.</p>
+    <p>Tap the astronaut icon at the bottom of the screen to get a table of information about the current ISS crew.</p>
     <h4> Crew Bios &amp; Tweets</h4>
     <p>Tap any cell in the table to pop-up the detail view for that crew member. This will display a brief bio. To view the full bio, tap the biography icon.</p>
     <p>To visit the crew member's Twitter feed, open their Twitter profile by tapping the Twitter button. If you do not have the Twitter app installed, it will open in Safari instead. If the crew member does not have a Twitter profile, the Twitter button will not be displayed. Return to ISS Real-Time Tracker 3D by tapping "◀︎ ISS Tracker" on the top-left of Twitter.</p>
@@ -282,7 +282,7 @@ struct UserGuide {
     static let passesHelp =
     """
     \(head)
-    <p>Tapping the binoculars icon at the bottom of the tracking (main) screen starts the process of computing up-coming visible ISS passes. First, ISS Real-Time Tracker 3D gets your current location's coordinates. Then, it computes the visible passes for that location. The default number of days to predict passes is set in Settings. The passes are listed in chronological order along with detailed viewing data.</p>
+    <p>This screen computes and presents a table of up-coming visible ISS passes for your location. First, ISS Real-Time Tracker 3D gets your current location's coordinates. Then, it computes the visible passes for that location. The default number of days to predict passes is set in Settings. The passes are listed in chronological order along with detailed viewing data.</p>
     <p>Data for each pass includes:</p>
     <ul>
     <li>

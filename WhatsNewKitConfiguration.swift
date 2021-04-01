@@ -20,18 +20,18 @@ private let whatsNew = WhatsNew(
     // The features and other information to showcase
     items: [
         WhatsNew.Item(
-            title: "Improvements & Fixes",
+            title: "New in This Release",
             subtitle: """
-                      Just some under-the-hood tune-ups.
-                      """,
-            image: UIImage(named: "icons8-bug_filled")
-        ),
-        WhatsNew.Item(
-            title: "Navigating the 3D Earth Model",
-            subtitle: """
-                      Use gestures to move around the 3D Earth model, zoom in/out, tilt, translate, autorotate, and more. Tap the help (?) button on the main screen or in the fullscreen 3D Globe to learn more.
+                      Improved tab bar icons.
                       """,
             image: UIImage(named: "icons8-megaphone_filled.imageset")
+        ),
+        WhatsNew.Item(
+            title: "Improvements & Fixes",
+            subtitle: """
+                      Performance enhancements, user interface improvements, and bug fixes.
+                      """,
+            image: UIImage(named: "icons8-bug_filled")
         ),
         WhatsNew.Item(
             title: "Built-In Help",

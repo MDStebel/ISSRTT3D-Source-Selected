@@ -14,7 +14,7 @@ struct CoordinateConversions: ConvertsToDegreesMinutesSeconds {
     
     /// Convert coordinates from decimal to degrees, minutes, seconds, and direction
     ///
-    /// This is a format conversion.
+    /// This is a format conversion only.
     /// - Parameters:
     ///   - latitude: Latitude as a Double.
     ///   - longitude: Longitude as a Double.
@@ -40,6 +40,8 @@ struct CoordinateConversions: ConvertsToDegreesMinutesSeconds {
     
     
     /// Convert coordinates from degrees, minutes, seconds, and direction to decimal
+    ///
+    /// This is a format conversion only.
     /// - Parameters:
     ///   - degrees: Degrees as a Double.
     ///   - minutes: Minutes as a Double.

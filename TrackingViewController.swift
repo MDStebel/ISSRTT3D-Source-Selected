@@ -46,8 +46,8 @@ class TrackingViewController: UIViewController, MKMapViewDelegate, UIGestureReco
     /// Local constants
     struct Constants {
         static let animationOffsetY: CGFloat    = 90.0
-        static let apiEndpointAString           = "---"
-        static let apiEndpointBString           = "---"
+        static let apiEndpointAString           = "https://api.wheretheiss.at/v1/satellites/25544"
+        static let apiEndpointBString           = "http://api.open-notify.org/iss-now.json"
         static let defaultTimerInterval         = 3.0
         static let fontForTitle                 = Theme.nasa
         static let helpTitle                    = "User Guide"
@@ -60,8 +60,8 @@ class TrackingViewController: UIViewController, MKMapViewDelegate, UIGestureReco
     }
     
     private struct TrackingButtonImages {
-        static let play                         = "icons8-play"
-        static let pause                        = "icons8-pause"
+        static let play                         = "Track-Play"
+        static let pause                        = "Track-Pause"
     }
     
     private struct SoundtrackButtonImages {

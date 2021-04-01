@@ -18,8 +18,6 @@ class SettingsTableViewController: UITableViewController {
     private let defaultMapType              = 2                                                     // Hybrid map type is the default
     private let defaultMarkerType           = 0                                                     // ISS icon marker type is the default
     private let defaultZoomFactor           = 2                                                     // Medium zoom is the default
-    private let urlForFacebookLink          = "https://www.facebook.com/sciencewithmikey"
-    private let urlForMyOtherApps           = "itms://itunes.apple.com/us/developer/michael-stebel/id1027443988"
     private let urlForRating                = "itms://itunes.apple.com/WebObjects/MZStore.woa/wa/viewContentsUserReviews?type=Purple+Software&id=1079990061"
     private let versionNumber               = Globals.versionNumber
     private let websiteURL                  = "https://www.issrtt.com/#support"
@@ -229,26 +227,7 @@ class SettingsTableViewController: UITableViewController {
         }
         
     }
-    
-    
-    ///  Got to my other apps on the App Store
-    @IBAction private func linkToMyOtherApps(_ sender: UIButton) {
-        
-        if let iTunesLinkForMyOtherApps = URL(string: urlForMyOtherApps), UIApplication.shared.canOpenURL(iTunesLinkForMyOtherApps) {
-            UIApplication.shared.open(iTunesLinkForMyOtherApps, options: convertToUIApplicationOpenExternalURLOptionsKeyDictionary([:]), completionHandler: { (success) in })
-        }
-        
-    }
-    
-    
-    @IBAction func likeOnFacebook(_ sender: UIButton) {
-        
-        if let facebookLink = URL(string: urlForFacebookLink), UIApplication.shared.canOpenURL(facebookLink) {
-            UIApplication.shared.open(facebookLink, options: convertToUIApplicationOpenExternalURLOptionsKeyDictionary([:]), completionHandler: { (success) in })
-        }
-        
-    }
-    
+
     
     /// Reset all settings to their defaults
     @IBAction private func resetSettings(_ sender: UIBarButtonItem) {

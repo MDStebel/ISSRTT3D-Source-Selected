@@ -14,10 +14,10 @@ extension DateFormatter: StringDateConversions {
     
     /// Take a date and convert it from its original format to a new format and return optional string.
     /// - Parameters:
-    ///   - date: Date string.
-    ///   - fromStringFormat: Format date is in.
-    ///   - toStringFormat: Format used in converting date.
-    /// - Returns: Optional date string.
+    ///   - date: Date string
+    ///   - fromStringFormat: Format date is in
+    ///   - toStringFormat: Format used in converting date
+    /// - Returns: Optional date string
     func convert(from date: String, fromStringFormat: String, toStringFormat: String) -> String? {
         
         dateFormat = fromStringFormat
@@ -38,8 +38,8 @@ extension DateFormatter: StringDateConversions {
     /// Convert a Date to a date in String representation.
     /// - Parameters:
     ///   - date: Date
-    ///   - withOutputFormat: Format to use.
-    /// - Returns: Date as a string.
+    ///   - withOutputFormat: Format to use
+    /// - Returns: Date as a string
     func getCurrentDateAndTimeInAString(forCurrent date: Date, withOutputFormat: String) -> String {
         
         dateFormat = withOutputFormat
