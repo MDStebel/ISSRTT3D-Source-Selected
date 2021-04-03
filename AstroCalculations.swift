@@ -152,9 +152,9 @@ struct AstroCalculations {
         let geomMeanLongitude        = geometricMeanLongitudeOfSunAtCurrentTime(t: jC)
         let sunTrueLongitude         = geomMeanLongitude + sunEquationOfCenter(t: jC)
         let latitudeOfSun            = asin(sin(sunTrueLongitude * Double(Globals.degreesToRadians)) * sin(Globals.earthTiltInRadians))
-        let sunTrueLatitudeInRadians = latitudeOfSun * Double(Globals.radiansToDegrees)
+        let sunTrueLatitudeInDegrees = latitudeOfSun * Double(Globals.radiansToDegrees)
         
-        return sunTrueLatitudeInRadians
+        return sunTrueLatitudeInDegrees
         
     }
     
