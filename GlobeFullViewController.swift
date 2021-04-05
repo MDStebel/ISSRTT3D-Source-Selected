@@ -6,36 +6,53 @@
 //  Copyright © 2020-2021 Michael Stebel Consulting, LLC. All rights reserved.
 //
 
+import AVFoundation
 import UIKit
-import SceneKit
 import MapKit
+import SceneKit
 
 
 /// Full-screen 3D interactive globe VC
-class GlobeFullViewController: UIViewController, EarthGlobeProtocol {
+class GlobeFullViewController: UIViewController, EarthGlobeProtocol, AVAudioPlayerDelegate {
     
     
     // MARK: - Properties
     
     
     struct Constants {
-        static let apiEndpointAString       = "---"
-        static let fontForTitle             = Theme.nasa
-        static let segueToHelpFromGlobe     = "segueToHelpFromGlobe"
-        static let segueToSettings          = "segueToSettings"
-        static let timerValue               = 3.0                           // Number of seconds between position updates
+        static let apiEndpointAString   = "https://api.wheretheiss.at/v1/satellites/25544"
+        static let fontForTitle         = Theme.nasa
+        static let segueToHelpFromGlobe = "segueToHelpFromGlobe"
+        static let segueToSettings      = "segueToSettings"
+        static let timerValue           = 3.0                           // Number of seconds between position updates
     }
     
+    private struct SoundtrackButtonImage {
+        static let on                   = "music on"
+        static let off                  = "music off"
+    }
 
-    var fullGlobe                           = EarthGlobe()
-    var globeBackgroundImageName            = ""
-    var lastLat: Float                      = 0                             // To conform with the EarthGlobeProtocol, will save the last latitude
-    var latitude                            = ""
-    var longitude                           = ""
-    var timer                               = Timer()
+    var fullGlobe                       = EarthGlobe()
+    var globeBackgroundImageName        = ""
+    var lastLat: Float                  = 0                             // To conform with the EarthGlobeProtocol, will save the last latitude
+    var latitude                        = ""
+    var longitude                       = ""
+    var timer                           = Timer()
     
-    private var helpTitle                   = "3D Globe Help"
+    private var helpTitle               = "3D Globe Help"
     
+    // Soundtrack properties
+    var soundtrackMusicPlayer: AVAudioPlayer?
+    let soundtrackFilePathString = Theme.soundTrack
+    var soundtrackButtonOn: Bool = false {
+        didSet {
+            if soundtrackButtonOn {
+                soundtrackMusicButton.image = UIImage(named: SoundtrackButtonImage.on)
+            } else {
+                soundtrackMusicButton.image = UIImage(named: SoundtrackButtonImage.off)
+            }
+        }
+    }
     
     // MARK: - Outlets
     
@@ -55,6 +72,8 @@ class GlobeFullViewController: UIViewController, EarthGlobeProtocol {
             isRunningLabel.text = "Starting Up"
         }
     }
+    @IBOutlet weak var soundtrackMusicButton: UIBarButtonItem!
+    
     
     
     // MARK: - Methods
@@ -96,6 +115,7 @@ class GlobeFullViewController: UIViewController, EarthGlobeProtocol {
         super.viewDidLoad()
         
         setUpAppDelegate()
+        setUpSoundTrackMusicPlayer()
 
     }
     
@@ -130,6 +150,7 @@ class GlobeFullViewController: UIViewController, EarthGlobeProtocol {
     override func viewWillDisappear(_ animated: Bool) {
         
         super.viewWillDisappear(animated)
+        soundtrackMusicPlayer?.stop()
         
         stopUpdatingGlobe()
         
@@ -192,6 +213,43 @@ class GlobeFullViewController: UIViewController, EarthGlobeProtocol {
     /// Unwind segue
     @IBAction func unwindFromOtherVCs(unwindSegue: UIStoryboardSegue) {
 
+    }
+    
+    
+    /// Set up audio player to play soundtrack without stopping any audio that was playing when app launched
+    private func setUpSoundTrackMusicPlayer() {
+        
+        if let bundlePath = Bundle.main.path(forResource: soundtrackFilePathString, ofType: nil) {
+            
+            let url = URL.init(fileURLWithPath: bundlePath)
+            do {
+                try soundtrackMusicPlayer = AVAudioPlayer(contentsOf: url)
+                soundtrackMusicPlayer?.delegate = self
+            } catch {
+                return
+            }
+            
+        } else {
+            return
+        }
+        
+        soundtrackMusicPlayer?.numberOfLoops = -1       // Loop indefinitely
+        
+    }
+    
+    
+    /// Toggle soundtrack on and off
+    
+    @IBAction func toggleMusicSoundtrack(_ sender: UIBarButtonItem) {
+        
+        if soundtrackButtonOn {
+            soundtrackMusicPlayer?.pause()
+        } else {
+            soundtrackMusicPlayer?.play()
+        }
+        
+        soundtrackButtonOn.toggle()
+        
     }
     
     

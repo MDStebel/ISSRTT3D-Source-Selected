@@ -46,8 +46,8 @@ class TrackingViewController: UIViewController, MKMapViewDelegate, UIGestureReco
     /// Local constants
     struct Constants {
         static let animationOffsetY: CGFloat    = 90.0
-        static let apiEndpointAString           = "---"
-        static let apiEndpointBString           = "---"
+        static let apiEndpointAString           = "https://api.wheretheiss.at/v1/satellites/25544"
+        static let apiEndpointBString           = "http://api.open-notify.org/iss-now.json"
         static let defaultTimerInterval         = 3.0
         static let fontForTitle                 = Theme.nasa
         static let helpTitle                    = "User Guide"
@@ -64,7 +64,7 @@ class TrackingViewController: UIViewController, MKMapViewDelegate, UIGestureReco
         static let pause                        = "Track-Pause"
     }
     
-    private struct SoundtrackButtonImages {
+    private struct SoundtrackButtonImage {
         static let on                           = "music on"
         static let off                          = "music off"
     }
@@ -85,9 +85,9 @@ class TrackingViewController: UIViewController, MKMapViewDelegate, UIGestureReco
     var soundtrackButtonOn: Bool = false {
         didSet {
             if soundtrackButtonOn {
-                soundtrackMusicButton.setImage(UIImage(named: SoundtrackButtonImages.on), for: .normal)
+                soundtrackMusicButton.setImage(UIImage(named: SoundtrackButtonImage.on), for: .normal)
             } else {
-                soundtrackMusicButton.setImage(UIImage(named: SoundtrackButtonImages.off), for: .normal)
+                soundtrackMusicButton.setImage(UIImage(named: SoundtrackButtonImage.off), for: .normal)
             }
         }
     }
@@ -457,7 +457,7 @@ class TrackingViewController: UIViewController, MKMapViewDelegate, UIGestureReco
         }
         
         soundtrackMusicPlayer?.pause()
-        playButton?.image = UIImage(named: TrackingButtonImages.play, in: nil, compatibleWith: nil)     // While paused, change pause to play
+        playButton?.image = UIImage(named: TrackingButtonImages.play, in: nil, compatibleWith: nil)     // While paused, change pause icon to play icon
         
     }
     
@@ -872,7 +872,7 @@ class TrackingViewController: UIViewController, MKMapViewDelegate, UIGestureReco
         
         if running! {
             if soundtrackButtonOn {
-                soundtrackMusicPlayer?.stop()
+                soundtrackMusicPlayer?.pause()
             } else {
                 soundtrackMusicPlayer?.play()
             }

@@ -231,8 +231,11 @@ struct UserGuide {
     <li>
     <h6>To disable auto-rotation, as well as to enable/disable the globe entirely, go to Settings.</h6>
     </li>
+    <li>
+    <h6>The music soundtrack will be disabled (not play) by default. Click the ♪ icon at the upper-right to toggle the soundtrack on/off.</h6>
+    </li>
     </ul>
-    <p>Tap the collapse icon on the upper-right of the scene to return to the map and resume tracking.</p>
+    <p>Tap the collapse icon on the upper-right of the scene to return to the main tracking screen.</p>
     <div id="crew"></div>
     <h2>Crew</h2>
     <p>Tap the astronaut icon at the bottom of the screen to get a table of information about the current ISS crew.</p>
@@ -377,8 +380,11 @@ struct UserGuide {
     <li>
     <h6>To disable auto-rotation, as well as to enable/disable the globe entirely, go to Settings.</h6>
     </li>
+    <li>
+    <h6>The music soundtrack will be disabled (not play) by default. Click the ♪ icon at the upper-right to toggle the soundtrack on/off.</h6>
+    </li>
     </ul>
-    <p>Tap the collapse icon on the upper-right of the scene to return to the map and resume tracking.</p>
+    <p>Tap the collapse icon on the upper-right of the scene to return to the main tracking screen.</p>
     \(tail)
     """
     

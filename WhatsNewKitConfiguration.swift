@@ -22,7 +22,7 @@ private let whatsNew = WhatsNew(
         WhatsNew.Item(
             title: "New in This Release",
             subtitle: """
-                      Improved tab bar icons.
+                      Beautiful new soundtrack. The soundtrack can now be played in the fullscreen 3D Globe as well as the Tracking screen.
                       """,
             image: UIImage(named: "icons8-megaphone_filled.imageset")
         ),

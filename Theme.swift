@@ -9,7 +9,7 @@
 import UIKit
 
 
-/// Original theme used in the app
+/// The main theme used in the app
 struct Theme {
     
     static let appFont                                      = "Avenir Book"
@@ -17,13 +17,14 @@ struct Theme {
     static let atlBgd                                       = "Alternate Background"
     static let bgd                                          = "Background"
     static let cellBackgroundColorAlpha: CGFloat            = 0.15
+    static let cornerRadius: CGFloat                        = 15
     static let issrttWhite                                  = "ISSRTT-White"
     static let lblBgd                                       = "Label Background"
     static let nasa                                         = "nasalization"
     static let navigationBarTitleFontSizeForIPad: CGFloat   = 24
     static let navigationBarTitleFontSizeForIPhone: CGFloat = 20
     static let popupBgd                                     = "Pop-Up and Tab Bar Background"
-    static let soundTrack                                   = "064349285-space-station.wav"
+    static let soundTrack                                   = "122607755-opening-chakras-new-age-medita.wav"
     static let star                                         = "StarColor"
     static let tblBgd                                       = "Table Background"
     static let tint                                         = "Tint"
