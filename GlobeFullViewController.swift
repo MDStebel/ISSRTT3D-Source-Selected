@@ -20,7 +20,7 @@ class GlobeFullViewController: UIViewController, EarthGlobeProtocol, AVAudioPlay
     
     
     struct Constants {
-        static let apiEndpointAString   = "---"
+        static let apiEndpointAString   = "https://api.wheretheiss.at/v1/satellites/25544"
         static let fontForTitle         = Theme.nasa
         static let segueToHelpFromGlobe = "segueToHelpFromGlobe"
         static let segueToSettings      = "segueToSettings"
@@ -80,7 +80,6 @@ class GlobeFullViewController: UIViewController, EarthGlobeProtocol, AVAudioPlay
     
     
     /// Set the space image to use for the background
-    /// - Parameter selection: Integer corresponding to the selected image index (based on slider control value, for example)
     func setGlobeBackgroundImage() {
         
         switch Globals.globeBackgroundImageSelection {

@@ -20,16 +20,16 @@ private let whatsNew = WhatsNew(
     // The features and other information to showcase
     items: [
         WhatsNew.Item(
-            title: "New in This Release",
+            title: "Did You Know?",
             subtitle: """
-                      Beautiful new soundtrack. The soundtrack can now be played in the fullscreen 3D Globe as well as the Tracking screen.
+                      You use gestures to move around the 3D Earth model, zoom in/out, tilt, translate, and more. Tap the help (?) button on the main screen or in the fullscreen 3D Globe to learn more.
                       """,
             image: UIImage(named: "icons8-megaphone_filled.imageset")
         ),
         WhatsNew.Item(
             title: "Improvements & Fixes",
             subtitle: """
-                      Performance enhancements, user interface improvements, and bug fixes.
+                      Under-the-hood stuff to improve the performance of the 3D Earth model.
                       """,
             image: UIImage(named: "icons8-bug_filled")
         ),
@@ -53,7 +53,7 @@ private let whatsNew = WhatsNew(
 
 // Initialize a detail button
 let detailButton = WhatsNewViewController.DetailButton(
-    title: "ISS Real-Time Tracker Version \(WhatsNew.Version.current())",
+    title: "ISS Real-Time Tracker 3D Version \(WhatsNew.Version.current())",
     action: .website(url: "")
 )
 
