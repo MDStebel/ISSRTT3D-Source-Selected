@@ -21,16 +21,15 @@ struct Astronaut {
     let name: String
     let title: String
     let country: String
-    let countryFlag: String?
     let spaceCraft: String
     let launchDate: String
     let bio: String
+    let launchVehicle: String
     let shortBioBlurb: String?
     let image: String?
     let twitter: String?
     let mission: String?
     let expedition: String?
-    let launchVehicle: String
     
     var shortAstronautDescription: String {
         return name + "  " + (flag)
@@ -44,12 +43,6 @@ struct Astronaut {
     /// This computed property returns a flag representing the country, if available. If there's no flag, return the flag image, or else return the country name.
     var flag: String {
         return countryFlags[country] ?? countryFormatted
-    }
-    
-    
-    /// This computed property returns the flag image URL as a string
-    private var countryFlagImage: String {
-        return countryFlag ?? flag
     }
     
     
@@ -97,7 +90,7 @@ struct Astronaut {
         /// Type alias for a dictionary to make code easier to read
         typealias JSONDictionary = [String: Any]
         
-        var crew = [Astronaut]()    // An array of Astronauts
+        var crew = [Astronaut]()    // Create an empty array of Astronauts
         
         do {
             
@@ -110,7 +103,6 @@ struct Astronaut {
                     let name          = astronaut["name"] as! String
                     let title         = astronaut["title"] as! String
                     let country       = astronaut["country"] as! String
-                    let countryFlag   = astronaut["countryflag"] as! String
                     let spaceCraft    = astronaut["location"] as! String
                     let launchDate    = astronaut["launchdate"] as! String
                     let bio           = astronaut["biolink"] as! String
@@ -121,7 +113,7 @@ struct Astronaut {
                     let expedition    = astronaut["expedition"] as? String
                     let launchVehicle = astronaut["launchvehicle"] as! String
                     
-                    crew.append(Astronaut(name: name, title: title, country: country, countryFlag: countryFlag, spaceCraft: spaceCraft, launchDate: launchDate, bio: bio, shortBioBlurb: shortBioBlurb, image: image, twitter: twitter, mission: mission, expedition: expedition, launchVehicle: launchVehicle))
+                    crew.append(Astronaut(name: name, title: title, country: country, spaceCraft: spaceCraft, launchDate: launchDate, bio: bio, launchVehicle: launchVehicle, shortBioBlurb: shortBioBlurb, image: image, twitter: twitter, mission: mission, expedition: expedition))
                     
                 }
                 

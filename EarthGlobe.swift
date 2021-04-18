@@ -72,7 +72,7 @@ final class EarthGlobe {
         emission.contents                              = "8081_earthlights_8190px"              // Our high-resolution city lights map
         earthMaterial.setValue(emission, forKey: "emissionTexture")
         
-        /// OpenGL/Metal lighting map C++ code that brings forth our emitter texture
+        /// OpenGL/Metal lighting map in C++ code that brings forth our emitter texture
         let shaderModifier                             = """
                                                          uniform sampler2D emissionTexture;
                                                          vec3 light = _lightingContribution.diffuse;
@@ -92,8 +92,8 @@ final class EarthGlobe {
         // Land areas are not reflective
         earthMaterial.roughness.contents               = "8081_earthroughness_4096px"           // High-resolution non-reflectivity map
 
-        // Use bump map (a "normal map") to make elevated areas (e.g., mountains) appear as relief
-        earthMaterial.normal.contents                  = "EarthBump_NormalMap_MDS_8190px-3"     // High-resolution normal map
+        // The bump map (a "normal map") to make elevated areas (e.g., mountains) appear as relief
+        earthMaterial.normal.contents                  = "EarthBump_NormalMap_MDS_8190px-3"     // High-resolution normal map that I created
         earthMaterial.normal.intensity                 = 0.52
         
         // Create a realistic specular reflection that changes its aspect based on angle

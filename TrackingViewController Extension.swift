@@ -15,9 +15,9 @@ extension TrackingViewController {
     /// Update the info box data 
     private func updateCoordinatesDisplay() {
         
-        altitudeLabel?.text    = altString
-        coordinatesLabel?.text = positionString
-        velocityLabel?.text    = velString
+        altitudeLabel.text    = altString
+        coordinatesLabel.text = positionString
+        velocityLabel.text    = velString
         
     }
     
@@ -56,9 +56,9 @@ extension TrackingViewController {
             }
             
             if Globals.showCoordinatesIsOn {
-                self.displayInfoBoxAndLandsatButton(true)
+                self.displayInfoBox(true)
             } else {
-                self.displayInfoBoxAndLandsatButton(false)
+                self.displayInfoBox(false)
             }
             
             if Globals.displayZoomFactorBelowMarkerIsOn {

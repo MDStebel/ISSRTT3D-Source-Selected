@@ -46,8 +46,8 @@ class TrackingViewController: UIViewController, MKMapViewDelegate, UIGestureReco
     /// Local constants
     struct Constants {
         static let animationOffsetY: CGFloat    = 90.0
-        static let apiEndpointAString           = "---"
-        static let apiEndpointBString           = "---"
+        static let apiEndpointAString           = "https://api.wheretheiss.at/v1/satellites/25544"
+        static let apiEndpointBString           = "http://api.open-notify.org/iss-now.json"
         static let defaultTimerInterval         = 3.0
         static let fontForTitle                 = Theme.nasa
         static let helpTitle                    = "User Guide"
@@ -324,7 +324,7 @@ class TrackingViewController: UIViewController, MKMapViewDelegate, UIGestureReco
         setUpDisplayConfiguration()                                                                 // Set up display with map in last-used map type and other display parameters
         setUpSoundTrackMusicPlayer()                                                                // Set up the player for the soundtrack
         SettingsDataModel.restoreUserSettings()                                                     // Restore user settings
-        displayInfoBoxAndLandsatButton(false)                                                       // Start up with map overlay info box and buttons off
+        displayInfoBox(false)                                                                       // Start up with map overlay info box and buttons off
         
         justStartedUp = true
         
@@ -761,19 +761,19 @@ class TrackingViewController: UIViewController, MKMapViewDelegate, UIGestureReco
     }
       
     
-    /// Show map overlay info box and buttons if parameter is true
-    func displayInfoBoxAndLandsatButton(_ isOn: Bool) {
+    /// Show map overlay info box and buttons if isOn parameter is true
+    func displayInfoBox(_ isOn: Bool) {
         
         if isOn {
             
-            coordinatesLabel.isHidden = false
             altitudeLabel.isHidden    = false
+            coordinatesLabel.isHidden = false
             velocityLabel.isHidden    = false
             
         } else {
             
-            coordinatesLabel.isHidden = true
             altitudeLabel.isHidden    = true
+            coordinatesLabel.isHidden = true
             velocityLabel.isHidden    = true
             
         }
