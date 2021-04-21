@@ -16,8 +16,8 @@ class CrewMembersTableViewController: UITableViewController, TableAnimatable {
     
     /// Constants
     private struct Constants {
-        static let bioBackupURLString           = "---"                         // Backup URL is used if a bio URL is not returned in the JSON file
-        static let crewAPIEndpointURLString     = "---"                         // API endpoint
+        static let bioBackupURLString           = "https://www.issrtt.com/issrtt-astronaut-bio-not-found"   // Backup URL is used if a bio URL is not returned in the JSON file
+        static let crewAPIEndpointURLString     = "https://issrttapi.com/crew.json"                         // API endpoint
         static let customCellIdentifier         = "crewMemberCell"
         static let fontForTitle                 = Theme.nasa
         static let newLine                      = "\n"
@@ -387,8 +387,8 @@ extension CrewMembersTableViewController {
             
             cell.astronautName.text   = startOfLabelText + flagImageURLString
             
-            var dataString            = "Title:                   \(title)\nMission:             \(mission)\nDays in space:  \(daysInSpace)\n"
-            dataString += "Launched on:   \(launchDate)\nSpacecraft:        \(vehicle)"
+            // Build string containing the basic crew member data
+            let dataString            = "\(title)\n\(mission)\n\(launchDate)\n\(vehicle)\n\(daysInSpace)"
             cell.astronautInfo.text   = dataString
             
         }
@@ -432,7 +432,6 @@ extension CrewMembersTableViewController {
         view.addSubview(crewMemberDetailView)
         
     }
-    
     
     
     // Return the cell height for the cell

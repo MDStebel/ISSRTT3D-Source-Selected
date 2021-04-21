@@ -22,14 +22,14 @@ private let whatsNew = WhatsNew(
         WhatsNew.Item(
             title: "Did You Know?",
             subtitle: """
-                      You use gestures to move around the 3D Earth model, zoom in/out, tilt, translate, and more. Tap the help (?) button on the main screen or in the fullscreen 3D Globe to learn more.
+                      You use gestures in the 3D Earth model to rotate, zoom in/out, tilt, and translate the Earth in the scene. Tap the help (?) button on the main screen or in the fullscreen 3D Globe to learn more.
                       """,
             image: UIImage(named: "icons8-megaphone_filled.imageset")
         ),
         WhatsNew.Item(
             title: "Improvements & Fixes",
             subtitle: """
-                      Under-the-hood stuff to improve the performance of the 3D Earth model.
+                      This release focuses on the Crew table and features significant increases in its performance, as well as data formatting tweaks.
                       """,
             image: UIImage(named: "icons8-bug_filled")
         ),

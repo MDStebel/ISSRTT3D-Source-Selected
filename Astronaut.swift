@@ -42,19 +42,19 @@ struct Astronaut {
     
     /// This computed property returns a flag representing the country, if available. If there's no flag, return the flag image, or else return the country name.
     var flag: String {
-        return countryFlags[country] ?? countryFormatted
+        countryFlags[country] ?? countryFormatted
     }
     
     
     /// This computed property returns the uppercase string of the country
     private var countryFormatted: String {
-        return country.uppercased()
+        country.uppercased()
     }
     
     
     /// This computed property returns a date formatted according to output date format string in Globals. If not successful, return an empty string
     var launchDateFormatted: String {
-        return DateFormatter().convert(from: launchDate, fromStringFormat: Globals.dateFormatStringEuropeanForm, toStringFormat: Globals.outputDateFormatStringShortForm) ?? ""
+        DateFormatter().convert(from: launchDate, fromStringFormat: Globals.dateFormatStringEuropeanForm, toStringFormat: Globals.outputDateFormatStringShortForm) ?? ""
     }
     
     
@@ -147,7 +147,7 @@ extension Astronaut: CustomStringConvertible, Comparable {
     
     /// Returns comma delimited string
     var description: String {
-        return "\(name), \(title), \(flag)"
+        "\(name), \(title), \(flag)"
     }
     
 }
