@@ -356,7 +356,7 @@ extension CrewMembersTableViewController {
         
         var imageToReturn: UIImage? = nil
         
-        if let imageURL = URL(string: currentCrew![index].image!), let astonautImageData = try? Data(contentsOf: imageURL) {
+        if let imageURL = URL(string: currentCrew![index].image), let astonautImageData = try? Data(contentsOf: imageURL) {
             imageToReturn = UIImage(data: astonautImageData)
         }
         
@@ -376,20 +376,18 @@ extension CrewMembersTableViewController {
             
             cell.astronautImage.image = getAstronautImage(forCell: index) ?? placeholderImage
             
-            let launchDate            = currentCrew![index].launchDateFormatted
+            let name                  = currentCrew![index].name
+            let flag                  = currentCrew![index].flag
             let title                 = currentCrew![index].title
-            let daysInSpace           = currentCrew![indexPath.row].numberOfDaysInSpace()
-            let startOfLabelText      = currentCrew![index].name + Globals.spacer
-            let flagImageURLString    = currentCrew![index].flag
-            let expedition            = currentCrew![index].expedition
-            let mission               = currentCrew![index].mission ?? expedition!
+            let mission               = currentCrew![index].mission
+            let launchDate            = currentCrew![index].launchDateFormatted
             let vehicle               = currentCrew![index].launchVehicle
+            let daysInSpace           = currentCrew![indexPath.row].numberOfDaysInSpace()
             
-            cell.astronautName.text   = startOfLabelText + flagImageURLString
+            cell.astronautName.text   = name + Globals.spacer + flag
             
             // Build string containing the basic crew member data
-            let dataString            = "\(title)\n\(mission)\n\(launchDate)\n\(vehicle)\n\(daysInSpace)"
-            cell.astronautInfo.text   = dataString
+            cell.astronautInfo.text   = "\(title)\n\(mission)\n\(launchDate)\n\(vehicle)\n\(daysInSpace)"
             
         }
         

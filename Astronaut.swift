@@ -25,11 +25,10 @@ struct Astronaut {
     let launchDate: String
     let bio: String
     let launchVehicle: String
-    let shortBioBlurb: String?
-    let image: String?
-    let twitter: String?
-    let mission: String?
-    let expedition: String?
+    let shortBioBlurb: String
+    let image: String
+    let twitter: String
+    let mission: String
     
     var shortAstronautDescription: String {
         return name + "  " + (flag)
@@ -109,11 +108,10 @@ struct Astronaut {
                     let shortBioBlurb = astronaut["bio"] as! String
                     let image         = astronaut["biophoto"] as! String
                     let twitter       = astronaut["twitter"] as! String
-                    let mission       = astronaut["mission"] as? String
-                    let expedition    = astronaut["expedition"] as? String
+                    let mission       = astronaut["mission"] as! String
                     let launchVehicle = astronaut["launchvehicle"] as! String
                     
-                    crew.append(Astronaut(name: name, title: title, country: country, spaceCraft: spaceCraft, launchDate: launchDate, bio: bio, launchVehicle: launchVehicle, shortBioBlurb: shortBioBlurb, image: image, twitter: twitter, mission: mission, expedition: expedition))
+                    crew.append(Astronaut(name: name, title: title, country: country, spaceCraft: spaceCraft, launchDate: launchDate, bio: bio, launchVehicle: launchVehicle, shortBioBlurb: shortBioBlurb, image: image, twitter: twitter, mission: mission))
                     
                 }
                 
