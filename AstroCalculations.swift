@@ -73,7 +73,7 @@ struct AstroCalculations {
     /// - Returns: The mean anomaly as a Double
     static func meanAnomaly(t: Double) -> Double {
         
-        let m = ((357.52911 + t * (35999.05029 - t * 0.0001537)))
+        let m = (357.52911 + t * (35999.05029 - t * 0.0001537))
         
         return m
         
