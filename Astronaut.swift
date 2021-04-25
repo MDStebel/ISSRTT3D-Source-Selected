@@ -31,7 +31,7 @@ struct Astronaut {
     let mission: String
     
     var shortAstronautDescription: String {
-        return name + "  " + (flag)
+        name + "  " + (flag)
     }
 
     
