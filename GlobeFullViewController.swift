@@ -20,9 +20,9 @@ class GlobeFullViewController: UIViewController, EarthGlobeProtocol, AVAudioPlay
     
     
     struct Constants {
-        static let ISSAPIEndpointAString = "https://api.wheretheiss.at/v1/satellites/25544"
-        static let TSSAPIEndpointString  = "https://api.n2yo.com/rest/v1/satellite/positions/48274/0/0/0/1/"
-        static let TSSAPIKey             = "BZQB9N-9FTL47-ZXK7MZ-3TLE"
+        static let ISSAPIEndpointAString = "---"
+        static let TSSAPIEndpointString  = "---"
+        static let TSSAPIKey             = "---"
         static let fontForTitle          = Theme.nasa
         static let segueToHelpFromGlobe  = "segueToHelpFromGlobe"
         static let segueToSettings       = "segueToSettings"
