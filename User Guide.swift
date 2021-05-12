@@ -15,7 +15,7 @@ struct UserGuide {
     // MARK: - Theme colors converted to CSS hex
     
     private static let helpViewBackgroundColor = UIColor(named: Theme.usrGuide)?.cgColor.toHex ?? "000000"
-    private static let tintColor = UIColor(named: Theme.tint)?.cgColor.toHex ?? "ff0000"
+    private static let tintColor = UIColor(named: Theme.tint)?.cgColor.toHex ?? "ff4c4c"
     private static let whiteColor = UIColor(named: Theme.white)?.cgColor.toHex ?? "ffffff"
     
     
@@ -71,13 +71,13 @@ struct UserGuide {
     <h6>Covers version \(Globals.versionNumber)</h6>
     <h2>Contents</h2>
     <p>Tap an item from the list below to jump to that section:</p>
-    <h3><a href="#passes">ISS Pass Predictions</a></h3>
-    <h3><a href="#track">ISS Tracking Map View</a></h3>
-    <h3><a href="#globe">Fullscreen Interactive 3D Globe</a></h3>
-    <h3><a href="#crew">Current Crew</a></h3>
-    <h3><a href="#streaming">Live Earth View</a></h3>
-    <h3><a href="#nasatv">Live NASA TV</a></h3>
-    <h3><a href="#settings">Settings</a></h3>
+    <h4><a href="#passes">ISS Pass Predictions</a></h4>
+    <h4><a href="#track">ISS Tracking Map View</a></h4>
+    <h4><a href="#globe">Fullscreen Interactive 3D Globe</a></h4>
+    <h4><a href="#crew">Current Crew</a></h4>
+    <h4><a href="#streaming">Live Earth View</a></h4>
+    <h4><a href="#nasatv">Live NASA TV</a></h4>
+    <h4><a href="#settings">Settings</a></h4>
     <div id="passes"></div>
     <h2>ISS Pass Predictions</h2>
     <p>Tapping the binoculars icon at the bottom of the main screen starts the process of computing up-coming visible ISS passes. First, ISS Real-Time Tracker 3D gets your current location's coordinates. Then, it computes the visible passes for that location. The default number of days to predict passes is set in Settings. The passes are listed in chronological order along with detailed viewing data.</p>
@@ -126,7 +126,7 @@ struct UserGuide {
     </ul>
     <p>Tap ⟵ to return to the map and resume tracking.</p>
     <div id="track"></div>
-    <h2>Tracking the ISS</h2>
+    <h2>ISS Tracking Map View</h2>
     <p>To locate and track the International Space Station in real time, tap the play button at the bottom of the screen. To pause tracking, tap the pause button.</p>
     <p>You can select from the following map types in Settings from the Tracking screen:</p>
     <ul>
@@ -237,7 +237,7 @@ struct UserGuide {
     </ul>
     <p>Tap the collapse icon on the upper-right of the scene to return to the main tracking map screen.</p>
     <div id="crew"></div>
-    <h2>Crew</h2>
+    <h2>Current Crew</h2>
     <p>Tap the astronaut icon at the bottom of the screen to get a table of information about the current ISS crew.</p>
     <h4> Crew Bios &amp; Tweets</h4>
     <p>Tap any cell in the table to pop-up the detail view for that crew member. This will display a brief bio. To view the full bio, tap the biography icon.</p>
@@ -265,7 +265,7 @@ struct UserGuide {
     </ul>
     <p>Tap ⟵ to return to the map.</p>
     <div id="nasatv"></div>
-    <h2>NASA TV</h2>
+    <h2>Live NASA TV</h2>
     <p>NASA TV airs a variety of regularly scheduled, pre-recorded educational and public relations programming 24 hours a day. The network also provides an array of live programming, such as 24-hour coverage of missions, events (spacewalks, media interviews, educational broadcasts), press conferences & rocket launches.</p>
     <h5>Notes:</h5>
     <ul>

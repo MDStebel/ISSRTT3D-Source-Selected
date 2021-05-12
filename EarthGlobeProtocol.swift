@@ -48,7 +48,7 @@ extension EarthGlobeProtocol {
     }
     
     
-    /// Add the station position marker(s), orbital track, and current Sun position to the globe.
+    /// Add the statellite/station position marker(s), orbital track(s), footprint(s), and current Sun position to the globe.
     /// Since we are not always plotting the TSS, the coordinates parameters are optional
     /// - Parameters:
     ///   - globe: The globe instance to use
@@ -56,22 +56,23 @@ extension EarthGlobeProtocol {
     ///   - ISSLongitude: ISS longitude as a string
     ///   - TSSLatitude: TSS latitude as an optional string
     ///   - TSSLongitude: TSS longitude as an optional string
-    ///   - lastLat: The last ISS latitude saved as a mutating parameter
+    ///   - ISSLastLat: The last ISS latitude saved as a mutating parameter
+    ///   - TSSLastLat: The last TSS latitude saved as a mutating parameter
     func updateEarthGlobeScene(in globe: EarthGlobe, ISSLatitude: String, ISSLongitude: String, TSSLatitude: String?, TSSLongitude: String?, ISSLastLat: inout Float, TSSLastLat: inout Float ) {
         
         var ISSHeadingFactor: Float = 1
         var TSSHeadingFactor: Float = 1
-        var showISSOrbitNow      = false
-        var showTSSOrbitNow      = false
-        var addTSS               = false
+        var showISSOrbitNow         = false
+        var showTSSOrbitNow         = false
+        var addTSS                  = false
         var iLat, iLon: Float
-        var tLat: Float?         = nil
-        var tLon: Float?         = nil
+        var tLat: Float?            = nil
+        var tLon: Float?            = nil
         
         // Process coordinates
         iLat = Float(ISSLatitude) ?? 0.0
         iLon = Float(ISSLongitude) ?? 0.0
-         
+        
         if TSSLatitude != nil && TSSLongitude != nil {  // Make sure we have valid TSS coordinates
             tLat = Float(TSSLatitude!) ?? 0.0
             tLon = Float(TSSLongitude!) ?? 0.0
@@ -84,13 +85,11 @@ extension EarthGlobeProtocol {
             addTSS = false
         }
         
-        globe.removeLastNode()                                  // Remove the last marker nodes, so we don't smear them together
-        globe.removeLastNode()
-        globe.removeLastNode()
-        if addTSS {
-            globe.removeLastNode()                              // Remove one more node if we've added the TSS node
-            globe.removeLastNode()                              // Remove one more node if we've added the TSS orbital track
-            globe.removeLastNode()                              // Remove one more node if we've added the TSS viewing range
+        // We need to remove all each of the nodes we've added before adding them again at new coordinates
+        var numberOfChildNodes  = globe.getNumberOfChildNodes()
+        while numberOfChildNodes > 0 {
+            globe.removeLastNode()
+            numberOfChildNodes -= 1
         }
         
         // Determine if we have a prior ISS latitude saved, as we don't know which way the orbit is oriented unless we do
@@ -106,7 +105,7 @@ extension EarthGlobeProtocol {
             TSSHeadingFactor = tLat! - TSSLastLat < 0 ? -1 : 1
         }
         TSSLastLat = tLat ?? 0
- 
+        
         // Get the current coordinates of the Sun at the subsolar point (i.e., where the Sun is at zenith)
         let coordinates = AstroCalculations.getSubSolarCoordinates()
         let subSolarLat = coordinates.latitude                  // Get the latitude of the subsolar point at the current time
@@ -121,10 +120,9 @@ extension EarthGlobeProtocol {
             globe.addOrbitTrackAroundTheGlobe(for: .TSS, lat: tLat!, lon: tLon!, headingFactor: TSSHeadingFactor)
         }
         
-        // Update the markers now
+        // Update the satellite/station markers now
         globe.addISSMarker(lat: iLat, lon: iLon)
         globe.addISSViewingCircle(lat: iLat, lon: iLon)
-        
         if addTSS {
             globe.addTSSMarker(lat: tLat!, lon: tLon!)
             globe.addTSSViewingCircle(lat: tLat!, lon: tLon!)

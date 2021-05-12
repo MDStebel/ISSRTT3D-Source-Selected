@@ -12,7 +12,6 @@ import SceneKit
 /// The 3D Interactive Earth Globe Model
 final class EarthGlobe {
     
-    
     // MARK: - Properties
 
     let ambientLightIntensity: CGFloat     = 100                                // Note: default value is 1000
@@ -34,7 +33,7 @@ final class EarthGlobe {
     let sunlightIntensity: CGFloat         = 3200                               // Default value is 1000 lumens
     let sunlightTemp: CGFloat              = 6000                               // Default value is 6500 Kelvin
     
-    // Initialize all nodes
+    // Initialize all scenese, objects, and nodes
     var camera                             = SCNCamera()
     var cameraNode                         = SCNNode()
     var earthAxisTilt                      = SCNNode()
@@ -51,7 +50,7 @@ final class EarthGlobe {
     /// Initializer for our Earth model
     init() {
         
-        // Create the globe shape upon which we'll build our Earth model
+        /// Create the globe shape upon which we'll build our Earth model
         let globeShape                                 = SCNSphere(radius: CGFloat(globeRadiusFactor) )
         globeShape.segmentCount                        = globeSegmentCount
         

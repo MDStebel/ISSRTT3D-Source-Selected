@@ -19,7 +19,7 @@ extension EarthGlobe {
     ///   - lon: The current longitude as a decimal value
     public func addISSMarker(lat: Float, lon: Float) {
         
-        let ISS = AddMarkerForEarthGlobe(for: .ISS, using: Globals.ISSIcon, lat: lat, lon: lon, isInOrbit: true)
+        let ISS = MarkerForEarthGlobe(for: .ISS, using: Globals.ISSIcon, lat: lat, lon: lon, isInOrbit: true)
         self.addMarker(ISS, shouldPulse: true)
         
     }
@@ -31,7 +31,7 @@ extension EarthGlobe {
     ///   - lon: The current longitude as a decimal value
     public func addTSSMarker(lat: Float, lon: Float) {
         
-        let TSS = AddMarkerForEarthGlobe(for: .TSS, using: Globals.TSSIcon, lat: lat, lon: lon, isInOrbit: true)
+        let TSS = MarkerForEarthGlobe(for: .TSS, using: Globals.TSSIcon, lat: lat, lon: lon, isInOrbit: true)
         self.addMarker(TSS, shouldPulse: true)
         
     }
@@ -43,7 +43,7 @@ extension EarthGlobe {
     ///   - lon: The current longitude as a decimal value
     public func addISSViewingCircle(lat: Float, lon: Float) {
         
-        let viewingCircle = AddMarkerForEarthGlobe(for: .none, using: Globals.ISSViewingCircleGraphic, lat: lat, lon: lon, isInOrbit: false)
+        let viewingCircle = MarkerForEarthGlobe(for: .none, using: Globals.ISSViewingCircleGraphic, lat: lat, lon: lon, isInOrbit: false)
         self.addMarker(viewingCircle, shouldPulse: false)
         
     }
@@ -55,7 +55,7 @@ extension EarthGlobe {
     ///   - lon: The current longitude as a decimal value
     public func addTSSViewingCircle(lat: Float, lon: Float) {
         
-        let viewingCircle = AddMarkerForEarthGlobe(for: .none, using: Globals.TSSViewingCircleGraphic, lat: lat, lon: lon, isInOrbit: false)
+        let viewingCircle = MarkerForEarthGlobe(for: .none, using: Globals.TSSViewingCircleGraphic, lat: lat, lon: lon, isInOrbit: false)
         self.addMarker(viewingCircle, shouldPulse: false)
         
     }
@@ -206,7 +206,7 @@ extension EarthGlobe {
     
 
     /// Add a marker to the globe and make it pulse
-    public func addMarker(_ marker: AddMarkerForEarthGlobe, shouldPulse: Bool) {
+    public func addMarker(_ marker: MarkerForEarthGlobe, shouldPulse: Bool) {
         
         globe.addChildNode(marker.node)
         if Globals.pulseISSMarkerForGlobe && shouldPulse {
@@ -216,7 +216,7 @@ extension EarthGlobe {
     }
     
     
-    /// Remove the last node in the childNodes array
+    /// Remove the last child node in the nodes array
     public func removeLastNode() {
         
         if let nodeToRemove = globe.childNodes.last {
@@ -226,6 +226,15 @@ extension EarthGlobe {
     }
     
     
+    /// Get the number of child nodes in the nodes array
+    /// - Returns: The number of child nodes in the scene heirarchy as an Int
+    public func getNumberOfChildNodes() -> Int {
+        
+        return globe.childNodes.count
+        
+    }
+    
+
     /// Convert map coordinates from lat, lon, altitude to SceneKit x, y, z coordinates
     /// - Parameters:
     ///   - lat: Latitude as a decimal Float

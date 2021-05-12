@@ -73,6 +73,7 @@ struct Globals {
     static let elevationFormat                               = "%2.1f"
     static let floatingPointWithThreePlusOneDecimalPlace     = "%3.1f"
     static let floatingPointWithTwoPlusOneDecimalPlace       = "%2.1f"
+    static let globeRadiusMultiplier: Float                  = 0.949
     static let helpChar                                      = "(?)"
     static let hubbleDeepField                               = "Hubble Legacy Field Crop 2800px.png"
     static let ISSAltitudeFactor: Float                      = ISSOrbitalAltitudeFactor * 1.015
@@ -120,5 +121,6 @@ struct Globals {
     static let TSSOrbitInclinationInRadians: Float           = TSSOrbitInclinationInDegrees * Float(degreesToRadians)
     static let TSSViewingCircleGraphic                       = "TSS-Visibility-Circle"
     static let twoPi: Double                                 = .pi * 2
+    static let zero: Float                                   = 0.0
     
 }
