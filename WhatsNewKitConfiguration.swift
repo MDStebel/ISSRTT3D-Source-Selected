@@ -20,16 +20,16 @@ private let whatsNew = WhatsNew(
     // The features and other information to showcase
     items: [
         WhatsNew.Item(
-            title: "Did You Know?",
+            title: "New: Tracks the Chinese Space Station!",
             subtitle: """
-                      You use gestures in the 3D Earth model to rotate, zoom in/out, tilt, and translate the Earth in the scene. Tap the help (?) button on the main screen or in the fullscreen 3D Globe to learn more.
+                      This major update adds real-time tracking of the Tiangong space station (TSS) in the fullscreen 3D globe view! Now track both the ISS & TSS in 3D! TSS pass predictions will be coming later. Learn more in Help.
                       """,
             image: UIImage(named: "icons8-megaphone_filled.imageset")
         ),
         WhatsNew.Item(
             title: "Improvements & Fixes",
             subtitle: """
-                      This release focuses on the Crew table and features significant increases in its performance, as well as data formatting tweaks.
+                      Bug fixes and performance improvements.
                       """,
             image: UIImage(named: "icons8-bug_filled")
         ),

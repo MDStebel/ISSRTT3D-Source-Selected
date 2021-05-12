@@ -11,6 +11,7 @@ import SceneKit
 
 /// Handles the objects we're adding to the globe
 extension EarthGlobe {
+
     
     /// Adds the ISS position marker at the precise latitude and longitude to our globe scene
     /// - Parameters:
@@ -18,88 +19,150 @@ extension EarthGlobe {
     ///   - lon: The current longitude as a decimal value
     public func addISSMarker(lat: Float, lon: Float) {
         
-        let ISS = ISSMarkerForEarthGlobe(using: Globals.ISSIcon, lat: lat, lon: lon, isInOrbit: true)
+        let ISS = AddMarkerForEarthGlobe(for: .ISS, using: Globals.ISSIcon, lat: lat, lon: lon, isInOrbit: true)
         self.addMarker(ISS, shouldPulse: true)
         
     }
     
     
-    /// Adds the ISS viewing circle marker at the precise latitude and longitude to our globe scene
+    /// Adds the TSS position marker at the precise latitude and longitude to our globe scene
     /// - Parameters:
     ///   - lat: The current latitude as a decimal value
     ///   - lon: The current longitude as a decimal value
-    public func addViewingCircle(lat: Float, lon: Float) {
+    public func addTSSMarker(lat: Float, lon: Float) {
         
-        let viewingCircle = ISSMarkerForEarthGlobe(using: Globals.viewingCircleGraphic, lat: lat, lon: lon, isInOrbit: false)
+        let TSS = AddMarkerForEarthGlobe(for: .TSS, using: Globals.TSSIcon, lat: lat, lon: lon, isInOrbit: true)
+        self.addMarker(TSS, shouldPulse: true)
+        
+    }
+    
+    
+    /// Adds the satellite's viewing circle marker at the precise latitude and longitude to our globe scene
+    /// - Parameters:
+    ///   - lat: The current latitude as a decimal value
+    ///   - lon: The current longitude as a decimal value
+    public func addISSViewingCircle(lat: Float, lon: Float) {
+        
+        let viewingCircle = AddMarkerForEarthGlobe(for: .none, using: Globals.ISSViewingCircleGraphic, lat: lat, lon: lon, isInOrbit: false)
         self.addMarker(viewingCircle, shouldPulse: false)
         
     }
     
     
-    /// Create an orbital track around the globe at the exact ISS orbital inclination and current ISS location, heading, and altitude
-    ///
-    /// Uses an algorithm that keeps the orientation of the track at the right angle even though the position of the globe in the scene uses different coordinate system.
+    /// Adds the satellite's viewing circle marker at the precise latitude and longitude to our globe scene
     /// - Parameters:
-    ///   - lat: Latitude as a decimal value
-    ///   - lon: Longitude as a decimal value
-    ///   - heading: Indicates whether the ISS is heading generally north or south
-    public func addOrbitTrackAroundTheGlobe(lat: Float, lon: Float, headingFactor: Float) {
+    ///   - lat: The current latitude as a decimal value
+    ///   - lon: The current longitude as a decimal value
+    public func addTSSViewingCircle(lat: Float, lon: Float) {
+        
+        let viewingCircle = AddMarkerForEarthGlobe(for: .none, using: Globals.TSSViewingCircleGraphic, lat: lat, lon: lon, isInOrbit: false)
+        self.addMarker(viewingCircle, shouldPulse: false)
+        
+    }
+    
+    
+    /// Create an orbital track around the globe at the station's precise orbital inclination and location, heading, and altitude
+    ///
+    /// This is my empirical algorithm that keeps the orientation of the track at the right angle even though the position of the globe in the scene uses different coordinate system.
+    /// - Parameters:
+    ///   - station: Type of satellite as a SatelliteID type
+    ///   - lat: Latitude as a decimal value as a Float
+    ///   - lon: Longitude as a decimal value as a Float
+    ///   - headingFactor: Indicates whether the statellite is heading generally north or south as a Float
+    public func addOrbitTrackAroundTheGlobe(for station: SatelliteID, lat: Float, lon: Float, headingFactor: Float) {
         
         // Create a hi-res torus geometry with a small pipeRadius to be used as our orbital track around the globe
-        let orbitTrack                             = SCNTorus()
-        orbitTrack.firstMaterial?.diffuse.contents = UIColor(named: Theme.tint)
-        orbitTrack.ringRadius                      = CGFloat(Globals.ISSOrbitAltitudeInScene)
-        orbitTrack.pipeRadius                      = pipeRadius
-        orbitTrack.ringSegmentCount                = ringSegmentCount
-        orbitTrack.pipeSegmentCount                = pipeSegmentCount
+        let orbitTrack                                 = SCNTorus()
         
-        // Assign the torus as a node and add it as a child of globe
-        let orbitTrackNode                         = SCNNode(geometry: orbitTrack)
-        globe.addChildNode(orbitTrackNode)
+        var orbitInclination: Float
+        var multiplier: Float
         
-        // Set the lat, lon, and inclination corrections that are be needed to align orbital properly to the ISS and its heading
-        var orbitalCorrectionForInclination: Float
-        
-        let adjustedLat                            = lat + Float(Globals.oneEightyDegrees)
-        let adjustedLon                            = lon - Float(Globals.oneEightyDegrees)
-        let orbitalCorrectionForLon                = adjustedLon * Float(Globals.degreesToRadians)  // lon & lat used as angular displacement from the origin (lon-origin=lon-0=lon)
-        let orbitalCorrectionForLat                = adjustedLat * Float(Globals.degreesToRadians)
-        let absLat                                 = abs(lat)
-        let exponent                               = Float.pi / 2.5 + absLat * Float(Globals.degreesToRadians) / Globals.ISSOrbitInclinationInRadians  // Adjustment to the inclination (z-axis) as we approach max latitudes
-        
-        switch absLat {  // Apply a power function to the adjustment (exponent) based on the latitude
-        case _ where absLat <= 25.0 :
-            orbitalCorrectionForInclination = exponent
-        case _ where absLat <= 35.0 :
-            orbitalCorrectionForInclination = pow(exponent, 1.5)
-        case _ where absLat <= 45.0 :
-            orbitalCorrectionForInclination = pow(exponent, 2.0)
-        case _ where absLat <= 49.0 :
-            orbitalCorrectionForInclination = pow(exponent, 2.5)
-        case _ where absLat <= 51.0 :
-            orbitalCorrectionForInclination = pow(exponent, 3.0)
-        default :
-            orbitalCorrectionForInclination = pow(exponent, 4.0)
+        switch station {
+        case .ISS :
+            orbitTrack.firstMaterial?.diffuse.contents = UIColor(named: Theme.issOrbitalColor)
+            orbitTrack.ringRadius                      = CGFloat(Globals.ISSOrbitAltitudeInScene)
+            orbitInclination                           = Globals.ISSOrbitInclinationInRadians
+            multiplier                                 = 2.5
+        case .TSS :
+            orbitTrack.firstMaterial?.diffuse.contents = UIColor(named: Theme.tssOrbitalColor)
+            orbitTrack.ringRadius                      = CGFloat(Globals.TSSOrbitAltitudeInScene)
+            orbitInclination                           = Globals.TSSOrbitInclinationInRadians
+            multiplier                                 = 2.8
+        case .none :
+            return
         }
         
-        let ISSOrbitInclinationInRadiansCorrected = pow(Globals.ISSOrbitInclinationInRadians, orbitalCorrectionForInclination) * headingFactor
+        orbitTrack.pipeRadius                          = pipeRadius
+        orbitTrack.ringSegmentCount                    = ringSegmentCount
+        orbitTrack.pipeSegmentCount                    = pipeSegmentCount
+        
+        // Assign the torus as a node and add it as a child of globe
+        let orbitTrackNode                             = SCNNode(geometry: orbitTrack)
+        globe.addChildNode(orbitTrackNode)
+        
+        // Set the lat, lon, and inclination corrections that are be needed to align orbital properly to the satellite and its heading
+        var orbitalCorrectionForInclination: Float
+        
+        let adjustedLat                                = lat + Float(Globals.oneEightyDegrees)
+        let adjustedLon                                = lon - Float(Globals.oneEightyDegrees)
+        let orbitalCorrectionForLon                    = adjustedLon * Float(Globals.degreesToRadians)  // lon & lat used as angular displacement from the origin (lon-origin=lon-0=lon)
+        let orbitalCorrectionForLat                    = adjustedLat * Float(Globals.degreesToRadians)
+        let absLat                                     = abs(lat)
+        let exponent                                   = Float.pi / multiplier + absLat * Float(Globals.degreesToRadians) / orbitInclination  // Adjustment to the inclination (z-axis) as we approach max latitudes
+        
+        switch station {
+        case .ISS :
+            switch absLat {   // Apply a power function to the adjustment (exponent) based on the latitude
+            case _ where absLat <= 25.0 :
+                orbitalCorrectionForInclination        = exponent
+            case _ where absLat <= 35.0 :
+                orbitalCorrectionForInclination        = pow(exponent, 1.5)
+            case _ where absLat <= 45.0 :
+                orbitalCorrectionForInclination        = pow(exponent, 2.0)
+            case _ where absLat <= 49.0 :
+                orbitalCorrectionForInclination        = pow(exponent, 2.5)
+            case _ where absLat <= 51.0 :
+                orbitalCorrectionForInclination        = pow(exponent, 3.0)
+            default :
+                orbitalCorrectionForInclination        = pow(exponent, 4.0)
+            }
+        case .TSS  :
+            switch absLat {   // Apply a power function to the adjustment (exponent) based on the latitude
+            case _ where absLat <= 20.0 :
+                orbitalCorrectionForInclination        = exponent
+            case _ where absLat <= 27.0 :
+                orbitalCorrectionForInclination        = pow(exponent, 1.0)
+            case _ where absLat <= 35.5 :
+                orbitalCorrectionForInclination        = pow(exponent, 1.5)
+            case _ where absLat <= 39.0 :
+                orbitalCorrectionForInclination        = pow(exponent, 2.0)
+            case _ where absLat <= 41.0 :
+                orbitalCorrectionForInclination        = pow(exponent, 2.5)
+            default :
+                orbitalCorrectionForInclination        = pow(exponent, 3.0)
+            }
+        case .none :
+            return
+        }
+        
+        let orbitInclinationInRadiansCorrected         = pow(orbitInclination, orbitalCorrectionForInclination) * headingFactor
         
         // Create 4x4 transform matrices for each rotation and initialize them as the identity matrix
-        var rotationMatrix1         = SCNMatrix4Identity
-        var rotationMatrix2         = SCNMatrix4Identity
-        var rotationMatrix3         = SCNMatrix4Identity
+        var rotationMatrix1                            = SCNMatrix4Identity
+        var rotationMatrix2                            = SCNMatrix4Identity
+        var rotationMatrix3                            = SCNMatrix4Identity
         
-        // Create the rotation matrices for the orbital inclination to align relative to the globe and the current ISS position
-        rotationMatrix1             = SCNMatrix4RotateF(rotationMatrix1, ISSOrbitInclinationInRadiansCorrected , 0, 0, 1)   // z rotation
-        rotationMatrix2             = SCNMatrix4RotateF(rotationMatrix2, orbitalCorrectionForLon, 0, 1, 0)                  // y rotation
-        rotationMatrix3             = SCNMatrix4RotateF(rotationMatrix3, orbitalCorrectionForLat, 1, 0, 0)                  // x rotation
+        // Create the rotation matrices for the orbital inclination to align relative to the globe and the current satellite position
+        rotationMatrix1                                = SCNMatrix4RotateF(rotationMatrix1, orbitInclinationInRadiansCorrected , 0, 0, 1)      // z rotation
+        rotationMatrix2                                = SCNMatrix4RotateF(rotationMatrix2, orbitalCorrectionForLon, 0, 1, 0)                  // y rotation
+        rotationMatrix3                                = SCNMatrix4RotateF(rotationMatrix3, orbitalCorrectionForLat, 1, 0, 0)                  // x rotation
         
         // Multiply the matrices together to make a composite matrix and use this as the transform matrix
-        let firstProduct            = SCNMatrix4Mult(rotationMatrix3, rotationMatrix2)                          // Note! The order of the matrix operands is NOT cummulative in multiplication
-        let compositeRotationMatrix = SCNMatrix4Mult(rotationMatrix1, firstProduct)                             // Note! The order of the matrix operands is NOT cummulative in multiplication
+        let firstProduct                               = SCNMatrix4Mult(rotationMatrix3, rotationMatrix2)                                      // Note! The order of the operands is NOT cummulative in matrix multiplication
+        let compositeRotationMatrix                    = SCNMatrix4Mult(rotationMatrix1, firstProduct)                                         // Note! The order of the operands is NOT cummulative in matrix multiplication
         
         // Apply the transform
-        orbitTrackNode.transform    = compositeRotationMatrix
+        orbitTrackNode.transform                       = compositeRotationMatrix
         
     }
     
@@ -113,7 +176,7 @@ extension EarthGlobe {
         let adjustedLon        = lon + Globals.ninetyDegrees
         let adjustedLat        = lat
         let distanceToTheSun   = sunDistance
-        let position           = EarthGlobe.convertLatLonCoordinatesToXYZ(lat: adjustedLat, lon: adjustedLon, alt: distanceToTheSun)
+        let position           = EarthGlobe.transformLatLonCoordinatesToXYZ(lat: adjustedLat, lon: adjustedLon, alt: distanceToTheSun)
         sun.position           = position
         
         sun.light              = SCNLight()
@@ -143,7 +206,7 @@ extension EarthGlobe {
     
 
     /// Add a marker to the globe and make it pulse
-    public func addMarker(_ marker: ISSMarkerForEarthGlobe, shouldPulse: Bool) {
+    public func addMarker(_ marker: AddMarkerForEarthGlobe, shouldPulse: Bool) {
         
         globe.addChildNode(marker.node)
         if Globals.pulseISSMarkerForGlobe && shouldPulse {
@@ -169,7 +232,7 @@ extension EarthGlobe {
     ///   - lon: Longitude as a decimal Float
     ///   - alt: altitude as a decimal Float
     /// - Returns: Position as a SCNVector3
-    static func convertLatLonCoordinatesToXYZ(lat: Float, lon: Float, alt: Float) -> SCNVector3 {
+    static func transformLatLonCoordinatesToXYZ(lat: Float, lon: Float, alt: Float) -> SCNVector3 {
         
         let cosLat    = cosf(lat * Float(Globals.degreesToRadians))
         let sinLat    = sinf(lat * Float(Globals.degreesToRadians))
@@ -192,7 +255,7 @@ extension EarthGlobe {
     
     public func goToPointOnGlobe(node: SCNNode, lat: Float, lon: Float) {
         
-        let position = EarthGlobe.convertLatLonCoordinatesToXYZ(lat: lat, lon: lon, alt: Globals.orbitalAltitudeFactor)
+        let position = EarthGlobe.transformLatLonCoordinatesToXYZ(lat: lat, lon: lon, alt: Globals.ISSOrbitalAltitudeFactor)
         
         // Determine how much we've moved
         let currentPosition       = node.position
@@ -219,7 +282,7 @@ extension EarthGlobe {
     /// Move camera to a given latitude and longitude
     public func moveCameraToPointOnGlobe(lat: Float, lon: Float) {
         
-        let newPosition     = EarthGlobe.convertLatLonCoordinatesToXYZ(lat: lat, lon: lon, alt: Globals.ISSOrbitAltitudeInScene)
+        let newPosition     = EarthGlobe.transformLatLonCoordinatesToXYZ(lat: lat, lon: lon, alt: Globals.ISSOrbitAltitudeInScene)
         let x               = newPosition.x
         let y               = newPosition.y
         cameraNode.position = SCNVector3(x: x, y: y, z: globeRadiusFactor + cameraAltitude)

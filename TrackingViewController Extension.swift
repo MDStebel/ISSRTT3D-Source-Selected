@@ -99,7 +99,7 @@ extension TrackingViewController {
             if let urlContent = data {
                 
                 // Call JSON parser and if successful (i.e., doesn't return nil) map the coordinates
-                if let parsedOrbitalPosition = OrbitalPosition.parseLocationSpeedAndAltitude(from: urlContent) {
+                if let parsedOrbitalPosition = ISSOrbitalPosition.parseLocationSpeedAndAltitude(from: urlContent) {
                     
                     // Get current location
                     self?.latitude      = String(parsedOrbitalPosition.latitude)
@@ -117,9 +117,9 @@ extension TrackingViewController {
                         // Draw ground track, if enabled
                         self?.drawOrbitGroundTrackLine()
                         
-                        // Update globe with ISS position and orbital track, if enabled
+                        // Update globe with ISS position and orbital track, if enabled. Do not show other station(s)
                         if Globals.displayGlobe {
-                            self?.updateEarthGlobeScene(in: self!.globe, latitude: self!.latitude, longitude: self!.longitude, lastLat: &self!.lastLat)
+                            self?.updateEarthGlobeScene(in: self!.globe, ISSLatitude: self!.latitude, ISSLongitude: self!.longitude, TSSLatitude: nil, TSSLongitude: nil, ISSLastLat: &self!.ISSLastLat, TSSLastLat: &self!.TSSLastLat)
                             self?.setUpCoordinatesLabel(withTopCorners: false)
                             self?.globeScene.isHidden        = false
                             self?.globeExpandButton.isHidden = false

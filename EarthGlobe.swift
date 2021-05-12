@@ -14,9 +14,6 @@ final class EarthGlobe {
     
     
     // MARK: - Properties
-    
-    
-    static let markerWidth: CGFloat        = 0.16                               // Size factor for the marker
 
     let ambientLightIntensity: CGFloat     = 100                                // Note: default value is 1000
     let cameraAltitude                     = Globals.cameraAltitude
@@ -27,10 +24,9 @@ final class EarthGlobe {
     let globeDefaultRotationSpeedInSeconds = 120.0                              // 360° revolution in n-seconds
     let globeRadiusFactor                  = Globals.globeRadiusFactor
     let globeSegmentCount                  = 1024                               // Number of subdivisions along the sphere's (Earth's) polar & azimuth angles, similar to latitude & longitude on a globe of the Earth
-    let markerAltitude                     = Globals.orbitalAltitudeFactor
     let maxFov                             = Globals.maxFov                     // Max zoom in degrees
     let minFov                             = Globals.minFov                     // Min zoom in degrees
-    let pipeRadius: CGFloat                = 0.005
+    let pipeRadius: CGFloat                = 0.004
     let pipeSegmentCount                   = 256                                // Number of subdivisions around the ring (orbit)
     let ringSegmentCount                   = 512                                // Number of subdivisions along the ring (orbit)
     let sceneBoxSize: CGFloat              = 1000
@@ -38,6 +34,7 @@ final class EarthGlobe {
     let sunlightIntensity: CGFloat         = 3200                               // Default value is 1000 lumens
     let sunlightTemp: CGFloat              = 6000                               // Default value is 6500 Kelvin
     
+    // Initialize all nodes
     var camera                             = SCNCamera()
     var cameraNode                         = SCNNode()
     var earthAxisTilt                      = SCNNode()
@@ -48,14 +45,10 @@ final class EarthGlobe {
     var userRotation                       = SCNNode()
     var userTilt                           = SCNNode()
     
-    var gestureHost : SCNView?
-    var lastFovBeforeZoom : CGFloat?
-    var lastPanLoc : CGPoint?
-    
     
     // MARK: - Methods
     
-    
+    /// Initializer for our Earth model
     init() {
         
         // Create the globe shape upon which we'll build our Earth model
@@ -121,26 +114,16 @@ final class EarthGlobe {
         theScene.showsStatistics            = false
         
         theScene.allowsCameraControl        = true
-        
-//        gestureHost                         = theScene
-//        if customPinchGestureIsEnabled {    // Overrides build-in scene kit gesture handlers
-//            let pan                         = UIPanGestureRecognizer(target: self, action:#selector(EarthGlobe.onPanGesture(pan:)))
-//            theScene.addGestureRecognizer(pan)
-//            let pinch                       = UIPinchGestureRecognizer(target: self, action: #selector(EarthGlobe.onPinchGesture(pinch:)))
-//            theScene.addGestureRecognizer(pinch)
-//        } else {                            // Handle pinch gestures with default handler, but use the following code for panning gesture handling
-//            let pan                         = UIPanGestureRecognizer(target: self, action:#selector(EarthGlobe.onPanGesture(pan:)))
-//            theScene.addGestureRecognizer(pan)
-//        }
-        
+              
         completeTheSetup()
         
     }
     
     
+    /// Set up ambient lighting, camera position, FOV, etc.
     private func completeTheSetup() {
 
-        // Let's give the Earth a bit of ambient light to illuminate the globe when its in nighttime
+        // Let's give the Earth a bit of ambient light to illuminate the globe when it's in nighttime
         let ambientLight            = SCNLight()
         ambientLight.type           = .ambient
         ambientLight.intensity      = ambientLightIntensity
@@ -160,79 +143,4 @@ final class EarthGlobe {
         
     }
 
-    
-    @objc fileprivate func onPanGesture(pan : UIPanGestureRecognizer) {
-        
-        // Handle panning and rotating
-        guard let sceneView = pan.view else { return }
-        let loc = pan.location(in: sceneView)
-        
-        if pan.state == .began {
-            handlePanBegan(loc)
-        } else {
-            guard pan.numberOfTouches == 1 else { return }
-            panHandler(loc, viewSize: sceneView.frame.size)
-        }
-        
-    }
-    
-    
-    @objc fileprivate func onPinchGesture(pinch: UIPinchGestureRecognizer) {
-        
-        // Update the camera's field of view
-        if pinch.state == .began {
-            lastFovBeforeZoom = camera.fieldOfView
-        } else {
-            if let lastFov = lastFovBeforeZoom {
-                var newFov = lastFov / CGFloat(pinch.scale)
-                if newFov < minFov {
-                    newFov = minFov
-                } else if newFov > maxFov {
-                    newFov = maxFov
-                }
-                self.camera.fieldOfView = newFov
-            }
-        }
-        
-    }
-    
-    
-    public func handlePanBegan(_ loc: CGPoint) {
-        
-        lastPanLoc = loc
-        
-    }
-    
-    
-    public func panHandler(_ loc: CGPoint, viewSize: CGSize) {
-        
-        guard let lastPanLoc = lastPanLoc else { return }
-        
-        // Determine the movement change
-        let delta = CGSize(width: (lastPanLoc.x - loc.x) / viewSize.width, height: (lastPanLoc.y - loc.y) / viewSize.height)
-        
-        //  DeltaX = amount of rotation to apply (around the Earth's axis)
-        //  DeltaY = amount of tilt to apply (to the Earth's axis)
-        if delta.width != 0.0 || delta.height != 0.0 {
-            
-            // As the user zooms in (smaller fieldOfView value), reduce finger travel
-            let fovProportion        = (camera.fieldOfView - minFov) / (maxFov - minFov)
-            let fovProportionRadians = Float(fovProportion * CGFloat(dragWidthInDegrees)) * Float(Globals.degreesToRadians)
-            let rotationAboutAxis    = Float(delta.width) * fovProportionRadians
-            let tiltOfAxisItself     = Float(delta.height) * fovProportionRadians
-            
-            // Apply the rotation
-            let rotate               = SCNMatrix4RotateF(userRotation.worldTransform, -rotationAboutAxis, 0.0, 1.0, 0.0)
-            userRotation.setWorldTransform(rotate)
-            
-            // Now, apply the tilt
-            let tilt                 = SCNMatrix4RotateF(userTilt.worldTransform, -tiltOfAxisItself, 1.0, 0.0, 0.0)
-            userTilt.setWorldTransform(tilt)
-            
-        }
-        
-        self.lastPanLoc = loc
-        
-    }
-    
 }

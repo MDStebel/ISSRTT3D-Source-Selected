@@ -71,15 +71,15 @@ struct UserGuide {
     <h6>Covers version \(Globals.versionNumber)</h6>
     <h2>Contents</h2>
     <p>Tap an item from the list below to jump to that section:</p>
-    <h3><a href="#passes">Pass Predictions</a></h3>
-    <h3><a href="#track">Real-Time Tracking</a></h3>
-    <h3><a href="#globe">Interactive 3D Globe</a></h3>
+    <h3><a href="#passes">ISS Pass Predictions</a></h3>
+    <h3><a href="#track">ISS Tracking Map View</a></h3>
+    <h3><a href="#globe">Fullscreen Interactive 3D Globe</a></h3>
     <h3><a href="#crew">Current Crew</a></h3>
     <h3><a href="#streaming">Live Earth View</a></h3>
-    <h3><a href="#nasatv">NASA TV</a></h3>
+    <h3><a href="#nasatv">Live NASA TV</a></h3>
     <h3><a href="#settings">Settings</a></h3>
     <div id="passes"></div>
-    <h2>Pass Predictions</h2>
+    <h2>ISS Pass Predictions</h2>
     <p>Tapping the binoculars icon at the bottom of the main screen starts the process of computing up-coming visible ISS passes. First, ISS Real-Time Tracker 3D gets your current location's coordinates. Then, it computes the visible passes for that location. The default number of days to predict passes is set in Settings. The passes are listed in chronological order along with detailed viewing data.</p>
     <p>Data for each pass includes:</p>
     <ul>
@@ -171,8 +171,8 @@ struct UserGuide {
     <p>The time interval between map updates is automatically set from 1 to 6 seconds, based upon the zoom slider setting. With the slider all the way to the left, the update interval is set at 1 second. As you drag the slider right, it increases by 1 second up to a maximum interval of 6 seconds. This keeps the relative motion of the map roughly equal at all scales within a given range.</p>
     <h4>Ground Track</h4>
     <p>The orbit ground track line is drawn by default. This shows the ground track of the ISS. You can turn this on/off in Settings by tapping the settings icon from the Tracking screen. When the orbit track is on, the ground track clear button is displayed on the Tracking screen.</p>
-    <h4>Interactive 3D Globe</h4>
-    <p>The globe shows the current position of the ISS and its orbital track. This is a photorealistic model of the Earth complete with accurate Sun subsolar position, specular reflections on the water, seasonal tilt, mountain shadows, and other details. Drag the globe to rotate and pan it. The circle represents the approximate ISS sighting range from ground level. Auto-rotation is enabled by default and rotates the globe once every 90 seconds. To disable auto-rotation, as well as to enable/disable the globe entirely, go to Settings. Tapping the expand icon on the globe overlay, or the globe button on the tab bar, expands the globe to fullscreen mode and hides the map.</p>
+    <h4>3D Globe Overlay</h4>
+    <p>The globe shows the current position of the ISS, its orbital track, and viewing range circle. The globe is a photorealistic model of the Earth complete with accurate Sun subsolar position, specular reflections on the water, seasonal tilt, mountain shadows, and other details. Drag the globe to rotate and pan it. The circle represents the approximate ISS sighting range from ground level. Auto-rotation is enabled by default and rotates the globe once every 90 seconds. To disable auto-rotation, as well as to enable/disable the globe overlay entirely, go to Settings. Tapping the expand icon on the globe overlay, or the globe button on the tab bar, expands the globe to fullscreen mode and hides the map.</p>
     <h4>Copy Info to the Clipboard</h4>
     <p>Tap the copy icon next to the info box on bottom of the map to copy the ISS's location, altitude, velocity, and associated time to the clipboard. You can then paste the data in another app.</p>
     <h5>Notes:</h5>
@@ -185,9 +185,9 @@ struct UserGuide {
     </li>
     </ul>
     <div id="globe"></div>
-    <h2>Interactive 3D Globe</h2>
+    <h2>Fullscreen Interactive 3D Globe</h2>
     <p>From the Tracking screen, tapping the expand icon on the globe overlay, or the globe icon on the tab bar, expands the globe to fullscreen mode and hides the map.</p>
-    <p>The 3D interactive globe shows the current position of the ISS and its orbital track. This is a photorealistic model of the Earth complete with accurate Sun subsolar position, specular reflections on the water, seasonal tilt, mountain shadows, and other details.</p>
+    <p>The 3D interactive globe shows the current position of the ISS, its orbital track, and footprint (viewing range circle). In this version, the globe also shows the current position of the Chinese Space Station, Tiangong-3 (TSS), its orbital track, and footprint (viewing range circle). The ISS track and footprint are shown in red and those for the TSS are in gold. The globe is a photorealistic model of the Earth complete with accurate Sun subsolar position, specular reflections on the water, seasonal tilt, mountain shadows, and other details.</p>
     <p>The globe starts updating automatically when in full-screen mode.</p>
     <h4>Using Gestures</h4>
     <ul>
@@ -223,7 +223,7 @@ struct UserGuide {
     <h5>Notes:</h5>
     <ul>
     <li>
-    <h6>The red circle represents the approximate ISS sighting range from ground level under perfect conditions. Use the Pass Predictor to get viewable passes from your exact location.</h6>
+    <h6>The red and gold circles represent the approximate ISS and TSS sighting ranges, respectively, from ground level under perfect conditions. Use the Pass Predictor to get viewable ISS passes from your exact location (TSS passes is not yet supported and will be in a future release).</h6>
     </li>
     <li>
     <h6>Auto-rotation is enabled by default and rotates the globe once every 90 seconds.</h6>
@@ -235,7 +235,7 @@ struct UserGuide {
     <h6>The music soundtrack will be disabled (not play) by default. Click the ♪ icon at the upper-right to toggle the soundtrack on/off.</h6>
     </li>
     </ul>
-    <p>Tap the collapse icon on the upper-right of the scene to return to the main tracking screen.</p>
+    <p>Tap the collapse icon on the upper-right of the scene to return to the main tracking map screen.</p>
     <div id="crew"></div>
     <h2>Crew</h2>
     <p>Tap the astronaut icon at the bottom of the screen to get a table of information about the current ISS crew.</p>
@@ -336,7 +336,10 @@ struct UserGuide {
     static let fullGlobe =
     """
     \(head)
-    <p>The fullscreen 3D interactive globe shows the current position of the ISS and its orbital track on a model of the Earth. This is a photorealistic model of the Earth complete with accurate Sun subsolar position, specular reflections on the water, seasonal tilt, mountain shadows, and other details.</p>
+    <h2>Interactive 3D Globe</h2>
+    <p>From the Tracking screen, tapping the expand icon on the globe overlay, or the globe icon on the tab bar, expands the globe to fullscreen mode and hides the map.</p>
+    <p>The 3D interactive globe shows the current position of the ISS, its orbital track, and footprint (viewing range circle). In this version, the globe also shows the current position of the Chinese Space Station, Tiangong-3 (TSS), its orbital track, and footprint (viewing range circle). The ISS track and footprint are shown in red and the TSS is in gold.</p>
+    <p>The globe is a photorealistic model of the Earth complete with accurate Sun subsolar position, specular reflections on the water, seasonal tilt, mountain shadows, and other details.</p>
     <p>The globe starts updating automatically when in full-screen mode.</p>
     <h4>Using Gestures</h4>
     <ul>
@@ -372,7 +375,7 @@ struct UserGuide {
     <h5>Notes:</h5>
     <ul>
     <li>
-    <h6>The red circle represents the approximate ISS sighting range from ground level under perfect conditions. Use the Pass Predictor to get viewable passes from your exact location.</h6>
+    <h6>The red and gold circles represent the approximate ISS and TSS sighting ranges, respectively, from ground level under perfect conditions. Use the Pass Predictor to get viewable ISS passes from your exact location (TSS passes is not yet supported and will be in a future release).</h6>
     </li>
     <li>
     <h6>Auto-rotation is enabled by default and rotates the globe once every 90 seconds.</h6>

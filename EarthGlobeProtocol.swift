@@ -13,10 +13,11 @@ import UIKit
 /// Protocol that adds EarthGlobe support to a UIViewController subclass, with properties and methods to create the scene and update it
 protocol EarthGlobeProtocol: UIViewController {
     
-    var lastLat: Float { get set }
+    var ISSLastLat: Float { get set }
+    var TSSLastLat: Float { get set }
     
     func setUpEarthGlobeScene(for globe: EarthGlobe, in scene: SCNView, hasTintedBackground: Bool)
-    func updateEarthGlobeScene(in globe: EarthGlobe, latitude: String, longitude: String, lastLat: inout Float )
+    func updateEarthGlobeScene(in globe: EarthGlobe, ISSLatitude: String, ISSLongitude: String, TSSLatitude: String?, TSSLongitude: String?, ISSLastLat: inout Float, TSSLastLat: inout Float)
     
 }
 
@@ -47,47 +48,87 @@ extension EarthGlobeProtocol {
     }
     
     
-    /// Add the ISS position marker, orbital track, and current Sun position to the globe
+    /// Add the station position marker(s), orbital track, and current Sun position to the globe.
+    /// Since we are not always plotting the TSS, the coordinates parameters are optional
     /// - Parameters:
     ///   - globe: The globe instance to use
-    ///   - latitude: The latitude
-    ///   - longitude: The longitude
-    ///   - lastLat: The last latitude saved as a mutating parameter
-    func updateEarthGlobeScene(in globe: EarthGlobe, latitude: String, longitude: String, lastLat: inout Float ) {
+    ///   - ISSLatitude: ISS latitude as a string
+    ///   - ISSLongitude: ISS longitude as a string
+    ///   - TSSLatitude: TSS latitude as an optional string
+    ///   - TSSLongitude: TSS longitude as an optional string
+    ///   - lastLat: The last ISS latitude saved as a mutating parameter
+    func updateEarthGlobeScene(in globe: EarthGlobe, ISSLatitude: String, ISSLongitude: String, TSSLatitude: String?, TSSLongitude: String?, ISSLastLat: inout Float, TSSLastLat: inout Float ) {
         
-        var headingFactor: Float = 1
-        var showOrbitNow = false
+        var ISSHeadingFactor: Float = 1
+        var TSSHeadingFactor: Float = 1
+        var showISSOrbitNow      = false
+        var showTSSOrbitNow      = false
+        var addTSS               = false
+        var iLat, iLon: Float
+        var tLat: Float?         = nil
+        var tLon: Float?         = nil
         
-        globe.removeLastNode()                      // Remove the last marker node, so we don't smear them together
-        globe.removeLastNode()                      // Remove the last orbit track, so we don't smear them together as they precess
-        globe.removeLastNode()                      // Remove the viewing circle
-        
-        let lat = Float(latitude) ?? 0.0
-        let lon = Float(longitude) ?? 0.0
-        
-        // Determine if we have a prior latitude saved, as we don't know which way the orbit is oriented unless we do
-        if lastLat != 0 {
-            showOrbitNow = true
-            headingFactor = lat - lastLat < 0 ? -1 : 1
+        // Process coordinates
+        iLat = Float(ISSLatitude) ?? 0.0
+        iLon = Float(ISSLongitude) ?? 0.0
+         
+        if TSSLatitude != nil && TSSLongitude != nil {  // Make sure we have valid TSS coordinates
+            tLat = Float(TSSLatitude!) ?? 0.0
+            tLon = Float(TSSLongitude!) ?? 0.0
+            if (tLat! + tLon!) != 0.0 {
+                addTSS = true
+            } else {
+                addTSS = false
+            }
+        } else {
+            addTSS = false
         }
-        lastLat = lat                               // Saves last latitude to use in calculating north or south heading vector after the second track update
         
+        globe.removeLastNode()                                  // Remove the last marker nodes, so we don't smear them together
+        globe.removeLastNode()
+        globe.removeLastNode()
+        if addTSS {
+            globe.removeLastNode()                              // Remove one more node if we've added the TSS node
+            globe.removeLastNode()                              // Remove one more node if we've added the TSS orbital track
+            globe.removeLastNode()                              // Remove one more node if we've added the TSS viewing range
+        }
+        
+        // Determine if we have a prior ISS latitude saved, as we don't know which way the orbit is oriented unless we do
+        if ISSLastLat != 0 {
+            showISSOrbitNow     = true
+            ISSHeadingFactor = iLat - ISSLastLat < 0 ? -1 : 1
+        }
+        ISSLastLat = iLat                                       // Saves last latitude to use in calculating north or south heading vector after the second track update
+        
+        // Determine if we have a prior TSS latitude saved, as we don't know which way the orbit is oriented unless we do
+        if TSSLastLat != 0 {
+            showTSSOrbitNow     = true
+            TSSHeadingFactor = tLat! - TSSLastLat < 0 ? -1 : 1
+        }
+        TSSLastLat = tLat ?? 0
+ 
         // Get the current coordinates of the Sun at the subsolar point (i.e., where the Sun is at zenith)
         let coordinates = AstroCalculations.getSubSolarCoordinates()
-        let subSolarLat = coordinates.latitude      // Get the latitude of the subsolar point at the current time
-        let subSolarLon = coordinates.longitude     // Get the longitude of the subsolar point at the current time
+        let subSolarLat = coordinates.latitude                  // Get the latitude of the subsolar point at the current time
+        let subSolarLon = coordinates.longitude                 // Get the longitude of the subsolar point at the current time
+        globe.setUpTheSun(lat: subSolarLat, lon: subSolarLon)   // Now, set up the Sun in our model at the subsolar point
         
-        // Now, set up the Sun in our model at the subsolar point
-        globe.setUpTheSun(lat: subSolarLat, lon: subSolarLon)
-        
-        // If we're ready to show the orbit track, render it now
-        if showOrbitNow {
-            globe.addOrbitTrackAroundTheGlobe(lat: lat, lon: lon, headingFactor: headingFactor)
+        // If we're ready to show the orbital tracks, render them now
+        if showISSOrbitNow {
+            globe.addOrbitTrackAroundTheGlobe(for: .ISS, lat: iLat, lon: iLon, headingFactor: ISSHeadingFactor)
+        }
+        if addTSS && showTSSOrbitNow {
+            globe.addOrbitTrackAroundTheGlobe(for: .TSS, lat: tLat!, lon: tLon!, headingFactor: TSSHeadingFactor)
         }
         
         // Update the markers now
-        globe.addISSMarker(lat: lat, lon: lon)
-        globe.addViewingCircle(lat: lat, lon: lon)
+        globe.addISSMarker(lat: iLat, lon: iLon)
+        globe.addISSViewingCircle(lat: iLat, lon: iLon)
+        
+        if addTSS {
+            globe.addTSSMarker(lat: tLat!, lon: tLon!)
+            globe.addTSSViewingCircle(lat: tLat!, lon: tLon!)
+        }
         
         // Autorotate the globe if autorotation is enabled in Settings
         globe.autoSpinGlobeRun(run: Globals.autoRotateGlobeEnabled)

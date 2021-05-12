@@ -20,26 +20,36 @@ class GlobeFullViewController: UIViewController, EarthGlobeProtocol, AVAudioPlay
     
     
     struct Constants {
-        static let apiEndpointAString   = "---"
-        static let fontForTitle         = Theme.nasa
-        static let segueToHelpFromGlobe = "segueToHelpFromGlobe"
-        static let segueToSettings      = "segueToSettings"
-        static let timerValue           = 3.0                           // Number of seconds between position updates
+        static let ISSAPIEndpointAString = "https://api.wheretheiss.at/v1/satellites/25544"
+        static let TSSAPIEndpointString  = "https://api.n2yo.com/rest/v1/satellite/positions/48274/0/0/0/1/"
+        static let TSSAPIKey             = "BZQB9N-9FTL47-ZXK7MZ-3TLE"
+        static let fontForTitle          = Theme.nasa
+        static let segueToHelpFromGlobe  = "segueToHelpFromGlobe"
+        static let segueToSettings       = "segueToSettings"
+        static let timerValue            = 3.0                           // Number of seconds between position updates
     }
     
     private struct SoundtrackButtonImage {
-        static let on                   = "music on"
-        static let off                  = "music off"
+        static let on                    = "music on"
+        static let off                   = "music off"
     }
 
-    var fullGlobe                       = EarthGlobe()
-    var globeBackgroundImageName        = ""
-    var lastLat: Float                  = 0                             // To conform with the EarthGlobeProtocol, will save the last latitude
-    var latitude                        = ""
-    var longitude                       = ""
-    var timer                           = Timer()
+    var fullGlobe                        = EarthGlobe()
+    var globeBackgroundImageName         = ""
+    var ISSLastLat: Float                = 0                             // To conform with the EarthGlobeProtocol, will save the last ISS latitude
+    var TSSLastLat: Float                = 0                             // To conform with the EarthGlobeProtocol, will save the last TSS latitude
+    var iLat                             = ""
+    var iLon                             = ""
+    var tLat                             = ""
+    var tLon                             = ""
+    var TSSLongitude                     = 0.0
+    var TSSLatitude                      = 0.0
+    var TSSCoordinates                   = [TSSOrbitalPosition.Positions]()
     
-    private var helpTitle               = "3D Globe Help"
+    // Initialize timer
+    var ISSTimer                         = Timer()                      // Timer for updating ISS position
+    
+    private var helpTitle                = "3D Globe Help"
     
     // Soundtrack properties
     var soundtrackMusicPlayer: AVAudioPlayer?
@@ -159,22 +169,22 @@ class GlobeFullViewController: UIViewController, EarthGlobeProtocol, AVAudioPlay
     func startUpdatingGlobe() {
         
         Globals.globeBackgroundWasChanged = true
-        earthGlobeLocateISS()       // Call once to update the globe before the timer starts in order to immediately show the ISS location, etc.
-        timerStartup()
+        earthGlobeLocateStations()       // Call once to update the globe before the timer starts in order to immediately show the ISS location, etc.
+        startAllTimers()
         
     }
     
     
-    private func timerStartup() {
+    private func startAllTimers() {
 
-        timer = Timer.scheduledTimer(timeInterval: Constants.timerValue, target: self, selector: #selector(earthGlobeLocateISS), userInfo: nil, repeats: true)
-        
+        ISSTimer = Timer.scheduledTimer(timeInterval: Constants.timerValue, target: self, selector: #selector(earthGlobeLocateStations), userInfo: nil, repeats: true)
+
     }
     
     
     func stopUpdatingGlobe() {
         
-        timer.invalidate()
+        ISSTimer.invalidate()
         
         isRunningLabel?.text = "Not Running"
         

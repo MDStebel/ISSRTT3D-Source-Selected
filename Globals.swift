@@ -12,6 +12,8 @@ import UIKit
 /// Struct used as a namespace to hold global variables and constants
 struct Globals {
     
+    // MARK: - Global Variables
+    
     static var isIPad                                        = false {
         didSet {
             if isIPad {
@@ -54,6 +56,9 @@ struct Globals {
     static var zoomFactorWasResetInSettings                  = false
     static var zoomRangeFactorSelection                      = 2
 
+    
+    // MARK: - Global Constants
+    
     static let azimuthFormat                                 = "%3.0f"
     static let coordinatesStringFormat                       = "%3d°%02d'%02d\" %@  %3d°%02d'%02d\" %@"
     static let dateFormatStringEuropeanForm                  = "yyyy-MM-dd"
@@ -70,13 +75,16 @@ struct Globals {
     static let floatingPointWithTwoPlusOneDecimalPlace       = "%2.1f"
     static let helpChar                                      = "(?)"
     static let hubbleDeepField                               = "Hubble Legacy Field Crop 2800px.png"
-    static let ISSAltitudeFactor: Float                      = orbitalAltitudeFactor * 1.015
-    static let ISSAltitudeInKM: Float                        = 425
-    static let ISSOrbitAltitudeInScene                       = orbitalAltitudeFactor
+    static let ISSAltitudeFactor: Float                      = ISSOrbitalAltitudeFactor * 1.015
+    static let ISSAltitudeInKM: Float                        = 436
+    static let ISSOrbitAltitudeInScene                       = ISSOrbitalAltitudeFactor
     static let ISSIcon                                       = "New-ISS-Marker-2400px-1"
+    static let ISSMarkerWidth: CGFloat                       = 0.16
     static let ISSOrbitInclinationInDegrees: Float           = 51.64
     static let ISSOrbitInclinationInRadians: Float           = ISSOrbitInclinationInDegrees * Float(degreesToRadians)
-    static let issrttWebsite                                 = "https://www.issrtt.com"
+    static let ISSOrbitalAltitudeFactor                      = globeRadiusFactor * (1 + ISSAltitudeInKM / earthRadiusInKM) * 1.02
+    static let ISSRTT3DWebsite                               = "https://www.issrtt.com"
+    static let ISSViewingCircleGraphic                       = "iss_4_visibility_circle"
     static let julianDateForJan011970At0000GMT               = 2440587.5
     static let milkyWay                                      = "Milky Way Correct Rotation in the Sky Square.png"
     static let ninetyDegrees: Float                          = 90
@@ -92,7 +100,6 @@ struct Globals {
     static let numberOfSecondsInAMinute: Double              = 60
     static let numberOfSecondsInAYear: Double                = numberOfSecondsInADay * numberOfDaysInAYear
     static let oneEightyDegrees: Double                      = 180
-    static let orbitalAltitudeFactor                         = globeRadiusFactor * (1 + ISSAltitudeInKM / earthRadiusInKM) * 1.02
     static let orionNebula                                   = "Orion Nebula.png"
     static let outputDateFormatString                        = "MMM-dd-YYYY 'at' hh:mma"
     static let outputDateFormatStringShortForm               = "MMM-dd-yyyy"
@@ -103,7 +110,15 @@ struct Globals {
     static let spacer                                        = "  "
     static let tarantulaNebula                               = "Tarantula Nebula in the Large Magellanic Cloud.png"
     static let threeSixtyDegrees: Float                      = 360
+    static let TSSAltitudeFactor: Float                      = TSSOrbitalAltitudeFactor * 1.015
+    static let TSSAltitudeInKM: Float                        = 365
+    static let TSSIcon                                       = "TSS-Large-MDS"
+    static let TSSMarkerWidth: CGFloat                       = 0.07
+    static let TSSOrbitalAltitudeFactor                      = globeRadiusFactor * (1 + TSSAltitudeInKM / earthRadiusInKM) * 1.01
+    static let TSSOrbitAltitudeInScene                       = TSSOrbitalAltitudeFactor
+    static let TSSOrbitInclinationInDegrees: Float           = 42.0
+    static let TSSOrbitInclinationInRadians: Float           = TSSOrbitInclinationInDegrees * Float(degreesToRadians)
+    static let TSSViewingCircleGraphic                       = "TSS-Visibility-Circle"
     static let twoPi: Double                                 = .pi * 2
-    static let viewingCircleGraphic                          = "iss_4_visibility_circle"
     
 }

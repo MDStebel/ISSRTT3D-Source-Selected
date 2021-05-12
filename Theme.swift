@@ -28,6 +28,8 @@ struct Theme {
     static let star                                         = "StarColor"
     static let tblBgd                                       = "Table Background"
     static let tint                                         = "Tint"
+    static let issOrbitalColor                              = tint
+    static let tssOrbitalColor                              = "StarColor"
     static let usrGuide                                     = "User Guide Background"
     static let white                                        = "White"
     

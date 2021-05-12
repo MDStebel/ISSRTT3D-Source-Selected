@@ -15,7 +15,7 @@ class PassesTableViewCell: UITableViewCell {
     // MARK: - Properties
     
     
-    private let cornerRadius: CGFloat = 15.0
+    private let cornerRadius = Theme.cornerRadius
     
 
     // MARK: - Outlets

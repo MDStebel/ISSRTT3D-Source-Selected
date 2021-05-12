@@ -22,7 +22,7 @@ class CrewMemberDetailView: UIView {
         }
     }
     
-    private let cornerRadius: CGFloat = 15.0
+    private let cornerRadius = Theme.cornerRadius
     private let shortBioBackgroundColor = UIColor(named: Theme.popupBgd)?.cgColor
     
     
@@ -47,10 +47,10 @@ class CrewMemberDetailView: UIView {
     @IBAction private func goToTwitter() {
 
         // First make sure we have a Twitter URL and can extract the handle from it and that the handle isn't blank
-        guard let twitterHandle = twitterHandleURL?.deletingPrefix("https://twitter.com/"), twitterHandle != "" else { return }
+        guard twitterHandleURL != "", let twitterHandle = twitterHandleURL?.deletingPrefix("https://twitter.com/"), twitterHandle != "", twitterHandle.count > 3 else { return }
         
-        let appURL = NSURL(string: "twitter://user?screen_name=\(twitterHandle)")!
-        let webURL = NSURL(string: "https://twitter.com/\(twitterHandle)")!
+        let appURL = URL(string: "twitter://user?screen_name=\(twitterHandle)")!
+        let webURL = URL(string: "https://twitter.com/\(twitterHandle)")!
         
         // Open Twitter app if installed. Otherwise, open Twitter website in Safari
         let application = UIApplication.shared
