@@ -14,15 +14,15 @@ a {
 </head>
 <body style="font-family: 'Avenir Next', 'San Francisco', Helvetica, Arial, sans-serif; color: #333333;">
 <h1>User Guide</h1>
-<h6>Covers version 6.15.1</h6>
+<h6>Covers version 7</h6>
 <h2>Contents</h2>
 <p>Tap an item from the list below to jump to that section:</p>
-<h3><a href="#passes">Pass Predictions</a></h3>
-<h3><a href="#track">Real-Time Tracking</a></h3>
-<h3><a href="#globe">Interactive 3D Globe</a></h3>
+<h3><a href="#passes">ISS Pass Predictions</a></h3>
+<h3><a href="#track">ISS Tracking Map View</a></h3>
+<h3><a href="#globe">Fullscreen Interactive 3D Globe</a></h3>
 <h3><a href="#crew">Current Crew</a></h3>
 <h3><a href="#streaming">Live Earth View</a></h3>
-<h3><a href="#nasatv">NASA TV</a></h3>
+<h3><a href="#nasatv">Live NASA TV</a></h3>
 <h3><a href="#settings">Settings</a></h3>
 <div id="passes"></div>
 <h2>Pass Predictions</h2>
@@ -47,7 +47,7 @@ a {
 </ul>
 <p>Each pass is rated based on its maximum magnitude (i.e., brightness). The brightest passes get the highest ratings. Passes are rated with 0, 1, 2, 3, or 4 stars corresponding to poor, fair, good, better, or best, respectively.</p>
 <h4>Adding a Pass Event to Your Calendar</h4>
-<p>Tap any pass in the table to add it as an event in your calendar. When adding a pass to your calendar, two alerts will be set: the first for 1 hour before and the second for 20 minutes before the start of the pass. The starting and ending times for the pass are saved in the event in your calendar, along with the maximum magnitude, as well as the starting, maximum, and ending azimuths and elevations for the pass.</p>
+<p>Tap any pass in the table to add it as an event in your calendar. When adding a pass to your calendar, two alerts will be set: the first for 1 hour before, and the second for 15 minutes before the start of the pass. The starting and ending times for the pass are saved in the event in your calendar, along with the maximum magnitude, as well as the starting, maximum, and ending azimuths and elevations for the pass.</p>
 <h4>Change Number of Days to Compute &amp; Refresh</h4>
 <p>Tap the Calendar icon at the top-right of the screen to change the number of days to compute and refresh the list. To change the number of days so that the app remembers your setting for next time, change it in Settings.</p>
 <h4>Pull-to-Refresh</h4>
@@ -118,7 +118,7 @@ a {
 <h4>Ground Track</h4>
 <p>The orbit ground track line is drawn by default. This shows the ground track of the ISS. You can turn this on/off in Settings by tapping the settings icon from the Tracking screen. When the orbit track is on, the ground track clear button is displayed on the Tracking screen.</p>
 <h4>Interactive 3D Globe</h4>
-<p>The globe shows the current position of the ISS and its orbital track. This is a photorealistic model of the Earth complete with accurate Sun subsolar position, specular reflections on the water, seasonal tilt, mountain shadows, and other details. Drag the globe to rotate and pan it. The circle represents the approximate ISS sighting range from ground level. Auto-rotation is enabled by default and rotates the globe once every 90 seconds. To disable auto-rotation, as well as to enable/disable the globe entirely, go to Settings. Tapping the expand icon on the globe overlay, or the globe button on the tab bar, expands the globe to fullscreen mode and hides the map.</p>
+<p>The globe shows the current position of the ISS, its orbital track, and viewing range circle. The globe is a photorealistic model of the Earth complete with accurate Sun subsolar position, specular reflections on the water, seasonal tilt, mountain shadows, and other details. Drag the globe to rotate and pan it. The circle represents the approximate ISS sighting range from ground level. Auto-rotation is enabled by default and rotates the globe once every 90 seconds. To disable auto-rotation, as well as to enable/disable the globe overlay entirely, go to Settings. Tapping the expand icon on the globe overlay, or the globe button on the tab bar, expands the globe to fullscreen mode and hides the map.</p>
 <h4>Copy Info to the Clipboard</h4>
 <p>Tap the copy icon next to the info box on bottom of the map to copy the ISS's location, altitude, velocity, and associated time to the clipboard. You can then paste the data in another app.</p>
 <h5>Notes:</h5>
@@ -131,9 +131,9 @@ a {
   </li>
 </ul>
 <div id="globe"></div>
-<h2>Interactive 3D Globe</h2>
+<h2>Fullscreen Interactive 3D Globe</h2>
 <p>From the Tracking screen, tapping the expand icon on the globe overlay, or the globe icon on the tab bar, expands the globe to fullscreen mode and hides the map.</p>
-<p>The 3D interactive globe shows the current position of the ISS and its orbital track. This is a photorealistic model of the Earth complete with accurate Sun subsolar position, specular reflections on the water, seasonal tilt, mountain shadows, and other details.</p>
+<p>The 3D interactive globe shows the current position of the ISS, its orbital track, and footprint (viewing range circle). In this version, the globe also shows the current position of the Chinese Space Station, Tiangong-3 (TSS), its orbital track, and footprint (viewing range circle). The ISS track and footprint are shown in red and those for the TSS are in gold. The globe is a photorealistic model of the Earth complete with accurate Sun subsolar position, specular reflections on the water, seasonal tilt, mountain shadows, and other details.</p>
 <p>The globe starts updating automatically when in full-screen mode.</p>
 <h4>Using Gestures</h4>
 <ul>
@@ -169,7 +169,7 @@ a {
 <h5>Notes:</h5>
 <ul>
   <li>
-    <h6>The red circle represents the approximate ISS sighting range from ground level under perfect conditions. Use the Pass Predictor to get viewable passes from your exact location.</h6>
+    <h6>The red and gold circles represent the approximate ISS and TSS sighting ranges, respectively, from ground level under perfect conditions. Use the Pass Predictor to get viewable ISS passes from your exact location (TSS passes is not yet supported).</h6>
   </li>
   <li>
     <h6>Auto-rotation is enabled by default and rotates the globe once every 90 seconds.</h6>
@@ -225,7 +225,5 @@ a {
 <p>All of your current user settings are automatically saved on your device when you exit the app or switch to another app. This also includes the current zoom slider position. Each time you run ISS Real-Time Tracker 3D, your settings are restored.</p>
 <p>Tapping the ⟳ button on the Settings title bar, will clear all your user settings and change them back to their defaults. The zoom slider will reset to its default (center) position, and What's New and other messages will be restored.</p>
 <p>Tap ⟵ to return to the tracking view.</p>
-<h5>© 2016-2021 Michael Stebel Consulting, LLC<br/>
-  All rights reserved</h5>
 </body>
 </html>
