@@ -26,7 +26,7 @@ extension GlobeFullViewController {
     @objc func earthGlobeLocateStations() {
         
         // Make sure we can create the URL
-        guard let ISSAPIEndpointURL = URL(string: Constants.ISSAPIEndpointAString) else { return }
+        guard let ISSAPIEndpointURL = URL(string: Constants.ISSAPIEndpointString) else { return }
         
         /// Task to get JSON data from API by sending request to API endpoint, parse response for ISS data, and then display ISS position, etc.
         let globeUpdateTask = URLSession.shared.dataTask(with: ISSAPIEndpointURL) { [ weak self ] (data, response, error) -> Void in

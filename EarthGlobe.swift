@@ -18,13 +18,9 @@ final class EarthGlobe {
     let cameraAltitude                     = Globals.cameraAltitude
     let daysInAYear                        = Globals.numberOfDaysInAYear
     let defaultCameraFov                   = Globals.defaultCameraFov
-    let distanceToISSOrbit                 = Globals.ISSOrbitAltitudeInScene
-    let dragWidthInDegrees                 = 270.0                              // Amount to rotate the globe on one edge-to-edge swipe (in degrees)
     let globeDefaultRotationSpeedInSeconds = 120.0                              // 360° revolution in n-seconds
     let globeRadiusFactor                  = Globals.globeRadiusFactor
     let globeSegmentCount                  = 1024                               // Number of subdivisions along the sphere's (Earth's) polar & azimuth angles, similar to latitude & longitude on a globe of the Earth
-    let maxFov                             = Globals.maxFov                     // Max zoom in degrees
-    let minFov                             = Globals.minFov                     // Min zoom in degrees
     let pipeRadius: CGFloat                = 0.004
     let pipeSegmentCount                   = 256                                // Number of subdivisions around the ring (orbit)
     let ringSegmentCount                   = 512                                // Number of subdivisions along the ring (orbit)
@@ -111,7 +107,6 @@ final class EarthGlobe {
         theScene.scene                      = scene
         theScene.autoenablesDefaultLighting = false
         theScene.showsStatistics            = false
-        
         theScene.allowsCameraControl        = true
               
         completeTheSetup()
@@ -130,10 +125,8 @@ final class EarthGlobe {
         // Add the camera
         camera.fieldOfView          = defaultCameraFov
         camera.zFar                 = 10000
-        
         let adjustedCameraAltitude  = globeRadiusFactor + cameraAltitude
         cameraNode.position         = SCNVector3(x: 0, y: 0, z: adjustedCameraAltitude)
-        
         cameraNode.constraints      = [SCNLookAtConstraint(target: globe)]
         cameraNode.light            = ambientLight
         cameraNode.camera           = camera

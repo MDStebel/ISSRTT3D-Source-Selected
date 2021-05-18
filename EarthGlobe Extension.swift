@@ -79,12 +79,12 @@ extension EarthGlobe {
         
         switch station {
         case .ISS :
-            orbitTrack.firstMaterial?.diffuse.contents = UIColor(named: Theme.issOrbitalColor)
+            orbitTrack.firstMaterial?.diffuse.contents = UIColor(named: Theme.ISSOrbitalColor)
             orbitTrack.ringRadius                      = CGFloat(Globals.ISSOrbitAltitudeInScene)
             orbitInclination                           = Globals.ISSOrbitInclinationInRadians
             multiplier                                 = 2.5
         case .TSS :
-            orbitTrack.firstMaterial?.diffuse.contents = UIColor(named: Theme.tssOrbitalColor)
+            orbitTrack.firstMaterial?.diffuse.contents = UIColor(named: Theme.TSSOrbitalColor)
             orbitTrack.ringRadius                      = CGFloat(Globals.TSSOrbitAltitudeInScene)
             orbitInclination                           = Globals.TSSOrbitInclinationInRadians
             multiplier                                 = 2.8

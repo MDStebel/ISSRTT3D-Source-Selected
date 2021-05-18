@@ -54,5 +54,4 @@ class SpaceStation: Satellite {
         super.init(name: name, image: image, orbitalInclination: orbitalInclination, altitudeInKM: altitudeInKM, NORADCode: NORADCode)
     }
     
-    
 }

@@ -13,7 +13,7 @@ extension UIViewController {
     /// Method to wait before executing a closure
     /// - Parameters:
     ///   - delay: Delay
-    ///   - closure: Closure as ()->() type. The closure is allowed to execute after the method returns
+    ///   - closure: Closure as ()->() type. The closure is allowed to execute after the method returns, and is therefore an escaping closure.
     /// - Returns: Returns immediately after delay. Closure is executed asynchronously
     func delay(_ delay: Double, closure: @escaping () -> () ) {
         

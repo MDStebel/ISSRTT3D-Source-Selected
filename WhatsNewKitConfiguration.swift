@@ -22,14 +22,14 @@ private let whatsNew = WhatsNew(
         WhatsNew.Item(
             title: "New: Tracks the Chinese Space Station, Too!",
             subtitle: """
-                      This big update adds real-time tracking of the new Tiangong space station (TSS) in the fullscreen 3D globe view! Now track both the ISS & TSS in 3D! TSS pass predictions will be coming later. Learn more in Help.
+                      Version 7 adds real-time tracking of the new Tiangong space station (TSS) in the fullscreen 3D globe view! Now track both the ISS & TSS in 3D! TSS pass predictions will be coming later. Learn more in Help.
                       """,
             image: UIImage(named: "icons8-megaphone_filled.imageset")
         ),
         WhatsNew.Item(
             title: "Improvements & Fixes",
             subtitle: """
-                      Bug fixes and performance improvements.
+                      Some under-the-hood cleanup and tweaks because I'm continuously seeking perfection.
                       """,
             image: UIImage(named: "icons8-bug_filled")
         ),
