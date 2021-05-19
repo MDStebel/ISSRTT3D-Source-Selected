@@ -46,8 +46,8 @@ class TrackingViewController: UIViewController, MKMapViewDelegate, UIGestureReco
     /// Local constants
     struct Constants {
         static let animationOffsetY: CGFloat    = 90.0
-        static let apiEndpointAString           = "---"
-        static let apiEndpointBString           = "---"
+        static let apiEndpointAString           = "https://api.wheretheiss.at/v1/satellites/25544"
+        static let apiEndpointBString           = "http://api.open-notify.org/iss-now.json"
         static let defaultTimerInterval         = 3.0
         static let fontForTitle                 = Theme.nasa
         static let helpTitle                    = "User Guide"
@@ -190,7 +190,6 @@ class TrackingViewController: UIViewController, MKMapViewDelegate, UIGestureReco
     var timer                               = Timer()
     var timerValue: TimeInterval            = 2.0
     var velString                           = ""
-    
     var altitude                            = "" {
         didSet{
             altitudeInMiles = Constants.numberFormatter.string(from: NSNumber(value: Double(altitude)! * Constants.kilometersToMiles))!
@@ -645,7 +644,7 @@ class TrackingViewController: UIViewController, MKMapViewDelegate, UIGestureReco
             
             case 0 :
                 
-                cursor.image = UIImage(named: "ISS-New-Marker")
+                cursor.image = UIImage(named: Globals.ISSIconForMapView)
                 
             case 1 :
                 
@@ -657,7 +656,7 @@ class TrackingViewController: UIViewController, MKMapViewDelegate, UIGestureReco
                 
             default :
                 
-                cursor.image = UIImage(named: "ISS-New-Marker")
+                cursor.image = UIImage(named: Globals.ISSIconForMapView)
                 
             }
             
@@ -668,7 +667,7 @@ class TrackingViewController: UIViewController, MKMapViewDelegate, UIGestureReco
             coordinatesLabel.textColor = UIColor.white
             altitudeLabel.textColor    = UIColor.white
             velocityLabel.textColor    = UIColor.white
-            cursor.alpha               = 0.90
+            cursor.alpha               = 1.0
             zoomFactorLabel.alpha      = 0.90
             copyButton.tintColor       = UIColor.white
             cursor.tintColor           = .white
@@ -677,7 +676,7 @@ class TrackingViewController: UIViewController, MKMapViewDelegate, UIGestureReco
             
             case 0 :
                 
-                cursor.image = UIImage(named: "ISS-New-Marker")
+                cursor.image = UIImage(named: Globals.ISSIconForMapView)
                 
             case 1 :
                 
@@ -689,7 +688,7 @@ class TrackingViewController: UIViewController, MKMapViewDelegate, UIGestureReco
                 
             default :
                 
-                cursor.image = UIImage(named: "ISS-New-Marker")
+                cursor.image = UIImage(named: Globals.ISSIconForMapView)
                 
             }
             
@@ -700,7 +699,7 @@ class TrackingViewController: UIViewController, MKMapViewDelegate, UIGestureReco
             coordinatesLabel.textColor = UIColor.white
             altitudeLabel.textColor    = UIColor.white
             velocityLabel.textColor    = UIColor.white
-            cursor.alpha               = 0.90
+            cursor.alpha               = 1.0
             zoomFactorLabel.alpha      = 0.90
             copyButton.tintColor       = UIColor.white
             cursor.tintColor           = .white
@@ -709,7 +708,7 @@ class TrackingViewController: UIViewController, MKMapViewDelegate, UIGestureReco
             
             case 0 :
                 
-                cursor.image = UIImage(named: "ISS-New-Marker")
+                cursor.image = UIImage(named: Globals.ISSIconForMapView)
                 
             case 1 :
                 
@@ -721,7 +720,7 @@ class TrackingViewController: UIViewController, MKMapViewDelegate, UIGestureReco
                 
             default :
                 
-                cursor.image = UIImage(named: "ISS-New-Marker")
+                cursor.image = UIImage(named: Globals.ISSIconForMapView)
                 
             }
             
@@ -732,7 +731,7 @@ class TrackingViewController: UIViewController, MKMapViewDelegate, UIGestureReco
             coordinatesLabel.textColor = UIColor.white
             altitudeLabel.textColor    = UIColor.white
             velocityLabel.textColor    = UIColor.white
-            cursor.alpha               = 0.90
+            cursor.alpha               = 1.0
             zoomFactorLabel.alpha      = 0.90
             copyButton.tintColor       = UIColor.white
             cursor.tintColor           = .white
@@ -741,7 +740,7 @@ class TrackingViewController: UIViewController, MKMapViewDelegate, UIGestureReco
             
             case 0 :
                 
-                cursor.image = UIImage(named: "ISS-New-Marker")
+                cursor.image = UIImage(named: Globals.ISSIconForMapView)
                 
             case 1 :
                 
@@ -753,7 +752,7 @@ class TrackingViewController: UIViewController, MKMapViewDelegate, UIGestureReco
                 
             default :
                 
-                cursor.image = UIImage(named: "ISS-New-Marker")
+                cursor.image = UIImage(named: Globals.ISSIconForMapView)
                 
             }
             

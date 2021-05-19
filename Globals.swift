@@ -79,7 +79,8 @@ struct Globals {
     static let ISSAltitudeFactor: Float                      = ISSOrbitalAltitudeFactor * 1.015
     static let ISSAltitudeInKM: Float                        = 436
     static let ISSOrbitAltitudeInScene                       = ISSOrbitalAltitudeFactor
-    static let ISSIcon                                       = "New-ISS-Marker-2400px-1"
+    static let ISSIconFor3DGlobeView                         = "ISS-mds-1350px"
+    static let ISSIconForMapView                             = "ISS-mds-75px-Template-Image"
     static let ISSMarkerWidth: CGFloat                       = 0.16
     static let ISSOrbitInclinationInDegrees: Float           = 51.64
     static let ISSOrbitInclinationInRadians: Float           = ISSOrbitInclinationInDegrees * Float(degreesToRadians)
@@ -113,7 +114,7 @@ struct Globals {
     static let threeSixtyDegrees: Float                      = 360
     static let TSSAltitudeFactor: Float                      = TSSOrbitalAltitudeFactor * 1.015
     static let TSSAltitudeInKM: Float                        = 365
-    static let TSSIcon                                       = "TSS-Large-MDS"
+    static let TSSIcon                                       = "Tiangong-mds-1200px"
     static let TSSMarkerWidth: CGFloat                       = 0.07
     static let TSSOrbitalAltitudeFactor                      = globeRadiusFactor * (1 + TSSAltitudeInKM / earthRadiusInKM) * 1.01
     static let TSSOrbitAltitudeInScene                       = TSSOrbitalAltitudeFactor

@@ -29,7 +29,7 @@ private let whatsNew = WhatsNew(
         WhatsNew.Item(
             title: "Improvements & Fixes",
             subtitle: """
-                      Some under-the-hood cleanup and tweaks because I'm continuously seeking perfection.
+                      Improved ISS and TSS markers and some under-the-hood cleanup and tweaks because I'm continuously seeking perfection.
                       """,
             image: UIImage(named: "icons8-bug_filled")
         ),

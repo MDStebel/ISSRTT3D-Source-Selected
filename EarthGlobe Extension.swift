@@ -19,7 +19,7 @@ extension EarthGlobe {
     ///   - lon: The current longitude as a decimal value
     public func addISSMarker(lat: Float, lon: Float) {
         
-        let ISS = MarkerForEarthGlobe(for: .ISS, using: Globals.ISSIcon, lat: lat, lon: lon, isInOrbit: true)
+        let ISS = MarkerForEarthGlobe(for: .ISS, using: Globals.ISSIconFor3DGlobeView, lat: lat, lon: lon, isInOrbit: true)
         self.addMarker(ISS, shouldPulse: true)
         
     }
