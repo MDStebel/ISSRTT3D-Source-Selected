@@ -46,8 +46,8 @@ class TrackingViewController: UIViewController, MKMapViewDelegate, UIGestureReco
     /// Local constants
     struct Constants {
         static let animationOffsetY: CGFloat    = 90.0
-        static let apiEndpointAString           = "https://api.wheretheiss.at/v1/satellites/25544"
-        static let apiEndpointBString           = "http://api.open-notify.org/iss-now.json"
+        static let apiEndpointAString           = "---"
+        static let apiEndpointBString           = "---"
         static let defaultTimerInterval         = 3.0
         static let fontForTitle                 = Theme.nasa
         static let helpTitle                    = "User Guide"
@@ -76,7 +76,7 @@ class TrackingViewController: UIViewController, MKMapViewDelegate, UIGestureReco
     
     // Change status bar to light color for this VC
     override var preferredStatusBarStyle: UIStatusBarStyle {
-        return .lightContent
+        .lightContent
     }
     
     // Soundtrack
