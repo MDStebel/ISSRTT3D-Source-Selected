@@ -214,7 +214,7 @@ struct AstroCalculations {
     /// Get the subsolar coordinates at the current date and time
     /// 
     /// The subsolar point is the position on Earth where the Sun is at the zenith.
-    /// - Returns: The subsolar coordinates as a tuple of Floats
+    /// - Returns: The subsolar coordinates (latitude and longitude) as a tuple of Floats
     static func getSubSolarCoordinates() -> (latitude: Float, longitude: Float) {
         
         let now = Date()

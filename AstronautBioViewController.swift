@@ -28,7 +28,7 @@ class AstronautBioViewController: UIViewController, WKUIDelegate, WKNavigationDe
     
     // Change status bar to light color for this VC
     override var preferredStatusBarStyle: UIStatusBarStyle {
-        return .lightContent
+        .lightContent
     }
     
     private struct Constants {

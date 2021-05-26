@@ -9,7 +9,7 @@
 import SceneKit
 
 
-/// The 3D Interactive Earth Globe Model
+/// The 3D Interactive 3D Earth Globe Model
 final class EarthGlobe {
     
     // MARK: - Properties

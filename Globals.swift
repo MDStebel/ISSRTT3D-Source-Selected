@@ -23,7 +23,6 @@ struct Globals {
             }
         }
     }
-    
     static var autoRotateGlobeEnabled                        = true
     static var globeBackgroundWasChanged                     = true
     static var blackScreenInHDEVExplanationPopsUp            = true
@@ -67,22 +66,23 @@ struct Globals {
     static let e                                             = M_E
     static let earthRadiusInKM: Float                        = 6378
     static let earthTiltInDegrees: Double                    = 23.43715
-    static let earthTiltInRadians: Double                    = 0.40905543478
+    static let earthTiltInRadians: Double                    = earthTiltInDegrees * degreesToRadians
     static let eclipticTiltFromGalacticPlaneInDegrees: Float = 60.5
     static let eclipticTiltFromGalacticPlaneInRadians: Float = eclipticTiltFromGalacticPlaneInDegrees * Float(degreesToRadians)
     static let elevationFormat                               = "%2.1f"
     static let floatingPointWithThreePlusOneDecimalPlace     = "%3.1f"
     static let floatingPointWithTwoPlusOneDecimalPlace       = "%2.1f"
     static let globeRadiusMultiplier: Float                  = 0.949
+    
     static let helpChar                                      = "(?)"
     static let hubbleDeepField                               = "Hubble Legacy Field Crop 2800px.png"
     static let ISSAltitudeFactor: Float                      = ISSOrbitalAltitudeFactor * 1.015
-    static let ISSAltitudeInKM: Float                        = 436
+    static let ISSAltitudeInKM: Float                        = 428
     static let ISSOrbitAltitudeInScene                       = ISSOrbitalAltitudeFactor
     static let ISSIconFor3DGlobeView                         = "ISS-mds-1350px"
     static let ISSIconForMapView                             = "ISS-mds-75px-Template-Image"
     static let ISSMarkerWidth: CGFloat                       = 0.16
-    static let ISSOrbitInclinationInDegrees: Float           = 51.64
+    static let ISSOrbitInclinationInDegrees: Float           = 51.6
     static let ISSOrbitInclinationInRadians: Float           = ISSOrbitInclinationInDegrees * Float(degreesToRadians)
     static let ISSOrbitalAltitudeFactor                      = globeRadiusFactor * (1 + ISSAltitudeInKM / earthRadiusInKM) * 1.02
     static let ISSRTT3DWebsite                               = "https://www.issrtt.com"
@@ -113,7 +113,7 @@ struct Globals {
     static let tarantulaNebula                               = "Tarantula Nebula in the Large Magellanic Cloud.png"
     static let threeSixtyDegrees: Float                      = 360
     static let TSSAltitudeFactor: Float                      = TSSOrbitalAltitudeFactor * 1.015
-    static let TSSAltitudeInKM: Float                        = 365
+    static let TSSAltitudeInKM: Float                        = 378
     static let TSSIcon                                       = "Tiangong-mds-1200px"
     static let TSSMarkerWidth: CGFloat                       = 0.07
     static let TSSOrbitalAltitudeFactor                      = globeRadiusFactor * (1 + TSSAltitudeInKM / earthRadiusInKM) * 1.01
@@ -125,3 +125,4 @@ struct Globals {
     static let zero: Float                                   = 0.0
     
 }
+
