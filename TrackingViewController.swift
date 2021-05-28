@@ -46,8 +46,8 @@ class TrackingViewController: UIViewController, MKMapViewDelegate, UIGestureReco
     /// Local constants
     struct Constants {
         static let animationOffsetY: CGFloat    = 90.0
-        static let apiEndpointAString           = "---"
-        static let apiEndpointBString           = "---"
+        static let apiEndpointAString           = "https://api.wheretheiss.at/v1/satellites/25544"
+        static let apiEndpointBString           = "http://api.open-notify.org/iss-now.json"
         static let defaultTimerInterval         = 3.0
         static let fontForTitle                 = Theme.nasa
         static let helpTitle                    = "User Guide"
@@ -71,7 +71,6 @@ class TrackingViewController: UIViewController, MKMapViewDelegate, UIGestureReco
     
     
     // MARK: - Properties
-    
     
     
     // Change status bar to light color for this VC
@@ -116,7 +115,7 @@ class TrackingViewController: UIViewController, MKMapViewDelegate, UIGestureReco
     
     /// This computed property returns the minimum zoom value for the slider based on the max value divided by a scaling factor
     private var zoomSliderMinValue: Double {
-        return max(zoomSliderMaxValue / Constants.zoomScaleFactor, zoomSliderMinFloor)     // Keep minimum value >= to zoomSliderMinFloor
+        max(zoomSliderMaxValue / Constants.zoomScaleFactor, zoomSliderMinFloor)     // Keep minimum value >= to zoomSliderMinFloor
     }
     
     /// This computed property returns the value used for both the lat and long in the map span and the default value of the zoom slider
@@ -137,23 +136,23 @@ class TrackingViewController: UIViewController, MKMapViewDelegate, UIGestureReco
     }
      
     var location: CLLocationCoordinate2D {
-        return CLLocationCoordinate2DMake(CLLocationDegrees(latitude)!, CLLocationDegrees(longitude)!)
+        CLLocationCoordinate2DMake(CLLocationDegrees(latitude)!, CLLocationDegrees(longitude)!)
     }
     
     private var span: MKCoordinateSpan {
-        return MKCoordinateSpan.init(latitudeDelta: latDelta, longitudeDelta: lonDelta)
+        MKCoordinateSpan.init(latitudeDelta: latDelta, longitudeDelta: lonDelta)
     }
     
     private var latDelta: CLLocationDegrees {
-        return Double(zoomSlider.value)
+        Double(zoomSlider.value)
     }
     
     private var lonDelta: CLLocationDegrees {
-        return latDelta
+        latDelta
     }
     
     var region: MKCoordinateRegion {
-        return MKCoordinateRegion.init(center: location, span: span)
+        MKCoordinateRegion.init(center: location, span: span)
     }
     
    
@@ -169,12 +168,12 @@ class TrackingViewController: UIViewController, MKMapViewDelegate, UIGestureReco
     private var zoomRangeFactorLabel        = ""
     private var zoomValueWasChanged         = false
     
+    var ISSLastLat: Float                   = 0
+    var TSSLastLat: Float                   = 0
     var aPolyLine                           = MKPolyline()
     var altString                           = ""
     var atDateAndTime                       = ""
     var globe                               = EarthGlobe()
-    var ISSLastLat: Float                   = 0
-    var TSSLastLat: Float                   = 0
     var latitude                            = ""
     var listOfCoordinates                   = [CLLocationCoordinate2D]()
     var longitude                           = ""

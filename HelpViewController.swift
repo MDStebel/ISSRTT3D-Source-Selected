@@ -22,7 +22,7 @@ class HelpViewController: UIViewController, WKUIDelegate, WKNavigationDelegate {
     
     // Change status bar to light color for this VC
     override var preferredStatusBarStyle: UIStatusBarStyle {
-        return .lightContent
+        .lightContent
     }
     
     private struct Constants {

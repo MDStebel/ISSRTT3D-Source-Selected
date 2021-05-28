@@ -53,7 +53,7 @@ class LiveVideoViewController: UIViewController, WKUIDelegate, WKNavigationDeleg
     
     // Change status bar to light color for this VC
     override var preferredStatusBarStyle: UIStatusBarStyle {
-        return .lightContent
+        .lightContent
     }
 
     

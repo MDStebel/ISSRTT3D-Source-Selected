@@ -12,6 +12,8 @@ import UIKit
 /// The main theme used in the app
 struct Theme {
     
+    static let ISSOrbitalColor                              = tint
+    static let TSSOrbitalColor                              = "StarColor"
     static let appFont                                      = "Avenir Book"
     static let appFontBold                                  = "Avenir Next Medium"
     static let atlBgd                                       = "Alternate Background"
@@ -28,8 +30,6 @@ struct Theme {
     static let star                                         = "StarColor"
     static let tblBgd                                       = "Table Background"
     static let tint                                         = "Tint"
-    static let ISSOrbitalColor                              = tint
-    static let TSSOrbitalColor                              = "StarColor"
     static let usrGuide                                     = "User Guide Background"
     static let white                                        = "White"
     

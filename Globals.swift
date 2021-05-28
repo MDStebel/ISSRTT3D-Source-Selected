@@ -24,7 +24,6 @@ struct Globals {
         }
     }
     static var autoRotateGlobeEnabled                        = true
-    static var globeBackgroundWasChanged                     = true
     static var blackScreenInHDEVExplanationPopsUp            = true
     static var buildNumber                                   = ""
     static var cameraAltitude: Float                         = 1.85
@@ -32,8 +31,9 @@ struct Globals {
     static var defaultCameraFov: CGFloat                     = 30
     static var displayGlobe                                  = true
     static var displayZoomFactorBelowMarkerIsOn              = true
-    static var globeBackgroundImageSelection                 = 0
     static var globeBackgroundImageDefaultSelectionSegment   = 0
+    static var globeBackgroundImageSelection                 = 0
+    static var globeBackgroundWasChanged                     = true
     static var globeRadiusFactor: Float                      = 0.555
     static var lastDateAndTimeSettingsWereSaved              = ""
     static var mapScrollingAndZoomIsEnabled                  = false
@@ -58,6 +58,26 @@ struct Globals {
     
     // MARK: - Global Constants
     
+    static let ISSAltitudeFactor: Float                      = ISSOrbitalAltitudeFactor * 1.015
+    static let ISSAltitudeInKM: Float                        = 428
+    static let ISSIconFor3DGlobeView                         = "ISS-mds-1350px"
+    static let ISSIconForMapView                             = "ISS-mds-75px-Template-Image"
+    static let ISSMarkerWidth: CGFloat                       = 0.16
+    static let ISSOrbitAltitudeInScene                       = ISSOrbitalAltitudeFactor
+    static let ISSOrbitInclinationInDegrees: Float           = 51.6
+    static let ISSOrbitInclinationInRadians: Float           = ISSOrbitInclinationInDegrees * Float(degreesToRadians)
+    static let ISSOrbitalAltitudeFactor                      = globeRadiusFactor * (1 + ISSAltitudeInKM / earthRadiusInKM) * 1.02
+    static let ISSRTT3DWebsite                               = "https://www.issrtt.com"
+    static let ISSViewingCircleGraphic                       = "iss_4_visibility_circle"
+    static let TSSAltitudeFactor: Float                      = TSSOrbitalAltitudeFactor * 1.015
+    static let TSSAltitudeInKM: Float                        = 365
+    static let TSSIconFor3DGlobeView                         = "Tiangong-mds-1200px"
+    static let TSSMarkerWidth: CGFloat                       = 0.07
+    static let TSSOrbitAltitudeInScene                       = TSSOrbitalAltitudeFactor
+    static let TSSOrbitInclinationInDegrees: Float           = 42.0
+    static let TSSOrbitInclinationInRadians: Float           = TSSOrbitInclinationInDegrees * Float(degreesToRadians)
+    static let TSSOrbitalAltitudeFactor                      = globeRadiusFactor * (1 + TSSAltitudeInKM / earthRadiusInKM) * 1.01
+    static let TSSViewingCircleGraphic                       = "TSS-Visibility-Circle"
     static let azimuthFormat                                 = "%3.0f"
     static let coordinatesStringFormat                       = "%3d°%02d'%02d\" %@  %3d°%02d'%02d\" %@"
     static let dateFormatStringEuropeanForm                  = "yyyy-MM-dd"
@@ -73,20 +93,8 @@ struct Globals {
     static let floatingPointWithThreePlusOneDecimalPlace     = "%3.1f"
     static let floatingPointWithTwoPlusOneDecimalPlace       = "%2.1f"
     static let globeRadiusMultiplier: Float                  = 0.949
-    
     static let helpChar                                      = "(?)"
     static let hubbleDeepField                               = "Hubble Legacy Field Crop 2800px.png"
-    static let ISSAltitudeFactor: Float                      = ISSOrbitalAltitudeFactor * 1.015
-    static let ISSAltitudeInKM: Float                        = 428
-    static let ISSOrbitAltitudeInScene                       = ISSOrbitalAltitudeFactor
-    static let ISSIconFor3DGlobeView                         = "ISS-mds-1350px"
-    static let ISSIconForMapView                             = "ISS-mds-75px-Template-Image"
-    static let ISSMarkerWidth: CGFloat                       = 0.16
-    static let ISSOrbitInclinationInDegrees: Float           = 51.6
-    static let ISSOrbitInclinationInRadians: Float           = ISSOrbitInclinationInDegrees * Float(degreesToRadians)
-    static let ISSOrbitalAltitudeFactor                      = globeRadiusFactor * (1 + ISSAltitudeInKM / earthRadiusInKM) * 1.02
-    static let ISSRTT3DWebsite                               = "https://www.issrtt.com"
-    static let ISSViewingCircleGraphic                       = "iss_4_visibility_circle"
     static let julianDateForJan011970At0000GMT               = 2440587.5
     static let milkyWay                                      = "Milky Way Correct Rotation in the Sky Square.png"
     static let ninetyDegrees: Float                          = 90
@@ -95,12 +103,12 @@ struct Globals {
     static let numberOfDaysInAYear: Double                   = 365
     static let numberOfHoursInADay: Double                   = 24
     static let numberOfMinutesInADay: Double                 = 1440
-    static let numberOfMinutesInAnHour: Double               = 60
     static let numberOfMinutesInAYear: Double                = numberOfDaysInAYear * numberOfMinutesInADay
+    static let numberOfMinutesInAnHour: Double               = 60
     static let numberOfSecondsInADay: Double                 = 86400
-    static let numberOfSecondsInAnHour: Double               = 3600
     static let numberOfSecondsInAMinute: Double              = 60
     static let numberOfSecondsInAYear: Double                = numberOfSecondsInADay * numberOfDaysInAYear
+    static let numberOfSecondsInAnHour: Double               = 3600
     static let oneEightyDegrees: Double                      = 180
     static let orionNebula                                   = "Orion Nebula.png"
     static let outputDateFormatString                        = "MMM-dd-YYYY 'at' hh:mma"
@@ -112,17 +120,7 @@ struct Globals {
     static let spacer                                        = "  "
     static let tarantulaNebula                               = "Tarantula Nebula in the Large Magellanic Cloud.png"
     static let threeSixtyDegrees: Float                      = 360
-    static let TSSAltitudeFactor: Float                      = TSSOrbitalAltitudeFactor * 1.015
-    static let TSSAltitudeInKM: Float                        = 378
-    static let TSSIcon                                       = "Tiangong-mds-1200px"
-    static let TSSMarkerWidth: CGFloat                       = 0.07
-    static let TSSOrbitalAltitudeFactor                      = globeRadiusFactor * (1 + TSSAltitudeInKM / earthRadiusInKM) * 1.01
-    static let TSSOrbitAltitudeInScene                       = TSSOrbitalAltitudeFactor
-    static let TSSOrbitInclinationInDegrees: Float           = 42.0
-    static let TSSOrbitInclinationInRadians: Float           = TSSOrbitInclinationInDegrees * Float(degreesToRadians)
-    static let TSSViewingCircleGraphic                       = "TSS-Visibility-Circle"
     static let twoPi: Double                                 = .pi * 2
     static let zero: Float                                   = 0.0
     
 }
-

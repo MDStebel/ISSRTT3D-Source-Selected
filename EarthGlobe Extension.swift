@@ -31,7 +31,7 @@ extension EarthGlobe {
     ///   - lon: The current longitude as a decimal value
     public func addTSSMarker(lat: Float, lon: Float) {
         
-        let TSS = MarkerForEarthGlobe(for: .TSS, using: Globals.TSSIcon, lat: lat, lon: lon, isInOrbit: true)
+        let TSS = MarkerForEarthGlobe(for: .TSS, using: Globals.TSSIconFor3DGlobeView, lat: lat, lon: lon, isInOrbit: true)
         self.addMarker(TSS, shouldPulse: true)
         
     }

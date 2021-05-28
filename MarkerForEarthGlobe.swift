@@ -71,7 +71,7 @@ final class MarkerForEarthGlobe {
     }
     
     
-    /// Method to add a pulsing effect to the node
+    /// Method to add a pulsing effect to the marker node
     func addPulseAnimation() {
         
         let scaleMin: Float      = 0.80

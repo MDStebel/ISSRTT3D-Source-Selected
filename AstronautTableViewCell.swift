@@ -24,6 +24,13 @@ class AstronautTableViewCell: UITableViewCell {
     @IBOutlet var astronautImage: AstronautImageView!
     @IBOutlet var astronautName: UILabel!
     @IBOutlet var astronautInfo: UILabel!
+    @IBOutlet weak var headerBackground: UIView! {
+        didSet {
+            headerBackground.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
+            headerBackground.layer.cornerRadius  = Theme.cornerRadius
+            headerBackground.layer.masksToBounds = true
+        }
+    }
     
     
     // MARK: - Methods

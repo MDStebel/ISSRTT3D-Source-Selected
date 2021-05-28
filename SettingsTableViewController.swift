@@ -36,24 +36,25 @@ class SettingsTableViewController: UITableViewController {
     
     // Change status bar to light color for this VC
     override var preferredStatusBarStyle: UIStatusBarStyle {
-        return .lightContent
+        .lightContent
     }
     
     
     // MARK: - Outlets
     
     
-    @IBOutlet private weak var backgroundSelector: UISegmentedControl!
-    @IBOutlet private weak var mapTypeSelector: UISegmentedControl!
-    @IBOutlet private weak var zoomRangeFactorSelector: UISegmentedControl!
-    @IBOutlet private weak var markerTypeSelector: UISegmentedControl!
-    @IBOutlet private weak var showOrbitGroundTrackLine: UISwitch!
-    @IBOutlet private weak var displayGlobeSwitch: UISwitch!
-    @IBOutlet private weak var showCoordinatesSwitch: UISwitch!
-    @IBOutlet private weak var displayZoomFactorBelowMarkerSwitch: UISwitch!
-    @IBOutlet private weak var userMapScrollingEnbleSwitch: UISwitch!
-    @IBOutlet private weak var showWhatsNewSwitch: UISwitch!
     @IBOutlet private weak var autoRotateGlobeSwitch: UISwitch!
+    @IBOutlet private weak var backgroundSelector: UISegmentedControl!
+    @IBOutlet private weak var displayGlobeSwitch: UISwitch!
+    @IBOutlet private weak var displayZoomFactorBelowMarkerSwitch: UISwitch!
+    @IBOutlet private weak var mapTypeSelector: UISegmentedControl!
+    @IBOutlet private weak var markerTypeSelector: UISegmentedControl!
+    @IBOutlet private weak var showCoordinatesSwitch: UISwitch!
+    @IBOutlet private weak var showOrbitGroundTrackLine: UISwitch!
+    @IBOutlet private weak var showWhatsNewSwitch: UISwitch!
+    @IBOutlet private weak var userMapScrollingEnbleSwitch: UISwitch!
+    @IBOutlet private weak var zoomRangeFactorSelector: UISegmentedControl!
+    
     @IBOutlet private weak var numberOfDaysOfPasses: UISegmentedControl! {
         // Set up segment labels from dictionary
         didSet{

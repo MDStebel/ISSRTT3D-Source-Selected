@@ -9,9 +9,9 @@
 import UIKit
 
 
+/// A card style custom cell for passes
 class PassesTableViewCell: UITableViewCell {
-    
-    
+        
     // MARK: - Properties
     
     
@@ -20,31 +20,29 @@ class PassesTableViewCell: UITableViewCell {
 
     // MARK: - Outlets
     
-    
+
     @IBOutlet var cellBackground: UIView!
-    
-    @IBOutlet var passDate: PassDateUILabel!
-    
     @IBOutlet var durationLabel: UILabel!
-    @IBOutlet var magnitudeLabel: UILabel!
-    
-    @IBOutlet var startTime: UILabel!
-    @IBOutlet var maxTime: UILabel!
-    @IBOutlet var endTime: UILabel!
-    
-    @IBOutlet var startAz: UILabel!
-    @IBOutlet var maxAz: UILabel!
     @IBOutlet var endAz: UILabel!
-    
-    @IBOutlet var startEl: UILabel!
-    @IBOutlet var maxEl: UILabel!
-    @IBOutlet var endEl: UILabel!
-    
-    @IBOutlet var startComp: UILabel!
-    @IBOutlet var maxComp: UILabel!
     @IBOutlet var endComp: UILabel!
-    
-    @IBOutlet var ratingStarView: [UIImageView]!  // Array of stars for rating
+    @IBOutlet var endEl: UILabel!
+    @IBOutlet var endTime: UILabel!
+    @IBOutlet var magnitudeLabel: UILabel!
+    @IBOutlet var maxAz: UILabel!
+    @IBOutlet var maxComp: UILabel!
+    @IBOutlet var maxEl: UILabel!
+    @IBOutlet var maxTime: UILabel!
+    @IBOutlet var passDate: PassDateUILabel! {
+        didSet {
+            passDate.textAlignment = NSTextAlignment.center
+        }
+    }
+    @IBOutlet var ratingStarView: [UIImageView]!            // Array of stars for rating
+    @IBOutlet var startAz: UILabel!
+    @IBOutlet var startComp: UILabel!
+    @IBOutlet var startEl: UILabel!
+    @IBOutlet var startTime: UILabel!
+    @IBOutlet var stationIcon: UIImageView!
     
     
     // MARK: - Methods
@@ -52,6 +50,10 @@ class PassesTableViewCell: UITableViewCell {
     
     override func awakeFromNib() {
         super.awakeFromNib()
+        
+        passDate.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
+        passDate.layer.cornerRadius  = cornerRadius
+        passDate.layer.masksToBounds = true
         
         cellBackground.layer.cornerRadius = cornerRadius
         cellBackground.layer.shadowColor = UIColor.black.cgColor
@@ -68,7 +70,7 @@ class PassesTableViewCell: UITableViewCell {
         if selected {
             
             cellBackground.backgroundColor = UIColor(named: Theme.tint)
-            passDate.textColor = UIColor(named: Theme.white)
+            passDate.textColor = UIColor(named: Theme.tblBgd)
             
         } else {
             

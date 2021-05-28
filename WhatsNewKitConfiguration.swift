@@ -29,7 +29,7 @@ private let whatsNew = WhatsNew(
         WhatsNew.Item(
             title: "Improvements & Fixes",
             subtitle: """
-                      Improved ISS and TSS markers and some under-the-hood cleanup and tweaks because I'm continuously seeking perfection.
+                      All-new passes section. Now provides ISS and TSS pass predictions (the latter with limitations, see User Guide and help). Refreshed passes and crew table layout designs.
                       """,
             image: UIImage(named: "icons8-bug_filled")
         ),

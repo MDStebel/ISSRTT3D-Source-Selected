@@ -26,8 +26,8 @@ class LaunchAnimationViewController: UIViewController {
     private let titleScaleFactor: CGFloat                             = 0.33
     
     private var iconScaleFactor: CGFloat                              = 0
-    private var scaleFactorForAppNameTitleForLaunchAnimation: CGFloat = 0
     private var scaleFactorFor3DTextImageForLaunchAnimation: CGFloat  = 0
+    private var scaleFactorForAppNameTitleForLaunchAnimation: CGFloat = 0
     private var trans1                                                = CGAffineTransform.identity
     private var trans2                                                = CGAffineTransform.identity
     private var trans3                                                = CGAffineTransform.identity
@@ -37,7 +37,7 @@ class LaunchAnimationViewController: UIViewController {
     
     // Hide the status bar for this VC
     override var prefersStatusBarHidden: Bool {
-        return true
+        true
     }
     
     

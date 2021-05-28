@@ -20,9 +20,9 @@ class GlobeFullViewController: UIViewController, AVAudioPlayerDelegate, EarthGlo
     
     
     struct Constants {
-        static let ISSAPIEndpointString  = "---"
-        static let TSSAPIEndpointString  = "---"
-        static let TSSAPIKey             = "---"
+        static let ISSAPIEndpointString  = "https://api.wheretheiss.at/v1/satellites/25544"                         // ISS API
+        static let TSSAPIEndpointString  = "https://api.n2yo.com/rest/v1/satellite/positions/48274/0/0/0/1/"        // TSS API (Chinese space station, Tiangong)
+        static let TSSAPIKey             = "BZQB9N-9FTL47-ZXK7MZ-3TLE"
         static let fontForTitle          = Theme.nasa
         static let segueToHelpFromGlobe  = "segueToHelpFromGlobe"
         static let segueToSettings       = "segueToSettings"
@@ -34,17 +34,17 @@ class GlobeFullViewController: UIViewController, AVAudioPlayerDelegate, EarthGlo
         static let off                   = "music off"
     }
 
+    var ISSLastLat: Float                = 0                             // To conform with the EarthGlobeProtocol, will save the last ISS latitude
+    var TSSCoordinates                   = [TSSOrbitalPosition.Positions]()
+    var TSSLastLat: Float                = 0                             // To conform with the EarthGlobeProtocol, will save the last TSS latitude
+    var TSSLatitude                      = 0.0
+    var TSSLongitude                     = 0.0
     var fullGlobe                        = EarthGlobe()
     var globeBackgroundImageName         = ""
-    var ISSLastLat: Float                = 0                             // To conform with the EarthGlobeProtocol, will save the last ISS latitude
-    var TSSLastLat: Float                = 0                             // To conform with the EarthGlobeProtocol, will save the last TSS latitude
     var iLat                             = ""
     var iLon                             = ""
     var tLat                             = ""
     var tLon                             = ""
-    var TSSLongitude                     = 0.0
-    var TSSLatitude                      = 0.0
-    var TSSCoordinates                   = [TSSOrbitalPosition.Positions]()
     
     // Initialize timer
     var ISSTimer                         = Timer()                      // Timer for updating ISS position
@@ -63,6 +63,13 @@ class GlobeFullViewController: UIViewController, AVAudioPlayerDelegate, EarthGlo
             }
         }
     }
+    
+    
+    // Change status bar to light color for this VC
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        .lightContent
+    }
+    
     
     // MARK: - Outlets
     
