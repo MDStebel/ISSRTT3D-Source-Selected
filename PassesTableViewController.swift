@@ -20,7 +20,7 @@ class PassesTableViewController: UITableViewController, CLLocationManagerDelegat
     /// This enum holds the max (i.e., lowest magnitude) values for the respective ratings and returns number of stars for each. Call: var nStars = RatingSystem.good.numberOfStars
     enum RatingSystem: Double, CaseIterable {
         
-        case unknown = 100000.0         // A magnitude of this value indicates that it is unknown
+        case unknown = 100000.0         // A magnitude of this value reported by the API indicates that it is unknown
         case poor    = 100.0            // Let's just consider anything this dim to be the 'poor' limit
         case fair    = -0.5
         case good    = -1.0
@@ -99,8 +99,8 @@ class PassesTableViewController: UITableViewController, CLLocationManagerDelegat
         static let noRatingStar                         = #imageLiteral(resourceName: "star-unfilled")
         static let ratingStar                           = #imageLiteral(resourceName: "star")
         static let segueToHelpFromPasses                = "segueToHelpFromPasses"
-        static let selectISSButton                      = #imageLiteral(resourceName: "ISS-Selected")
-        static let selectTSSButton                      = #imageLiteral(resourceName: "TSS-Selected")
+        static let selectISSButton                      = #imageLiteral(resourceName: "ISS-Selected-2")
+        static let selectTSSButton                      = #imageLiteral(resourceName: "TSS-Selected-2")
         static let unknownRatingStar                    = #imageLiteral(resourceName: "unknownRatingStar")
     }
     
@@ -112,7 +112,11 @@ class PassesTableViewController: UITableViewController, CLLocationManagerDelegat
     private var numberOfOverheadTimesActuallyReported   = 0
     private var overheadTimesList                       = [Passes.Pass]()
     private var rating                                  = 0
-    private var station: StationsNoradCodes             = .ISS                                                            // Default is ISS
+    private var station: StationsNoradCodes             = .ISS {
+        didSet{
+            getStationID(for: station)
+        }
+    }
     private var stationID                               = ""
     private var stationImage: UIImage?                  = nil
     private var stationName                             = ""
@@ -155,12 +159,12 @@ class PassesTableViewController: UITableViewController, CLLocationManagerDelegat
     
     /// Get  NORAD ID, name, and icon to use in background for selected target satellite/space station
     /// - Parameter station: Station selector value.
-    private func getStationID(for station: StationsNoradCodes) {        
+    private func getStationID(for station: StationsNoradCodes) {
         stationImage           = station.stationImage
         stationName            = station.stationName
         stationID              = station.rawValue
         stationSelectionButton = station.selectionButton
-        selectTarget.image     = stationSelectionButton 
+        selectTarget.image     = stationSelectionButton
     }
     
     
@@ -237,8 +241,7 @@ class PassesTableViewController: UITableViewController, CLLocationManagerDelegat
     
     /// Start getting locations
     private func startGettingLocations() {
-        
-        getStationID(for: station)
+
         ISSlocationManager.startUpdatingLocation()                              // Now, we can  get locations
         
     }
@@ -280,6 +283,11 @@ class PassesTableViewController: UITableViewController, CLLocationManagerDelegat
             )
         }
         
+        alertController.addAction(UIAlertAction(title: "Switch stations", style: .default) { (choice) in
+            self.switchStationPopup(withTitle: "Change Space Station", withStyleToUse: .actionSheet)
+        }
+        )
+        
         if usingStyle == .actionSheet {
             alertController.popoverPresentationController?.barButtonItem = changeNumberOfDaysButton
         }
@@ -292,7 +300,6 @@ class PassesTableViewController: UITableViewController, CLLocationManagerDelegat
     @IBAction func changeStation(_ sender: UIBarButtonItem) {
         
         switchStationPopup(withTitle: "Change Space Station", withStyleToUse: .actionSheet)
-        getStationID(for: station)
         
     }
     
