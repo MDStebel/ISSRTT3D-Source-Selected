@@ -61,6 +61,15 @@ class PassesTableViewController: UITableViewController, CLLocationManagerDelegat
                 return "TSS"
             }
         }
+        
+        var selectionButton: UIImage {
+            switch self {
+            case .ISS :
+                return Constants.selectISSButton
+            case .TSS :
+                return Constants.selectTSSButton
+            }
+        }
     }
     
     
@@ -71,16 +80,18 @@ class PassesTableViewController: UITableViewController, CLLocationManagerDelegat
     
     private struct Constants {
         static let altitude                             = 0
-        static let apiKey                               = "---"                                     // API key
-        static let endpointForPassesAPI                 = "---"           // API endpoint (new as of Nov 1, 2020)
+        static let apiKey                               = "BZQB9N-9FTL47-ZXK7MZ-3TLE"                                     // API key
         static let customCellIdentifier                 = "OverheadTimesCell"
         static let deg                                  = "°"
+        static let endpointForPassesAPI                 = "https://api.n2yo.com/rest/v1/satellite/visualpasses"           // API endpoint (new as of Nov 1, 2020)
         static let fontForTitle                         = Theme.nasa
         static let minObservationTime                   = 300                                                             // In seconds
         static let newLine                              = "\n"
         static let noRatingStar                         = #imageLiteral(resourceName: "star-unfilled")
         static let ratingStar                           = #imageLiteral(resourceName: "star")
         static let segueToHelpFromPasses                = "segueToHelpFromPasses"
+        static let selectISSButton                      = #imageLiteral(resourceName: "ISS-Selected")
+        static let selectTSSButton                      = #imageLiteral(resourceName: "TSS-Selected")
         static let unknownRatingStar                    = #imageLiteral(resourceName: "unknownRatingStar")
     }
     
@@ -96,6 +107,7 @@ class PassesTableViewController: UITableViewController, CLLocationManagerDelegat
     private var stationID                               = ""
     private var stationImage: UIImage?                  = nil
     private var stationName                             = ""
+    private var stationSelectionButton                  = Constants.selectISSButton
     private var userCurrentCoordinatesString            = ""
     private var userLatitude                            = 0.0
     private var userLongitude                           = 0.0
@@ -122,10 +134,13 @@ class PassesTableViewController: UITableViewController, CLLocationManagerDelegat
             spinner.hidesWhenStopped = true
         }
     }
-    @IBOutlet private weak var selectTarget: UIBarButtonItem!
+    @IBOutlet private weak var selectTarget: UIBarButtonItem!{
+        didSet {
+            selectTarget.image = stationSelectionButton
+        }
+    }
     @IBOutlet private weak var changeNumberOfDaysButton: UIBarButtonItem!
 
-    
     
     // MARK: - Methods
     
@@ -136,15 +151,19 @@ class PassesTableViewController: UITableViewController, CLLocationManagerDelegat
         // Get NORAD satellite code, name, and icon to use in the background
         switch station {
         case .ISS :
-            stationName = station.stationName
-            stationID   = StationsNoradCodes.ISS.rawValue
-            stationImage = UIImage(named: Globals.ISSIconFor3DGlobeView)!
+            stationName            = station.stationName
+            stationID              = StationsNoradCodes.ISS.rawValue
+            stationImage           = UIImage(named: Globals.ISSIconFor3DGlobeView)!
+            stationSelectionButton = Constants.selectISSButton
         case .TSS :
-            stationName = station.stationName
-            stationID   = StationsNoradCodes.TSS.rawValue
-            stationImage = UIImage(named: Globals.TSSIconFor3DGlobeView)!
+            stationName            = station.stationName
+            stationID              = StationsNoradCodes.TSS.rawValue
+            stationImage           = UIImage(named: Globals.TSSIconFor3DGlobeView)!
+            stationSelectionButton = Constants.selectTSSButton
             
         }
+        
+        selectTarget.image = stationSelectionButton
     }
     
     private func setUpDateFormatter() {
@@ -247,7 +266,7 @@ class PassesTableViewController: UITableViewController, CLLocationManagerDelegat
     ///   - usingStyle: The alert style
     private func noPasesPopup(withTitle title: String, withStyleToUse usingStyle : UIAlertController.Style) {
         
-        let alertController = UIAlertController(title: title, message: "Change number of days this time only by selecting below, or change for next time in Settings", preferredStyle: usingStyle)
+        let alertController = UIAlertController(title: title, message: "Change number of days for this time only by selecting below, or change for next time in Settings", preferredStyle: usingStyle)
         
         alertController.addAction(UIAlertAction(title: "Back", style: .cancel) { (dontShow) in
             self.dismiss(animated: true, completion: nil)
