@@ -9,16 +9,18 @@
 import UIKit
 
 
-/// Custom cell for crew table
+/// A card-style custom cell for crew table
 class AstronautTableViewCell: UITableViewCell {
     
     
     // MARK: - Properties
     
+    
     private let cornerRadius = Theme.cornerRadius
     
     
     // MARK: - Outlets
+    
     
     @IBOutlet var cellBackgroundView: UIView!
     @IBOutlet var astronautImage: AstronautImageView!
@@ -34,6 +36,7 @@ class AstronautTableViewCell: UITableViewCell {
     
     
     // MARK: - Methods
+    
 
     override func awakeFromNib() {
         super.awakeFromNib()

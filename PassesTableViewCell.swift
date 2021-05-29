@@ -12,6 +12,7 @@ import UIKit
 /// A card style custom cell for passes
 class PassesTableViewCell: UITableViewCell {
         
+    
     // MARK: - Properties
     
     

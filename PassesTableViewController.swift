@@ -48,7 +48,7 @@ class PassesTableViewController: UITableViewController, CLLocationManagerDelegat
     // MARK: - Stations and/or other satellites that we can get pass predictions for
     
     /// Enum holds the NORAD codes for the stations and their corresponding names
-    enum StationsNoradCodes: String, CaseIterable {
+    enum StationsAndSatellites: String, CaseIterable {
         
         case ISS    = "25544"
         case TSS    = "48274"
@@ -89,10 +89,10 @@ class PassesTableViewController: UITableViewController, CLLocationManagerDelegat
     
     private struct Constants {
         static let altitude                             = 0
-        static let apiKey                               = "---"                                     // API key
+        static let apiKey                               = "BZQB9N-9FTL47-ZXK7MZ-3TLE"                                     // API key
         static let customCellIdentifier                 = "OverheadTimesCell"
         static let deg                                  = "°"
-        static let endpointForPassesAPI                 = "---"           // API endpoint (new as of Nov 1, 2020)
+        static let endpointForPassesAPI                 = "https://api.n2yo.com/rest/v1/satellite/visualpasses"           // API endpoint (new as of Nov 1, 2020)
         static let fontForTitle                         = Theme.nasa
         static let minObservationTime                   = 300                                                             // In seconds
         static let newLine                              = "\n"
@@ -112,7 +112,7 @@ class PassesTableViewController: UITableViewController, CLLocationManagerDelegat
     private var numberOfOverheadTimesActuallyReported   = 0
     private var overheadTimesList                       = [Passes.Pass]()
     private var rating                                  = 0
-    private var station: StationsNoradCodes             = .ISS {
+    private var station: StationsAndSatellites             = .ISS {
         didSet{
             getStationID(for: station)
         }
@@ -159,7 +159,7 @@ class PassesTableViewController: UITableViewController, CLLocationManagerDelegat
     
     /// Get  NORAD ID, name, and icon to use in background for selected target satellite/space station
     /// - Parameter station: Station selector value.
-    private func getStationID(for station: StationsNoradCodes) {
+    private func getStationID(for station: StationsAndSatellites) {
         stationImage           = station.stationImage
         stationName            = station.stationName
         stationID              = station.rawValue
@@ -212,7 +212,7 @@ class PassesTableViewController: UITableViewController, CLLocationManagerDelegat
         
         if let refreshingFont = UIFont(name: Constants.fontForTitle, size: 12.0) {
             let attributes = [NSAttributedString.Key.font: refreshingFont, .foregroundColor: UIColor.white]
-            refreshControl?.attributedTitle = NSAttributedString(string: "Updating \(station.stationName) passes...", attributes: attributes )
+            refreshControl?.attributedTitle = NSAttributedString(string: "Updating passes...", attributes: attributes )
         }
         
         // Configure refresh control
@@ -310,25 +310,21 @@ class PassesTableViewController: UITableViewController, CLLocationManagerDelegat
     ///   - usingStyle: The alert style
     private func switchStationPopup(withTitle title: String, withStyleToUse usingStyle : UIAlertController.Style) {
         
-        let alertController = UIAlertController(title: title, message: "Switch to a different space station to get pass predictions for", preferredStyle: usingStyle)
+        let alertController = UIAlertController(title: title, message: "Switch to a different space station for pass predictions", preferredStyle: usingStyle)
         
         alertController.addAction(UIAlertAction(title: "Back", style: .cancel) { (dontShow) in
             self.dismiss(animated: true, completion: nil)
         }
         )
         
-        // Add selection for each of the stations for which we can get pass predictions
-        alertController.addAction(UIAlertAction(title: "\(StationsNoradCodes.ISS.stationName)", style: .default) { (choice) in
-            self.station = StationsNoradCodes.ISS
-            self.restartGettingUserLocation()
+        // Add selection for each of the stations/satellites for which we can get pass predictions
+        for target in StationsAndSatellites.allCases {
+            alertController.addAction(UIAlertAction(title: "\(target.stationName)", style: .default) { (choice) in
+                self.station = target
+                self.restartGettingUserLocation()
+            }
+            )
         }
-        )
-        
-        alertController.addAction(UIAlertAction(title: "\(StationsNoradCodes.TSS.stationName)", style: .default) { (choice) in
-            self.station = StationsNoradCodes.TSS
-            self.restartGettingUserLocation()
-        }
-        )
         
         if usingStyle == .actionSheet {
             alertController.popoverPresentationController?.barButtonItem = selectTarget
@@ -380,7 +376,7 @@ class PassesTableViewController: UITableViewController, CLLocationManagerDelegat
     
     /// Get the ISS passes as JSON from the REST API
     /// - Parameter completionHandler: The function to handle to process the raw data returned
-    private func getISSOverheadtimes(for station: StationsNoradCodes, then completionHandler: @escaping completionHandler ) {
+    private func getISSOverheadtimes(for station: StationsAndSatellites, then completionHandler: @escaping completionHandler ) {
         
         DispatchQueue.main.async { [self] in
             spinner.startAnimating()
@@ -445,37 +441,37 @@ class PassesTableViewController: UITableViewController, CLLocationManagerDelegat
     private func createEvent(_ eventStore: EKEventStore, passEvent: Passes.Pass) {
         
         // Create an event
-        let event = EKEvent(eventStore: eventStore)
-        event.title = "\(station.stationName) Pass Starts"
-        event.calendar = eventStore.defaultCalendarForNewEvents
+        let event       = EKEvent(eventStore: eventStore)
+        event.title     = "\(station.stationName) Pass Starts"
+        event.calendar  = eventStore.defaultCalendarForNewEvents
         event.startDate = Date(timeIntervalSince1970: Double(passEvent.startUTC))
-        event.endDate = Date(timeIntervalSince1970: Double(passEvent.endUTC))
+        event.endDate   = Date(timeIntervalSince1970: Double(passEvent.endUTC))
         
         // Set two alarms: one at 15 mins and the other at 60 mins before the pass
-        event.alarms = [EKAlarm(relativeOffset: -900.0), EKAlarm(relativeOffset: -3600.0)]      // In seconds
+        event.alarms    = [EKAlarm(relativeOffset: -900.0), EKAlarm(relativeOffset: -3600.0)]      // In seconds
         
         // Create entries for event location
-        event.location = "Your Location: \(userCurrentCoordinatesString)"
+        event.location  = "Your Location: \(userCurrentCoordinatesString)"
         
         // Add notes with viewing details
-        let mag = passEvent.mag
-        let startAz = String(format: Globals.azimuthFormat, passEvent.startAz) + Constants.deg
-        let startEl = String(format: Globals.elevationFormat, passEvent.startEl) + Constants.deg
-        let maxAz = String(format: Globals.azimuthFormat, passEvent.maxAz) + Constants.deg
-        let maxEl = String(format: Globals.elevationFormat, passEvent.maxEl) + Constants.deg
-        let endAz = String(format: Globals.azimuthFormat, passEvent.endAz) + Constants.deg
-        let endEl = String(format: Globals.elevationFormat, passEvent.endEl) + Constants.deg
-        event.notes = "Max Magnitude: \(mag)\nStarting azimuth: \(startAz) \(passEvent.startAzCompass)\nStarting elevation: \(startEl)\nMax azimuth: \(maxAz) \(passEvent.maxAzCompass)\nMax elevation: \(maxEl)\nEnding azimuth: \(endAz) \(passEvent.endAzCompass)\nEnding elevation: \(endEl)"
+        let mag         = passEvent.mag
+        let startAz     = String(format: Globals.azimuthFormat, passEvent.startAz) + Constants.deg
+        let startEl     = String(format: Globals.elevationFormat, passEvent.startEl) + Constants.deg
+        let maxAz       = String(format: Globals.azimuthFormat, passEvent.maxAz) + Constants.deg
+        let maxEl       = String(format: Globals.elevationFormat, passEvent.maxEl) + Constants.deg
+        let endAz       = String(format: Globals.azimuthFormat, passEvent.endAz) + Constants.deg
+        let endEl       = String(format: Globals.elevationFormat, passEvent.endEl) + Constants.deg
+        event.notes     = "Max Magnitude: \(mag)\nStarting azimuth: \(startAz) \(passEvent.startAzCompass)\nStarting elevation: \(startEl)\nMax azimuth: \(maxAz) \(passEvent.maxAzCompass)\nMax elevation: \(maxEl)\nEnding azimuth: \(endAz) \(passEvent.endAzCompass)\nEnding elevation: \(endEl)"
         
-        let whichEvent = EKSpan.thisEvent
+        let whichEvent  = EKSpan.thisEvent
         do {
             try eventStore.save(event, span: whichEvent)
             DispatchQueue.main.async {
-                self.alert(for: "Event Saved!", message: "A pass reminder was added to your calendar. You'll be alerted 1 hour in advance, and again 15 minutes before it begins.")
+                self.alert(for: "Pass Reminded Saved!", message: "A \(self.station.stationName) pass reminder was added to your calendar. You'll be alerted 1 hour in advance, and again 15 minutes before it begins.")
             }
         } catch {
             DispatchQueue.main.async {
-                self.alert(for: "Failed", message: "Could not add the pass reminder to your calendar")
+                self.alert(for: "Failed", message: "Could not add the \(self.station.stationName) pass reminder to your calendar")
             }
         }
         
@@ -576,28 +572,28 @@ extension PassesTableViewController {
         
         /// Helper function to clear data displayed in cell
         func clearDataIn(thisCell cell: PassesTableViewCell) {
-            cell.passDate.text = ""
-            cell.durationLabel.text = ""
-            cell.magnitudeLabel.text = ""
-            cell.startTime.text = ""
-            cell.startAz.text = ""
-            cell.startEl.text = ""
-            cell.startComp.text = ""
-            cell.maxTime.text = ""
-            cell.maxAz.text = ""
-            cell.maxEl.text = ""
-            cell.maxComp.text = ""
-            cell.endTime.text = ""
-            cell.endAz.text = ""
-            cell.endEl.text = ""
-            cell.endComp.text = ""
-            cell.backgroundColor = UIColor(named: Theme.popupBgd)
-            cell.tintColor = UIColor(named: Theme.popupBgd)
+            cell.passDate.text            = ""
+            cell.durationLabel.text       = ""
+            cell.magnitudeLabel.text      = ""
+            cell.startTime.text           = ""
+            cell.startAz.text             = ""
+            cell.startEl.text             = ""
+            cell.startComp.text           = ""
+            cell.maxTime.text             = ""
+            cell.maxAz.text               = ""
+            cell.maxEl.text               = ""
+            cell.maxComp.text             = ""
+            cell.endTime.text             = ""
+            cell.endAz.text               = ""
+            cell.endEl.text               = ""
+            cell.endComp.text             = ""
+            cell.backgroundColor          = UIColor(named: Theme.popupBgd)
+            cell.tintColor                = UIColor(named: Theme.popupBgd)
             cell.passDate.backgroundColor = UIColor(named: Theme.popupBgd)
         }
         
         // Set up the cell
-        let cell = tableView.dequeueReusableCell(withIdentifier: Constants.customCellIdentifier, for: indexPath) as! PassesTableViewCell
+        let cell                          = tableView.dequeueReusableCell(withIdentifier: Constants.customCellIdentifier, for: indexPath) as! PassesTableViewCell
         
         if numberOfOverheadTimesActuallyReported > 0 {
             let mag                       = overheadTimesList[indexPath.row].mag    // Get the magnitude of this pass, as we'll use it later.
@@ -633,8 +629,7 @@ extension PassesTableViewController {
             cell.endComp.text             = String(overheadTimesList[indexPath.row].endAzCompass)
             
             // Show the correct number of rating stars based on the magnitude of the pass according the rating system enum
-            // If the magnitude is unknown (.unknown) then don't show any stars
-            
+            // If the magnitude is unknown (.unknown) then show the greyed-out stars only
             let totalStarsInRatingSystem = RatingSystem.allCases.count - 2         // Subtract 1 because there are less stars than values in the enum
             if mag != RatingSystem.unknown.rawValue {                              // Only show stars if the rating is NOT unknown
                 let rating = numberOfRatingStars(for: mag)
@@ -650,7 +645,7 @@ extension PassesTableViewController {
             }
             
         } else {
-            // If there there's no pass data show alert and clear cells, as any data in the table is invalid
+            // If there there's no passes data show alert and clear cells, as any data in the table is invalid
             alert(for: "No Visible Passes", message: "No visible \(station.stationName) passes found during the next \(numberOfDays) days")
             clearDataIn(thisCell: cell)
         }

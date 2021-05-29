@@ -71,16 +71,16 @@ struct UserGuide {
     <h6>Covers version \(Globals.versionNumber)</h6>
     <h2>Contents</h2>
     <p>Tap an item from the list below to jump to that section:</p>
-    <h4><a href="#passes">ISS Pass Predictions</a></h4>
-    <h4><a href="#track">ISS Tracking Map View</a></h4>
+    <h4><a href="#passes">Pass Predictions</a></h4>
+    <h4><a href="#track">Tracking Map View</a></h4>
     <h4><a href="#globe">Fullscreen Interactive 3D Globe</a></h4>
     <h4><a href="#crew">Current Crew</a></h4>
     <h4><a href="#streaming">Live Earth View</a></h4>
     <h4><a href="#nasatv">Live NASA TV</a></h4>
     <h4><a href="#settings">Settings</a></h4>
     <div id="passes"></div>
-    <h2>ISS Pass Predictions</h2>
-    <p>Tapping the binoculars icon at the bottom of the main screen starts the process of computing up-coming visible ISS passes. First, ISS Real-Time Tracker 3D gets your current location's coordinates. Then, it computes the visible passes for that location. The default number of days to predict passes is set in Settings. The passes are listed in chronological order along with detailed viewing data.</p>
+    <h2>Pass Predictions</h2>
+    <p>Tapping the binoculars icon at the bottom of the main screen starts the process of computing up-coming visible ISS or TSS passes. First, ISS Real-Time Tracker 3D gets your current location's coordinates. Then, it computes the the ISS or TSS passes that should be visible (weather permitting) from your location. The default number of days to predict passes is set in Settings and can be overridden in the Passes screen. The passes are listed in chronological order along with detailed viewing data.</p>
     <p>Data for each pass includes:</p>
     <ul>
     <li>
@@ -115,7 +115,7 @@ struct UserGuide {
     <h6>Overhead passes returned are only those visible from your location for at least 300 seconds (5 minutes) and where the ISS is illuminated by the Sun.</h6>
     </li>
     <li>
-    <h6>If there are buildings, trees, or other obstructions, and depending upon the weather and other viewing conditions, you may not be able to spot the station.</h6>
+    <h6>If there are buildings, trees, or other obstructions, and depending upon the weather and other viewing conditions, you may not be able to spot the space station.</h6>
     </li>
     <li>
     <h6>You must give ISS Real-Time Tracker 3D access to your location. When asked, tap &quot;OK.&quot; You can change this permission in your device's Settings app.</h6>
@@ -126,7 +126,7 @@ struct UserGuide {
     </ul>
     <p>Tap ⟵ to return to the map and resume tracking.</p>
     <div id="track"></div>
-    <h2>ISS Tracking Map View</h2>
+    <h2>Tracking Map View</h2>
     <p>To locate and track the International Space Station in real time, tap the play button at the bottom of the screen. To pause tracking, tap the pause button.</p>
     <p>You can select from the following map types in Settings from the Tracking screen:</p>
     <ul>
@@ -187,7 +187,7 @@ struct UserGuide {
     <div id="globe"></div>
     <h2>Fullscreen Interactive 3D Globe</h2>
     <p>From the Tracking screen, tapping the expand icon on the globe overlay, or the globe icon on the tab bar, expands the globe to fullscreen mode and hides the map.</p>
-    <p>The 3D interactive globe shows the current position of the ISS, its orbital track, and footprint (viewing range circle). In this version, the globe also shows the current position of the Chinese Space Station, Tiangong-3 (TSS), its orbital track, and footprint (viewing range circle). The ISS track and footprint are shown in red and those for the TSS are in gold. The globe is a photorealistic model of the Earth complete with accurate Sun subsolar position, specular reflections on the water, seasonal tilt, mountain shadows, and other details.</p>
+    <p>The 3D interactive globe shows the current position of the ISS, its orbital track, and footprint (viewing range circle). The globe also shows the current position of the new Chinese Space Station, Tiangong-3 (TSS), its orbital track, and footprint (viewing range circle). The ISS track and footprint are shown in red and those for the TSS are in gold. The globe is a photorealistic model of the Earth complete with accurate Sun subsolar position, specular reflections on the water, seasonal tilt, mountain shadows, and other details.</p>
     <p>The globe starts updating automatically when in full-screen mode.</p>
     <h4>Using Gestures</h4>
     <ul>
@@ -223,7 +223,7 @@ struct UserGuide {
     <h5>Notes:</h5>
     <ul>
     <li>
-    <h6>The red and gold circles represent the approximate ISS and TSS sighting ranges, respectively, from ground level under perfect conditions. Use the Pass Predictor to get viewable ISS passes from your exact location (TSS passes is not yet supported and will be in a future release).</h6>
+    <h6>The red and gold circles represent the approximate ISS and TSS sighting ranges, respectively, from ground level under perfect conditions. Use the Pass Predictor to get viewable ISS or TSS passes from your exact location.</h6>
     </li>
     <li>
     <h6>Auto-rotation is enabled by default and rotates the globe once every 90 seconds.</h6>
@@ -285,7 +285,7 @@ struct UserGuide {
     static let passesHelp =
     """
     \(head)
-    <p>This screen computes and presents a table of up-coming visible ISS passes for your location. First, ISS Real-Time Tracker 3D gets your current location's coordinates. Then, it computes the visible passes for that location. The default number of days to predict passes is set in Settings. The passes are listed in chronological order along with detailed viewing data.</p>
+    <p>This screen computes and presents a table of up-coming ISS or TSS passes that are predicted to be visible (weather permitting) from your location. First, ISS Real-Time Tracker 3D gets your current location's coordinates. Then, it computes the the ISS or TSS passes that should be visible (weather permitting) from your location. The default number of days to predict passes is set in Settings and can be overridden in the Passes screen. The passes are listed in chronological order along with detailed viewing data.</p>
     <p>Data for each pass includes:</p>
     <ul>
     <li>
@@ -320,7 +320,7 @@ struct UserGuide {
     <h6>Overhead passes returned are only those visible from your location for at least 300 seconds (5 minutes) and where the ISS is illuminated by the Sun.</h6>
     </li>
     <li>
-    <h6>If there are buildings, trees, or other obstructions, and depending upon the weather and other viewing conditions, you may not be able to spot the station.</h6>
+    <h6>If there are buildings, trees, or other obstructions, and depending upon the weather and other viewing conditions, you may not be able to spot the space station.</h6>
     </li>
     <li>
     <h6>You must give ISS Real-Time Tracker 3D access to your location. When asked, tap &quot;OK.&quot; You can change this permission in your device's Settings app.</h6>
