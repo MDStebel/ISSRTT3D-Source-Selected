@@ -80,10 +80,10 @@ class PassesTableViewController: UITableViewController, CLLocationManagerDelegat
     
     private struct Constants {
         static let altitude                             = 0
-        static let apiKey                               = "BZQB9N-9FTL47-ZXK7MZ-3TLE"                                     // API key
+        static let apiKey                               = "---"                                     // API key
         static let customCellIdentifier                 = "OverheadTimesCell"
         static let deg                                  = "°"
-        static let endpointForPassesAPI                 = "https://api.n2yo.com/rest/v1/satellite/visualpasses"           // API endpoint (new as of Nov 1, 2020)
+        static let endpointForPassesAPI                 = "---"           // API endpoint (new as of Nov 1, 2020)
         static let fontForTitle                         = Theme.nasa
         static let minObservationTime                   = 300                                                             // In seconds
         static let newLine                              = "\n"
@@ -151,20 +151,19 @@ class PassesTableViewController: UITableViewController, CLLocationManagerDelegat
         // Get NORAD satellite code, name, and icon to use in the background
         switch station {
         case .ISS :
-            stationName            = station.stationName
-            stationID              = StationsNoradCodes.ISS.rawValue
             stationImage           = UIImage(named: Globals.ISSIconFor3DGlobeView)!
-            stationSelectionButton = Constants.selectISSButton
         case .TSS :
-            stationName            = station.stationName
-            stationID              = StationsNoradCodes.TSS.rawValue
             stationImage           = UIImage(named: Globals.TSSIconFor3DGlobeView)!
-            stationSelectionButton = Constants.selectTSSButton
             
         }
         
-        selectTarget.image = stationSelectionButton
+        stationName                = station.stationName
+        stationID                  = station.rawValue
+        stationSelectionButton     = station.selectionButton
+        selectTarget.image         = stationSelectionButton
+        
     }
+    
     
     private func setUpDateFormatter() {
         dateFormatterForDate.dateFormat = Globals.outputDateOnlyFormatString
