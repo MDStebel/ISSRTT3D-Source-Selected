@@ -70,6 +70,15 @@ class PassesTableViewController: UITableViewController, CLLocationManagerDelegat
                 return Constants.selectTSSButton
             }
         }
+        
+        var stationImage: UIImage {
+            switch self {
+            case .ISS :
+                return UIImage(named: Globals.ISSIconFor3DGlobeView)!
+            case .TSS :
+                return UIImage(named: Globals.TSSIconFor3DGlobeView)!
+            }
+        }
     }
     
     
@@ -146,22 +155,12 @@ class PassesTableViewController: UITableViewController, CLLocationManagerDelegat
     
     /// Get  NORAD ID, name, and icon to use in background for selected target satellite/space station
     /// - Parameter station: Station selector value.
-    private func getStationID(for station: StationsNoradCodes) {
-        
-        // Get NORAD satellite code, name, and icon to use in the background
-        switch station {
-        case .ISS :
-            stationImage           = UIImage(named: Globals.ISSIconFor3DGlobeView)!
-        case .TSS :
-            stationImage           = UIImage(named: Globals.TSSIconFor3DGlobeView)!
-            
-        }
-        
-        stationName                = station.stationName
-        stationID                  = station.rawValue
-        stationSelectionButton     = station.selectionButton
-        selectTarget.image         = stationSelectionButton
-        
+    private func getStationID(for station: StationsNoradCodes) {        
+        stationImage           = station.stationImage
+        stationName            = station.stationName
+        stationID              = station.rawValue
+        stationSelectionButton = station.selectionButton
+        selectTarget.image     = stationSelectionButton 
     }
     
     
