@@ -100,9 +100,11 @@ struct UserGuide {
     </li>
     </ul>
     <p>Each pass is rated based on its maximum magnitude (i.e., brightness). The brightest passes get the highest ratings. Passes are rated with 0, 1, 2, 3, or 4 stars corresponding to poor, fair, good, better, or best, respectively.</p>
+    <h4>Switching Stations</h4>
+    <p>Tap the ISS/TSS buton in the navigation bar to switch between the ISS and TSS (Chinese space station named Tiangong). The table will automatically refresh and present passes for the selected station.</p>
     <h4>Adding a Pass Event to Your Calendar</h4>
     <p>Tap any pass in the table to add it as an event in your calendar. When adding a pass to your calendar, two alerts will be set: the first for 1 hour before, and the second for 15 minutes before the start of the pass. The starting and ending times for the pass are saved in the event in your calendar, along with the maximum magnitude, as well as the starting, maximum, and ending azimuths and elevations for the pass.</p>
-    <h4>Change Number of Days to Compute &amp; Refresh</h4>
+    <h4>Change Number of Days to Compute</h4>
     <p>Tap the Calendar icon at the top-right of the screen to change the number of days to compute and refresh the list. To change the number of days so that the app remembers your setting for next time, change it in Settings.</p>
     <h4>Pull-to-Refresh</h4>
     <p>Pull down the table to refresh the data.</p>
@@ -113,6 +115,9 @@ struct UserGuide {
     </li>
     <li>
     <h6>Overhead passes returned are only those visible from your location for at least 300 seconds (5 minutes) and where the ISS is illuminated by the Sun.</h6>
+    </li>
+    <li>
+    <h6>Tiangong (TSS) pass predictions do not include the magnitude of the passes and are, therefore, not rated. The stars are greyed-out. This may change in the future, as the magnitude data are provided for the TSS.</h6>
     </li>
     <li>
     <h6>If there are buildings, trees, or other obstructions, and depending upon the weather and other viewing conditions, you may not be able to spot the space station.</h6>
@@ -305,6 +310,8 @@ struct UserGuide {
     </li>
     </ul>
     <p>Each pass is rated based on its maximum magnitude (i.e., brightness). The brightest passes get the highest ratings. Passes are rated with 0, 1, 2, 3, or 4 stars corresponding to poor, fair, good, better, or best, respectively.</p>
+    <h4>Switching Stations</h4>
+    <p>Tap the ISS/TSS buton in the navigation bar to switch between the ISS and TSS (Chinese space station named Tiangong). The table will automatically refresh and present passes for the selected station.</p>
     <h4>Adding a Pass Event to Your Calendar</h4>
     <p>Tap any pass in the table to add it as an event in your calendar. When adding a pass to your calendar, two alerts will be set: the first for 1 hour before, and the second for 15 minutes before the start of the pass. The starting and ending times for the pass are saved in the event in your calendar, along with the maximum magnitude, as well as the starting, maximum, and ending azimuths and elevations for the pass.</p>
     <h4>Change Number of Days to Compute &amp; Refresh</h4>
@@ -318,6 +325,9 @@ struct UserGuide {
     </li>
     <li>
     <h6>Overhead passes returned are only those visible from your location for at least 300 seconds (5 minutes) and where the ISS is illuminated by the Sun.</h6>
+    </li>
+    <li>
+    <h6>Tiangong (TSS) pass predictions do not include the magnitude of the passes and are, therefore, not rated. The stars are greyed-out. This may change in the future, as the magnitude data are provided for the TSS.</h6>
     </li>
     <li>
     <h6>If there are buildings, trees, or other obstructions, and depending upon the weather and other viewing conditions, you may not be able to spot the space station.</h6>
