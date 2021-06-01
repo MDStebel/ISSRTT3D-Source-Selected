@@ -11,13 +11,32 @@ import UIKit
 
 class CrewMembersTableViewController: UITableViewController, TableAnimatable {
     
-    // MARK: - Properties
+    // MARK: - Launch spacecraft enum
     
+    private enum LaunchVehicles: String {
+        
+        case soyuz      = "Soyuz"
+        case crewDragon = "Crew Dragon"
+        case starliner  = "Starliner"
+        
+        var spacecraftImages: UIImage {
+            switch self {
+            case .soyuz      :
+                return #imageLiteral(resourceName: "Soyuz-2")
+            case .crewDragon :
+                return #imageLiteral(resourceName: "spacex-dragon-spacecraft-1")
+            case .starliner  :
+                return #imageLiteral(resourceName: "astronaut_filled_Grey")
+            }
+        }
+    }
+    
+    // MARK: - Properties
     
     /// Constants
     private struct Constants {
-        static let bioBackupURLString           = "---"   // Backup URL is used if a bio URL is not returned in the JSON file
-        static let crewAPIEndpointURLString     = "---"                         // API endpoint
+        static let bioBackupURLString           = "https://www.issrtt.com/issrtt-astronaut-bio-not-found"   // Backup URL is used if a bio URL is not returned in the JSON file
+        static let crewAPIEndpointURLString     = "https://issrttapi.com/crew.json"                         // API endpoint
         static let customCellIdentifier         = "crewMemberCell"
         static let fontForTitle                 = Theme.nasa
         static let newLine                      = "\n"
@@ -65,9 +84,7 @@ class CrewMembersTableViewController: UITableViewController, TableAnimatable {
         }
     }
        
-    
     // MARK: - Methods
-    
     
     override func viewDidLoad() {
         
@@ -334,7 +351,6 @@ class CrewMembersTableViewController: UITableViewController, TableAnimatable {
 
 // MARK: - Table view delegates
 
-
 extension CrewMembersTableViewController {
     
     override func numberOfSections(in tableView: UITableView) -> Int {
@@ -385,6 +401,10 @@ extension CrewMembersTableViewController {
             let daysInSpace           = currentCrew![indexPath.row].numberOfDaysInSpace()
             
             cell.astronautName.text   = name + Globals.spacer + flag
+            
+            // Get launch spacecraft watermark image using vehicle name
+            let spacecraft = LaunchVehicles(rawValue: vehicle) ?? .crewDragon
+            cell.spacecraftWatermark.image = spacecraft.spacecraftImages
             
             // Build string containing the basic crew member data
             cell.astronautInfo.text   = "\(title)\n\(mission)\n\(launchDate)\n\(vehicle)\n\(daysInSpace)"

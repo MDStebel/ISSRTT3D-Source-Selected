@@ -33,6 +33,7 @@ class AstronautTableViewCell: UITableViewCell {
             headerBackground.layer.masksToBounds = true
         }
     }
+    @IBOutlet weak var spacecraftWatermark: UIImageView!
     
     
     // MARK: - Methods
