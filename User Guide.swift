@@ -385,7 +385,7 @@ struct UserGuide {
     <h5>Notes:</h5>
     <ul>
     <li>
-    <h6>The red and gold circles represent the approximate ISS and TSS sighting ranges, respectively, from ground level under perfect conditions. Use the Pass Predictor to get viewable ISS passes from your exact location (TSS passes is not yet supported and will be in a future release).</h6>
+    <h6>The red and gold circles represent the approximate ISS and TSS sighting ranges, respectively, from ground level under perfect conditions. Use the Pass Predictor to get viewable ISS or TSS passes from your exact location.</h6>
     </li>
     <li>
     <h6>Auto-rotation is enabled by default and rotates the globe once every 90 seconds.</h6>

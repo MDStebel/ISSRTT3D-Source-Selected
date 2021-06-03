@@ -9,7 +9,7 @@
 import SceneKit
 
 
-/// Handles the objects we're adding to the globe
+/// Handles the objects we're adding to the globe as well as coordinate transforms
 extension EarthGlobe {
 
     
@@ -257,6 +257,7 @@ extension EarthGlobe {
         let sceneKitZ = y
         
         let position  = SCNVector3(x: sceneKitX, y: sceneKitY, z: sceneKitZ )
+        
         return position
         
     }
