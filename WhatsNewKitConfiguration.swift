@@ -29,7 +29,7 @@ private let whatsNew = WhatsNew(
         WhatsNew.Item(
             title: "Improvements & Fixes",
             subtitle: """
-                      This release features an all-new passes section. Now provides ISS and TSS pass predictions (the latter with limitations, see User Guide and help). Refreshed passes and crew table layout designs.
+                      Some under-the-hood improvements in this release.
                       """,
             image: UIImage(named: "icons8-bug_filled")
         ),
