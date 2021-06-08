@@ -145,7 +145,7 @@ struct AstroCalculations {
     /// Uses the geometric mean longitude of the Sun and equation of center.
     /// - Parameter date: A date as a Date type
     /// - Returns: Latitude in degrees as a Double
-    static func latitudeOfSun(for date: Date) -> Double {
+    static func latitudeOfSunAtCurrentTime(for date: Date) -> Double {
         
         let jC                       = julianCenturySinceJan2000(date: date)
         
@@ -218,7 +218,7 @@ struct AstroCalculations {
     static func getSubSolarCoordinates() -> (latitude: Float, longitude: Float) {
         
         let now = Date()
-        let lat = Float(latitudeOfSun(for: now))
+        let lat = Float(latitudeOfSunAtCurrentTime(for: now))
         let lon = Float(subSolarLongitudeOfSunAtCurrentTime(for: now))
         
         return (lat, lon)

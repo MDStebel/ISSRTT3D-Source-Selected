@@ -89,10 +89,10 @@ class PassesTableViewController: UITableViewController, CLLocationManagerDelegat
     
     private struct Constants {
         static let altitude                             = 0
-        static let apiKey                               = "---"                                     // API key
+        static let apiKey                               = "BZQB9N-9FTL47-ZXK7MZ-3TLE"                                     // API key
         static let customCellIdentifier                 = "OverheadTimesCell"
         static let deg                                  = "°"
-        static let endpointForPassesAPI                 = "---"           // API endpoint (new as of Nov 1, 2020)
+        static let endpointForPassesAPI                 = "https://api.n2yo.com/rest/v1/satellite/visualpasses"           // API endpoint (new as of Nov 1, 2020)
         static let fontForTitle                         = Theme.nasa
         static let minObservationTime                   = 300                                                             // In seconds
         static let newLine                              = "\n"
@@ -345,7 +345,7 @@ class PassesTableViewController: UITableViewController, CLLocationManagerDelegat
 
             numberOfOverheadTimesActuallyReported = passesDataSet.info.passescount
             if numberOfOverheadTimesActuallyReported > 0 {
-                // Success!
+                // Success! So, here's our array of passes
                 overheadTimesList = passesDataSet.passes
 
                 DispatchQueue.main.async { [self] in
@@ -594,39 +594,40 @@ extension PassesTableViewController {
         
         // Set up the cell
         let cell                          = tableView.dequeueReusableCell(withIdentifier: Constants.customCellIdentifier, for: indexPath) as! PassesTableViewCell
+        let row                           = indexPath.row
         
         if numberOfOverheadTimesActuallyReported > 0 {
-            let mag                       = overheadTimesList[indexPath.row].mag    // Get the magnitude of this pass, as we'll use it later.
+            let mag                       = overheadTimesList[row].mag    // Get the magnitude of this pass, as we'll use it later.
             
             // Set date of pass & set date label background color
-            cell.passDate.text            = dateFormatterForDate.string(from: Date(timeIntervalSince1970: overheadTimesList[indexPath.row].startUTC))
-            cell.passDate.text? += "\(Constants.newLine)\(Constants.newLine)"
             cell.passDate.backgroundColor = UIColor(named: Theme.lblBgd)    // Set the date label background color
+            cell.passDate.text            = dateFormatterForDate.string(from: Date(timeIntervalSince1970: overheadTimesList[row].startUTC))
+            cell.passDate.text? += "\(Constants.newLine)\(Constants.newLine)"
             
-            // Set the icon for the cell card background watermark
+            // Set the image for the cell background watermark
             cell.stationIcon.image        = stationImage
             
             // Duration & max magnitude
-            cell.durationLabel.text       = "DUR: \(minsAndSecs(from: overheadTimesList[indexPath.row].duration))"
+            cell.durationLabel.text       = "DUR: \(minsAndSecs(from: overheadTimesList[row].duration))"
             cell.magnitudeLabel.text      = mag != RatingSystem.unknown.rawValue ? "MAG: \(mag)" : "MAG: N/A"
             
             // Start of pass data
-            cell.startTime.text           = dateFormatterForTime.string(from: Date(timeIntervalSince1970: overheadTimesList[indexPath.row].startUTC))
-            cell.startAz.text             = String(format: Globals.azimuthFormat, overheadTimesList[indexPath.row].startAz) + Constants.deg
-            cell.startEl.text             = String(format: Globals.elevationFormat, overheadTimesList[indexPath.row].startEl) + Constants.deg
-            cell.startComp.text           = String(overheadTimesList[indexPath.row].startAzCompass)
+            cell.startTime.text           = dateFormatterForTime.string(from: Date(timeIntervalSince1970: overheadTimesList[row].startUTC))
+            cell.startAz.text             = String(format: Globals.azimuthFormat, overheadTimesList[row].startAz) + Constants.deg
+            cell.startEl.text             = String(format: Globals.elevationFormat, overheadTimesList[row].startEl) + Constants.deg
+            cell.startComp.text           = String(overheadTimesList[row].startAzCompass)
             
             // Maximum elevation data
-            cell.maxTime.text             = dateFormatterForTime.string(from: Date(timeIntervalSince1970: overheadTimesList[indexPath.row].maxUTC))
-            cell.maxAz.text               = String(format: Globals.azimuthFormat, overheadTimesList[indexPath.row].maxAz) + Constants.deg
-            cell.maxEl.text               = String(format: Globals.elevationFormat, overheadTimesList[indexPath.row].maxEl) + Constants.deg
-            cell.maxComp.text             = String(overheadTimesList[indexPath.row].maxAzCompass)
+            cell.maxTime.text             = dateFormatterForTime.string(from: Date(timeIntervalSince1970: overheadTimesList[row].maxUTC))
+            cell.maxAz.text               = String(format: Globals.azimuthFormat, overheadTimesList[row].maxAz) + Constants.deg
+            cell.maxEl.text               = String(format: Globals.elevationFormat, overheadTimesList[row].maxEl) + Constants.deg
+            cell.maxComp.text             = String(overheadTimesList[row].maxAzCompass)
             
             // End-of-pass data
-            cell.endTime.text             = dateFormatterForTime.string(from: Date(timeIntervalSince1970: overheadTimesList[indexPath.row].endUTC))
-            cell.endAz.text               = String(format: Globals.azimuthFormat, overheadTimesList[indexPath.row].endAz) + Constants.deg
-            cell.endEl.text               = String(format: Globals.elevationFormat, overheadTimesList[indexPath.row].endEl) + Constants.deg
-            cell.endComp.text             = String(overheadTimesList[indexPath.row].endAzCompass)
+            cell.endTime.text             = dateFormatterForTime.string(from: Date(timeIntervalSince1970: overheadTimesList[row].endUTC))
+            cell.endAz.text               = String(format: Globals.azimuthFormat, overheadTimesList[row].endAz) + Constants.deg
+            cell.endEl.text               = String(format: Globals.elevationFormat, overheadTimesList[row].endEl) + Constants.deg
+            cell.endComp.text             = String(overheadTimesList[row].endAzCompass)
             
             // Show the correct number of rating stars based on the magnitude of the pass according the rating system enum
             // If the magnitude is unknown (.unknown) then show the greyed-out stars only
@@ -716,7 +717,7 @@ extension PassesTableViewController {
         userLatitude     = userLocation.coordinate.latitude
         userLongitude    = userLocation.coordinate.longitude
         
-        getISSOverheadtimes(for: station, then: decodeJSONPasses)                   // Get passes from API, then run callback to decode/parse
+        getISSOverheadtimes(for: station, then: decodeJSONPasses)                   // Get passes from API, then run callback to decode/parse JSON
         
         ISSLocationManager.stopUpdatingLocation()                                   // Now that we have user's location, we don't need it again, so stop updating location
         

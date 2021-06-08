@@ -29,7 +29,7 @@ private let whatsNew = WhatsNew(
         WhatsNew.Item(
             title: "Improvements & Fixes",
             subtitle: """
-                      Some under-the-hood improvements in this release.
+                      Table performance improvements for Passes and Crew.
                       """,
             image: UIImage(named: "icons8-bug_filled")
         ),

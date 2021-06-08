@@ -35,8 +35,8 @@ class CrewMembersTableViewController: UITableViewController, TableAnimatable {
     
     /// Constants
     private struct Constants {
-        static let bioBackupURLString           = "---"   // Backup URL is used if a bio URL is not returned in the JSON file
-        static let crewAPIEndpointURLString     = "---"                         // API endpoint
+        static let bioBackupURLString           = "https://www.issrtt.com/issrtt-astronaut-bio-not-found"   // Backup URL is used if a bio URL is not returned in the JSON file
+        static let crewAPIEndpointURLString     = "https://issrttapi.com/crew.json"                         // API endpoint
         static let customCellIdentifier         = "crewMemberCell"
         static let fontForTitle                 = Theme.nasa
         static let newLine                      = "\n"
@@ -189,6 +189,7 @@ class CrewMembersTableViewController: UITableViewController, TableAnimatable {
                     // Sort by name and then by title
                     weakSelf?.currentCrew = ISSCrewOnly?.sorted {$0.name < $1.name}
                     weakSelf?.currentCrew?.sort() {$0.title < $1.title}
+                    
                     weakSelf?.currentCrewSize = (weakSelf?.currentCrew!.count)!
                     
                     DispatchQueue.main.async {
@@ -388,26 +389,26 @@ extension CrewMembersTableViewController {
         
         if currentCrewSize > 0 {
             
-            let index                 = indexPath.row
+            let row                        = indexPath.row
             
-            cell.astronautImage.image = getAstronautImage(forCell: index) ?? placeholderImage
+            cell.astronautImage.image      = getAstronautImage(forCell: row) ?? placeholderImage
             
-            let name                  = currentCrew![index].name
-            let flag                  = currentCrew![index].flag
-            let title                 = currentCrew![index].title
-            let mission               = currentCrew![index].mission
-            let launchDate            = currentCrew![index].launchDateFormatted
-            let vehicle               = currentCrew![index].launchVehicle
-            let daysInSpace           = currentCrew![indexPath.row].numberOfDaysInSpace()
+            let name                       = currentCrew![row].name
+            let flag                       = currentCrew![row].flag
+            let title                      = currentCrew![row].title
+            let mission                    = currentCrew![row].mission
+            let launchDate                 = currentCrew![row].launchDateFormatted
+            let vehicle                    = currentCrew![row].launchVehicle
+            let daysInSpace                = currentCrew![row].numberOfDaysInSpace()
             
-            cell.astronautName.text   = name + Globals.spacer + flag
+            cell.astronautName.text        = name + Globals.spacer + flag
             
             // Get launch spacecraft watermark image using vehicle name
-            let spacecraft = LaunchVehicles(rawValue: vehicle) ?? .crewDragon
+            let spacecraft                 = LaunchVehicles(rawValue: vehicle) ?? .crewDragon
             cell.spacecraftWatermark.image = spacecraft.spacecraftImages
             
             // Build string containing the basic crew member data
-            cell.astronautInfo.text   = "\(title)\n\(mission)\n\(launchDate)\n\(vehicle)\n\(daysInSpace)"
+            cell.astronautInfo.text        = "\(title)\n\(mission)\n\(launchDate)\n\(vehicle)\n\(daysInSpace)"
             
         }
         
@@ -441,12 +442,14 @@ extension CrewMembersTableViewController {
         
         centerPopover()
         
-        let index                                       = indexPath.row
-        let startOfLabelText                            = currentCrew![index].name + Globals.spacer
-        let flagImageURLString                          = currentCrew![index].flag 
+        let row                                         = indexPath.row
+        let startOfLabelText                            = currentCrew![row].name + Globals.spacer
+        let flagImageURLString                          = currentCrew![row].flag 
+        
         crewMemberDetailView.shortBioName?.text         = startOfLabelText + flagImageURLString
-        crewMemberDetailView.shortBioInforomation?.text = currentCrew?[index].shortBioBlurb ?? "No short bio is available."
-        crewMemberDetailView.twitterHandleURL           = currentCrew?[index].twitter
+        crewMemberDetailView.shortBioInforomation?.text = currentCrew?[row].shortBioBlurb ?? "No brief bio is available."
+        crewMemberDetailView.twitterHandleURL           = currentCrew?[row].twitter
+        
         view.addSubview(crewMemberDetailView)
         
     }
