@@ -30,13 +30,15 @@ struct Astronaut {
     let twitter: String
     let mission: String
     
-    var shortAstronautDescription: String {
-        name + "  " + (flag)
-    }
-
     
     /// Dictionary of flag emoji for each nationality
     private let countryFlags = [ "usa": "🇺🇸", "USA": "🇺🇸", "united states": "🇺🇸", "United States": "🇺🇸","russia": "🇷🇺", "Russia": "🇷🇺", "italy": "🇮🇹", "Italy": "🇮🇹", "united kingdom": "🇬🇧", "United Kingdom": "🇬🇧", "uk": "🇬🇧", "UK": "🇬🇧", "england": "🇬🇧", "England": "🇬🇧", "canada": "🇨🇦", "Canada": "🇨🇦", "japan": "🇯🇵", "Japan": "🇯🇵", "germany": "🇩🇪", "Germany": "🇩🇪", "israel": "🇮🇱", "Israel": "🇮🇱", "france": "🇫🇷", "France": "🇫🇷", "netherlands": "🇳🇱", "Netherlands": "🇳🇱", "the netherlands": "🇳🇱", "The Netherlands": "🇳🇱","belgium": "🇧🇪", "Belgium": "🇧🇪", "denmark": "🇩🇰", "Denmark": "🇩🇰", "norway": "🇳🇴", "Norway": "🇳🇴", "china": "🇨🇳", "China": "🇨🇳", "spain": "🇪🇸", "Spain": "🇪🇸", "india": "🇮🇳", "India": "🇮🇳", "brazil": "🇧🇷", "Brazil": "🇧🇷","sweden": "🇸🇪", "Sweden": "🇸🇪", "greece": "🇬🇷", "Greece": "🇬🇷", "estonia": "🇪🇪", "Estonia": "🇪🇪", "austria": "🇦🇹", "Austria": "🇦🇹", "czech republic": "🇨🇿", "Czech Republic": "🇨🇿", "czech": "🇨🇿", "Czech": "🇨🇿", "switzerland": "🇨🇭", "Switzerland": "🇨🇭", "switz": "🇨🇭", "Switz": "🇨🇭", "finland": "🇫🇮", "Finland": "🇫🇮", "hungary": "🇭🇺", "Hungary": "🇭🇺", "poland": "🇵🇱", "Poland": "🇵🇱", "luxembourg": "🇱🇺", "Luxembourg": "🇱🇺", "romainia": "🇷🇴", "Romainia": "🇷🇴", "portugal": "🇵🇹", "Portugal": "🇵🇹", "ireland": "🇮🇪", "Ireland": "🇮🇪", "UAE": "🇦🇪", "uae": "🇦🇪", "U.A.E.": "🇦🇪", "United Arab Emirates": "🇦🇪", "united arab emirates": "🇦🇪"]
+    
+    
+    /// This computed property returns the uppercase string of the country
+    private var countryFormatted: String {
+        country.uppercased()
+    }
     
     
     /// This computed property returns a flag representing the country, if available. If there's no flag, return the flag image, or else return the country name.
@@ -45,9 +47,8 @@ struct Astronaut {
     }
     
     
-    /// This computed property returns the uppercase string of the country
-    private var countryFormatted: String {
-        country.uppercased()
+    var shortAstronautDescription: String {
+        name + "  " + (flag)
     }
     
     
@@ -136,17 +137,16 @@ struct Astronaut {
 extension Astronaut: CustomStringConvertible, Comparable {
     
     static func < (lhs: Astronaut, rhs: Astronaut) -> Bool {
-        return lhs.name < rhs.name
+        lhs.name < rhs.name
     }
     
     static func == (lhs: Astronaut, rhs: Astronaut) -> Bool {
-        return lhs.name == rhs.name
+        lhs.name == rhs.name
     }
     
     /// Returns comma delimited string
     var description: String {
         "\(name), \(title), \(flag)"
     }
-    
     
 }

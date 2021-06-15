@@ -15,7 +15,7 @@ enum SatelliteID {
 }
 
 
-/// Define a satellite object
+/// Defines a satellite object
 class Satellite {
     
     var name: String
