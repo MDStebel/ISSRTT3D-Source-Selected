@@ -18,7 +18,7 @@ class PassesTableViewController: UITableViewController, CLLocationManagerDelegat
     /// Defines the passes rating system
     ///
     /// This enum holds the max (i.e., lowest magnitude) values for the respective ratings and returns number of stars for each. Call: var nStars = RatingSystem.good.numberOfStars
-    enum RatingSystem: Double, CaseIterable {
+    private enum RatingSystem: Double, CaseIterable {
         
         case unknown = 100000.0         // A magnitude of this value reported by the API indicates that it is unknown
         case poor    = 100.0            // Let's just consider anything this dim to be the 'poor' limit
@@ -47,8 +47,8 @@ class PassesTableViewController: UITableViewController, CLLocationManagerDelegat
     
     // MARK: - Stations and/or other satellites that we can get pass predictions for
     
-    /// Enum holds the NORAD codes for the stations and their corresponding names
-    enum StationsAndSatellites: String, CaseIterable {
+    /// Enum holds the NORAD codes for the stations and their corresponding names and images
+    private enum StationsAndSatellites: String, CaseIterable {
         
         case ISS    = "25544"
         case TSS    = "48274"
@@ -85,14 +85,14 @@ class PassesTableViewController: UITableViewController, CLLocationManagerDelegat
     // MARK: - Properties
     
     /// Defines type for completion handler function
-    typealias completionHandler = (Data) -> ()
+    private typealias completionHandler = (Data) -> ()
     
     private struct Constants {
         static let altitude                             = 0
-        static let apiKey                               = "---"                                     // API key
+        static let apiKey                               = "BZQB9N-9FTL47-ZXK7MZ-3TLE"                                     // API key
         static let customCellIdentifier                 = "OverheadTimesCell"
         static let deg                                  = "°"
-        static let endpointForPassesAPI                 = "---"           // API endpoint (new as of Nov 1, 2020)
+        static let endpointForPassesAPI                 = "https://api.n2yo.com/rest/v1/satellite/visualpasses"           // API endpoint (new as of Nov 1, 2020)
         static let fontForTitle                         = Theme.nasa
         static let minObservationTime                   = 300                                                             // In seconds
         static let newLine                              = "\n"
