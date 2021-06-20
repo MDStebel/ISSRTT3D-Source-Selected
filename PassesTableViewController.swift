@@ -112,7 +112,7 @@ class PassesTableViewController: UITableViewController, CLLocationManagerDelegat
     private var numberOfOverheadTimesActuallyReported   = 0
     private var overheadTimesList                       = [Passes.Pass]()
     private var rating                                  = 0
-    private var station: StationsAndSatellites             = .ISS {
+    private var station: StationsAndSatellites          = .ISS {
         didSet{
             getStationID(for: station)
         }
