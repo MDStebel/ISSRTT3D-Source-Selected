@@ -30,7 +30,7 @@ class PassesTableViewController: UITableViewController, CLLocationManagerDelegat
         var numberOfStars: Int {
             switch self {
             case .unknown :
-                return 99
+                return 0
             case .poor   :
                 return 0
             case .fair   :
@@ -89,12 +89,12 @@ class PassesTableViewController: UITableViewController, CLLocationManagerDelegat
     
     private struct Constants {
         static let altitude                             = 0
-        static let apiKey                               = "---"                                     // API key
+        static let apiKey                               = "BZQB9N-9FTL47-ZXK7MZ-3TLE"                                     // API key
         static let customCellIdentifier                 = "OverheadTimesCell"
         static let deg                                  = "°"
-        static let endpointForPassesAPI                 = "---"                                     // API endpoint (new as of Nov 1, 2020)
+        static let endpointForPassesAPI                 = "https://api.n2yo.com/rest/v1/satellite/visualpasses"           // API endpoint (new as of Nov 1, 2020)
         static let fontForTitle                         = Theme.nasa
-        static let minObservationTime                   = 300                                       // In seconds
+        static let minObservationTime                   = 300                                                             // In seconds
         static let newLine                              = "\n"
         static let noRatingStar                         = #imageLiteral(resourceName: "star-unfilled")
         static let ratingStar                           = #imageLiteral(resourceName: "star")
@@ -563,7 +563,7 @@ extension PassesTableViewController {
             case _ where thisMagnitude <= RatingSystem.better.rawValue : rating = RatingSystem.better.numberOfStars
             case _ where thisMagnitude <= RatingSystem.good.rawValue   : rating = RatingSystem.good.numberOfStars
             case _ where thisMagnitude <= RatingSystem.fair.rawValue   : rating = RatingSystem.fair.numberOfStars
-            case _ where thisMagnitude == 10000                        : rating = RatingSystem.unknown.numberOfStars
+            case _ where thisMagnitude == RatingSystem.unknown.rawValue: rating = RatingSystem.unknown.numberOfStars
             default                                                    : rating = RatingSystem.poor.numberOfStars
             }
             
