@@ -89,18 +89,18 @@ class PassesTableViewController: UITableViewController, CLLocationManagerDelegat
     
     private struct Constants {
         static let altitude                             = 0
-        static let apiKey                               = "---"                                     // API key
+        static let apiKey                               = "BZQB9N-9FTL47-ZXK7MZ-3TLE"                                     // API key
         static let customCellIdentifier                 = "OverheadTimesCell"
         static let deg                                  = "°"
-        static let endpointForPassesAPI                 = "---"           // API endpoint (new as of Nov 1, 2020)
+        static let endpointForPassesAPI                 = "https://api.n2yo.com/rest/v1/satellite/visualpasses"           // API endpoint
         static let fontForTitle                         = Theme.nasa
         static let minObservationTime                   = 300                                                             // In seconds
         static let newLine                              = "\n"
         static let noRatingStar                         = #imageLiteral(resourceName: "star-unfilled")
         static let ratingStar                           = #imageLiteral(resourceName: "star")
         static let segueToHelpFromPasses                = "segueToHelpFromPasses"
-        static let selectISSButton                      = #imageLiteral(resourceName: "ISS-Selected-2")
-        static let selectTSSButton                      = #imageLiteral(resourceName: "TSS-Selected-2")
+        static let selectISSButton                      = #imageLiteral(resourceName: "ISS-Selected-3")
+        static let selectTSSButton                      = #imageLiteral(resourceName: "TSS-Selected-3")
         static let unknownRatingStar                    = #imageLiteral(resourceName: "unknownRatingStar")
     }
     
@@ -112,7 +112,7 @@ class PassesTableViewController: UITableViewController, CLLocationManagerDelegat
     private var numberOfOverheadTimesActuallyReported   = 0
     private var overheadTimesList                       = [Passes.Pass]()
     private var rating                                  = 0
-    private var station: StationsAndSatellites          = .ISS {
+    private var station: StationsAndSatellites             = .ISS {
         didSet{
             getStationID(for: station)
         }
