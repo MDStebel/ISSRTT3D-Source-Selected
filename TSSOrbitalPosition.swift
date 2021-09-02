@@ -23,6 +23,7 @@ struct TSSOrbitalPosition: Decodable {
         var satid: Int
         var satname: String
         var transactionscount: Int
+        let passescount: Int
         
     }
     

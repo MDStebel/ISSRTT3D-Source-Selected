@@ -111,7 +111,8 @@ extension GlobeFullViewController {
                 } catch {
                     
                     DispatchQueue.main.async {
-                        self?.alert(for: "Can't get TSS location", message: "Will automatically start again when available.")
+                        // self?.alert(for: "Can't get TSS location", message: "Will automatically start again when available.")
+                        self?.isRunningLabel?.text = "Can't get TSS location"
                     }
                     
                 }
@@ -119,7 +120,8 @@ extension GlobeFullViewController {
             } else {
                 
                 DispatchQueue.main.async {
-                    self?.alert(for: "Can't get TSS location", message: "Will automatically start again when available.")
+                    // self?.alert(for: "Can't get TSS location", message: "Will automatically start again when available.")
+                    self?.isRunningLabel?.text = "Can't get TSS location"
                 }
                 
             }

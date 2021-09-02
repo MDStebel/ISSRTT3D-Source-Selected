@@ -2,6 +2,7 @@
 //  HelpViewController.swift
 //  ISS Real-Time Tracker 3D
 //
+//  Created by Michael Stebel on 2/21/16.
 //  Copyright © 2016-2021 Michael Stebel Consulting, LLC. All rights reserved.
 //
 

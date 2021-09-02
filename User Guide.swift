@@ -286,7 +286,7 @@ struct UserGuide {
     <p>Tap ⟵ to return to the tracking view.</p>
     \(tail)
     """
-    
+     
     static let passesHelp =
     """
     \(head)

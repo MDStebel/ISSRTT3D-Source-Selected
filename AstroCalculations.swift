@@ -10,7 +10,7 @@ import Foundation
 
 
 /// A set of functions that provide solar position calculations
-struct AstroCalculations {
+public struct AstroCalculations {
     
     
     /// Convert a given Gregorian date to a Julian date

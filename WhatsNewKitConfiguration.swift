@@ -20,16 +20,17 @@ private let whatsNew = WhatsNew(
     // The features and other information to showcase
     items: [
         WhatsNew.Item(
-            title: "Tracks the Chinese Space Station, Too!",
+            title: "Apple Watch Support",
             subtitle: """
-                      Now provides real-time tracking of the new Tiangong space station (TSS) in the fullscreen 3D globe view, and pass TSS predictions as well! Learn more in Help.
+                      Companion Apple Watch app provides the real-time location of the subsolar point. More features coming soon.
                       """,
             image: UIImage(named: "icons8-megaphone_filled.imageset")
         ),
         WhatsNew.Item(
             title: "Improvements & Fixes",
             subtitle: """
-                      Table performance improvements for Passes and Crew.
+                      • Fixed an issue in the full-screen globe view that caused repeated alerts to pop up if the Chinese space station (TSS) location was not available. Will now display a notice instead.
+                      • Other small improvements and bug fixes.
                       """,
             image: UIImage(named: "icons8-bug_filled")
         ),

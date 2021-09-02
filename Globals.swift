@@ -80,6 +80,7 @@ struct Globals {
     static let TSSViewingCircleGraphic                       = "TSS-Visibility-Circle"
     static let azimuthFormat                                 = "%3.0f"
     static let coordinatesStringFormat                       = "%3d°%02d'%02d\" %@  %3d°%02d'%02d\" %@"
+    static let coordinatesStringFormatShortForm              = "%3d° %02d' %@  %3d° %02d' %@"
     static let dateFormatStringEuropeanForm                  = "yyyy-MM-dd"
     static let degreesLongitudePerHour: Double               = 15
     static let degreesToRadians: Double                      = .pi / 180

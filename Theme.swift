@@ -29,7 +29,7 @@ struct Theme {
     static let soundTrack                                   = "122607755-opening-chakras-new-age-medita.wav"
     static let star                                         = "StarColor"
     static let tblBgd                                       = "Table Background"
-    static let tint                                         = "Tint"
+    static let tint                                         = "ISSRTT-Red"
     static let usrGuide                                     = "User Guide Background"
     static let white                                        = "White"
     
