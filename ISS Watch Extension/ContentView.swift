@@ -10,14 +10,18 @@ import SwiftUI
 import SceneKit
 
 struct ContentView: View {
+    // Get the phase of the scene
+    @Environment(\.scenePhase) private var scenePhase
+    
     // Get the subsolar point coordinates
     @State private var subsolarPoint = AstroCalculations.getSubSolarCoordinates()
     
     var body: some View {
-        LazyVStack(spacing: 10) {
-            // Convert decimal coordinates to degrees, minutes format
-            let coordinatesString = CoordinateConversions.decimalCoordinatesToDegMin(latitude: Double(subsolarPoint.latitude), longitude: Double(subsolarPoint.longitude), format: Globals.coordinatesStringFormatShortForm)
-            
+        
+        // Convert decimal coordinates to degrees, minutes format
+        let coordinatesString = CoordinateConversions.decimalCoordinatesToDegMin(latitude: Double(subsolarPoint.latitude), longitude: Double(subsolarPoint.longitude), format: Globals.coordinatesStringFormatShortForm)
+        
+        VStack(spacing: 10) {
             Text("Subsolar Point")
                 .font(.custom(Theme.nasa, size: 15.0))
                 .foregroundColor(.ISSRTT3DRed)
@@ -28,22 +32,40 @@ struct ContentView: View {
             Divider()
             Text("Tap to update")
                 .font(.custom(Theme.appFont, size: 10.0))
-                .foregroundColor(.gray)
+                .foregroundColor(.ISSRTTGrey)
                 .padding()
         }
         .multilineTextAlignment(.center)
+        
         // Update the coordinates when the watch screen is tapped
         .onTapGesture {
             subsolarPoint = AstroCalculations.getSubSolarCoordinates()
         }
+        
+        // Detect change in phase of the scene
+        .onChange(of: scenePhase) { phase in
+            switch phase {
+            case .active:
+                // The scene has become active, so update the subsolar point
+                subsolarPoint = AstroCalculations.getSubSolarCoordinates()
+            case .inactive:
+                // The app has become inactive.
+                break
+            case .background:
+                // The app has moved to the background.
+                break
+            @unknown default:
+                fatalError("The app has entered an unknown state.")
+            }
+        }
     }
-    
 }
     
 
 extension Color {
     // Add global ISSRTT3D theme colors
     static let ISSRTT3DRed = Color(Theme.tint)
+    static let ISSRTTGrey  = Color(Theme.lblBgd)
 }
 
 
