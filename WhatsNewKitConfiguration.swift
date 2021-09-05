@@ -7,10 +7,13 @@
 //  Uses WhatsNewKit by Sven Tiigi
 //
 
+#if !os(watchOS)
 import WhatsNewKit
+#endif
+
 import UIKit
 
-
+#if !os(watchOS)
 // Initialize a WhatsNew instance
 private let whatsNew = WhatsNew(
     
@@ -105,3 +108,6 @@ private let myConfiguration = WhatsNewViewController.Configuration(theme: myThem
 
 /// Initialize WhatsNewViewController with WhatsNew
 let whatsNewViewController  = WhatsNewViewController(whatsNew: whatsNew, configuration: myConfiguration)
+
+
+#endif
