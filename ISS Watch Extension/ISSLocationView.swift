@@ -1,5 +1,5 @@
 //
-//  SubSolarPointView.swift
+//  ISSLocationView.swift
 //  ISS Watch Extension
 //
 //  Created by Michael Stebel on 8/26/21.
@@ -9,23 +9,23 @@
 import SwiftUI
 import SceneKit
 
-struct SubSolarPointView: View {
+struct ISSLocationView: View {
     // Get the phase of the scene
     @Environment(\.scenePhase) private var scenePhase
     
     // Get the subsolar point coordinates
-    @StateObject private var subSolarPoint = SubSolarViewModel()
+    @StateObject private var issLocation = ISSLocationViewModel()
     
     var body: some View {
         VStack(spacing: 10) {
             Spacer()
-            Text("Subsolar Point")
+            Text("ISS Location")
                 .font(.ISSRTT3DFont)
                 .foregroundColor(.ISSRTT3DRed)
                 .padding()
             Divider()
-            Text(subSolarPoint.subSolarPointString)
-                .font(.custom(Theme.appFontBold, size: 14.0))
+            Text(issLocation.issLocationString)
+                .font(.custom(Theme.appFontBold, size: 12.0))
             Divider()
             Spacer()
             Text("Tap to update")
@@ -38,8 +38,8 @@ struct SubSolarPointView: View {
         .onChange(of: scenePhase) { phase in
             switch phase {
             case .active:
-                // The scene has become active, so update the subsolar point
-                subSolarPoint.updateSubSolarPoint()
+                // The scene has become active, so update the ISS location coordinates
+                issLocation.updateISSLocation()
             case .inactive:
                 // The app has become inactive.
                 break
@@ -52,15 +52,15 @@ struct SubSolarPointView: View {
         }
         // Update the coordinates when the watch screen is tapped
         .onTapGesture {
-            subSolarPoint.updateSubSolarPoint()
+            issLocation.updateISSLocation()
         }
     }
 }
     
-struct ContentView_Previews: PreviewProvider {
+struct ISSLocationView_Previews: PreviewProvider {
     static var previews: some View {
         Group {
-            SubSolarPointView()
+            ISSLocationView()
         }
     }
 }

@@ -12,7 +12,7 @@ struct TabViewForWatch: View {
     var body: some View {
         TabView {
             SubSolarPointView()
-            SubSolarPointView()
+            ISSLocationView()
         }
     }
 }
