@@ -14,7 +14,6 @@ struct TabViewForWatch: View {
             SubSolarPointView()
             SubSolarPointView()
         }
-
     }
 }
 

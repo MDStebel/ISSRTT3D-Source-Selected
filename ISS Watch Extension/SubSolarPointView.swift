@@ -14,27 +14,23 @@ struct SubSolarPointView: View {
     @Environment(\.scenePhase) private var scenePhase
     
     // Get the subsolar point coordinates
-    @State private var subsolarPoint = AstroCalculations.getSubSolarCoordinates()
+    @StateObject private var subSolarPoint = SubSolarViewModel()
     
     var body: some View {
-        
-        // Convert decimal coordinates to degrees, minutes format
-        let coordinatesString = CoordinateConversions.decimalCoordinatesToDegMin(latitude: Double(subsolarPoint.latitude), longitude: Double(subsolarPoint.longitude), format: Globals.coordinatesStringFormatShortForm)
-        
         VStack(spacing: 10) {
             Text("Subsolar Point")
                 .font(.ISSRTT3DFont)
                 .foregroundColor(.ISSRTT3DRed)
                 .padding()
             Divider()
-            Text(coordinatesString)
+            Text(subSolarPoint.subSolarPointString)
                 .font(.custom(Theme.appFontBold, size: 14.0))
                 // Detect change in phase of the scene
                 .onChange(of: scenePhase) { phase in
                     switch phase {
                     case .active:
                         // The scene has become active, so update the subsolar point
-                        subsolarPoint = AstroCalculations.getSubSolarCoordinates()
+                        subSolarPoint.updateSubSolarPoint()
                     case .inactive:
                         // The app has become inactive.
                         break
@@ -56,7 +52,7 @@ struct SubSolarPointView: View {
         
         // Update the coordinates when the watch screen is tapped
         .onTapGesture {
-            subsolarPoint = AstroCalculations.getSubSolarCoordinates()
+            subSolarPoint.updateSubSolarPoint()
         }
     }
 }
