@@ -17,24 +17,30 @@ struct SubSolarPointView: View {
     @StateObject private var subSolarPoint = SubSolarViewModel()
     
     var body: some View {
-        VStack(spacing: 10) {
-            Spacer()
-            Text("Subsolar Point")
-                .font(.ISSRTT3DFont)
-                .foregroundColor(.ISSRTT3DRed)
-                .padding()
-            Divider()
-            Text(subSolarPoint.subSolarPointString)
-                .font(.custom(Theme.appFontBold, size: 14.0))
-            Divider()
-            Spacer()
-            Text("Tap to update")
-                .font(.custom(Theme.appFont, size: 10.0))
-                .foregroundColor(.ISSRTT3DGrey)
-                .padding()
+        ZStack {
+            Image(systemName: "sun.max.fill")
+                .resizable()
+                .scaledToFit()
+                .rotationEffect(.degrees(22.5))
+                .foregroundColor(.yellow)
+                .opacity(0.25)
+            VStack {
+                Spacer()
+                ScrollView {
+                    Text(subSolarPoint.subSolarPointString)
+                        .font(.custom(Theme.appFontBold, size: 14.0))
+                        .bold()
+                    Text("Tap to update")
+                        .font(.custom(Theme.appFont, size: 10.0))
+                        .foregroundColor(.white)
+                        .padding()
+                }
+                Spacer()
+            }
         }
-        .multilineTextAlignment(.center)
-        // Detect change in phase of the scene
+        .onAppear() {
+            subSolarPoint.updateSubSolarPoint()
+        }
         .onChange(of: scenePhase) { phase in
             switch phase {
             case .active:
@@ -54,6 +60,7 @@ struct SubSolarPointView: View {
         .onTapGesture {
             subSolarPoint.updateSubSolarPoint()
         }
+        .navigationTitle("Subsolar")
     }
 }
     

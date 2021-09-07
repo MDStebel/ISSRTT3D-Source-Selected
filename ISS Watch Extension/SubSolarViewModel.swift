@@ -17,6 +17,6 @@ class SubSolarViewModel: ObservableObject {
     
     func updateSubSolarPoint() {
         let values = AstroCalculations.getSubSolarCoordinates()
-        subSolarPointString = CoordinateConversions.decimalCoordinatesToDegMin(latitude: Double(values.latitude), longitude: Double(values.longitude), format: Globals.coordinatesStringFormatShortForm)
+        subSolarPointString = CoordinateConversions.decimalCoordinatesToDegMinSec(latitude: Double(values.latitude), longitude: Double(values.longitude), format: Globals.coordinatesStringFormat)
     }
 }

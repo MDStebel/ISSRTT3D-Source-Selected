@@ -17,24 +17,30 @@ struct ISSLocationView: View {
     @StateObject private var issLocation = ISSLocationViewModel()
     
     var body: some View {
-        VStack(spacing: 10) {
-            Spacer()
-            Text("ISS Location")
-                .font(.ISSRTT3DFont)
-                .foregroundColor(.ISSRTT3DRed)
+        ZStack {
+            Image(Globals.ISSIconForMapView)
+                .resizable()
+                .scaledToFit()
+                .foregroundColor(.blue)
+                .opacity(0.25)
                 .padding()
-            Divider()
-            Text(issLocation.issLocationString)
-                .font(.custom(Theme.appFontBold, size: 12.0))
-            Divider()
-            Spacer()
-            Text("Tap to update")
-                .font(.custom(Theme.appFont, size: 10.0))
-                .foregroundColor(.ISSRTT3DGrey)
-                .padding()
+            VStack {
+                Spacer()
+                ScrollView {
+                    Text(issLocation.issLocationString)
+                        .font(.custom(Theme.appFontBold, size: 14.0))
+                        .bold()
+                    Text("Tap to update")
+                        .font(.custom(Theme.appFont, size: 10.0))
+                        .foregroundColor(.white)
+                        .padding()
+                }
+                Spacer()
+            }
         }
-        .multilineTextAlignment(.center)
-        // Detect change in phase of the scene
+        .onAppear() {
+            issLocation.updateISSLocation()
+        }
         .onChange(of: scenePhase) { phase in
             switch phase {
             case .active:
@@ -54,6 +60,7 @@ struct ISSLocationView: View {
         .onTapGesture {
             issLocation.updateISSLocation()
         }
+        .navigationTitle("Tracker")
     }
 }
     

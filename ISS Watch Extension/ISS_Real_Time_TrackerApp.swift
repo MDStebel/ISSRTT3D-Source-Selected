@@ -12,11 +12,9 @@ import SwiftUI
 struct ISS_Real_Time_TrackerApp: App {
     @SceneBuilder var body: some Scene {
         WindowGroup {
-            NavigationView {
-                TabViewForWatch()
-            }
+            ISSRTT3DNavigationView()
         }
-
+        
         WKNotificationScene(controller: NotificationController.self, category: "myCategory")
     }
 }
