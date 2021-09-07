@@ -58,6 +58,12 @@ struct Globals {
     
     // MARK: - Global Constants
     
+    #if os(watchOS)
+    static let coordinatesStringFormat                       = "Lat: %3d°%02d'%02d\" %@\nLon: %3d°%02d'%02d\" %@"
+    #else
+    static let coordinatesStringFormat                       = "%3d°%02d'%02d\" %@  %3d°%02d'%02d\" %@"
+    #endif
+    
     static let ISSAltitudeFactor: Float                      = ISSOrbitalAltitudeFactor * 1.015
     static let ISSAltitudeInKM: Float                        = 428
     static let ISSIconFor3DGlobeView                         = "ISS-mds-1350px"
@@ -79,7 +85,6 @@ struct Globals {
     static let TSSOrbitalAltitudeFactor                      = globeRadiusFactor * (1 + TSSAltitudeInKM / earthRadiusInKM) * 1.01
     static let TSSViewingCircleGraphic                       = "TSS-Visibility-Circle"
     static let azimuthFormat                                 = "%3.0f"
-    static let coordinatesStringFormat                       = "%3d°%02d'%02d\" %@  %3d°%02d'%02d\" %@"
     static let coordinatesStringFormatShortForm              = "%3d° %02d' %@  %3d° %02d' %@"
     static let dateFormatStringEuropeanForm                  = "yyyy-MM-dd"
     static let degreesLongitudePerHour: Double               = 15
