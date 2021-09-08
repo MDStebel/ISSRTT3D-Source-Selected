@@ -12,7 +12,7 @@ import SwiftUI
 struct ISS_Real_Time_TrackerApp: App {
     @SceneBuilder var body: some Scene {
         WindowGroup {
-            SubSolarPointView()
+            GlobeView()
         }
         
         WKNotificationScene(controller: NotificationController.self, category: "myCategory")

@@ -14,61 +14,23 @@ struct GlobeView: View {
     @Environment(\.scenePhase) private var scenePhase
     
     // Get the subsolar point coordinates
-    @StateObject private var subSolarPoint = SubSolarViewModel()
+    @State private var globeNode  = GlobeViewModel().globeMainNode
+    @State private var globeScene = GlobeViewModel().globeScene
     
     var body: some View {
-        ZStack {
-            Image(systemName: "sun.max.fill")
-                .resizable()
-                .scaledToFit()
-                //                    .rotationEffect(.degrees(22.5))
-                .foregroundColor(.yellow)
-                .opacity(0.6)
+        NavigationView {
             VStack {
-                Spacer()
-                Text(subSolarPoint.subSolarPointString)
-                    .font(.custom(Theme.nasa, size: 16.0))
-                    .fontWeight(.regular)
-                    .bold()
-                Text("Tap to update")
-                    .font(.custom(Theme.appFont, size: 10.0))
-                    .foregroundColor(.white)
-                    .padding()
-                Spacer()
+                SceneView(scene: globeScene, pointOfView: globeNode, options: [.allowsCameraControl])
+                
                 NavigationLink(
-                    destination: ISSLocationView()
+                    destination: SubSolarPointView()
                 ) {
-                    Text("Tracker")
+                    Text("Details")
                 }
                 .withISSNavigationLinkFormatting()
             }
             .ignoresSafeArea(edges: .bottom)
             .navigationTitle("Globe")
-        }
-        
-        // Update the coordinates when this view appears
-        .onAppear() {
-            subSolarPoint.updateSubSolarPoint()
-        }
-        // Respond to lifecycle phases
-        .onChange(of: scenePhase) { phase in
-            switch phase {
-            case .active:
-                // The scene has become active, so update the subsolar point
-                subSolarPoint.updateSubSolarPoint()
-            case .inactive:
-                // The app has become inactive.
-                break
-            case .background:
-                // The app has moved to the background.
-                break
-            @unknown default:
-                fatalError("The app has entered an unknown state.")
-            }
-        }
-        // Update the coordinates when the watch screen is tapped
-        .onTapGesture {
-            subSolarPoint.updateSubSolarPoint()
         }
     }
 }
