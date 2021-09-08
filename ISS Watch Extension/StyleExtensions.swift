@@ -25,7 +25,6 @@ extension View {
     func withISSNavigationLinkFormatting() -> some View {
         self.modifier(ISSNavigationLinkModifier())
     }
-
 }
 
 /// Custom modifier for navigation links
@@ -36,11 +35,11 @@ struct ISSNavigationLinkModifier: ViewModifier {
     /// - Returns: Custom modifier
     func body(content: Content) -> some View {
         content
-            .background(Color.ISSRTT3DGrey)
-            .foregroundColor(.white)
+            .frame(minWidth: 150, idealWidth: 175, maxWidth: /*@START_MENU_TOKEN@*/.infinity/*@END_MENU_TOKEN@*/, minHeight: 40, idealHeight: 40, maxHeight: 40, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
             .font(.subheadline)
-            .frame(height: 30)
-            .cornerRadius(15)
-            .offset(y: 10.0)
+            .background(Color(red: 0.2, green: 0.2, blue: 0.2, opacity: 0.7))
+            .foregroundColor(.white)
+            .cornerRadius(20)
+            .padding()
     }
 }

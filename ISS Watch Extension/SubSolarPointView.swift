@@ -17,54 +17,65 @@ struct SubSolarPointView: View {
     @StateObject private var subSolarPoint = SubSolarViewModel()
     
     var body: some View {
-        ZStack {
-            Image(systemName: "sun.max.fill")
-                .resizable()
-                .scaledToFit()
-                .rotationEffect(.degrees(22.5))
-                .foregroundColor(.yellow)
-                .opacity(0.25)
-            VStack {
-                Spacer()
-                ScrollView {
+        NavigationView {
+            ZStack {
+                Image(systemName: "sun.max.fill")
+                    .resizable()
+                    .scaledToFit()
+                    //                    .rotationEffect(.degrees(22.5))
+                    .foregroundColor(.yellow)
+                    .opacity(0.6)
+                VStack {
+                    Spacer()
                     Text(subSolarPoint.subSolarPointString)
-                        .font(.custom(Theme.appFontBold, size: 14.0))
+                        .font(.custom(Theme.nasa, size: 16.0))
+                        .fontWeight(.regular)
                         .bold()
                     Text("Tap to update")
                         .font(.custom(Theme.appFont, size: 10.0))
                         .foregroundColor(.white)
                         .padding()
+                    Spacer()
+                    NavigationLink(
+                        destination: GlobeView()
+                    ) {
+                        Text("Globe")
+                    }
+                    .withISSNavigationLinkFormatting()
                 }
-                Spacer()
+                .ignoresSafeArea(edges: .bottom)
+                .navigationTitle("Subsolar")
             }
-        }
-        .onAppear() {
-            subSolarPoint.updateSubSolarPoint()
-        }
-        .onChange(of: scenePhase) { phase in
-            switch phase {
-            case .active:
-                // The scene has become active, so update the subsolar point
+            
+            // Update the coordinates when this view appears
+            .onAppear() {
                 subSolarPoint.updateSubSolarPoint()
-            case .inactive:
-                // The app has become inactive.
-                break
-            case .background:
-                // The app has moved to the background.
-                break
-            @unknown default:
-                fatalError("The app has entered an unknown state.")
+            }
+            // Respond to lifecycle phases
+            .onChange(of: scenePhase) { phase in
+                switch phase {
+                case .active:
+                    // The scene has become active, so update the subsolar point
+                    subSolarPoint.updateSubSolarPoint()
+                case .inactive:
+                    // The app has become inactive.
+                    break
+                case .background:
+                    // The app has moved to the background.
+                    break
+                @unknown default:
+                    fatalError("The app has entered an unknown state.")
+                }
+            }
+            // Update the coordinates when the watch screen is tapped
+            .onTapGesture {
+                subSolarPoint.updateSubSolarPoint()
             }
         }
-        // Update the coordinates when the watch screen is tapped
-        .onTapGesture {
-            subSolarPoint.updateSubSolarPoint()
-        }
-        .navigationTitle("Subsolar")
     }
 }
     
-struct ContentView_Previews: PreviewProvider {
+struct SubSolarPointView_Previews: PreviewProvider {
     static var previews: some View {
         Group {
             SubSolarPointView()

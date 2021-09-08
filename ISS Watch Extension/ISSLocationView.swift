@@ -21,7 +21,7 @@ struct ISSLocationView: View {
             Image(Globals.ISSIconForMapView)
                 .resizable()
                 .scaledToFit()
-                .foregroundColor(.blue)
+                .foregroundColor(.gray)
                 .opacity(0.25)
                 .padding()
             VStack {
