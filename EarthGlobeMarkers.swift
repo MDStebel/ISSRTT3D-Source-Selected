@@ -14,10 +14,11 @@ import SceneKit
 final class EarthGlobeMarkers {
     
     var image: String
-    var widthAndHeight: CGFloat
-    var altitude: Float
+    var widthAndHeight: CGFloat = Globals.ISSMarkerWidth
+    var altitude: Float = Globals.ISSOrbitalAltitudeFactor
     var node: SCNNode!                                                                                 // The SceneKit node for this marker
     
+    #if !os(watchOS)
     /// Initialize a marker to be added to the Earth globe
     /// - Parameters:
     ///   - satellite: Type of satellite as a SatelliteID
@@ -88,5 +89,44 @@ final class EarthGlobeMarkers {
         node.addAnimation(animation, forKey: nil)
         
     }
+    
+    #else
+    
+    /// Initialize a marker to be added to the Earth globe for watchOS
+    /// - Parameters:
+    ///   - image: Image name to use as marker as a String
+    ///   - lat: Latitude of the marker's position on Earth as a Float
+    ///   - lon: Longitude of the marker's position on Earth as a Float
+    init(lat: Float, lon: Float) {
+        
+        self.image                                       = Globals.ISSIconFor3DGlobeView
+        let adjustedLon                                  = lon + Globals.ninetyDegrees                 // Textures are centered on 0,0, so adjust by 90 degrees
+        
+        // Initialize and configure the marker node
+        node                                             = SCNNode(geometry: SCNPlane(width: 0.15, height: 0.15))
+        node.geometry!.firstMaterial!.diffuse.contents   = image
+        node.geometry!.firstMaterial!.diffuse.intensity  = 1.0                                         // Appearance in daylight areas
+        node.geometry!.firstMaterial!.emission.contents  = image
+        node.geometry!.firstMaterial!.emission.intensity = 0.75                                        // Appearance in nighttime areas (a bit less bright)
+        node.geometry!.firstMaterial!.isDoubleSided      = true
+        node.castsShadow                                 = false
+        
+        altitude = Globals.ISSAltitudeFactor
+
+        // Map Earth coordinates (lat and lon) to xyz coodinates on globe
+        let position                                     = EarthGlobe.transformLatLonCoordinatesToXYZ(lat: lat, lon: adjustedLon, alt: altitude)
+        self.node.position                               = position
+        
+        // Compute the normal pitch, roll and yaw
+        let pitch                                        = -lat * Float(Globals.degreesToRadians)                                    // Pitch is the rotation about the node's x-axis in radians
+        let roll: Float                                  = Globals.zero                                                              // Roll is the rotation about the node's z-axis in radians
+        let yaw                                          = lon * Float(Globals.degreesToRadians)                                     // Yaw is the rotation about the node's y-axis in radians
+        
+        // Set the marker's orientation using pitch, roll, and yaw
+        node.eulerAngles                                 = SCNVector3(x: pitch, y: yaw, z: roll )
+        
+    }
+    
+    #endif
     
 }

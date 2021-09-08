@@ -10,7 +10,7 @@ import SceneKit
 
 
 /// The 3D Interactive 3D Earth Globe Model
-final class EarthGlobe {
+final class EarthGlobe: ObservableObject {
     
     // MARK: - Properties
 
@@ -39,7 +39,7 @@ final class EarthGlobe {
     var sun                                = SCNNode()
     var userRotation                       = SCNNode()
     var userTilt                           = SCNNode()
-    
+
     
     // MARK: - Methods
     
@@ -53,8 +53,13 @@ final class EarthGlobe {
         guard let earthMaterial                        = globeShape.firstMaterial else { return }
 
         // The Earth's texture is revealed by diffuse light sources
+        #if !os(watchOS)
         earthMaterial.diffuse.contents                 = "8081_earthmap_8190px"                 // Use the high-resolution Earth image
+        #else
+        earthMaterial.diffuse.contents                 = "8081_earthmap_2048"                   // Use low resolution Earth image for watchOS
+        #endif
         
+        #if !os(watchOS)
         /// Our emitter will show city lights as Earth passes into nighttime
         let emission                                   = SCNMaterialProperty()
         emission.contents                              = "8081_earthlights_8190px"              // Our high-resolution city lights map
@@ -86,6 +91,7 @@ final class EarthGlobe {
         
         // Create a realistic specular reflection that changes its aspect based on angle
         earthMaterial.fresnelExponent                  = 1.75
+        #endif
         
         // Assign the shape to the globe's geometry property
         globe.geometry                                 = globeShape
@@ -97,7 +103,7 @@ final class EarthGlobe {
         
     }
     
-    
+    #if !os(watchOS)
     /// Set up our scene
     /// - Parameters:
     ///   - theScene: The scene view to use
@@ -112,6 +118,18 @@ final class EarthGlobe {
         completeTheSetup()
         
     }
+    
+    #else
+    /// Set up our scene
+    /// - Parameters:
+    ///   - theScene: The scene view to use
+    ///   - pinchGestureIsEnabled: True if we're rendering the full globe and want to pinch to zoom
+    func setupInSceneView() {
+              
+        completeTheSetup()
+        
+    }
+    #endif
     
     
     /// Set up ambient lighting, camera position, FOV, etc.
