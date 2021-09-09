@@ -27,9 +27,14 @@ struct SubSolarPointView: View {
             VStack {
                 Spacer()
                 Text(subSolarPoint.subSolarPointString)
-                    .font(.custom(Theme.nasa, size: 16.0))
-                    .fontWeight(.regular)
-                    .bold()
+                    .lineSpacing(5.0)
+                    .font(.custom(Theme.nasa, size: 15.0))
+                    .foregroundColor(.white)
+                    .frame(minWidth: 120, idealWidth: 150, maxWidth: .infinity, minHeight: 40, idealHeight: 50, maxHeight: 50, alignment: .center)
+                    .padding()
+                    .background(Color.ISSRTT3DBackground)
+                    .cornerRadius(5.0)
+                Spacer()
                 Text("Tap to update")
                     .font(.custom(Theme.appFont, size: 10.0))
                     .foregroundColor(.white)
@@ -37,7 +42,7 @@ struct SubSolarPointView: View {
                 Spacer()
             }
             .ignoresSafeArea(edges: .bottom)
-            .navigationTitle("Details")
+            .navigationTitle("Subsolar")
         }
         
         // Update the coordinates when this view appears
@@ -66,6 +71,7 @@ struct SubSolarPointView: View {
         }
     }
 }
+
     
 struct SubSolarPointView_Previews: PreviewProvider {
     static var previews: some View {

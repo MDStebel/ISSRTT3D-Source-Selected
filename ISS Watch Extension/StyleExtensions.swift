@@ -9,14 +9,18 @@
 import SwiftUI
 
 extension Color {
-    // Add global ISSRTT3D theme colors
-    static let ISSRTT3DRed  = Color(Theme.tint)
-    static let ISSRTT3DGrey = Color(Theme.usrGuide)
+    
+    // Create new colors from ISSRTT3D theme colors and other colors
+    static let ISSRTT3DRed        = Color(Theme.tint)
+    static let ISSRTT3DGrey       = Color(Theme.usrGuide)
+    static let ISSRTT3DBackground = Color(red: 0.2, green: 0.2, blue: 0.2, opacity: 0.75)
 }
+
 
 extension Font {
     static let ISSRTT3DFont = Font.custom(Theme.nasa, size: 15.0)
 }
+
 
 extension View {
     
@@ -27,6 +31,7 @@ extension View {
     }
 }
 
+
 /// Custom modifier for navigation links
 struct ISSNavigationLinkModifier: ViewModifier {
     
@@ -35,9 +40,9 @@ struct ISSNavigationLinkModifier: ViewModifier {
     /// - Returns: Custom modifier
     func body(content: Content) -> some View {
         content
-            .frame(minWidth: 150, idealWidth: 175, maxWidth: /*@START_MENU_TOKEN@*/.infinity/*@END_MENU_TOKEN@*/, minHeight: 40, idealHeight: 40, maxHeight: 40, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
+            .frame(minWidth: 150, idealWidth: 175, maxWidth: .infinity, minHeight: 40, idealHeight: 40, maxHeight: 40, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
+            .opacity(0.75)
             .font(.subheadline)
-            .background(Color(red: 0.2, green: 0.2, blue: 0.2, opacity: 0.7))
             .foregroundColor(.white)
             .cornerRadius(20)
             .padding()
