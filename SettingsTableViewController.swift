@@ -16,12 +16,12 @@ class SettingsTableViewController: UITableViewController {
     
     private let buildNumber                 = Globals.buildNumber
     private let copyrightNotice             = Globals.copyrightString
-    private let defaultMapType              = 2                                                     // Hybrid map type is the default
-    private let defaultMarkerType           = 0                                                     // ISS icon marker type is the default
-    private let defaultZoomFactor           = 2                                                     // Medium zoom is the default
-    private let urlForRating                = "itms://itunes.apple.com/WebObjects/MZStore.woa/wa/viewContentsUserReviews?type=Purple+Software&id=1079990061"
+    private let defaultMapType              = 2                           // Hybrid map type is the default
+    private let defaultMarkerType           = 0                           // ISS icon marker type is the default
+    private let defaultZoomFactor           = 2                           // Medium zoom is the default
+    private let urlForRating                = ApiEndpoints.ratingURL
     private let versionNumber               = Globals.versionNumber
-    private let websiteURL                  = "https://www.issrtt.com/#support"
+    private let websiteURL                  = ApiEndpoints.supportURL
     
     private var dateAndTimeSaved: String?   = ""
     private var helpTitle                   = "Settings Help"

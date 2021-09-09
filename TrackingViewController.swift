@@ -46,8 +46,8 @@ class TrackingViewController: UIViewController, MKMapViewDelegate, UIGestureReco
     /// Local constants
     struct Constants {
         static let animationOffsetY: CGFloat    = 90.0
-        static let apiEndpointAString           = "---"
-        static let apiEndpointBString           = "---"
+        static let apiEndpointAString           = ApiEndpoints.issTrackerAPIEndpointA
+        static let apiEndpointBString           = ApiEndpoints.issTrackerAPIEndpointB
         static let defaultTimerInterval         = 3.0
         static let fontForTitle                 = Theme.nasa
         static let helpTitle                    = "User Guide"

@@ -31,7 +31,7 @@ class LiveVideoViewController: UIViewController, WKUIDelegate, WKNavigationDeleg
 
     
     /// Selector containing the URL to access the JSON date containing the final URLs of the channels
-    private var whichJsonFileToUse = LiveTVChoices.URLAlternatives.v9.rawValue
+    private var whichJSONFileToUse = LiveTVChoices.URLAlternatives.v9.rawValue
     
     
     /// Live video feed address
@@ -109,7 +109,7 @@ class LiveVideoViewController: UIViewController, WKUIDelegate, WKNavigationDeleg
     private func getHDEVUrl(then completionHandler: @escaping callBack) {
         
         // Make sure we can create the URL
-        guard let myJsonFile = URL(string: whichJsonFileToUse) else { return }
+        guard let myJsonFile = URL(string: whichJSONFileToUse) else { return }
         
         let getURLTask = URLSession.shared.dataTask(with: myJsonFile) { (data, response, error) -> Void in
             if let unparsedData = data {

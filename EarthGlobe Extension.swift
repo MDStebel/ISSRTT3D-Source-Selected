@@ -248,7 +248,7 @@ extension EarthGlobe {
         var orbitInclination: Float
         var multiplier: Float
         
-        orbitTrack.firstMaterial?.diffuse.contents = CGColor(red: 255.0/255.0, green: 76.0/255.0, blue: 76.0/255.0, alpha: 1.0)
+        orbitTrack.firstMaterial?.diffuse.contents = Theme.issrtt3dRedCGColor
         orbitTrack.ringRadius                      = CGFloat(Globals.ISSOrbitAltitudeInScene)
         orbitInclination                           = Globals.ISSOrbitInclinationInRadians
         multiplier                                 = 2.5

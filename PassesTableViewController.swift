@@ -89,12 +89,12 @@ class PassesTableViewController: UITableViewController, CLLocationManagerDelegat
     
     private struct Constants {
         static let altitude                             = 0
-        static let apiKey                               = ApiKeys.passesApiKey                                            // API key
+        static let apiKey                               = ApiKeys.passesApiKey                     // API key
         static let customCellIdentifier                 = "OverheadTimesCell"
         static let deg                                  = "°"
-        static let endpointForPassesAPI                 = "---"           // API endpoint
+        static let endpointForPassesAPI                 = ApiEndpoints.passesAPIEndpoint           // API endpoint
         static let fontForTitle                         = Theme.nasa
-        static let minObservationTime                   = 300                                                             // In seconds
+        static let minObservationTime                   = 300                                      // In seconds
         static let newLine                              = "\n"
         static let noRatingStar                         = #imageLiteral(resourceName: "star-unfilled")
         static let ratingStar                           = #imageLiteral(resourceName: "star")

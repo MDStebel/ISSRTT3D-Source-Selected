@@ -20,13 +20,13 @@ class GlobeFullViewController: UIViewController, AVAudioPlayerDelegate, EarthGlo
     
     
     struct Constants {
-        static let ISSAPIEndpointString  = "---"                         // ISS API
-        static let TSSAPIEndpointString  = "---"        // TSS API (Chinese space station Tiangong)
+        static let ISSAPIEndpointString  = ApiEndpoints.issTrackerAPIEndpointA       // ISS API
+        static let TSSAPIEndpointString  = ApiEndpoints.tssTrackerAPIEndpoint        // TSS API (Chinese space station Tiangong)
         static let TSSAPIKey             = ApiKeys.TSSLocationKey
         static let fontForTitle          = Theme.nasa
         static let segueToHelpFromGlobe  = "segueToHelpFromGlobe"
         static let segueToSettings       = "segueToSettings"
-        static let timerValue            = 3.0                           // Number of seconds between position updates
+        static let timerValue            = 3.0                                       // Number of seconds between position updates
     }
     
     private struct SoundtrackButtonImage {
@@ -34,9 +34,9 @@ class GlobeFullViewController: UIViewController, AVAudioPlayerDelegate, EarthGlo
         static let off                   = "music off"
     }
 
-    var ISSLastLat: Float                = 0                             // To conform with the EarthGlobeProtocol, will save the last ISS latitude
+    var ISSLastLat: Float                = 0                                         // To conform with the EarthGlobeProtocol, will save the last ISS latitude
     var TSSCoordinates                   = [TSSOrbitalPosition.Positions]()
-    var TSSLastLat: Float                = 0                             // To conform with the EarthGlobeProtocol, will save the last TSS latitude
+    var TSSLastLat: Float                = 0                                         // To conform with the EarthGlobeProtocol, will save the last TSS latitude
     var TSSLatitude                      = 0.0
     var TSSLongitude                     = 0.0
     var fullGlobe                        = EarthGlobe()
@@ -47,7 +47,7 @@ class GlobeFullViewController: UIViewController, AVAudioPlayerDelegate, EarthGlo
     var tLon                             = ""
     
     // Initialize timer
-    var ISSTimer                         = Timer()                      // Timer for updating ISS position
+    var ISSTimer                         = Timer()                                   // Timer for updating ISS position
     
     private var helpTitle                = "3D Globe Help"
     
