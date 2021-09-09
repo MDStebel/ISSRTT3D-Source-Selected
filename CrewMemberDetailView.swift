@@ -46,7 +46,7 @@ class CrewMemberDetailView: UIView {
     /// Open Twitter app to this crew member's Twitter profile in Twitter app or Twitter website
     @IBAction private func goToTwitter() {
 
-        // First make sure we have a Twitter URL and can extract the handle from it and that the handle isn't blank
+        // First make sure we have a valid Twitter URL and can extract the handle from it and that the handle isn't blank
         guard twitterHandleURL != "", let twitterHandle = twitterHandleURL?.deletingPrefix("https://twitter.com/"), twitterHandle != "", twitterHandle.count > 3 else { return }
         
         let appURL = URL(string: "twitter://user?screen_name=\(twitterHandle)")!
@@ -59,14 +59,11 @@ class CrewMemberDetailView: UIView {
         } else {
             application.open(webURL as URL)
         }
-
     }
     
     
     @IBAction private func close(_ sender: Any) {
-        
         removeFromSuperview()
-        
     }
     
     
@@ -74,13 +71,12 @@ class CrewMemberDetailView: UIView {
         
         super.init(coder: aDecoder)
         
-        layer.cornerRadius = cornerRadius
-        layer.shadowColor = UIColor.black.cgColor
-        layer.shadowRadius = 4.0
-        layer.shadowOpacity = 0.6
-        layer.shadowOffset = CGSize(width: 0.0, height: 3.0)
+        layer.cornerRadius    = cornerRadius
+        layer.shadowColor     = UIColor.black.cgColor
+        layer.shadowRadius    = 4.0
+        layer.shadowOpacity   = 0.6
+        layer.shadowOffset    = CGSize(width: 0.0, height: 3.0)
         layer.backgroundColor = shortBioBackgroundColor
         
     }
-
 }
