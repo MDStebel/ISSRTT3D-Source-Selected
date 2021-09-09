@@ -20,8 +20,8 @@ class GlobeFullViewController: UIViewController, AVAudioPlayerDelegate, EarthGlo
     
     
     struct Constants {
-        static let ISSAPIEndpointString  = "https://api.wheretheiss.at/v1/satellites/25544"                         // ISS API
-        static let TSSAPIEndpointString  = "https://api.n2yo.com/rest/v1/satellite/positions/48274/0/0/0/1/"        // TSS API (Chinese space station Tiangong)
+        static let ISSAPIEndpointString  = "---"                         // ISS API
+        static let TSSAPIEndpointString  = "---"        // TSS API (Chinese space station Tiangong)
         static let TSSAPIKey             = ApiKeys.TSSLocationKey
         static let fontForTitle          = Theme.nasa
         static let segueToHelpFromGlobe  = "segueToHelpFromGlobe"
