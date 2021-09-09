@@ -41,7 +41,7 @@ class GlobeViewModel: ObservableObject {
     
     /// Get the current ISS coordinates
     private func getISSPosition() {
-        let apiEndpointString = "https://api.n2yo.com/rest/v1/satellite/positions/25544/0/0/0/1/"
+        let apiEndpointString = ApiEndpoints.issTrackerAPIEndpointC
         
         // Make sure we can create the URL
         guard let ISSAPIEndpointURL = URL(string: apiEndpointString + "&apiKey=\(apiKey)") else { return }

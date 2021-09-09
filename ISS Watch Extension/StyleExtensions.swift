@@ -41,7 +41,7 @@ struct ISSNavigationLinkModifier: ViewModifier {
     func body(content: Content) -> some View {
         content
             .frame(minWidth: 150, idealWidth: 175, maxWidth: .infinity, minHeight: 40, idealHeight: 40, maxHeight: 40, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
-            .opacity(0.75)
+            .opacity(0.95)
             .font(.subheadline)
             .foregroundColor(.white)
             .cornerRadius(20)
