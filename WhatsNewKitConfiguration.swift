@@ -9,11 +9,8 @@
 
 #if !os(watchOS)
 import WhatsNewKit
-#endif
-
 import UIKit
 
-#if !os(watchOS)
 // Initialize a WhatsNew instance
 private let whatsNew = WhatsNew(
     
@@ -25,15 +22,14 @@ private let whatsNew = WhatsNew(
         WhatsNew.Item(
             title: "Apple Watch Support",
             subtitle: """
-                      Companion Apple Watch app provides the real-time location of the subsolar point. More features coming soon.
+                      New! Companion Apple Watch app provides 3D globe with real-time ISS position and real-time location of the subsolar point. More features coming soon.
                       """,
             image: UIImage(named: "icons8-megaphone_filled.imageset")
         ),
         WhatsNew.Item(
             title: "Improvements & Fixes",
             subtitle: """
-                      • Fixed an issue in the full-screen globe view that caused repeated alerts to pop up if the Chinese space station (TSS) location was not available. Will now display a notice instead.
-                      • Other small improvements and bug fixes.
+                      Some under-the-hood stuff.
                       """,
             image: UIImage(named: "icons8-bug_filled")
         ),
@@ -108,6 +104,5 @@ private let myConfiguration = WhatsNewViewController.Configuration(theme: myThem
 
 /// Initialize WhatsNewViewController with WhatsNew
 let whatsNewViewController  = WhatsNewViewController(whatsNew: whatsNew, configuration: myConfiguration)
-
 
 #endif

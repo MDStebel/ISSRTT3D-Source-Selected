@@ -10,7 +10,7 @@ import Foundation
 
 
 /// Model encapsulating the orbital position (lat/lon), altitude, and velocity of a satellite or orbiting spacecraft
-struct ISSOrbitalPosition {
+struct ISSOrbitalPosition: Codable {
     
     let latitude: Double
     let longitude: Double

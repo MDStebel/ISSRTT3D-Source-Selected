@@ -56,7 +56,7 @@ final class EarthGlobe: ObservableObject {
         #if !os(watchOS)
         earthMaterial.diffuse.contents                 = "8081_earthmap_8190px"                 // Use the high-resolution Earth image
         #else
-        earthMaterial.diffuse.contents                 = "8081_earthmap_2048"                   // Use low resolution Earth image for watchOS
+        earthMaterial.diffuse.contents                 = "8081_earthmap_2048px"                   // Use low resolution Earth image for watchOS
         #endif
         
         #if !os(watchOS)

@@ -89,10 +89,10 @@ class PassesTableViewController: UITableViewController, CLLocationManagerDelegat
     
     private struct Constants {
         static let altitude                             = 0
-        static let apiKey                               = "---"                                     // API key
+        static let apiKey                               = ApiKeys.passesApiKey                                            // API key
         static let customCellIdentifier                 = "OverheadTimesCell"
         static let deg                                  = "°"
-        static let endpointForPassesAPI                 = "---"           // API endpoint
+        static let endpointForPassesAPI                 = "https://api.n2yo.com/rest/v1/satellite/visualpasses"           // API endpoint
         static let fontForTitle                         = Theme.nasa
         static let minObservationTime                   = 300                                                             // In seconds
         static let newLine                              = "\n"

@@ -7,7 +7,6 @@
 //
 
 import SceneKit
-import UIKit
 
 
 /// Handles the objects we're adding to the globe as well as coordinate transforms
@@ -249,14 +248,14 @@ extension EarthGlobe {
         var orbitInclination: Float
         var multiplier: Float
         
-        orbitTrack.firstMaterial?.diffuse.contents = UIColor(named: Theme.ISSOrbitalColor)
+        orbitTrack.firstMaterial?.diffuse.contents = CGColor(red: 255.0/255.0, green: 76.0/255.0, blue: 76.0/255.0, alpha: 1.0)
         orbitTrack.ringRadius                      = CGFloat(Globals.ISSOrbitAltitudeInScene)
         orbitInclination                           = Globals.ISSOrbitInclinationInRadians
         multiplier                                 = 2.5
         
         orbitTrack.pipeRadius                      = pipeRadius
-        orbitTrack.ringSegmentCount                = 100
-        orbitTrack.pipeSegmentCount                = 64
+        orbitTrack.ringSegmentCount                = 512
+        orbitTrack.pipeSegmentCount                = 128
         
         // Assign the torus as a node and add it as a child of globe
         let orbitTrackNode                         = SCNNode(geometry: orbitTrack)
