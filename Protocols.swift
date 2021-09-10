@@ -8,6 +8,14 @@
 
 import Foundation
 
+#if os(watchOS)
+protocol ConvertsToDegreesMinutesSeconds {
+    
+    static func decimalCoordinatesToDegMinSec(coordinate: Double, format: String, isLatitude: Bool) -> String
+    
+}
+
+#else
 
 protocol ConvertsToDegreesMinutesSeconds {
     
@@ -15,15 +23,14 @@ protocol ConvertsToDegreesMinutesSeconds {
     
 }
 
+#endif
 
 protocol StringDateConversions {
     
     func convert(from date: String, fromStringFormat: String, toStringFormat: String) -> String?
-    
     func getCurrentDateAndTimeInAString(forCurrent date: Date, withOutputFormat: String) -> String
     
 }
-
 
 protocol AlertHandler {
     

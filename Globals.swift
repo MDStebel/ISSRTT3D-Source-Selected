@@ -59,7 +59,7 @@ struct Globals {
     // MARK: - Global Constants
     
     #if os(watchOS)
-    static let coordinatesStringFormat                       = "Lat: %3d°%02d'%02d\" %@\nLon: %3d°%02d'%02d\" %@"
+    static let coordinatesStringFormat                       = "%3d°%02d'%02d\" %@"
     #else
     static let coordinatesStringFormat                       = "%3d°%02d'%02d\" %@  %3d°%02d'%02d\" %@"
     #endif
