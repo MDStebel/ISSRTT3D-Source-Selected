@@ -16,15 +16,16 @@ class GlobeViewModel: ObservableObject {
     @Published var globeMainNode: SCNNode?
     @Published var globeScene: SCNScene?
 
-    let apiKey                  = ApiKeys.ISSLocationKey
-    let timerValue              = 5.0
+    private let apiEndpointString       = ApiEndpoints.issTrackerAPIEndpointC
+    private let apiKey                  = ApiKeys.ISSLocationKey
+    private let timerValue              = 3.0
    
-    var hasRun: Bool
-    var ISSHeadingFactor: Float = 0.0
-    var ISSLastLat: Float
-    var latitude: Float         = 0.0
-    var longitude: Float        = 0.0
-    var timer                   = Timer()
+    private var ISSHeadingFactor: Float = 0.0
+    private var ISSLastLat: Float
+    private var hasRun: Bool
+    private var latitude: Float         = 0.0
+    private var longitude: Float        = 0.0
+    private var timer                   = Timer()
     
     // MARK: - Methods
     
@@ -34,15 +35,15 @@ class GlobeViewModel: ObservableObject {
         hasRun     = false
         ISSLastLat = 0
         
+        if !hasRun {
+            updateEarthGlobe()  // Update the globe once before starting the timer
+        }
         startTimer()
-        updateEarthGlobe()
     }
-    
     
     /// Get the current ISS coordinates
     private func getISSPosition() {
-        let apiEndpointString = ApiEndpoints.issTrackerAPIEndpointC
-        
+
         // Make sure we can create the URL
         guard let ISSAPIEndpointURL = URL(string: apiEndpointString + "&apiKey=\(apiKey)") else { return }
         
@@ -74,10 +75,9 @@ class GlobeViewModel: ObservableObject {
         
     }
        
-    
     /// Update the globe scene
-    func updateEarthGlobe() {
-        
+    private func updateEarthGlobe() {
+
         // We have to remove the dynamic nodes (Sun, ISS, orbit track), if we've already updated them once. If not, just remove the first two that were created when we initialized.
         if hasRun {
             for _ in 1...3 {
@@ -110,7 +110,6 @@ class GlobeViewModel: ObservableObject {
         hasRun = true
     }
     
-    
     /// Remove the last child node in the nodes array
     private func removeLastNode() {
         if let nodeToRemove = earthGlobe.globe.childNodes.last {
@@ -118,12 +117,12 @@ class GlobeViewModel: ObservableObject {
         }
     }
     
-    
     /// Setup and start the timer
     func startTimer() {
-        timer = Timer.scheduledTimer(timeInterval: timerValue, target: self, selector: #selector(update), userInfo: nil, repeats: true)
+        if !timer.isValid {
+            timer = Timer.scheduledTimer(timeInterval: timerValue, target: self, selector: #selector(update), userInfo: nil, repeats: true)
+        }
     }
-    
     
     /// The selector the timer calls
     @objc func update() {

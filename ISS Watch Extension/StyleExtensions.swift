@@ -8,9 +8,10 @@
 
 import SwiftUI
 
+
+/// Create new colors from ISSRTT3D theme colors and other colors
 extension Color {
     
-    // Create new colors from ISSRTT3D theme colors and other colors
     static let ISSRTT3DRed        = Color(Theme.tint)
     static let ISSRTT3DGrey       = Color(Theme.usrGuide)
     static let ISSRTT3DBackground = Color(red: 0.2, green: 0.2, blue: 0.2, opacity: 0.75)

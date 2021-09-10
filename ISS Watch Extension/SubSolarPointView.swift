@@ -21,58 +21,65 @@ struct SubSolarPointView: View {
             Image(systemName: "sun.max.fill")
                 .resizable()
                 .scaledToFit()
-                //                    .rotationEffect(.degrees(22.5))
                 .foregroundColor(.yellow)
                 .opacity(0.6)
             VStack {
-                Spacer()
-                Text(subSolarPoint.subSolarPointString)
-                    .lineSpacing(5.0)
-                    .font(.custom(Theme.nasa, size: 15.0))
-                    .foregroundColor(.white)
-                    .frame(minWidth: 120, idealWidth: 150, maxWidth: .infinity, minHeight: 40, idealHeight: 50, maxHeight: 50, alignment: .center)
-                    .padding()
-                    .background(Color.ISSRTT3DBackground)
-                    .cornerRadius(5.0)
-                Spacer()
-                Text("Tap to update")
-                    .font(.custom(Theme.appFont, size: 10.0))
-                    .foregroundColor(.white)
-                    .padding()
-                Spacer()
+                HStack {
+                    Text("Lat:")
+                        .bold()
+                    Spacer()
+                    Text(subSolarPoint.subsolarLatitude)
+                }
+                .padding()
+                HStack {
+                    Text("Lon:")
+                        .bold()
+                    Spacer()
+                    Text(subSolarPoint.subsolarLongitude)
+                }
+                .padding(.leading)
+                .padding(.trailing)
+                .padding(.bottom)
             }
-            .ignoresSafeArea(edges: .bottom)
-            .navigationTitle("Subsolar")
+            .font(.custom(Theme.appFont, size: 15.0))
+            .foregroundColor(.white)
+            .frame(minWidth: 120, idealWidth: 150, maxWidth: .infinity, minHeight: 40, idealHeight: 50, maxHeight: 50, alignment: .center)
+            .padding()
+            .background(Color.ISSRTT3DBackground)
+            .cornerRadius(5.0)
         }
+        .ignoresSafeArea(edges: .bottom)
+        .navigationTitle("Subsolar")
         
         // Update the coordinates when this view appears
         .onAppear() {
-            subSolarPoint.updateSubSolarPoint()
+            subSolarPoint.startUp()
         }
+        
+        // Stop updating when this view disappears
+        .onDisappear() {
+            subSolarPoint.stop()
+        }
+        
         // Respond to lifecycle phases
         .onChange(of: scenePhase) { phase in
             switch phase {
             case .active:
                 // The scene has become active, so update the subsolar point
-                subSolarPoint.updateSubSolarPoint()
+                subSolarPoint.startUp()
             case .inactive:
-                // The app has become inactive.
-                break
+                // The app has become inactive, so stop the timer
+                subSolarPoint.stop()
             case .background:
-                // The app has moved to the background.
-                break
+                // The app has moved to the background
+                subSolarPoint.stop()
             @unknown default:
                 fatalError("The app has entered an unknown state.")
             }
         }
-        // Update the coordinates when the watch screen is tapped
-        .onTapGesture {
-            subSolarPoint.updateSubSolarPoint()
-        }
     }
 }
 
-    
 struct SubSolarPointView_Previews: PreviewProvider {
     static var previews: some View {
         Group {

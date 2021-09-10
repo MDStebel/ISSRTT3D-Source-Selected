@@ -9,14 +9,48 @@
 import Foundation
 
 class SubSolarViewModel: ObservableObject {
-    @Published var subSolarPointString: String = ""
+    
+    // MARK: - Properties
+    
+    @Published var subsolarLatitude: String  = ""
+    @Published var subsolarLongitude: String = ""
+    
+    private var timer      = Timer()
+    private let timerValue = 10.0
+    
+    // MARK: - Methods
     
     init() {
+        startUp()
+    }
+    
+    func startUp() {
+        updateSubSolarPoint()   // Get the data once before starting the timer
+        startTimer()
+    }
+    
+    private func updateSubSolarPoint() {
+        let values = AstroCalculations.getSubSolarCoordinates()
+        subsolarLatitude = CoordinateConversions.decimalCoordinatesToDegMinSec(coordinate: Double(values.latitude), format: Globals.coordinatesStringFormat, isLatitude: true)
+        subsolarLongitude = CoordinateConversions.decimalCoordinatesToDegMinSec(coordinate: Double(values.longitude), format: Globals.coordinatesStringFormat, isLatitude: false)
+    }
+    
+    /// Setup and start the timer
+    private func startTimer() {
+        if !timer.isValid {
+            timer = Timer.scheduledTimer(timeInterval: timerValue, target: self, selector: #selector(update), userInfo: nil, repeats: true)
+            print("Subsolar timer on")
+        }
+    }
+    
+    /// The selector the timer calls
+    @objc func update() {
         updateSubSolarPoint()
     }
     
-    func updateSubSolarPoint() {
-        let values = AstroCalculations.getSubSolarCoordinates()
-        subSolarPointString = CoordinateConversions.decimalCoordinatesToDegMinSec(latitude: Double(values.latitude), longitude: Double(values.longitude), format: Globals.coordinatesStringFormat)
+    /// Stop the timer
+    func stop() {
+        timer.invalidate()
+        print("Subsolar timer off")
     }
 }

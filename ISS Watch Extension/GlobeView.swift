@@ -13,7 +13,7 @@ struct GlobeView: View {
     // Get the phase of the scene
     @Environment(\.scenePhase) private var scenePhase
     
-    // Get the subsolar point coordinates
+    // We're observing our view model
     @StateObject private var globeViewModel = GlobeViewModel()
     @State private var globeNode            = GlobeViewModel().globeMainNode
     @State private var globeScene           = GlobeViewModel().globeScene
@@ -32,30 +32,36 @@ struct GlobeView: View {
             }
             .ignoresSafeArea(edges: .bottom)
             .navigationTitle("Globe")
-        }
-        // Update the coordinates when this view appears
-        .onAppear() {
-            globeViewModel.startTimer()
-        }
-        // Respond to lifecycle phases
-        .onChange(of: scenePhase) { phase in
-            switch phase {
-            case .active:
-                // The scene has become active, so update the subsolar point
+            
+            // Update the scene when this view appears
+            .onAppear() {
                 globeViewModel.startTimer()
-            case .inactive:
-                // The app has become inactive.
+            }
+            
+            // Stop updating when this view disappears
+            .onDisappear() {
                 globeViewModel.stop()
-            case .background:
-                // The app has moved to the background.
-                globeViewModel.stop()
-            @unknown default:
-                fatalError("The app has entered an unknown state.")
+            }
+            
+            // Respond to lifecycle phases
+            .onChange(of: scenePhase) { phase in
+                switch phase {
+                case .active:
+                    // The scene has become active, so start the timer
+                    globeViewModel.startTimer()
+                case .inactive:
+                    // The app has become inactive, so stop the timer
+                    globeViewModel.stop()
+                case .background:
+                    // The app has moved to the background, so stop the timer
+                    globeViewModel.stop()
+                @unknown default:
+                    globeViewModel.stop()
+                }
             }
         }
     }
 }
-
     
 struct GlobeView_Previews: PreviewProvider {
     static var previews: some View {
