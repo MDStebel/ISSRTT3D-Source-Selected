@@ -15,8 +15,8 @@ class SubSolarViewModel: ObservableObject {
     @Published var subsolarLatitude: String  = ""
     @Published var subsolarLongitude: String = ""
     
-    private var timer      = Timer()
-    private let timerValue = 10.0
+    private var timer                        = Timer()
+    private let timerValue                   = 10.0
     
     // MARK: - Methods
     
@@ -39,7 +39,6 @@ class SubSolarViewModel: ObservableObject {
     private func startTimer() {
         if !timer.isValid {
             timer = Timer.scheduledTimer(timeInterval: timerValue, target: self, selector: #selector(update), userInfo: nil, repeats: true)
-            print("Subsolar timer on")
         }
     }
     
@@ -51,6 +50,5 @@ class SubSolarViewModel: ObservableObject {
     /// Stop the timer
     func stop() {
         timer.invalidate()
-        print("Subsolar timer off")
     }
 }

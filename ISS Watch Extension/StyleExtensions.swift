@@ -41,11 +41,11 @@ struct ISSNavigationLinkModifier: ViewModifier {
     /// - Returns: Custom modifier
     func body(content: Content) -> some View {
         content
-            .frame(minWidth: 150, idealWidth: 175, maxWidth: .infinity, minHeight: 40, idealHeight: 40, maxHeight: 40, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
+            .frame(minWidth: 150, idealWidth: 175, maxWidth: .infinity, minHeight: 30, idealHeight: 36, maxHeight: 36, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
             .opacity(0.95)
             .font(.subheadline)
             .foregroundColor(.white)
-            .cornerRadius(20)
-            .padding()
+            .cornerRadius(15)
+            .padding([.leading, .trailing])
     }
 }

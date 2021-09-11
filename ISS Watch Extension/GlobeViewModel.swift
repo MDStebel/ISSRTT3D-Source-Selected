@@ -52,9 +52,7 @@ class GlobeViewModel: ObservableObject {
             // Uses a capture list to capture a weak reference to self. This should prevent a retain cycle and allow ARC to release instance and reduce memory load.
             
             if let urlContent = data {
-                
                 let decoder = JSONDecoder()
-                
                 do {
                     // Call JSON parser and if successful (i.e., doesn't return nil) map the coordinates
                     let parsedISSOrbitalPosition = try decoder.decode(ISSOrbitalPosition2.self, from: urlContent)

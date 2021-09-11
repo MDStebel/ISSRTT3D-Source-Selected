@@ -14,24 +14,29 @@ struct GlobeView: View {
     @Environment(\.scenePhase) private var scenePhase
     
     // We're observing our view model
-    @StateObject private var globeViewModel = GlobeViewModel()
-    @State private var globeNode            = GlobeViewModel().globeMainNode
-    @State private var globeScene           = GlobeViewModel().globeScene
+    @ObservedObject private var globeViewModel = GlobeViewModel()
     
     var body: some View {
         NavigationView {
-            VStack {
-                SceneView(scene: globeScene, pointOfView: globeNode, options: [.allowsCameraControl])
-                
-                NavigationLink(
-                    destination: SubSolarPointView()
-                ) {
-                    Text("Subsolar")
+            ZStack {
+                VStack {
+                    SceneView(scene: globeViewModel.globeScene, pointOfView: globeViewModel.globeMainNode, options: [.allowsCameraControl])
+                    Spacer(minLength: 45)
                 }
-                .withISSNavigationLinkFormatting()
+                
+                VStack {
+                    Spacer()
+                    NavigationLink(
+                        destination: SubSolarPointView()
+                    ) {
+                        Text("Subsolar")
+                    }
+                    .withISSNavigationLinkFormatting()
+                    .padding()
+                }
             }
-            .ignoresSafeArea(edges: .bottom)
             .navigationTitle("Globe")
+            .ignoresSafeArea(edges: [.bottom])
             
             // Update the scene when this view appears
             .onAppear() {
@@ -67,6 +72,7 @@ struct GlobeView_Previews: PreviewProvider {
     static var previews: some View {
         Group {
             GlobeView()
+                
         }
     }
 }

@@ -14,7 +14,7 @@ struct SubSolarPointView: View {
     @Environment(\.scenePhase) private var scenePhase
     
     // Get the subsolar point coordinates
-    @StateObject private var subSolarPoint = SubSolarViewModel()
+    @ObservedObject private var subSolarPoint = SubSolarViewModel()
     
     var body: some View {
         ZStack {
@@ -22,28 +22,32 @@ struct SubSolarPointView: View {
                 .resizable()
                 .scaledToFit()
                 .foregroundColor(.yellow)
-                .opacity(0.6)
+                .opacity(0.60)
             VStack {
                 HStack {
-                    Text("Lat:")
+                    Text("Sun at the Zenith")
+                        .foregroundColor(.gray)
                         .bold()
+                    Spacer()
+                }
+                HStack {
+                    Text("LAT")
+                        .foregroundColor(.ISSRTT3DRed)
                     Spacer()
                     Text(subSolarPoint.subsolarLatitude)
-                }
-                .padding()
-                HStack {
-                    Text("Lon:")
                         .bold()
+                }
+                HStack {
+                    Text("LON")
+                        .foregroundColor(.ISSRTT3DRed)
                     Spacer()
                     Text(subSolarPoint.subsolarLongitude)
+                        .bold()
                 }
-                .padding(.leading)
-                .padding(.trailing)
-                .padding(.bottom)
             }
             .font(.custom(Theme.appFont, size: 15.0))
             .foregroundColor(.white)
-            .frame(minWidth: 120, idealWidth: 150, maxWidth: .infinity, minHeight: 40, idealHeight: 50, maxHeight: 50, alignment: .center)
+            .frame(minWidth: 120, idealWidth: 150, maxWidth: .infinity, minHeight: 50, idealHeight: 60, maxHeight: 60, alignment: .center)
             .padding()
             .background(Color.ISSRTT3DBackground)
             .cornerRadius(5.0)
