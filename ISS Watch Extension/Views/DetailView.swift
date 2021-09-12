@@ -87,10 +87,10 @@ struct DataCellView: View {
                 HStack {
                     Spacer()
                     Text(latitude)
-                        .font(.custom(Theme.appFont, size: 18))
+                        .font(.custom(Theme.appFont, size: 17))
                         .bold()
                 }
-                Text(" LAT")
+                Text("LAT")
                     .font(.subheadline)
                     .foregroundColor(.ISSRTT3DRed)
                     .bold()
@@ -99,7 +99,7 @@ struct DataCellView: View {
                 HStack {
                     Spacer()
                     Text(longitude)
-                        .font(.custom(Theme.appFont, size: 18))
+                        .font(.custom(Theme.appFont, size: 17))
                         .bold()
                 }
                 Text("LON")

@@ -19,7 +19,7 @@ final class ISSPositionViewModel: ObservableObject {
     private let apiKey                  = ApiKeys.ISSLocationKey
     private let timerValue              = 3.0
     
-    private var issTimer                = Timer()
+    private var timer                = Timer()
     private var latitude: Float         = 0
     private var longitude: Float        = 0
     
@@ -35,11 +35,7 @@ final class ISSPositionViewModel: ObservableObject {
     }
     
     private func updateISSPosition() {
-        
         getISSPosition()
-        
-        issLatitude = CoordinateConversions.decimalCoordinatesToDegMinSec(coordinate: Double(latitude), format: Globals.coordinatesStringFormat, isLatitude: true)
-        issLongitude = CoordinateConversions.decimalCoordinatesToDegMinSec(coordinate: Double(longitude), format: Globals.coordinatesStringFormat, isLatitude: false)
     }
     
     /// Get the current ISS coordinates
@@ -58,9 +54,14 @@ final class ISSPositionViewModel: ObservableObject {
                     // Call JSON parser and if successful (i.e., doesn't return nil) map the coordinates
                     let parsedISSOrbitalPosition = try decoder.decode(ISSOrbitalPosition2.self, from: urlContent)
                     // Get current ISS location
-                    let coordinates          = parsedISSOrbitalPosition.positions
-                    self?.latitude           = Float(coordinates[0].satlatitude)
-                    self?.longitude          = Float(coordinates[0].satlongitude)
+                    let coordinates    = parsedISSOrbitalPosition.positions
+                    self?.latitude     = Float(coordinates[0].satlatitude)
+                    self?.longitude    = Float(coordinates[0].satlongitude)
+                    
+                    DispatchQueue.main.async {
+                        self?.issLatitude  = CoordinateConversions.decimalCoordinatesToDegMinSec(coordinate: Double(self!.latitude), format: Globals.coordinatesStringFormat, isLatitude: true)
+                        self?.issLongitude = CoordinateConversions.decimalCoordinatesToDegMinSec(coordinate: Double(self!.longitude), format: Globals.coordinatesStringFormat, isLatitude: false)
+                    }
                 } catch {
                     return
                 }
@@ -75,7 +76,7 @@ final class ISSPositionViewModel: ObservableObject {
     
     /// Setup and start the timer
     private func startISSTimer() {
-        issTimer = Timer.scheduledTimer(timeInterval: timerValue, target: self, selector: #selector(updateISS), userInfo: nil, repeats: true)
+        timer = Timer.scheduledTimer(timeInterval: timerValue, target: self, selector: #selector(updateISS), userInfo: nil, repeats: true)
         
     }
     
@@ -86,6 +87,6 @@ final class ISSPositionViewModel: ObservableObject {
     
     /// Stop the timer
     func stop() {
-        issTimer.invalidate()
+        timer.invalidate()
     }
 }
