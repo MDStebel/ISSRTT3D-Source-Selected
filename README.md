@@ -1,6 +1,6 @@
 #  ISS Real-Time Tracker 3D
 
-## App for iPhone, iPad, and iPod touch
+## App for iPhone, iPad, iPod touch, and Apple Watch
 ## Selected source files
 
 Note: Published for educational purposes only. Source files in this repository do not include resources, images, fonts, graphics, soundtracks, and certain other source files. All API endpoints and keys have been removed.
