@@ -13,6 +13,7 @@ import SceneKit
 extension EarthGlobe {
 
     #if !os(watchOS)
+    
     /// Adds the ISS position marker at the precise latitude and longitude to our globe scene
     /// - Parameters:
     ///   - lat: The current latitude as a decimal value
@@ -211,9 +212,9 @@ extension EarthGlobe {
         
     }
     
-    #else
+    #else // If Apple watchOS
     
-    /// Add a marker to the globe and make it pulse for watchOS
+    /// Add a marker to the globe
     public func addMarker(_ marker: EarthGlobeMarkers) {
         
         globe.addChildNode(marker.node)
@@ -403,5 +404,4 @@ extension EarthGlobe {
         return SCNMatrix4Rotate(src, angle, x, y, z)
         
     }
-    
 }

@@ -22,14 +22,14 @@ private let whatsNew = WhatsNew(
         WhatsNew.Item(
             title: "Apple Watch Support",
             subtitle: """
-                      New! Companion Apple Watch app provides 3D globe with real-time ISS position and real-time location of the subsolar point. More features coming soon.
+                      New! Companion Apple Watch app provides interactive 3D globe and detail view with ISS position and subsolar point coordinates. More features coming soon.
                       """,
             image: UIImage(named: "icons8-megaphone_filled.imageset")
         ),
         WhatsNew.Item(
             title: "Improvements & Fixes",
             subtitle: """
-                      Some under-the-hood stuff.
+                      Small UI tweaks and an under-the-hood tune-up.
                       """,
             image: UIImage(named: "icons8-bug_filled")
         ),

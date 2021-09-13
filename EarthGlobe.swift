@@ -152,5 +152,4 @@ final class EarthGlobe: ObservableObject {
         scene.rootNode.addChildNode(cameraNode)
         
     }
-
 }

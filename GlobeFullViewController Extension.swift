@@ -98,7 +98,7 @@ extension GlobeFullViewController {
                 do {
                     
                     // Parse JSON
-                    let parsedTSSOrbitalPosition = try decoder.decode(TSSOrbitalPosition.self, from: urlContent)
+                    let parsedTSSOrbitalPosition = try decoder.decode(SatelliteOrbitPosition.self, from: urlContent)
                     
                     // Get current TSS coordinates
                     self?.TSSCoordinates         = parsedTSSOrbitalPosition.positions

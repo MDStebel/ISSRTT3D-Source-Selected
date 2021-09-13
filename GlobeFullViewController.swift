@@ -35,7 +35,7 @@ class GlobeFullViewController: UIViewController, AVAudioPlayerDelegate, EarthGlo
     }
 
     var ISSLastLat: Float                = 0                                         // To conform with the EarthGlobeProtocol, will save the last ISS latitude
-    var TSSCoordinates                   = [TSSOrbitalPosition.Positions]()
+    var TSSCoordinates                   = [SatelliteOrbitPosition.Positions]()
     var TSSLastLat: Float                = 0                                         // To conform with the EarthGlobeProtocol, will save the last TSS latitude
     var TSSLatitude                      = 0.0
     var TSSLongitude                     = 0.0

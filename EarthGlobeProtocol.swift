@@ -132,5 +132,4 @@ extension EarthGlobeProtocol {
         globe.autoSpinGlobeRun(run: Globals.autoRotateGlobeEnabled)
         
     }
-    
 }
