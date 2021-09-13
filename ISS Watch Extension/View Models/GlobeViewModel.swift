@@ -55,7 +55,7 @@ final class GlobeViewModel: ObservableObject {
                 let decoder = JSONDecoder()
                 do {
                     // Call JSON parser and if successful (i.e., doesn't return nil) map the coordinates
-                    let parsedISSOrbitalPosition = try decoder.decode(ISSOrbitalPosition2.self, from: urlContent)
+                    let parsedISSOrbitalPosition = try decoder.decode(SatelliteOrbitPosition.self, from: urlContent)
                     // Get current ISS location
                     let coordinates          = parsedISSOrbitalPosition.positions
                     self?.latitude           = Float(coordinates[0].satlatitude)

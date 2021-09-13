@@ -21,10 +21,11 @@ struct GlobeView: View {
             ZStack {
                 VStack {
                     
+                    // Presents the globe
                     SceneView(scene: globeViewModel.globeScene,
                               pointOfView: globeViewModel.globeMainNode,
                               options: [.allowsCameraControl])
-                    Spacer(minLength: 45)
+                    Spacer(minLength: 40)
                 }
                 
                 VStack {
@@ -40,33 +41,6 @@ struct GlobeView: View {
             }
             .navigationTitle("Globe")
             .ignoresSafeArea(edges: [.bottom])
-            
-//            // Update the scene when this view appears
-//            .onAppear() {
-//                globeViewModel.startTimer()
-//            }
-//            
-//            // Stop updating when this view disappears
-//            .onDisappear() {
-//                globeViewModel.stop()
-//            }
-//            
-//            // Respond to lifecycle phases
-//            .onChange(of: scenePhase) { phase in
-//                switch phase {
-//                case .active:
-//                    // The scene has become active, so start the timer
-//                    globeViewModel.startTimer()
-//                case .inactive:
-//                    // The app has become inactive, so stop the timer
-//                    globeViewModel.stop()
-//                case .background:
-//                    // The app has moved to the background, so stop the timer
-//                    globeViewModel.stop()
-//                @unknown default:
-//                    globeViewModel.stop()
-//                }
-//            }
         }
     }
 }
