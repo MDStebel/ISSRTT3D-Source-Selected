@@ -39,5 +39,4 @@ struct SatelliteOrbitPosition: Decodable {
         var timestamp: Int
         
     }
-    
 }

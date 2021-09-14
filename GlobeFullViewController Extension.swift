@@ -18,7 +18,6 @@ extension GlobeFullViewController {
             self.updateEarthGlobeScene(in: self.fullGlobe, ISSLatitude: self.iLat, ISSLongitude: self.iLon, TSSLatitude: self.tLat, TSSLongitude: self.tLon, ISSLastLat: &self.ISSLastLat, TSSLastLat: &self.TSSLastLat)
             self.isRunningLabel?.text = "Running"
         }
-        
     }
     
     
@@ -46,8 +45,10 @@ extension GlobeFullViewController {
                     }
                     
                     // Get current ISS location
-                    self?.iLat = String(parsedISSOrbitalPosition.latitude)
-                    self?.iLon = String(parsedISSOrbitalPosition.longitude)
+                    DispatchQueue.main.async {
+                        self?.iLat = String(parsedISSOrbitalPosition.latitude)
+                        self?.iLon = String(parsedISSOrbitalPosition.longitude)
+                    }
                     
                     // Get the current TSS location
                     self?.earthGlobeLocateTSS()
@@ -76,7 +77,6 @@ extension GlobeFullViewController {
         }
         
         globeUpdateTask.resume()
-        
     }
     
     
@@ -111,7 +111,6 @@ extension GlobeFullViewController {
                 } catch {
                     
                     DispatchQueue.main.async {
-                        // self?.alert(for: "Can't get TSS location", message: "Will automatically start again when available.")
                         self?.isRunningLabel?.text = "Can't get TSS location"
                     }
                     
@@ -120,7 +119,6 @@ extension GlobeFullViewController {
             } else {
                 
                 DispatchQueue.main.async {
-                    // self?.alert(for: "Can't get TSS location", message: "Will automatically start again when available.")
                     self?.isRunningLabel?.text = "Can't get TSS location"
                 }
                 
@@ -129,7 +127,5 @@ extension GlobeFullViewController {
         }
         
         globeUpdateTaskForTSS.resume()
-        
     }
-    
 }
