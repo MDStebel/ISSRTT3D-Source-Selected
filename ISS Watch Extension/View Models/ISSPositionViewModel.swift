@@ -6,7 +6,7 @@
 //  Copyright © 2021 Michael Stebel Consulting, LLC. All rights reserved.
 //
 
-import Foundation
+import SwiftUI
 
 final class ISSPositionViewModel: ObservableObject {
     
@@ -54,13 +54,13 @@ final class ISSPositionViewModel: ObservableObject {
                     // Call JSON parser and if successful (i.e., doesn't return nil) map the coordinates
                     let parsedISSOrbitalPosition = try decoder.decode(SatelliteOrbitPosition.self, from: urlContent)
                     // Get current ISS location
-                    let coordinates    = parsedISSOrbitalPosition.positions
-                    self?.latitude     = Float(coordinates[0].satlatitude)
-                    self?.longitude    = Float(coordinates[0].satlongitude)
+                    let coordinates              = parsedISSOrbitalPosition.positions
                     
                     DispatchQueue.main.async {
-                        self?.issLatitude  = CoordinateConversions.decimalCoordinatesToDegMinSec(coordinate: Double(self!.latitude), format: Globals.coordinatesStringFormat, isLatitude: true)
-                        self?.issLongitude = CoordinateConversions.decimalCoordinatesToDegMinSec(coordinate: Double(self!.longitude), format: Globals.coordinatesStringFormat, isLatitude: false)
+                        self?.latitude           = Float(coordinates[0].satlatitude)
+                        self?.longitude          = Float(coordinates[0].satlongitude)
+                        self?.issLatitude        = CoordinateConversions.decimalCoordinatesToDegMinSec(coordinate: Double(self!.latitude), format: Globals.coordinatesStringFormat, isLatitude: true)
+                        self?.issLongitude       = CoordinateConversions.decimalCoordinatesToDegMinSec(coordinate: Double(self!.longitude), format: Globals.coordinatesStringFormat, isLatitude: false)
                     }
                 } catch {
                     return
@@ -71,10 +71,9 @@ final class ISSPositionViewModel: ObservableObject {
         }
         
         globeUpdateTask.resume()
-        
     }
     
-    /// Setup and start the timer
+    /// Set up and start the timer
     private func startISSTimer() {
         timer = Timer.scheduledTimer(timeInterval: timerValue, target: self, selector: #selector(updateISS), userInfo: nil, repeats: true)
         

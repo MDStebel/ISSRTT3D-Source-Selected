@@ -6,6 +6,7 @@
 //  Copyright © 2021 Michael Stebel Consulting, LLC. All rights reserved.
 //
 
+import SwiftUI
 import SceneKit
 
 final class GlobeViewModel: ObservableObject {
@@ -57,9 +58,12 @@ final class GlobeViewModel: ObservableObject {
                     // Call JSON parser and if successful (i.e., doesn't return nil) map the coordinates
                     let parsedISSOrbitalPosition = try decoder.decode(SatelliteOrbitPosition.self, from: urlContent)
                     // Get current ISS location
-                    let coordinates          = parsedISSOrbitalPosition.positions
-                    self?.latitude           = Float(coordinates[0].satlatitude)
-                    self?.longitude          = Float(coordinates[0].satlongitude)
+                    let coordinates              = parsedISSOrbitalPosition.positions
+                    
+                    DispatchQueue.main.async {
+                        self?.latitude           = Float(coordinates[0].satlatitude)
+                        self?.longitude          = Float(coordinates[0].satlongitude)
+                    }
                 } catch {
                     return
                 }
@@ -69,7 +73,6 @@ final class GlobeViewModel: ObservableObject {
         }
         
         globeUpdateTask.resume()
-        
     }
     
     /// Update the globe scene
@@ -114,7 +117,7 @@ final class GlobeViewModel: ObservableObject {
         }
     }
     
-    /// Setup and start the timer
+    /// Set up and start the timer
     func startTimer() {
         if !timer.isValid {
             timer = Timer.scheduledTimer(timeInterval: timerValue, target: self, selector: #selector(update), userInfo: nil, repeats: true)

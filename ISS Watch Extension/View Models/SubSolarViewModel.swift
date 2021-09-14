@@ -6,7 +6,7 @@
 //  Copyright © 2021 Michael Stebel Consulting, LLC. All rights reserved.
 //
 
-import Foundation
+import SwiftUI
 
 final class SubSolarViewModel: ObservableObject {
     
@@ -30,12 +30,12 @@ final class SubSolarViewModel: ObservableObject {
     }
     
     private func updateSubSolarPoint() {
-        let values = AstroCalculations.getSubSolarCoordinates()
-        subsolarLatitude = CoordinateConversions.decimalCoordinatesToDegMinSec(coordinate: Double(values.latitude), format: Globals.coordinatesStringFormat, isLatitude: true)
+        let values        = AstroCalculations.getSubSolarCoordinates()
+        subsolarLatitude  = CoordinateConversions.decimalCoordinatesToDegMinSec(coordinate: Double(values.latitude), format: Globals.coordinatesStringFormat, isLatitude: true)
         subsolarLongitude = CoordinateConversions.decimalCoordinatesToDegMinSec(coordinate: Double(values.longitude), format: Globals.coordinatesStringFormat, isLatitude: false)
     }
     
-    /// Setup and start the timer
+    /// Set up and start the timer
     private func startTimer() {
         if !timer.isValid {
             timer = Timer.scheduledTimer(timeInterval: timerValue, target: self, selector: #selector(update), userInfo: nil, repeats: true)
