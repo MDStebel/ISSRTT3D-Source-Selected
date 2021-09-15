@@ -6,7 +6,7 @@
 Note: Published for educational purposes only. Source files in this repository do not include resources, images, fonts, graphics, soundtracks, and certain other source files. All API endpoints and keys have been removed.
 Learn about the app or get support here: https://www.issrtt.com 
 
-![banner](Ad - ISS Real-Time Tracker 3D.png)
+![banner](https://github.com/MDStebel/ISSRTT3D-Source-Public/blob/625431cb4bfaef527c0207f5677a0dc46315ac0f/Ad%20-%20ISS%20Real-Time%20Tracker%203D.png)
 
 ![banner](https://github.com/MDStebel/ISSRTT-Source-Public/blob/master/Call%20for%20Beta%20Testers.png)
 
