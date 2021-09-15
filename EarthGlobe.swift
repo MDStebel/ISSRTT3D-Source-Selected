@@ -52,17 +52,20 @@ final class EarthGlobe: ObservableObject {
         
         guard let earthMaterial                        = globeShape.firstMaterial else { return }
 
-        // The Earth's texture is revealed by diffuse light sources
+        /// The Earth's texture is revealed by diffuse light sources
         #if !os(watchOS)
         earthMaterial.diffuse.contents                 = "8081_earthmap_8190px"                 // Use the high-resolution Earth image
         #else
-        earthMaterial.diffuse.contents                 = "8081_earthmap_2048px"                   // Use low resolution Earth image for watchOS
+        earthMaterial.diffuse.contents                 = "8081_earthmap_2048px"                 // Use low resolution Earth image for watchOS
         #endif
         
-        #if !os(watchOS)
         /// Our emitter will show city lights as Earth passes into nighttime
         let emission                                   = SCNMaterialProperty()
-        emission.contents                              = "8081_earthlights_8190px"              // Our high-resolution city lights map
+        #if !os(watchOS)
+        emission.contents                              = "8081_earthlights_8190px"              // High-resolution city lights map
+        #else
+        emission.contents                              = "8081_earthlights_4096px"              // Low-resolution city lights map
+        #endif
         earthMaterial.setValue(emission, forKey: "emissionTexture")
         
         /// OpenGL/Metal lighting map in C++ code that brings forth our emitter texture
@@ -76,22 +79,38 @@ final class EarthGlobe: ObservableObject {
         earthMaterial.shaderModifiers                  = [.fragment: shaderModifier]            // Apply the shader modifier code
         
         // Texture is revealed by the specular light sources
+        #if !os(watchOS)
         earthMaterial.specular.contents                = "8081_earthspec_4096px"                // High-resolution specular texture map
+        #else
+        earthMaterial.specular.contents                = "8081_earthspec_2048px"                // Low-resolution specular texture map
+        #endif
         earthMaterial.specular.intensity               = 0.2
         
         // Earth's oceans and other watery areas are reflective
+        #if !os(watchOS)
         earthMaterial.metalness.contents               = "8081_earthmetalness_4096px"           // High-resolution reflectivity map
+        #else
+        earthMaterial.metalness.contents               = "8081_earthmetalness_2048px"           // Low-resolution reflectivity map
+        #endif
         
         // Land areas are not reflective
+        #if !os(watchOS)
         earthMaterial.roughness.contents               = "8081_earthroughness_4096px"           // High-resolution non-reflectivity map
-
+        #else
+        earthMaterial.roughness.contents               = "8081_earthroughness_2048px"           // Low-resolution non-reflectivity map
+        #endif
+        
         // The bump map (a "normal map") to make elevated areas (e.g., mountains) appear as relief
+        #if !os(watchOS)
         earthMaterial.normal.contents                  = "EarthBump_NormalMap_MDS_8190px-3"     // High-resolution normal map that I created
+        #else
+        earthMaterial.normal.contents                  = "EarthBump_NormalMap_MDS_2048px"       // Low-resolution normal map that I created
+        #endif
         earthMaterial.normal.intensity                 = 0.52
         
         // Create a realistic specular reflection that changes its aspect based on angle
         earthMaterial.fresnelExponent                  = 1.75
-        #endif
+
         
         // Assign the shape to the globe's geometry property
         globe.geometry                                 = globeShape
@@ -100,7 +119,6 @@ final class EarthGlobe: ObservableObject {
         scene.rootNode.addChildNode(userTilt)
         userTilt.addChildNode(userRotation)
         userRotation.addChildNode(globe)
-        
     }
     
     #if !os(watchOS)
@@ -116,10 +134,10 @@ final class EarthGlobe: ObservableObject {
         theScene.allowsCameraControl        = true
               
         completeTheSetup()
-        
     }
     
     #else
+    
     /// Set up our scene
     /// - Parameters:
     ///   - theScene: The scene view to use
@@ -127,7 +145,6 @@ final class EarthGlobe: ObservableObject {
     func setupInSceneView() {
               
         completeTheSetup()
-        
     }
     #endif
     
@@ -150,6 +167,5 @@ final class EarthGlobe: ObservableObject {
         cameraNode.camera           = camera
         
         scene.rootNode.addChildNode(cameraNode)
-        
     }
 }
