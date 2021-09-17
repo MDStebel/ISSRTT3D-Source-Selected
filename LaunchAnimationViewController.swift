@@ -72,9 +72,9 @@ class LaunchAnimationViewController: UIViewController {
     // MARK: - Methods
     
     
+    /// Create the transformations for ISS graphic
     private func createTransformationsForISSIcon() {
         
-        // Create a stack of transformations for the ISS graphic
         if #available(iOS 13, *) {                  // If iOS 13 or greater
             
             xTrans          = view.bounds.size.width + 20
@@ -84,7 +84,7 @@ class LaunchAnimationViewController: UIViewController {
             trans1          = trans1.scaledBy(x: iconScaleFactor, y: iconScaleFactor)
             trans1          = trans1.rotated(by: iconAnimationRotationAngle)
         
-        } else {                                    // If before iOS 13
+        } else {                                    // If earlier than iOS 13
             
             xTrans          = view.bounds.size.width - ISSImage.bounds.size.width / 2.0 - 15
             yTrans          = view.bounds.size.height - ISSImage.bounds.size.height / 2.0 + 10
@@ -97,15 +97,16 @@ class LaunchAnimationViewController: UIViewController {
     }
     
     
+    /// Create the transformations for the title
     private func createTransformationsForTitle() {
-        
-        // Create a stack of transformations for the title
+
         scaleFactorForAppNameTitleForLaunchAnimation = 4.0
         trans2 = trans2.scaledBy(x: scaleFactorForAppNameTitleForLaunchAnimation, y: scaleFactorForAppNameTitleForLaunchAnimation)
         
     }
     
     
+    /// Create the transformations for the '3D' label
     private func createTransformationsFor3D() {
         
         // Create a stack of transformations for the 3D text image
@@ -165,7 +166,7 @@ class LaunchAnimationViewController: UIViewController {
     }
     
     
-    /// Get current version and copyright information and update globals
+    /// Get current version and copyright information and update the variables
     private func getVersionAndCopyrightData() {
         
         if let (versionNumber, buildNumber, copyright) = getAppCurrentVersion() {

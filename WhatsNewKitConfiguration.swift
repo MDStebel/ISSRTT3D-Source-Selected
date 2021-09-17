@@ -7,7 +7,7 @@
 //  Uses WhatsNewKit by Sven Tiigi
 //
 
-#if !os(watchOS)
+#if !os(watchOS)    // Only the iOS and iPadOS versions use this
 import WhatsNewKit
 import UIKit
 
@@ -29,7 +29,8 @@ private let whatsNew = WhatsNew(
         WhatsNew.Item(
             title: "Improvements & Fixes",
             subtitle: """
-                      Small UI tweaks and an under-the-hood tune-up.
+                      Watch App improvements: Added ISS footprint circle and reset button to globe view.
+                      General: More under-the-hood stuff.
                       """,
             image: UIImage(named: "icons8-bug_filled")
         ),

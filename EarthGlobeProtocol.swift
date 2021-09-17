@@ -120,9 +120,13 @@ extension EarthGlobeProtocol {
             globe.addOrbitTrackAroundTheGlobe(for: .TSS, lat: tLat!, lon: tLon!, headingFactor: TSSHeadingFactor)
         }
         
-        // Update the satellite/station markers now
+        // Add the ISS
         globe.addISSMarker(lat: iLat, lon: iLon)
+        
+        // Add footprint
         globe.addISSViewingCircle(lat: iLat, lon: iLon)
+        
+        // Add the TSS if valid
         if addTSS {
             globe.addTSSMarker(lat: tLat!, lon: tLon!)
             globe.addTSSViewingCircle(lat: tLat!, lon: tLon!)

@@ -212,7 +212,7 @@ extension EarthGlobe {
         
     }
     
-    #else // If Apple watchOS
+    #else // If watchOS
     
     /// Add a marker to the globe
     public func addMarker(_ marker: EarthGlobeMarkers) {
@@ -228,8 +228,29 @@ extension EarthGlobe {
     ///   - lon: The current longitude as a decimal value
     public func addISSMarker(lat: Float, lon: Float) {
         
-        let ISS = EarthGlobeMarkers(lat: lat, lon: lon)
+        let ISS = EarthGlobeMarkers(for: .ISS, lat: lat, lon: lon)
         self.addMarker(ISS)
+        
+    }
+    
+    
+    /// Adds the satellite's viewing circle marker at the precise latitude and longitude to our globe scene
+    /// - Parameters:
+    ///   - lat: The current latitude as a decimal value
+    ///   - lon: The current longitude as a decimal value
+    public func addISSViewingCircle(lat: Float, lon: Float) {
+        
+        let viewingCircle = EarthGlobeMarkers(for: .none, lat: lat, lon: lon)
+        self.addMarker(viewingCircle)
+        
+    }
+    
+    
+    /// Get the number of child nodes in the nodes array
+    /// - Returns: The number of child nodes in the scene heirarchy as an Int
+    public func getNumberOfChildNodes() -> Int {
+        
+        return globe.childNodes.count
         
     }
     
@@ -360,48 +381,20 @@ extension EarthGlobe {
         return position
         
     }
-    
-    
-    public func goToPointOnGlobe(node: SCNNode, lat: Float, lon: Float) {
         
-        let position = EarthGlobe.transformLatLonCoordinatesToXYZ(lat: lat, lon: lon, alt: Globals.ISSOrbitalAltitudeFactor)
-        
-        // Determine how much we've moved
-        let currentPosition       = node.position
-        let delta                 = CGSize(width: Double((currentPosition.x - position.x)) / 225.0, height: Double((currentPosition.y - position.y)) / 225.0 )
-        
-        if delta.width != 0.0 || delta.height != 0.0 {
-
-            let rotationAboutAxis = Float(delta.width) * Float(Globals.twoPi)
-            let tiltOfAxisItself  = Float(delta.height) * Float(Globals.twoPi)
-            
-            // First, apply the rotation
-            let rotate            = SCNMatrix4RotateF(userRotation.worldTransform, -rotationAboutAxis, 0.0, 1.0, 0.0)
-            node.setWorldTransform(rotate)
-            
-            // Now, apply the tilt
-            let tilt              = SCNMatrix4RotateF(userTilt.worldTransform, -tiltOfAxisItself, 1.0, 0.0, 0.0)
-            node.setWorldTransform(tilt)
-            
-        }
-        
-    }
     
-    
-    /// Move camera to a given latitude and longitude
-    public func moveCameraToPointOnGlobe(lat: Float, lon: Float) {
-        
-        let newPosition     = EarthGlobe.transformLatLonCoordinatesToXYZ(lat: lat, lon: lon, alt: Globals.ISSOrbitAltitudeInScene)
-        let x               = newPosition.x
-        let y               = newPosition.y
-        cameraNode.position = SCNVector3(x: x, y: y, z: globeRadiusFactor + cameraAltitude)
-        
-    }
-    
-    
+    /// Rotate a 4-vector
+    /// - Parameters:
+    ///   - src: 4-matrix
+    ///   - angle: Angle
+    ///   - x: X
+    ///   - y: Y
+    ///   - z: Z
+    /// - Returns: A new 4-matrix
     func SCNMatrix4RotateF(_ src: SCNMatrix4, _ angle : Float, _ x : Float, _ y : Float, _ z : Float) -> SCNMatrix4 {
         
         return SCNMatrix4Rotate(src, angle, x, y, z)
         
     }
+    
 }

@@ -672,7 +672,7 @@ extension PassesTableViewController {
     
     func locationManagerDidChangeAuthorization(_ manager: CLLocationManager) {
         
-        let authStatus = ISSlocationManager.authorizationStatus
+        let authStatus     = ISSlocationManager.authorizationStatus
         let canGetLocation = authStatus != .denied
         if canGetLocation {
             

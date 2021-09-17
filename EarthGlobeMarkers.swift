@@ -14,9 +14,10 @@ import SceneKit
 final class EarthGlobeMarkers {
     
     var image: String
-    var widthAndHeight: CGFloat = Globals.ISSMarkerWidth
-    var altitude: Float = Globals.ISSOrbitalAltitudeFactor
+    var altitude: Float         = Globals.ISSOrbitalAltitudeFactor
     var node: SCNNode!                                                                                 // The SceneKit node for this marker
+    var widthAndHeight: CGFloat
+    
     
     #if !os(watchOS)
     /// Initialize a marker to be added to the Earth globe
@@ -31,14 +32,17 @@ final class EarthGlobeMarkers {
         self.image                                       = image
         let adjustedLon                                  = lon + Globals.ninetyDegrees                 // Textures are centered on 0,0, so adjust by 90 degrees
         
-        // Which object does our marker represent? .none implies sighting circle (i.e., footprint)
+        // Which object does our marker represent? .none implies footprint
         switch satellite {
         case .ISS :
             widthAndHeight                               = Globals.ISSMarkerWidth
+            altitude                                     = Globals.ISSAltitudeFactor
         case .TSS :
             widthAndHeight                               = Globals.TSSMarkerWidth
+            altitude                                     = Globals.TSSAltitudeFactor
         case .none :
             widthAndHeight                               = Globals.ISSMarkerWidth * 2.25               // Factor to approximate the ground diameter of the sighting circle
+            altitude                                     = Globals.globeRadiusFactor * Globals.globeRadiusMultiplierToPlaceOnSurface   // This is the footprint, so place it flush with the surface
         }
         
         // Initialize and configure the marker node
@@ -50,23 +54,14 @@ final class EarthGlobeMarkers {
         node.geometry!.firstMaterial!.isDoubleSided      = true
         node.castsShadow                                 = false
         
-        switch satellite {
-        case .ISS :
-            altitude                                     = Globals.ISSAltitudeFactor
-        case .TSS :
-            altitude                                     = Globals.TSSAltitudeFactor
-        case .none :
-            altitude                                     = Globals.globeRadiusFactor * Globals.globeRadiusMultiplier                       // This is the sighting circle, so place it flush with the surface
-        }
-        
         // Map Earth coordinates (lat and lon) to xyz coodinates on globe
         let position                                     = EarthGlobe.transformLatLonCoordinatesToXYZ(lat: lat, lon: adjustedLon, alt: altitude)
         self.node.position                               = position
         
         // Compute the normal pitch, roll and yaw
-        let pitch                                        = -lat * Float(Globals.degreesToRadians)                                    // Pitch is the rotation about the node's x-axis in radians
-        let roll: Float                                  = Globals.zero                                                              // Roll is the rotation about the node's z-axis in radians
-        let yaw                                          = lon * Float(Globals.degreesToRadians)                                     // Yaw is the rotation about the node's y-axis in radians
+        let pitch                                        = -lat * Float(Globals.degreesToRadians)      // Pitch is the rotation about the node's x-axis in radians
+        let roll: Float                                  = Globals.zero                                // Roll is the rotation about the node's z-axis in radians
+        let yaw                                          = lon * Float(Globals.degreesToRadians)       // Yaw is the rotation about the node's y-axis in radians
         
         // Set the marker's orientation using pitch, roll, and yaw
         node.eulerAngles                                 = SCNVector3(x: pitch, y: yaw, z: roll )
@@ -90,37 +85,50 @@ final class EarthGlobeMarkers {
         
     }
     
-    #else
+    #else // If watchOS
     
     /// Initialize a marker to be added to the Earth globe for watchOS
     /// - Parameters:
     ///   - image: Image name to use as marker as a String
     ///   - lat: Latitude of the marker's position on Earth as a Float
     ///   - lon: Longitude of the marker's position on Earth as a Float
-    init(lat: Float, lon: Float) {
+    init(for satellite: SatelliteID, lat: Float, lon: Float) {
         
-        self.image                                       = Globals.ISSIconFor3DGlobeView
+        // Which object does our marker represent? .none implies footprint
+        switch satellite {
+        case .ISS :
+            self.image                                   = Globals.ISSIconFor3DGlobeView
+            widthAndHeight                               = Globals.ISSMarkerWidth
+            altitude                                     = Globals.ISSAltitudeFactor
+        case .TSS :
+            self.image                                   = Globals.TSSIconFor3DGlobeView
+            widthAndHeight                               = Globals.TSSMarkerWidth
+            altitude                                     = Globals.TSSAltitudeFactor
+        case .none :
+            self.image                                   = Globals.ISSViewingCircleGraphic
+            widthAndHeight                               = Globals.ISSMarkerWidth * 2.25
+            altitude                                     = Globals.globeRadiusFactor * Globals.globeRadiusMultiplierToPlaceOnSurface  // This is the footprint, so place it flush with the surface
+        }
+        
         let adjustedLon                                  = lon + Globals.ninetyDegrees                 // Textures are centered on 0,0, so adjust by 90 degrees
         
         // Initialize and configure the marker node
-        node                                             = SCNNode(geometry: SCNPlane(width: 0.15, height: 0.15))
+        node                                             = SCNNode(geometry: SCNPlane(width: widthAndHeight, height: widthAndHeight))
         node.geometry!.firstMaterial!.diffuse.contents   = image
         node.geometry!.firstMaterial!.diffuse.intensity  = 1.0                                         // Appearance in daylight areas
         node.geometry!.firstMaterial!.emission.contents  = image
         node.geometry!.firstMaterial!.emission.intensity = 0.75                                        // Appearance in nighttime areas (a bit less bright)
         node.geometry!.firstMaterial!.isDoubleSided      = true
         node.castsShadow                                 = false
-        
-        altitude = Globals.ISSAltitudeFactor
 
         // Map Earth coordinates (lat and lon) to xyz coodinates on globe
         let position                                     = EarthGlobe.transformLatLonCoordinatesToXYZ(lat: lat, lon: adjustedLon, alt: altitude)
         self.node.position                               = position
         
         // Compute the normal pitch, roll and yaw
-        let pitch                                        = -lat * Float(Globals.degreesToRadians)                                    // Pitch is the rotation about the node's x-axis in radians
-        let roll: Float                                  = Globals.zero                                                              // Roll is the rotation about the node's z-axis in radians
-        let yaw                                          = lon * Float(Globals.degreesToRadians)                                     // Yaw is the rotation about the node's y-axis in radians
+        let pitch                                        = -lat * Float(Globals.degreesToRadians)      // Pitch is the rotation about the node's x-axis in radians
+        let roll: Float                                  = Globals.zero                                // Roll is the rotation about the node's z-axis in radians
+        let yaw                                          = lon * Float(Globals.degreesToRadians)       // Yaw is the rotation about the node's y-axis in radians
         
         // Set the marker's orientation using pitch, roll, and yaw
         node.eulerAngles                                 = SCNVector3(x: pitch, y: yaw, z: roll )

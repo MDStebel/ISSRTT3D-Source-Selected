@@ -28,7 +28,7 @@ struct Globals {
     static var buildNumber                                   = ""
     static var cameraAltitude: Float                         = 1.85
     static var copyrightString                               = ""
-    static var defaultCameraFov: CGFloat                     = 30
+
     static var displayGlobe                                  = true
     static var displayZoomFactorBelowMarkerIsOn              = true
     static var globeBackgroundImageDefaultSelectionSegment   = 0
@@ -59,16 +59,21 @@ struct Globals {
     // MARK: - Global Constants
     
     #if os(watchOS)
+    static let defaultCameraFov: CGFloat                     = 40
     static let coordinatesStringFormat                       = "%3d°%02d'%02d\"%@"
-    #else
+    static let globeRadiusMultiplierToPlaceOnSurface: Float  = 0.962
+    static let ISSMarkerWidth: CGFloat                       = 0.15
+    #else // If iOS or iPadOS
+    static let defaultCameraFov: CGFloat                     = 30
     static let coordinatesStringFormat                       = "%3d°%02d'%02d\"%@, %3d°%02d'%02d\"%@"
+    static let globeRadiusMultiplierToPlaceOnSurface: Float  = 0.949
+    static let ISSMarkerWidth: CGFloat                       = 0.16
     #endif
     
     static let ISSAltitudeFactor: Float                      = ISSOrbitalAltitudeFactor * 1.015
     static let ISSAltitudeInKM: Float                        = 428
     static let ISSIconFor3DGlobeView                         = "ISS-mds-1350px"
     static let ISSIconForMapView                             = "ISS-mds-75px-Template-Image"
-    static let ISSMarkerWidth: CGFloat                       = 0.16
     static let ISSOrbitAltitudeInScene                       = ISSOrbitalAltitudeFactor
     static let ISSOrbitInclinationInDegrees: Float           = 51.6
     static let ISSOrbitInclinationInRadians: Float           = ISSOrbitInclinationInDegrees * Float(degreesToRadians)
@@ -98,7 +103,6 @@ struct Globals {
     static let elevationFormat                               = "%2.1f"
     static let floatingPointWithThreePlusOneDecimalPlace     = "%3.1f"
     static let floatingPointWithTwoPlusOneDecimalPlace       = "%2.1f"
-    static let globeRadiusMultiplier: Float                  = 0.949
     static let helpChar                                      = "(?)"
     static let hubbleDeepField                               = "Hubble Legacy Field Crop 2800px.png"
     static let julianDateForJan011970At0000GMT               = 2440587.5
