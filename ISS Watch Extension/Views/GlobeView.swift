@@ -19,28 +19,46 @@ struct GlobeView: View {
     var body: some View {
         NavigationView {
             ZStack {
-                VStack {
-                    
-                    // Presents the globe
-                    SceneView(scene: globeViewModel.globeScene,
-                              pointOfView: globeViewModel.globeMainNode,
-                              options: [.allowsCameraControl])
-                    Spacer(minLength: 40)
+                
+                // Present the globe
+                SceneView(scene: globeViewModel.globeScene,
+                          pointOfView: globeViewModel.globeMainNode,
+                          options: [.allowsCameraControl])
+                    .padding([.leading, .trailing], 5)
+                
+                // Show progress indicator when starting up/resetting
+                if !globeViewModel.hasRun {
+                    ProgressView()
                 }
                 
+                // Buttons
                 VStack {
                     Spacer()
-                    NavigationLink(
-                        destination: DetailView()
-                    ) {
-                        Text("Details")
+                    
+                    // Button group
+                    HStack {
+                        Button(action: {
+                            globeViewModel.reset()
+                        }) {
+                            Image(systemName: "arrow.uturn.backward.square.fill")
+                        }
+                        .withMDSButtonModifier()
+                        
+                        Spacer()
+                        
+                        NavigationLink(
+                            destination: DetailView()
+                        ) {
+                            Image(systemName: "tablecells.fill")
+                        }
+                        .withMDSButtonModifier()
                     }
-                    .withISSNavigationLinkFormatting()
-                    .padding()
+                    .padding([.leading, .trailing], 25)
+                    .padding([.bottom], 3)
                 }
             }
             .navigationTitle("Globe")
-            .ignoresSafeArea(edges: [.bottom])
+            .ignoresSafeArea(edges: [.top,.bottom])
         }
     }
 }
@@ -49,7 +67,6 @@ struct GlobeView_Previews: PreviewProvider {
     static var previews: some View {
         Group {
             GlobeView()
-                
         }
     }
 }

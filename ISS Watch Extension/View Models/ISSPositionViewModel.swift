@@ -19,9 +19,10 @@ final class ISSPositionViewModel: ObservableObject {
     private let apiKey                  = ApiKeys.ISSLocationKey
     private let timerValue              = 3.0
     
-    private var timer                = Timer()
+    private var timer                   = Timer()
     private var latitude: Float         = 0
     private var longitude: Float        = 0
+    
     
     // MARK: - Methods
     
@@ -29,14 +30,18 @@ final class ISSPositionViewModel: ObservableObject {
         startUp()
     }
     
+    
     func startUp() {
+        
         updateISSPosition()   // Get the data once before starting the timer
         startISSTimer()
     }
     
+    
     private func updateISSPosition() {
         getISSPosition()
     }
+    
     
     /// Get the current ISS coordinates
     private func getISSPosition() {
@@ -73,16 +78,19 @@ final class ISSPositionViewModel: ObservableObject {
         globeUpdateTask.resume()
     }
     
+    
     /// Set up and start the timer
     private func startISSTimer() {
         timer = Timer.scheduledTimer(timeInterval: timerValue, target: self, selector: #selector(updateISS), userInfo: nil, repeats: true)
         
     }
     
+    
     /// The selector the timer calls
     @objc func updateISS() {
         updateISSPosition()
     }
+    
     
     /// Stop the timer
     func stop() {

@@ -27,25 +27,27 @@ extension View {
     
     /// Extends View to allow us to use custom modifier without using ".modifier(..."
     /// - Returns: Custom modifier
-    func withISSNavigationLinkFormatting() -> some View {
-        self.modifier(ISSNavigationLinkModifier())
+    func withMDSButtonModifier() -> some View {
+        self.modifier(MDSButtonModifier())
     }
 }
 
 
-/// Custom modifier for navigation links
-struct ISSNavigationLinkModifier: ViewModifier {
+/// Button style custom modifier
+///
+/// Produces a small round button with a white background and ISSRTT3DRed foreground.
+/// - Parameter content: The view being modified
+/// - Returns: Custom modifier
+struct MDSButtonModifier: ViewModifier {
     
-    /// Button style navigation link custom modifier
-    /// - Parameter content: The view being modified
-    /// - Returns: Custom modifier
     func body(content: Content) -> some View {
         content
-            .frame(minWidth: 150, idealWidth: 175, maxWidth: .infinity, minHeight: 30, idealHeight: 30, maxHeight: 30, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
-            .opacity(0.95)
+            .frame(width: 30, height: 30, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
+            .background(Color.white)
             .font(.subheadline)
-            .foregroundColor(.white)
+            .foregroundColor(.ISSRTT3DRed)
             .cornerRadius(15)
             .padding([.leading, .trailing])
+            .padding([.bottom], 3)
     }
 }

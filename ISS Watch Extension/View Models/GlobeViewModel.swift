@@ -16,17 +16,18 @@ final class GlobeViewModel: ObservableObject {
     @Published var earthGlobe: EarthGlobe
     @Published var globeMainNode: SCNNode?
     @Published var globeScene: SCNScene?
+    @Published var hasRun: Bool
     
     private let apiEndpointString       = ApiEndpoints.issTrackerAPIEndpointC
     private let apiKey                  = ApiKeys.ISSLocationKey
-    private let timerValue              = 5.0
+    private let timerValue              = 3.0
     
     private var ISSHeadingFactor: Float = 0.0
     private var ISSLastLat: Float
-    private var hasRun: Bool
     private var latitude: Float         = 0.0
     private var longitude: Float        = 0.0
     private var timer                   = Timer()
+    
     
     // MARK: - Methods
     
@@ -36,11 +37,36 @@ final class GlobeViewModel: ObservableObject {
         hasRun             = false
         ISSLastLat         = 0
         
-        if !hasRun {
-            updateEarthGlobe()  // Update the globe once before starting the timer
-        }
+        initHelper()
+        
+        updateEarthGlobe()                  // Update the globe once before starting the timer
         startTimer()
     }
+    
+    
+    /// Reset the globe
+    func reset() {
+        
+        earthGlobe         = EarthGlobe()
+        hasRun             = false
+        ISSLastLat         = 0
+        
+        initHelper()
+    }
+    
+    
+    private func initHelper() {
+        
+        // Show the progress indicator.
+        DispatchQueue.main.asyncAfter(deadline: .now() + 5.5) {
+            self.hasRun = true
+        }
+        
+        globeMainNode = earthGlobe.cameraNode
+        globeScene    = earthGlobe.scene
+        earthGlobe.setupInSceneView()
+    }
+    
     
     /// Get the current ISS coordinates
     func getISSPosition() {
@@ -55,8 +81,10 @@ final class GlobeViewModel: ObservableObject {
             if let urlContent = data {
                 let decoder = JSONDecoder()
                 do {
+                    
                     // Call JSON parser and if successful (i.e., doesn't return nil) map the coordinates
                     let parsedISSOrbitalPosition = try decoder.decode(SatelliteOrbitPosition.self, from: urlContent)
+                    
                     // Get current ISS location
                     let coordinates              = parsedISSOrbitalPosition.positions
                     
@@ -64,6 +92,7 @@ final class GlobeViewModel: ObservableObject {
                         self?.latitude           = Float(coordinates[0].satlatitude)
                         self?.longitude          = Float(coordinates[0].satlongitude)
                     }
+                    
                 } catch {
                     return
                 }
@@ -75,40 +104,41 @@ final class GlobeViewModel: ObservableObject {
         globeUpdateTask.resume()
     }
     
-    /// Update the globe scene
+    
+    /// Update the globe scene for the new coordinates
     private func updateEarthGlobe() {
         
-        // We have to remove the dynamic nodes (Sun, ISS, orbit track), if we've already updated them once. If not, just remove the first two that were created when we initialized.
-        if hasRun {
-            for _ in 1...3 {
-                removeLastNode()
-            }
-        } else {
-            for _ in 1...2 {
-                removeLastNode()
-            }
+        // We need to remove each of the nodes we've added before adding them again at new coordinates, or we get an f'ng mess!
+        var numberOfChildNodes  = earthGlobe.getNumberOfChildNodes()
+        while numberOfChildNodes > 0 {
+            removeLastNode()
+            numberOfChildNodes -= 1
         }
         
-        globeMainNode = earthGlobe.cameraNode
-        globeScene    = earthGlobe.scene
-        earthGlobe.setupInSceneView()
-        
+        // Where are we?
         getISSPosition()
         
-        // Determine if we have a prior ISS latitude saved, as we don't know which way the orbit is oriented unless we do
+        // If we have a saved last coordinate, add the markers, otherwise we don't know which way the orbit is oriented
         if ISSLastLat != 0 {
+            
             ISSHeadingFactor = latitude - ISSLastLat < 0 ? -1 : 1
+            earthGlobe.addOrbitTrackAroundTheGlobe(lat: latitude, lon: longitude, headingFactor: ISSHeadingFactor)
+            
+            // Add footprint
+            earthGlobe.addISSViewingCircle(lat: latitude, lon: longitude)
+            
+            // Add satellite marker
+            earthGlobe.addISSMarker(lat: latitude, lon: longitude)
+            
+            // Add the Sun
+            let subSolarPoint = AstroCalculations.getSubSolarCoordinates()
+            earthGlobe.setUpTheSun(lat: subSolarPoint.latitude, lon: subSolarPoint.longitude)
+            
         }
-        ISSLastLat = latitude   // Saves last latitude to use in calculating north or south heading vector after the second track update
         
-        earthGlobe.addOrbitTrackAroundTheGlobe(lat: latitude, lon: longitude, headingFactor: ISSHeadingFactor)
-        earthGlobe.addISSMarker(lat: latitude, lon: longitude)
-        
-        let subSolarPoint = AstroCalculations.getSubSolarCoordinates()
-        earthGlobe.setUpTheSun(lat: subSolarPoint.latitude, lon: subSolarPoint.longitude)
-
-        hasRun = true
+        ISSLastLat = latitude   // Saves last coordinate to use in calculating north or south heading vector after the second track update
     }
+    
     
     /// Remove the last child node in the nodes array
     private func removeLastNode() {
@@ -117,6 +147,7 @@ final class GlobeViewModel: ObservableObject {
         }
     }
     
+    
     /// Set up and start the timer
     func startTimer() {
         if !timer.isValid {
@@ -124,10 +155,12 @@ final class GlobeViewModel: ObservableObject {
         }
     }
     
+    
     /// The selector the timer calls
     @objc func update() {
         updateEarthGlobe()
     }
+    
     
     /// Stop the timer
     func stop() {

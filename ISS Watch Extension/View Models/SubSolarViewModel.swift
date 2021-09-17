@@ -18,22 +18,26 @@ final class SubSolarViewModel: ObservableObject {
     private var timer                        = Timer()
     private let timerValue                   = 5.0
     
+    
     // MARK: - Methods
     
     init() {
         startUp()
     }
     
+    
     func startUp() {
         updateSubSolarPoint()   // Get the data once before starting the timer so we have something we can use immediately
         startTimer()
     }
+    
     
     private func updateSubSolarPoint() {
         let values        = AstroCalculations.getSubSolarCoordinates()
         subsolarLatitude  = CoordinateConversions.decimalCoordinatesToDegMinSec(coordinate: Double(values.latitude), format: Globals.coordinatesStringFormat, isLatitude: true)
         subsolarLongitude = CoordinateConversions.decimalCoordinatesToDegMinSec(coordinate: Double(values.longitude), format: Globals.coordinatesStringFormat, isLatitude: false)
     }
+    
     
     /// Set up and start the timer
     private func startTimer() {
@@ -42,10 +46,12 @@ final class SubSolarViewModel: ObservableObject {
         }
     }
     
+    
     /// The selector the timer calls
     @objc func update() {
         updateSubSolarPoint()
     }
+    
     
     /// Stop the timer
     func stop() {
