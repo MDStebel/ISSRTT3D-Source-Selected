@@ -22,10 +22,14 @@ final class GlobeViewModel: ObservableObject {
     private let apiKey                  = ApiKeys.ISSLocationKey
     private let timerValue              = 3.0
     
-    private var ISSHeadingFactor: Float = 0.0
-    private var ISSLastLat: Float
-    private var latitude: Float         = 0.0
-    private var longitude: Float        = 0.0
+    private var issHeadingFactor: Float = 0.0
+    private var tssHeadingFactor: Float = 0.0
+    private var issLastLat: Float
+    private var tssLastLat: Float
+    private var issLatitude: Float      = 0.0
+    private var issLongitude: Float     = 0.0
+    private var tssLatitude: Float      = 0.0
+    private var tssLongitude: Float     = 0.0
     private var timer                   = Timer()
     
     
@@ -35,7 +39,8 @@ final class GlobeViewModel: ObservableObject {
         
         earthGlobe         = EarthGlobe()
         hasRun             = false
-        ISSLastLat         = 0
+        issLastLat         = 0
+        tssLastLat         = 0
         
         initHelper()
         
@@ -49,7 +54,8 @@ final class GlobeViewModel: ObservableObject {
         
         earthGlobe         = EarthGlobe()
         hasRun             = false
-        ISSLastLat         = 0
+        issLastLat         = 0
+        tssLastLat         = 0
         
         initHelper()
     }
@@ -71,8 +77,10 @@ final class GlobeViewModel: ObservableObject {
     /// Get the current ISS coordinates
     func getISSPosition() {
         
+        let satelliteCodeNumber = StationsAndSatellites.iss.satelliteNORADCode
+        
         // Make sure we can create the URL
-        guard let ISSAPIEndpointURL = URL(string: apiEndpointString + "&apiKey=\(apiKey)") else { return }
+        guard let ISSAPIEndpointURL = URL(string: apiEndpointString + "\(satelliteCodeNumber)/0/0/0/1/" + "&apiKey=\(apiKey)") else { return }
         
         /// Task to get JSON data from API by sending request to API endpoint, parse response for ISS data, and then display ISS position, etc.
         let globeUpdateTask = URLSession.shared.dataTask(with: ISSAPIEndpointURL) { [ weak self ] (data, response, error) -> Void in
@@ -89,8 +97,47 @@ final class GlobeViewModel: ObservableObject {
                     let coordinates              = parsedISSOrbitalPosition.positions
                     
                     DispatchQueue.main.async {
-                        self?.latitude           = Float(coordinates[0].satlatitude)
-                        self?.longitude          = Float(coordinates[0].satlongitude)
+                        self?.issLatitude        = Float(coordinates[0].satlatitude)
+                        self?.issLongitude       = Float(coordinates[0].satlongitude)
+                    }
+                    
+                } catch {
+                    return
+                }
+            } else {
+                return
+            }
+        }
+        
+        globeUpdateTask.resume()
+    }
+    
+    
+    /// Get the current TSS coordinates
+    func getTSSPosition() {
+        
+        let satelliteCodeNumber = StationsAndSatellites.tss.satelliteNORADCode
+        
+        // Make sure we can create the URL
+        guard let TSSAPIEndpointURL = URL(string: apiEndpointString + "\(satelliteCodeNumber)/0/0/0/1/" + "&apiKey=\(apiKey)") else { return }
+        
+        /// Task to get JSON data from API by sending request to API endpoint, parse response for TSS data, and then display TSS position, etc.
+        let globeUpdateTask = URLSession.shared.dataTask(with: TSSAPIEndpointURL) { [ weak self ] (data, response, error) -> Void in
+            // Uses a capture list to capture a weak reference to self. This should prevent a retain cycle and allow ARC to release instance and reduce memory load.
+            
+            if let urlContent = data {
+                let decoder = JSONDecoder()
+                do {
+                    
+                    // Call JSON parser and if successful (i.e., doesn't return nil) map the coordinates
+                    let parsedTSSOrbitalPosition = try decoder.decode(SatelliteOrbitPosition.self, from: urlContent)
+                    
+                    // Get current TSS location
+                    let coordinates              = parsedTSSOrbitalPosition.positions
+                    
+                    DispatchQueue.main.async {
+                        self?.tssLatitude        = Float(coordinates[0].satlatitude)
+                        self?.tssLongitude       = Float(coordinates[0].satlongitude)
                     }
                     
                 } catch {
@@ -115,28 +162,46 @@ final class GlobeViewModel: ObservableObject {
             numberOfChildNodes -= 1
         }
         
-        // Where are we?
+        // Where are the satellites right now?
         getISSPosition()
+        getTSSPosition()
         
         // If we have a saved last coordinate, add the markers, otherwise we don't know which way the orbit is oriented
-        if ISSLastLat != 0 {
+        if issLastLat != 0 {
             
-            ISSHeadingFactor = latitude - ISSLastLat < 0 ? -1 : 1
-            earthGlobe.addOrbitTrackAroundTheGlobe(lat: latitude, lon: longitude, headingFactor: ISSHeadingFactor)
-            
-            // Add footprint
-            earthGlobe.addISSViewingCircle(lat: latitude, lon: longitude)
-            
-            // Add satellite marker
-            earthGlobe.addISSMarker(lat: latitude, lon: longitude)
-            
-            // Add the Sun
-            let subSolarPoint = AstroCalculations.getSubSolarCoordinates()
-            earthGlobe.setUpTheSun(lat: subSolarPoint.latitude, lon: subSolarPoint.longitude)
-            
+            DispatchQueue.main.async { [self] in
+                
+                // MARK: Set up ISS
+                issHeadingFactor = issLatitude - issLastLat < 0 ? -1 : 1
+                earthGlobe.addOrbitTrackAroundTheGlobe(for: .iss, lat: issLatitude, lon: issLongitude, headingFactor: issHeadingFactor)
+                
+                // Add footprint
+                earthGlobe.addISSViewingCircle(lat: issLatitude, lon: issLongitude)
+                
+                // Add satellite marker
+                earthGlobe.addISSMarker(lat: issLatitude, lon: issLongitude)
+                
+                
+                // MARK: Set up TSS
+                tssHeadingFactor = tssLatitude - tssLastLat < 0 ? -1 : 1
+                earthGlobe.addOrbitTrackAroundTheGlobe(for: .tss, lat: tssLatitude, lon: tssLongitude, headingFactor: tssHeadingFactor)
+                
+                // Add footprint
+                earthGlobe.addTSSViewingCircle(lat: tssLatitude, lon: tssLongitude)
+                
+                // Add satellite marker
+                earthGlobe.addTSSMarker(lat: tssLatitude, lon: tssLongitude)
+                
+                
+                // MARK: Set up the Sun at the current subsolar point
+                let subSolarPoint = AstroCalculations.getSubSolarCoordinates()
+                earthGlobe.setUpTheSun(lat: subSolarPoint.latitude, lon: subSolarPoint.longitude)
+            }
         }
         
-        ISSLastLat = latitude   // Saves last coordinate to use in calculating north or south heading vector after the second track update
+        // Saves last coordinate for each track to use in calculating north or south heading vector after the second track update
+        issLastLat = issLatitude
+        tssLastLat = tssLatitude
     }
     
     
@@ -156,7 +221,7 @@ final class GlobeViewModel: ObservableObject {
     }
     
     
-    /// The selector the timer calls
+    /// The selector that the timer calls
     @objc func update() {
         updateEarthGlobe()
     }

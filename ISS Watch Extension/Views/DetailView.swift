@@ -14,16 +14,27 @@ struct DetailView: View {
     @Environment(\.scenePhase) private var scenePhase
     
     // View models we're responding to
-    @StateObject private var issPosition   = ISSPositionViewModel()
+    @StateObject private var issPosition   = SatellitePositionViewModel(satellite: .iss)
+    @StateObject private var tssPosition   = SatellitePositionViewModel(satellite: .tss)
     @StateObject private var subSolarPoint = SubSolarViewModel()
     
     var body: some View {
+        
+        let issLatitudeFormatted  = issPosition.formattedLatitude
+        let issLongitudeFormatted = issPosition.formattedLongitude
+        let tssLatitudeFormatted  = tssPosition.formattedLatitude
+        let tssLongitudeFormatted = tssPosition.formattedLongitude
+        
         ScrollView {
             VStack {
                 
                 DataCellView(title: "ISS Position",
-                             latitude: issPosition.issLatitude,
-                             longitude: issPosition.issLongitude)
+                             latitude: issLatitudeFormatted,
+                             longitude: issLongitudeFormatted)
+                
+                DataCellView(title: "TSS Position",
+                             latitude: tssLatitudeFormatted,
+                             longitude: tssLongitudeFormatted)
                 
                 DataCellView(title: "Subsolar Point",
                              latitude: subSolarPoint.subsolarLatitude,
