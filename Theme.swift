@@ -33,6 +33,7 @@ struct Theme {
     static let usrGuide                                     = "User Guide Background"
     static let white                                        = "White"
     static let issrtt3dRedCGColor                           = UIColor(named: Theme.tint)?.cgColor
+    static let issrtt3dGoldCGColor                          = UIColor(named: Theme.TSSOrbitalColor)?.cgColor
     
     static var lastBackgroundColorWas: UIColor              = .white
     static var navigationBarTitleFontSize: CGFloat          = 0

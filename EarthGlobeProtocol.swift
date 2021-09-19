@@ -114,10 +114,10 @@ extension EarthGlobeProtocol {
         
         // If we're ready to show the orbital tracks, render them now
         if showISSOrbitNow {
-            globe.addOrbitTrackAroundTheGlobe(for: .ISS, lat: iLat, lon: iLon, headingFactor: ISSHeadingFactor)
+            globe.addOrbitTrackAroundTheGlobe(for: .iss, lat: iLat, lon: iLon, headingFactor: ISSHeadingFactor)
         }
         if addTSS && showTSSOrbitNow {
-            globe.addOrbitTrackAroundTheGlobe(for: .TSS, lat: tLat!, lon: tLon!, headingFactor: TSSHeadingFactor)
+            globe.addOrbitTrackAroundTheGlobe(for: .tss, lat: tLat!, lon: tLon!, headingFactor: TSSHeadingFactor)
         }
         
         // Add the ISS

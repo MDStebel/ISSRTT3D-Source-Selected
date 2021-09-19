@@ -45,42 +45,6 @@ class PassesTableViewController: UITableViewController, CLLocationManagerDelegat
         }
     }
     
-    // MARK: - Stations and/or other satellites that we can get pass predictions for
-    
-    /// Enum holds the NORAD codes for the stations and their corresponding names and images
-    private enum StationsAndSatellites: String, CaseIterable {
-        
-        case ISS    = "25544"
-        case TSS    = "48274"
-        
-        var stationName: String {
-            switch self {
-            case .ISS :
-                return "ISS"
-            case .TSS :
-                return "TSS"
-            }
-        }
-        
-        var selectionButton: UIImage {
-            switch self {
-            case .ISS :
-                return Constants.selectISSButton
-            case .TSS :
-                return Constants.selectTSSButton
-            }
-        }
-        
-        var stationImage: UIImage {
-            switch self {
-            case .ISS :
-                return UIImage(named: Globals.ISSIconFor3DGlobeView)!
-            case .TSS :
-                return UIImage(named: Globals.TSSIconFor3DGlobeView)!
-            }
-        }
-    }
-    
     
     // MARK: - Properties
     
@@ -112,7 +76,7 @@ class PassesTableViewController: UITableViewController, CLLocationManagerDelegat
     private var numberOfOverheadTimesActuallyReported   = 0
     private var overheadTimesList                       = [Passes.Pass]()
     private var rating                                  = 0
-    private var station: StationsAndSatellites             = .ISS {
+    private var station: StationsAndSatellites          = .iss {
         didSet{
             getStationID(for: station)
         }
@@ -120,10 +84,19 @@ class PassesTableViewController: UITableViewController, CLLocationManagerDelegat
     private var stationID                               = ""
     private var stationImage: UIImage?                  = nil
     private var stationName                             = ""
-    private var stationSelectionButton                  = Constants.selectISSButton
     private var userCurrentCoordinatesString            = ""
     private var userLatitude                            = 0.0
     private var userLongitude                           = 0.0
+    private var stationSelectionButton: UIImage {
+        switch station {
+        case .iss :
+            return Constants.selectISSButton
+        case .tss :
+            return Constants.selectTSSButton
+        case .none :
+        return Constants.selectISSButton
+        }
+    }
     
     // Change status bar to light color for this VC
     override var preferredStatusBarStyle: UIStatusBarStyle {
@@ -160,15 +133,16 @@ class PassesTableViewController: UITableViewController, CLLocationManagerDelegat
     /// Get  NORAD ID, name, and icon to use in background for selected target satellite/space station
     /// - Parameter station: Station selector value.
     private func getStationID(for station: StationsAndSatellites) {
+        
         stationImage           = station.stationImage
         stationName            = station.stationName
-        stationID              = station.rawValue
-        stationSelectionButton = station.selectionButton
+        stationID              = station.satelliteNORADCode
         selectTarget.image     = stationSelectionButton
     }
     
     
     private func setUpDateFormatter() {
+        
         dateFormatterForDate.dateFormat = Globals.outputDateOnlyFormatString
         dateFormatterForTime.dateFormat = Globals.outputTimeOnlyFormatString
     }
@@ -318,7 +292,7 @@ class PassesTableViewController: UITableViewController, CLLocationManagerDelegat
         )
         
         // Add selection for each of the stations/satellites for which we can get pass predictions
-        for target in StationsAndSatellites.allCases {
+        for target in [StationsAndSatellites.iss, StationsAndSatellites.tss] {
             alertController.addAction(UIAlertAction(title: "\(target.stationName)", style: .default) { (choice) in
                 self.station = target
                 self.restartGettingUserLocation()
@@ -338,6 +312,7 @@ class PassesTableViewController: UITableViewController, CLLocationManagerDelegat
     /// Decode the raw passes in the JSON data
     /// - Parameter data: JSON passes data
     private func decodeJSONPasses(withData data: Data) {
+        
         let decoder = JSONDecoder()
 
         do {
@@ -384,7 +359,7 @@ class PassesTableViewController: UITableViewController, CLLocationManagerDelegat
         }
         
         // Create the API URL request from endpoint. If not succesful, then return
-        let URLrequestString = Constants.endpointForPassesAPI + "/\(stationID)/\(userLatitude)/\(userLongitude)/\(Constants.altitude)/\(numberOfDays)/\(Constants.minObservationTime)/&apiKey=\(Constants.apiKey)"
+        let URLrequestString = Constants.endpointForPassesAPI + "\(stationID)/\(userLatitude)/\(userLongitude)/\(Constants.altitude)/\(numberOfDays)/\(Constants.minObservationTime)/&apiKey=\(Constants.apiKey)"
         
         guard let URLRequest = URL(string: URLrequestString) else { return }
         

@@ -22,15 +22,15 @@ private let whatsNew = WhatsNew(
         WhatsNew.Item(
             title: "Apple Watch Support",
             subtitle: """
-                      New! Companion Apple Watch app provides interactive 3D globe and detail view with ISS position and subsolar point coordinates. More features coming soon.
+                      New! Companion Apple Watch app provides interactive 3D globe and detail view showing ISS and TSS positions and subsolar point coordinates. More features coming soon.
                       """,
             image: UIImage(named: "icons8-megaphone_filled.imageset")
         ),
         WhatsNew.Item(
             title: "Improvements & Fixes",
             subtitle: """
-                      Watch App improvements: Added ISS footprint circle and reset button to globe view.
-                      General: More under-the-hood stuff.
+                      • Apple Watch App improvements: Now tracks the Chinese Space Station, Tiangong (TSS), in the Watch globe view. Added ISS and TSS footprint circles. Added a reset button to globe view.
+                      • General: Bug fixes and other under-the-hood stuff.
                       """,
             image: UIImage(named: "icons8-bug_filled")
         ),

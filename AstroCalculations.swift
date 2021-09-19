@@ -197,7 +197,7 @@ public struct AstroCalculations {
         if subSolarLon < -Globals.oneEightyDegrees && GMT <= Globals.noonTime {
             lonCorrection = Globals.oneEightyDegrees
         } else if subSolarLon < -Globals.oneEightyDegrees && GMT >= Globals.noonTime {
-            lonCorrection = localHour >= GMT ? 0 : Globals.oneEightyDegrees
+            lonCorrection = 0 //localHour >= GMT ? 0 : Globals.oneEightyDegrees
         } else if GMT >= Globals.numberOfHoursInADay {
             lonCorrection = Globals.oneEightyDegrees
         } else {
