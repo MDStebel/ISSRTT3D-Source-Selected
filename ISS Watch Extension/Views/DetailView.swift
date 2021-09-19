@@ -46,14 +46,12 @@ struct DetailView: View {
         
         // Update the coordinates when this view appears
         .onAppear() {
-            issPosition.startUp()
-            subSolarPoint.startUp()
+            start()
         }
 
         // Stop updating when this view disappears
         .onDisappear() {
-            issPosition.stop()
-            subSolarPoint.stop()
+            stop()
         }
 
         // Respond to lifecycle phases
@@ -61,20 +59,29 @@ struct DetailView: View {
             switch phase {
             case .active:
                 // The scene has become active, so update the subsolar point
-                issPosition.startUp()
-                subSolarPoint.startUp()
+                start()
             case .inactive:
                 // The app has become inactive, so stop the timer
-                issPosition.stop()
-                subSolarPoint.stop()
+                stop()
             case .background:
                 // The app has moved to the background
-                issPosition.stop()
-                subSolarPoint.stop()
+                stop()
             @unknown default:
                 fatalError("The app has entered an unknown state.")
             }
         }
+    }
+    
+    private func start() {
+        issPosition.startUp()
+        tssPosition.startUp()
+        subSolarPoint.startUp()
+    }
+    
+    private func stop() {
+        issPosition.stop()
+        tssPosition.stop()
+        subSolarPoint.stop()
     }
 }
 
