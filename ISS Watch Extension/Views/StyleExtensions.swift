@@ -12,14 +12,16 @@ import SwiftUI
 /// Create new colors from ISSRTT3D theme colors and other colors
 extension Color {
     
-    static let ISSRTT3DRed        = Color(Theme.tint)
-    static let ISSRTT3DGrey       = Color(Theme.usrGuide)
     static let ISSRTT3DBackground = Color(red: 0.2, green: 0.2, blue: 0.2, opacity: 0.75)
+    static let ISSRTT3DGold       = Color(Theme.issrtt3dGoldCGColor!)
+    static let ISSRTT3DGrey       = Color(Theme.usrGuide)
+    static let ISSRTT3DRed        = Color(Theme.tint)
 }
 
 
 extension Font {
-    static let ISSRTT3DFont = Font.custom(Theme.nasa, size: 15.0)
+    
+    static let ISSRTT3DFont       = Font.custom(Theme.nasa, size: 15.0)
 }
 
 

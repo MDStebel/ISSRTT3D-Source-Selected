@@ -14,42 +14,51 @@ struct DataCellView: View {
     let title: String
     let latitude: String
     let longitude: String
+    let sidebarColor: Color
     
     var body: some View {
-        VStack {
-            HStack {
-                Text(title)
-                    .font(.subheadline)
-                    .foregroundColor(.gray)
+        HStack {
+            Rectangle()                             // Sidebar with color indicator
+                .frame(width: 5)
+                .foregroundColor(sidebarColor)
+            VStack {                                // Data
+                HStack {
+                    Text(title)
+                        .font(.subheadline)
+                        .foregroundColor(.gray)
+                    Spacer()
+                }
                 Spacer()
-            }
-            Spacer()
-            HStack (alignment: .top) {
-                HStack {
-                    Spacer()
-                    Text(latitude)
-                        .font(.custom(Theme.appFont, size: 17))
+                HStack (alignment: .top) {
+                    HStack {
+                        Spacer()
+                        Text(latitude)
+                            .font(.custom(Theme.appFont, size: 17))
+                            .bold()
+                    }
+                    Text("LAT")
+                        .font(.subheadline)
+                        .foregroundColor(.ISSRTT3DRed)
                         .bold()
                 }
-                Text("LAT")
-                    .font(.subheadline)
-                    .foregroundColor(.ISSRTT3DRed)
-                    .bold()
-            }
-            HStack(alignment: .top) {
-                HStack {
-                    Spacer()
-                    Text(longitude)
-                        .font(.custom(Theme.appFont, size: 17))
+                HStack(alignment: .top) {
+                    HStack {
+                        Spacer()
+                        Text(longitude)
+                            .font(.custom(Theme.appFont, size: 17))
+                            .bold()
+                    }
+                    Text("LON")
+                        .font(.subheadline)
+                        .foregroundColor(.ISSRTT3DRed)
                         .bold()
                 }
-                Text("LON")
-                    .font(.subheadline)
-                    .foregroundColor(.ISSRTT3DRed)
-                    .bold()
             }
+            .padding([.top, .bottom], 5)
+            .padding([.leading], 1)
+            .padding([.trailing], 6)
         }
-        .padding()
+        .frame(height: 78)
         .background(Color.ISSRTT3DBackground)
         .cornerRadius(5.0)
     }
@@ -57,6 +66,6 @@ struct DataCellView: View {
 
 struct DataCellView_Previews: PreviewProvider {
     static var previews: some View {
-        DataCellView(title: "Title", latitude: "test", longitude: "test")
+        DataCellView(title: "Title", latitude: "test", longitude: "test", sidebarColor: .blue)
     }
 }

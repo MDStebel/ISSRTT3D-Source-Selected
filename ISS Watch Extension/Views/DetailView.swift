@@ -10,6 +10,7 @@ import SwiftUI
 import SceneKit
 
 struct DetailView: View {
+    
     // Get the phase of the scene
     @Environment(\.scenePhase) private var scenePhase
     
@@ -30,15 +31,18 @@ struct DetailView: View {
                 
                 DataCellView(title: "ISS Position",
                              latitude: issLatitudeFormatted,
-                             longitude: issLongitudeFormatted)
+                             longitude: issLongitudeFormatted,
+                             sidebarColor: .ISSRTT3DRed)
                 
                 DataCellView(title: "TSS Position",
                              latitude: tssLatitudeFormatted,
-                             longitude: tssLongitudeFormatted)
+                             longitude: tssLongitudeFormatted,
+                             sidebarColor: .ISSRTT3DGold)
                 
                 DataCellView(title: "Subsolar Point",
                              latitude: subSolarPoint.subsolarLatitude,
-                             longitude: subSolarPoint.subsolarLongitude)
+                             longitude: subSolarPoint.subsolarLongitude,
+                             sidebarColor: .white)
             }
         }
         .ignoresSafeArea(edges: .bottom)

@@ -10,6 +10,7 @@ import SwiftUI
 import SceneKit
 
 struct GlobeView: View {
+    
     // Get the phase of the scene
     @Environment(\.scenePhase) private var scenePhase
     
