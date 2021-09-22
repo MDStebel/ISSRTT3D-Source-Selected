@@ -18,6 +18,7 @@ struct GlobeView: View {
     @StateObject private var globeViewModel = GlobeViewModel()
     
     var body: some View {
+        
         NavigationView {
             ZStack {
                 
@@ -59,6 +60,7 @@ struct GlobeView: View {
                 }
             }
             .navigationTitle("Globe")
+            .navigationBarTitleDisplayMode(.inline) // We want the small navigation title
             .ignoresSafeArea(edges: [.top,.bottom])
         }
     }

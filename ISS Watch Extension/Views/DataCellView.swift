@@ -21,7 +21,7 @@ struct DataCellView: View {
             Rectangle()                             // Sidebar with color indicator
                 .frame(width: 5)
                 .foregroundColor(sidebarColor)
-            VStack {                                // Data
+            VStack {                                // Coordinates data here
                 HStack {
                     Text(title)
                         .font(.subheadline)
