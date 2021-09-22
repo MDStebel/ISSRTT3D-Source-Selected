@@ -22,13 +22,12 @@ extension EarthGlobe {
         
         let ISS = EarthGlobeMarkers(for: .iss, using: Globals.ISSIconFor3DGlobeView, lat: lat, lon: lon, isInOrbit: true)
         
-        #if !os(watchOS)
+#if !os(watchOS)
         let pulse = true
-        #else
+#else
         let pulse = false
-        #endif
+#endif
         self.addMarker(ISS, shouldPulse: pulse)
-        
     }
     
     
@@ -40,13 +39,12 @@ extension EarthGlobe {
         
         let TSS = EarthGlobeMarkers(for: .tss, using: Globals.TSSIconFor3DGlobeView, lat: lat, lon: lon, isInOrbit: true)
         
-        #if !os(watchOS)
+#if !os(watchOS)
         let pulse = true
-        #else
+#else
         let pulse = false
-        #endif
+#endif
         self.addMarker(TSS, shouldPulse: pulse)
-        
     }
     
     
@@ -57,9 +55,7 @@ extension EarthGlobe {
     public func addISSViewingCircle(lat: Float, lon: Float) {
         
         let viewingCircle = EarthGlobeMarkers(for: .none, using: Globals.ISSViewingCircleGraphic, lat: lat, lon: lon, isInOrbit: false)
-        
         self.addMarker(viewingCircle, shouldPulse: false)
-        
     }
     
     
@@ -70,9 +66,7 @@ extension EarthGlobe {
     public func addTSSViewingCircle(lat: Float, lon: Float) {
         
         let viewingCircle = EarthGlobeMarkers(for: .none, using: Globals.TSSViewingCircleGraphic, lat: lat, lon: lon, isInOrbit: false)
-        
         self.addMarker(viewingCircle, shouldPulse: false)
-        
     }
     
     
@@ -178,11 +172,10 @@ extension EarthGlobe {
         
         // Apply the transform
         orbitTrackNode.transform                       = compositeRotationMatrix
-        
     }
     
     
-    #if !os(watchOS)
+#if !os(watchOS)
     
     /// Start/stop autospinning the globe
     /// - Parameter run: Start if true. Stop if false.
@@ -195,23 +188,20 @@ extension EarthGlobe {
         } else if !run && globe.hasActions {
             globe.removeAllActions()
         }
-        
     }
     
-    #endif
+#endif
     
     
     /// Add a marker to the globe and make it pulse
     public func addMarker(_ marker: EarthGlobeMarkers, shouldPulse: Bool) {
         
         globe.addChildNode(marker.node)
-        
-        #if !os(watchOS)
+#if !os(watchOS)
         if Globals.pulseISSMarkerForGlobe && shouldPulse {
             marker.addPulseAnimation()
         }
-        #endif
-        
+#endif
     }
     
     
@@ -221,7 +211,6 @@ extension EarthGlobe {
         if let nodeToRemove = globe.childNodes.last {
             nodeToRemove.removeFromParentNode()
         }
-        
     }
     
     
@@ -230,7 +219,6 @@ extension EarthGlobe {
     public func getNumberOfChildNodes() -> Int {
         
         return globe.childNodes.count
-        
     }
     
     
@@ -253,7 +241,6 @@ extension EarthGlobe {
         sun.light!.intensity   = sunlightIntensity      // Sunlight intensity in lumens
         
         globe.addChildNode(sun)
-        
     }
     
     
@@ -281,7 +268,6 @@ extension EarthGlobe {
         let position  = SCNVector3(x: sceneKitX, y: sceneKitY, z: sceneKitZ )
         
         return position
-        
     }
     
     
@@ -296,7 +282,5 @@ extension EarthGlobe {
     func SCNMatrix4RotateF(_ src: SCNMatrix4, _ angle : Float, _ x : Float, _ y : Float, _ z : Float) -> SCNMatrix4 {
         
         return SCNMatrix4Rotate(src, angle, x, y, z)
-        
     }
-    
 }

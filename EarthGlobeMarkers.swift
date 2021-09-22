@@ -1,5 +1,5 @@
 //
-//  ISSMarkerForEarthGlobe.swift
+//  EarthGlobeMarkers.swift
 //  ISS Real-Time Tracker 3D
 //
 //  Created by Michael Stebel on 8/7/16.
@@ -13,13 +13,16 @@ import SceneKit
 /// Model for markers to be added to the Earth model
 final class EarthGlobeMarkers {
     
-    var image: String
+    // MARK: - Properties
+    
     var altitude: Float         = Globals.ISSOrbitalAltitudeFactor
+    var image: String
     var node: SCNNode!                                                                                 // The SceneKit node for this marker
     var widthAndHeight: CGFloat
     
     
-//    #if !os(watchOS)
+    // MARK: - Methods
+    
     /// Initialize a marker to be added to the Earth globe
     /// - Parameters:
     ///   - satellite: Type of satellite as a SatelliteID
@@ -68,7 +71,7 @@ final class EarthGlobeMarkers {
         
     }
     
-    #if !os(watchOS)
+#if !os(watchOS)
     /// Method to add a pulsing effect to the marker node
     func addPulseAnimation() {
         
@@ -84,6 +87,6 @@ final class EarthGlobeMarkers {
         node.addAnimation(animation, forKey: nil)
         
     }
-    #endif
+#endif
     
 }
