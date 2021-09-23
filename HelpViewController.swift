@@ -68,17 +68,16 @@ class HelpViewController: UIViewController, WKUIDelegate, WKNavigationDelegate {
     override func viewWillAppear(_ animated: Bool) {
         super .viewWillAppear(animated)
         
-        // Set font and attributes for navigation bar
-        let titleFontSize = Theme.navigationBarTitleFontSize
-        if let titleFont = UIFont(name: Constants.fontForTitle, size: titleFontSize) {
-            let attributes = [NSAttributedString.Key.font: titleFont, .foregroundColor: UIColor.white]
-            navigationController?.navigationBar.titleTextAttributes = attributes
-            navigationController?.navigationBar.barTintColor = UIColor(named: Theme.tint)
-        }
+        // Set navigation and status bar font and color to our Theme
+        let titleFontSize                   = Theme.navigationBarTitleFontSize
+        let barAppearance                   = UINavigationBarAppearance()
+        barAppearance.backgroundColor       = UIColor(named: Theme.tint)
+        barAppearance.titleTextAttributes   = [.font : UIFont(name: Constants.fontForTitle, size: titleFontSize) as Any]
+        navigationItem.standardAppearance   = barAppearance
+        navigationItem.scrollEdgeAppearance = barAppearance
         
         // Show the help content
         helpTextWebView.loadHTMLString(helpContentHTML, baseURL: nil)
-        
     }
     
     

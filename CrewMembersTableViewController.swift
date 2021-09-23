@@ -95,24 +95,15 @@ class CrewMembersTableViewController: UITableViewController, TableAnimatable {
     
     
     override func viewWillAppear(_ animated: Bool) {
-        
         super.viewWillAppear(animated)
-
-        // Set font and attributes for navigation bar
-        let titleFontSize = Theme.navigationBarTitleFontSize
-        if let titleFont = UIFont(name: Constants.fontForTitle, size: titleFontSize) {
-            let attributes = [NSAttributedString.Key.font: titleFont, .foregroundColor: UIColor.white]
-            navigationController?.navigationBar.titleTextAttributes = attributes
-            navigationController?.navigationBar.barTintColor = UIColor(named: Theme.tint)
-        }
         
-//        // Use appropriate background color for light or dark mode
-//        if traitCollection.userInterfaceStyle == .light {
-//            crewTable.backgroundColor = UIColor(named: "Alternate Background")
-//        } else {
-//            crewTable.backgroundColor = UIColor(named: "Flipside View Background Color")
-//        }
-        
+        /// Set navigation and status bar font and color to our Theme
+        let titleFontSize                   = Theme.navigationBarTitleFontSize
+        let barAppearance                   = UINavigationBarAppearance()
+        barAppearance.backgroundColor       = UIColor(named: Theme.tint)
+        barAppearance.titleTextAttributes   = [.font : UIFont(name: Constants.fontForTitle, size: titleFontSize) as Any]
+        navigationItem.standardAppearance   = barAppearance
+        navigationItem.scrollEdgeAppearance = barAppearance
     }
     
     
@@ -126,9 +117,7 @@ class CrewMembersTableViewController: UITableViewController, TableAnimatable {
             DispatchQueue.global(qos: .userInteractive).async {
                 self.getCurrrentCrewMembers()
             }
-            
         }
-        
     }
     
     

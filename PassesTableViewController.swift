@@ -167,14 +167,13 @@ class PassesTableViewController: UITableViewController, CLLocationManagerDelegat
     override func viewWillAppear(_ animated: Bool) {
         super .viewWillAppear(animated)
         
-        // Set font and attributes for navigation bar
-        let titleFontSize = Theme.navigationBarTitleFontSize
-        if let titleFont = UIFont(name: Constants.fontForTitle, size: titleFontSize) {
-            let attributes = [NSAttributedString.Key.font: titleFont, .foregroundColor: UIColor.white]
-            navigationController?.navigationBar.titleTextAttributes = attributes
-            navigationController?.navigationBar.barTintColor = UIColor(named: Theme.tint)
-        }
-
+        // Set navigation and status bar font and color to our Theme
+        let titleFontSize                   = Theme.navigationBarTitleFontSize
+        let barAppearance                   = UINavigationBarAppearance()
+        barAppearance.backgroundColor       = UIColor(named: Theme.tint)
+        barAppearance.titleTextAttributes   = [.font : UIFont(name: Constants.fontForTitle, size: titleFontSize) as Any]
+        navigationItem.standardAppearance   = barAppearance
+        navigationItem.scrollEdgeAppearance = barAppearance
     }
     
     
@@ -378,13 +377,10 @@ class PassesTableViewController: UITableViewController, CLLocationManagerDelegat
                     cannotConnectToInternetAlert()
                     promptLabel.text = "Connection Error"
                 }
-                
             }
-            
         }
         
         getPassesDataFromAPI.resume()
-        
     }
     
     
@@ -449,7 +445,6 @@ class PassesTableViewController: UITableViewController, CLLocationManagerDelegat
                 self.alert(for: "Failed", message: "Could not add the \(self.station.stationName) pass reminder to your calendar")
             }
         }
-        
     }
     
     
@@ -478,7 +473,6 @@ class PassesTableViewController: UITableViewController, CLLocationManagerDelegat
         default :
             break
         }
-        
     }
     
     

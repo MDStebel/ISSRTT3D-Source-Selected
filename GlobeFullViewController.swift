@@ -108,6 +108,8 @@ class GlobeFullViewController: UIViewController, AVAudioPlayerDelegate, EarthGlo
             globeBackgroundImageName = Globals.orionNebula
         case 3 :
             globeBackgroundImageName = Globals.tarantulaNebula
+        case 4 :
+            globeBackgroundImageName = Globals.blackBackgroundImage
         default :
             globeBackgroundImageName = Globals.hubbleDeepField
         }
@@ -137,19 +139,17 @@ class GlobeFullViewController: UIViewController, AVAudioPlayerDelegate, EarthGlo
     
 
     override func viewWillAppear(_ animated: Bool) {
-        
         super.viewWillAppear(animated)
         
-        // Set font and attributes for navigation bar
-        let titleFontSize = Theme.navigationBarTitleFontSize
-        if let titleFont = UIFont(name: Constants.fontForTitle, size: titleFontSize) {
-            let attributes = [NSAttributedString.Key.font: titleFont, .foregroundColor: UIColor.white]
-            navigationController?.navigationBar.titleTextAttributes = attributes
-            navigationController?.navigationBar.barTintColor = UIColor(named: Theme.tint)
-        }
+        // Set navigation and status bar font and color to our Theme
+        let titleFontSize                   = Theme.navigationBarTitleFontSize
+        let barAppearance                   = UINavigationBarAppearance()
+        barAppearance.backgroundColor       = UIColor(named: Theme.tint)
+        barAppearance.titleTextAttributes   = [.font : UIFont(name: Constants.fontForTitle, size: titleFontSize) as Any]
+        navigationItem.standardAppearance   = barAppearance
+        navigationItem.scrollEdgeAppearance = barAppearance
         
         setUpEarthGlobeScene(for: fullGlobe, in: fullScreenGlobeView, hasTintedBackground: false)
-        
     }
     
     

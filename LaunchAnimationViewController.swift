@@ -102,7 +102,6 @@ class LaunchAnimationViewController: UIViewController {
 
         scaleFactorForAppNameTitleForLaunchAnimation = 4.0
         trans2 = trans2.scaledBy(x: scaleFactorForAppNameTitleForLaunchAnimation, y: scaleFactorForAppNameTitleForLaunchAnimation)
-        
     }
     
     
@@ -121,7 +120,6 @@ class LaunchAnimationViewController: UIViewController {
         }
         
         trans3 = trans3.scaledBy(x: scaleFactorFor3DTextImageForLaunchAnimation, y: scaleFactorFor3DTextImageForLaunchAnimation)
-        
     }
     
     
@@ -133,7 +131,6 @@ class LaunchAnimationViewController: UIViewController {
         createTransformationsForTitle()
         createTransformationsFor3D()
         getVersionAndCopyrightData()
-        
     }
     
 
@@ -162,7 +159,6 @@ class LaunchAnimationViewController: UIViewController {
         completion: { [self] (completedOK) in
             performSegue(withIdentifier: segueToMainViewController, sender: self)           // Now, segue to the Tracking view controller
         })
-        
     }
     
     
@@ -174,7 +170,6 @@ class LaunchAnimationViewController: UIViewController {
             Globals.versionNumber   = versionNumber
             Globals.buildNumber     = buildNumber
         }
-        
     }
     
     
@@ -188,7 +183,6 @@ class LaunchAnimationViewController: UIViewController {
         if currentDevice.model.hasPrefix("iPhone")  {
             performSegue(withIdentifier: segueToMainViewController, sender: self)
         }
-        
     }
 
     
@@ -198,7 +192,6 @@ class LaunchAnimationViewController: UIViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
 
         guard let segueInProcess = segue.identifier, segueInProcess == segueToMainViewController else { return }  // Prevents crash if a segue is unnamed
-
     }
 
     

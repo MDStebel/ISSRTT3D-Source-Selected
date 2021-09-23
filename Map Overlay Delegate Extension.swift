@@ -20,7 +20,5 @@ extension TrackingViewController {
         renderer.lineCap     = .butt
         
         return renderer
-        
     }
-    
 }
