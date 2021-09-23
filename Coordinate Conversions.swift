@@ -11,7 +11,7 @@ import Foundation
 /// A set of format converters for latitude and longitude coordinates
 struct CoordinateConversions: ConvertsToDegreesMinutesSeconds {
     
-    #if !os(watchOS)
+#if !os(watchOS)
     
     /// Convert coordinates from decimal to degrees, minutes, seconds, and direction
     ///
@@ -27,17 +27,17 @@ struct CoordinateConversions: ConvertsToDegreesMinutesSeconds {
         latSeconds = abs(latSeconds % Int(Globals.numberOfSecondsInAnHour))
         let latMinutes = latSeconds / Int(Globals.numberOfSecondsInAMinute)
         latSeconds %= Int(Globals.numberOfSecondsInAMinute)
-
+        
         var longSeconds = Int(longitude * Double(Globals.numberOfSecondsInAnHour))
         let longDegrees = longSeconds / Int(Globals.numberOfSecondsInAnHour)
         longSeconds = abs(longSeconds % Int(Globals.numberOfSecondsInAnHour))
         let longMinutes = longSeconds / Int(Globals.numberOfSecondsInAMinute)
         longSeconds %= Int(Globals.numberOfSecondsInAMinute)
-
+        
         return String(format: format, abs(latDegrees), latMinutes, latSeconds, { latDegrees >= 0 ? "N" : "S" }(), abs(longDegrees), longMinutes, longSeconds, { longDegrees >= 0 ? "E" : "W" }())
     }
     
-    #else // watchOS
+#else // watchOS
     
     /// Convert an individual coordinate from decimal to degrees, minutes, seconds, and direction
     ///
@@ -45,6 +45,7 @@ struct CoordinateConversions: ConvertsToDegreesMinutesSeconds {
     /// - Parameters:
     ///   - coordinate: An individual coordinate (i.e., lat or lon) as a Double.
     ///   - format: String containing the format to use in the conversion.
+    ///   - isLatitude: If true, this is a latitude, else it's a longitude
     /// - Returns: The coordinate string in deg min sec format.
     static func decimalCoordinatesToDegMinSec(coordinate: Double, format: String, isLatitude: Bool) -> String {
         
@@ -57,16 +58,16 @@ struct CoordinateConversions: ConvertsToDegreesMinutesSeconds {
         seconds %= Int(Globals.numberOfSecondsInAMinute)
         
         if isLatitude {
-            cardinal = degrees >= 0 ? "N" : "S"
+            cardinal = coordinate >= 0 ? "N" : "S"
         } else {
-            cardinal = degrees >= 0 ? "E" : "W"
+            cardinal = coordinate >= 0 ? "E" : "W"
         }
-
+        
         let coordinateText = String(format: format, abs(degrees), minutes, seconds, cardinal)
         return coordinateText
     }
     
-    #endif
+#endif
     
     
     /// Convert coordinates from decimal to degrees, minutes, and direction
@@ -83,13 +84,13 @@ struct CoordinateConversions: ConvertsToDegreesMinutesSeconds {
         latSeconds = abs(latSeconds % Int(Globals.numberOfSecondsInAnHour))
         let latMinutes = latSeconds / Int(Globals.numberOfSecondsInAMinute)
         latSeconds %= Int(Globals.numberOfSecondsInAMinute)
-
+        
         var longSeconds = Int(longitude * Double(Globals.numberOfSecondsInAnHour))
         let longDegrees = longSeconds / Int(Globals.numberOfSecondsInAnHour)
         longSeconds = abs(longSeconds % Int(Globals.numberOfSecondsInAnHour))
         let longMinutes = longSeconds / Int(Globals.numberOfSecondsInAMinute)
         longSeconds %= Int(Globals.numberOfSecondsInAMinute)
-
+        
         return String(format: format, abs(latDegrees), latMinutes, { latDegrees >= 0 ? "N" : "S" }(), abs(longDegrees), longMinutes, { longDegrees >= 0 ? "E" : "W" }())
     }
     
@@ -104,7 +105,7 @@ struct CoordinateConversions: ConvertsToDegreesMinutesSeconds {
     /// - Returns: Decimal representation of coordinates as a Double
     static func degMinSecCoordinatesToDecimal(degrees: Double, minutes: Double, seconds: Double, direction: String) -> Double {
         let sign = (direction == "S" || direction == "W") ? -1.0 : 1.0
-
+        
         return (degrees + (minutes + seconds / Double(Globals.numberOfSecondsInAMinute)) / Double(Globals.numberOfSecondsInAMinute)) * sign
     }
     
