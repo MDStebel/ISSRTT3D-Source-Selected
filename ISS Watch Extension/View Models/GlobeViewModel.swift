@@ -152,7 +152,7 @@ final class GlobeViewModel: ObservableObject {
     }
     
     
-    /// Update the globe scene for the new coordinates
+    /// The engine that powers this view model. Updates the globe scene for the new coordinates
     private func updateEarthGlobe() {
         
         // We need to remove each of the nodes we've added before adding them again at new coordinates, or we get an f'ng mess!

@@ -21,10 +21,12 @@ struct DetailView: View {
     
     var body: some View {
         
-        let issLatitudeFormatted  = issPosition.formattedLatitude
-        let issLongitudeFormatted = issPosition.formattedLongitude
-        let tssLatitudeFormatted  = tssPosition.formattedLatitude
-        let tssLongitudeFormatted = tssPosition.formattedLongitude
+        let issLatitudeFormatted   = issPosition.formattedLatitude
+        let issLongitudeFormatted  = issPosition.formattedLongitude
+        let subsolarPointLatitude  = subSolarPoint.subsolarLatitude
+        let subsolarPointLongitude = subSolarPoint.subsolarLongitude
+        let tssLatitudeFormatted   = tssPosition.formattedLatitude
+        let tssLongitudeFormatted  = tssPosition.formattedLongitude
         
         ScrollView {
             VStack {
@@ -40,8 +42,8 @@ struct DetailView: View {
                              sidebarColor: .ISSRTT3DGold)
                 
                 DataCellView(title: "Subsolar Point",
-                             latitude: subSolarPoint.subsolarLatitude,
-                             longitude: subSolarPoint.subsolarLongitude,
+                             latitude: subsolarPointLatitude,
+                             longitude: subsolarPointLongitude,
                              sidebarColor: .white)
             }
         }
