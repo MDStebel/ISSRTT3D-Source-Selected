@@ -28,7 +28,6 @@ struct Globals {
     static var buildNumber                                   = ""
     static var cameraAltitude: Float                         = 1.85
     static var copyrightString                               = ""
-    
     static var displayGlobe                                  = true
     static var displayZoomFactorBelowMarkerIsOn              = true
     static var globeBackgroundImageDefaultSelectionSegment   = 0
@@ -104,6 +103,7 @@ struct Globals {
     static let TSSOrbitalAltitudeFactor                      = globeRadiusFactor * (1 + TSSAltitudeInKM / earthRadiusInKM) * 1.01
     static let TSSViewingCircleGraphic                       = "TSS-Visibility-Circle"
     static let azimuthFormat                                 = "%3.0f"
+    static let blackBackgroundImage                          = "blackBackgroundImage"
     static let coordinatesStringFormatShortForm              = "%3d° %02d' %@  %3d° %02d' %@"
     static let dateFormatStringEuropeanForm                  = "yyyy-MM-dd"
     static let degreesLongitudePerHour: Double               = 15
@@ -118,9 +118,9 @@ struct Globals {
     static let floatingPointWithThreePlusOneDecimalPlace     = "%3.1f"
     static let floatingPointWithTwoPlusOneDecimalPlace       = "%2.1f"
     static let helpChar                                      = "(?)"
-    static let hubbleDeepField                               = "Hubble Legacy Field Crop 2800px.png"
+    static let hubbleDeepField                               = "Hubble Legacy Field Crop 2800px"
     static let julianDateForJan011970At0000GMT               = 2440587.5
-    static let milkyWay                                      = "Milky Way Correct Rotation in the Sky Square.png"
+    static let milkyWay                                      = "Milky Way Correct Rotation in the Sky Square"
     static let ninetyDegrees: Float                          = 90
     static let noonTime: Double                              = 12
     static let numberOfDaysInACentury: Double                = 36525
@@ -142,7 +142,7 @@ struct Globals {
     static let radiansToDegrees: Double                      = 1 / degreesToRadians
     static let settingsChar                                  = "⚙"
     static let spacer                                        = "  "
-    static let tarantulaNebula                               = "Tarantula Nebula in the Large Magellanic Cloud.png"
+    static let tarantulaNebula                               = "Tarantula Nebula in the Large Magellanic Cloud"
     static let threeSixtyDegrees: Float                      = 360
     static let twoPi: Double                                 = .pi * 2
     static let zero: Float                                   = 0.0
