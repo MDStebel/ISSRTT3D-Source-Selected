@@ -45,9 +45,9 @@ struct MDSButtonModifier: ViewModifier {
     func body(content: Content) -> some View {
         content
             .frame(width: 30, height: 30, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
-            .background(Color.white)
+            .background(Color.ISSRTT3DRed)
             .font(.subheadline)
-            .foregroundColor(.ISSRTT3DRed)
+            .foregroundColor(.white)
             .cornerRadius(15)
             .padding([.leading, .trailing])
             .padding([.bottom], 3)

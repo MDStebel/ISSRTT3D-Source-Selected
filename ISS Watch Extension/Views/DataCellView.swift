@@ -1,5 +1,5 @@
 //
-//  CustomDataCellView.swift
+//  DataCellView.swift
 //  ISS Real-Time Tracker
 //
 //  Created by Michael Stebel on 9/17/21.
@@ -54,7 +54,7 @@ struct DataCellView: View {
                         .bold()
                 }
             }
-            .padding([.top, .bottom], 5)
+            .padding([.vertical], 5)
             .padding([.leading], 1)
             .padding([.trailing], 6)
         }

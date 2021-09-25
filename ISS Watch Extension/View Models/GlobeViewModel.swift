@@ -16,7 +16,7 @@ final class GlobeViewModel: ObservableObject {
     @Published var earthGlobe: EarthGlobe
     @Published var globeMainNode: SCNNode?
     @Published var globeScene: SCNScene?
-    @Published var hasRun: Bool
+    @Published var isStartingUp: Bool
     
     private let apiEndpointString                                  = ApiEndpoints.issTrackerAPIEndpointC
     private let apiKey                                             = ApiKeys.ISSLocationKey
@@ -39,7 +39,7 @@ final class GlobeViewModel: ObservableObject {
     init() {
         
         earthGlobe         = EarthGlobe()
-        hasRun             = false
+        isStartingUp       = true
         issLastLat         = 0
         tssLastLat         = 0
         
@@ -54,7 +54,7 @@ final class GlobeViewModel: ObservableObject {
     func reset() {
         
         earthGlobe         = EarthGlobe()
-        hasRun             = false
+        isStartingUp       = true
         issLastLat         = 0
         tssLastLat         = 0
         
@@ -65,7 +65,7 @@ final class GlobeViewModel: ObservableObject {
     private func initHelper() {
         
         DispatchQueue.main.asyncAfter(deadline: .now() + 5.5) { [self] in       // Show the progress indicator
-            self.hasRun = true
+            self.isStartingUp = false
         }
         
         globeMainNode = earthGlobe.cameraNode

@@ -26,10 +26,9 @@ struct GlobeView: View {
                 SceneView(scene: globeViewModel.globeScene,
                           pointOfView: globeViewModel.globeMainNode,
                           options: [.allowsCameraControl])
-                    .padding([.leading, .trailing], 5)
                 
                 // Show progress indicator when starting up/resetting
-                if !globeViewModel.hasRun {
+                if globeViewModel.isStartingUp {
                     ProgressView()
                 }
                 
@@ -45,6 +44,7 @@ struct GlobeView: View {
                             Image(systemName: "arrow.uturn.backward.square.fill")
                         }
                         .withMDSButtonModifier()
+                        .shadow(color: .ISSRTT3DRed, radius: 7)
                         
                         Spacer()
                         
@@ -54,11 +54,13 @@ struct GlobeView: View {
                             Image(systemName: "tablecells.fill")
                         }
                         .withMDSButtonModifier()
+                        .shadow(color: .ISSRTT3DRed, radius: 7)
                     }
                     .padding([.leading, .trailing], 25)
                     .padding([.bottom], 3)
                 }
             }
+            .ignoresSafeArea(edges: [.vertical])
             .navigationTitle("Globe")
             .navigationBarTitleDisplayMode(.inline) // We want the small navigation title
             .ignoresSafeArea(edges: [.top,.bottom])

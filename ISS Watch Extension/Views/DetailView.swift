@@ -14,7 +14,7 @@ struct DetailView: View {
     // Get the phase of the scene
     @Environment(\.scenePhase) private var scenePhase
     
-    // View models we're responding to
+    // View models we're observing for updated data
     @StateObject private var issPosition   = SatellitePositionViewModel(satellite: .iss)
     @StateObject private var tssPosition   = SatellitePositionViewModel(satellite: .tss)
     @StateObject private var subSolarPoint = SubSolarViewModel()
