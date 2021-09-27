@@ -22,7 +22,7 @@ struct DataCellView: View {
                 .frame(width: 5)
                 .foregroundColor(sidebarColor)
             VStack {                                // Coordinates data here
-                HStack {
+                HStack {                            // Title
                     Text(title)
                         .font(.subheadline)
                         .foregroundColor(.gray)

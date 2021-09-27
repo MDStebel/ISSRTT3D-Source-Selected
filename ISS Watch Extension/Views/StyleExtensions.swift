@@ -28,8 +28,8 @@ extension Font {
 extension View {
     
     /// Extends View to allow us to use custom modifier without using ".modifier(..."
-    /// - Returns: Custom modifier
-    func withMDSButtonModifier() -> some View {
+    /// - Returns: Custom modifier as a view
+    var withMDSButtonModifier: some View {
         self.modifier(MDSButtonModifier())
     }
 }
@@ -48,8 +48,9 @@ struct MDSButtonModifier: ViewModifier {
             .background(Color.ISSRTT3DRed)
             .font(.subheadline)
             .foregroundColor(.white)
-            .cornerRadius(15)
-            .padding([.leading, .trailing])
+            .cornerRadius(.infinity)
+            .shadow(color: .ISSRTT3DRed, radius: 6)
+            .padding([.horizontal])
             .padding([.bottom], 3)
     }
 }

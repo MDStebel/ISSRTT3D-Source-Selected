@@ -41,10 +41,9 @@ struct GlobeView: View {
                         Button(action: {
                             globeViewModel.reset()
                         }) {
-                            Image(systemName: "arrow.uturn.backward.square.fill")
+                            Image(systemName: "arrowshape.turn.up.backward.fill")
                         }
-                        .withMDSButtonModifier()
-                        .shadow(color: .ISSRTT3DRed, radius: 7)
+                        .withMDSButtonModifier
                         
                         Spacer()
                         
@@ -53,17 +52,15 @@ struct GlobeView: View {
                         ) {
                             Image(systemName: "tablecells.fill")
                         }
-                        .withMDSButtonModifier()
-                        .shadow(color: .ISSRTT3DRed, radius: 7)
+                        .withMDSButtonModifier
                     }
-                    .padding([.leading, .trailing], 25)
-                    .padding([.bottom], 3)
+                    .padding([.horizontal], 25)
+                    .padding([.bottom], 7)
                 }
             }
             .ignoresSafeArea(edges: [.vertical])
             .navigationTitle("Globe")
             .navigationBarTitleDisplayMode(.inline) // We want the small navigation title
-            .ignoresSafeArea(edges: [.top,.bottom])
         }
     }
 }
