@@ -171,7 +171,7 @@ class PassesTableViewController: UITableViewController, CLLocationManagerDelegat
         let titleFontSize                   = Theme.navigationBarTitleFontSize
         let barAppearance                   = UINavigationBarAppearance()
         barAppearance.backgroundColor       = UIColor(named: Theme.tint)
-        barAppearance.titleTextAttributes   = [.font : UIFont(name: Constants.fontForTitle, size: titleFontSize) as Any]
+        barAppearance.titleTextAttributes   = [.font : UIFont(name: Constants.fontForTitle, size: titleFontSize) as Any, .foregroundColor : UIColor.white]
         navigationItem.standardAppearance   = barAppearance
         navigationItem.scrollEdgeAppearance = barAppearance
     }
