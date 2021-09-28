@@ -210,7 +210,7 @@ struct UserGuide {
     </li>
     </ul>
     <h4>Choose Your Background</h4>
-    <p>From Settings you can select from four background images for your fullscreen globe. These are:</p>
+    <p>From Settings, you can select from five backgrounds for your fullscreen globe. These are:</p>
     <ul>
     <li>
     <h5>Hubble Deep Field (the default)</h5>
@@ -223,6 +223,9 @@ struct UserGuide {
     </li>
     <li>
     <h5>Tarantula Nebula in the Large Magellanic Cloud</h5>
+    </li>
+    <li>
+    <h5>Just black</h5>
     </li>
     </ul>
     <h5>Notes:</h5>
@@ -286,7 +289,7 @@ struct UserGuide {
     <p>Tap ⟵ to return to the tracking view.</p>
     \(tail)
     """
-     
+    
     static let passesHelp =
     """
     \(head)
@@ -367,7 +370,7 @@ struct UserGuide {
     </li>
     </ul>
     <h4>Choose Your Background</h4>
-    <p>From Settings you can select from four background images for your fullscreen globe. These are:</p>
+    <p>From Settings, you can select from five backgrounds for your fullscreen globe. These are:</p>
     <ul>
     <li>
     <h5>Hubble Deep Field (the default)</h5>
@@ -380,6 +383,9 @@ struct UserGuide {
     </li>
     <li>
     <h5>Tarantula Nebula in the Large Magellanic Cloud</h5>
+    </li>
+    <li>
+    <h5>Just black</h5>
     </li>
     </ul>
     <h5>Notes:</h5>

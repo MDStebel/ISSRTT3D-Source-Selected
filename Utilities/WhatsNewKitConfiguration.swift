@@ -29,9 +29,10 @@ private let whatsNew = WhatsNew(
         WhatsNew.Item(
             title: "Improvements & Fixes",
             subtitle: """
-                      • Fixed issue with navigation bar appearance on iPhone and iPad.
-                      • Added an all-black background to the background image selections in full-screen globe view.
-                      • Other bug fixes.
+                      • Fixed additional issues with navigation bar appearance on iPhone and iPad.
+                      • Small tweaks to the Apple Watch app globe scene.
+                      • Updated help files.
+                      • Bug fixes.
                       """,
             image: UIImage(named: "icons8-bug_filled")
         ),
