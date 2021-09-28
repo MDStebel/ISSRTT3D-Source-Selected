@@ -20,6 +20,7 @@ struct GlobeView: View {
     var body: some View {
         
         NavigationView {
+            
             ZStack {
                 
                 // Present the globe

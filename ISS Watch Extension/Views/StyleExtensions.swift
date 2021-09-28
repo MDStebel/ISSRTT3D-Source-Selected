@@ -46,11 +46,11 @@ struct MDSButtonModifier: ViewModifier {
         content
             .frame(width: 30, height: 30, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
             .background(Color.ISSRTT3DRed)
-            .font(.subheadline)
+            .font(.system(size: 16, weight: .semibold, design: .default))
             .foregroundColor(.white)
             .cornerRadius(.infinity)
-            .shadow(color: .ISSRTT3DRed, radius: 6)
+            .shadow(color: .ISSRTT3DRed, radius: 7)
             .padding([.horizontal])
-            .padding([.bottom], 3)
+//            .padding([.bottom], 3)
     }
 }

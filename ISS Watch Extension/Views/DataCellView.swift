@@ -18,9 +18,11 @@ struct DataCellView: View {
     
     var body: some View {
         HStack {
+            
             Rectangle()                             // Sidebar with color indicator
                 .frame(width: 5)
                 .foregroundColor(sidebarColor)
+            
             VStack {                                // Coordinates data here
                 HStack {                            // Title
                     Text(title)
@@ -28,7 +30,9 @@ struct DataCellView: View {
                         .foregroundColor(.gray)
                     Spacer()
                 }
+                
                 Spacer()
+                
                 HStack (alignment: .top) {
                     HStack {
                         Spacer()
@@ -41,6 +45,7 @@ struct DataCellView: View {
                         .foregroundColor(.ISSRTT3DRed)
                         .bold()
                 }
+                
                 HStack(alignment: .top) {
                     HStack {
                         Spacer()
