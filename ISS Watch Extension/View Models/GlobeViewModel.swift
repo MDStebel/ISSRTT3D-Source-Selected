@@ -6,17 +6,21 @@
 //  Copyright © 2021 Michael Stebel Consulting, LLC. All rights reserved.
 //
 
-import SwiftUI
+import Combine
 import SceneKit
+import SwiftUI
 
 final class GlobeViewModel: ObservableObject {
     
-    // MARK: - Properties
+    // MARK: - Published properties
     
-    @Published var earthGlobe: EarthGlobe
+    @Published var earthGlobe: EarthGlobe = EarthGlobe()
     @Published var globeMainNode: SCNNode?
     @Published var globeScene: SCNScene?
-    @Published var isStartingUp: Bool
+    @Published var isStartingUp: Bool                              = true
+    
+    
+    // MARK: - Properties
     
     private let apiEndpointString                                  = ApiEndpoints.issTrackerAPIEndpointC
     private let apiKey                                             = ApiKeys.ISSLocationKey
@@ -24,29 +28,24 @@ final class GlobeViewModel: ObservableObject {
     
     private var issHeadingFactor: Float                            = 0.0
     private var tssHeadingFactor: Float                            = 0.0
-    private var issLastLat: Float
-    private var tssLastLat: Float
+    private var issLastLat: Float                                  = 0.0
+    private var tssLastLat: Float                                  = 0.0
     private var issLatitude: Float                                 = 0.0
     private var issLongitude: Float                                = 0.0
     private var tssLatitude: Float                                 = 0.0
     private var tssLongitude: Float                                = 0.0
     private var subSolarPoint: (latitude: Float, longitude: Float) = (0, 0)
-    private var timer                                              = Timer()
+    private var timer: AnyCancellable?
     
     
     // MARK: - Methods
     
     init() {
         
-        earthGlobe         = EarthGlobe()
-        isStartingUp       = true
-        issLastLat         = 0
-        tssLastLat         = 0
-        
+        reset()
         initHelper()
-        
         updateEarthGlobe()                  // Update the globe once before starting the timer
-        startTimer()
+        start()
     }
     
     
@@ -62,15 +61,97 @@ final class GlobeViewModel: ObservableObject {
     }
     
     
+    /// Helps with initialization and reset
     private func initHelper() {
         
         DispatchQueue.main.asyncAfter(deadline: .now() + 5.5) { [self] in       // Show the progress indicator
             self.isStartingUp = false
         }
         
+        // Set up our scene
         globeMainNode = earthGlobe.cameraNode
         globeScene    = earthGlobe.scene
         earthGlobe.setupInSceneView()
+    }
+    
+    
+    /// Set up and start the timer
+    func start() {
+        
+        timer = Timer
+            .publish(every: timerValue, on: .main, in: .common)
+            .autoconnect()
+            .sink { _ in
+                self.updateEarthGlobe()
+            }
+    }
+ 
+    
+    /// Stop the timer
+    func stop() {
+        
+        timer?.cancel()
+    }
+    
+    
+    /// The engine that powers this view model. Updates the globe scene for the new coordinates
+    private func updateEarthGlobe() {
+        
+        /// Helper function to remove the last child node in the nodes array
+        func removeLastNode() {
+            if let nodeToRemove = earthGlobe.globe.childNodes.last {
+                nodeToRemove.removeFromParentNode()
+            }
+        }
+        
+        // We need to remove each of the nodes we've added before adding them again at new coordinates, or we get an f'ng mess!
+        var numberOfChildNodes  = earthGlobe.getNumberOfChildNodes()
+        while numberOfChildNodes > 0 {
+            removeLastNode()
+            numberOfChildNodes -= 1
+        }
+        
+        // Where are the satellites right now?
+        getISSPosition()
+        getTSSPosition()
+        
+        // Where is the subsolar point right now?
+        subSolarPoint = AstroCalculations.getSubSolarCoordinates()
+        
+        // If we have a saved last coordinate, add the markers, otherwise we don't know which way the orbit is oriented
+        if issLastLat != 0 {
+            
+            
+            // MARK: Set up ISS
+            issHeadingFactor = issLatitude - issLastLat < 0 ? -1 : 1
+            earthGlobe.addOrbitTrackAroundTheGlobe(for: .iss, lat: issLatitude, lon: issLongitude, headingFactor: issHeadingFactor)
+            
+            // Add footprint
+            earthGlobe.addISSViewingCircle(lat: issLatitude, lon: issLongitude)
+            
+            // Add satellite marker
+            earthGlobe.addISSMarker(lat: issLatitude, lon: issLongitude)
+            
+            
+            // MARK: Set up TSS
+            tssHeadingFactor = tssLatitude - tssLastLat < 0 ? -1 : 1
+            earthGlobe.addOrbitTrackAroundTheGlobe(for: .tss, lat: tssLatitude, lon: tssLongitude, headingFactor: tssHeadingFactor)
+            
+            // Add footprint
+            earthGlobe.addTSSViewingCircle(lat: tssLatitude, lon: tssLongitude)
+            
+            // Add satellite marker
+            earthGlobe.addTSSMarker(lat: tssLatitude, lon: tssLongitude)
+            
+            
+            // MARK: Set up the Sun at the current subsolar point
+            earthGlobe.setUpTheSun(lat: subSolarPoint.latitude, lon: subSolarPoint.longitude)
+            
+        }
+        
+        // Saves last coordinate for each track to use in calculating north or south heading vector after the second track update
+        issLastLat = issLatitude
+        tssLastLat = tssLatitude
     }
     
     
@@ -149,84 +230,5 @@ final class GlobeViewModel: ObservableObject {
         }
         
         tssUpdateTask.resume()
-    }
-    
-    
-    /// The engine that powers this view model. Updates the globe scene for the new coordinates
-    private func updateEarthGlobe() {
-        
-        // We need to remove each of the nodes we've added before adding them again at new coordinates, or we get an f'ng mess!
-        var numberOfChildNodes  = earthGlobe.getNumberOfChildNodes()
-        while numberOfChildNodes > 0 {
-            removeLastNode()
-            numberOfChildNodes -= 1
-        }
-        
-        // Where are the satellites right now?
-        getISSPosition()
-        getTSSPosition()
-        subSolarPoint = AstroCalculations.getSubSolarCoordinates()
-        
-        // If we have a saved last coordinate, add the markers, otherwise we don't know which way the orbit is oriented
-        if issLastLat != 0 {
-            
-            // MARK: Set up ISS
-            issHeadingFactor = issLatitude - issLastLat < 0 ? -1 : 1
-            earthGlobe.addOrbitTrackAroundTheGlobe(for: .iss, lat: issLatitude, lon: issLongitude, headingFactor: issHeadingFactor)
-            
-            // Add footprint
-            earthGlobe.addISSViewingCircle(lat: issLatitude, lon: issLongitude)
-            
-            // Add satellite marker
-            earthGlobe.addISSMarker(lat: issLatitude, lon: issLongitude)
-            
-            
-            // MARK: Set up TSS
-            tssHeadingFactor = tssLatitude - tssLastLat < 0 ? -1 : 1
-            earthGlobe.addOrbitTrackAroundTheGlobe(for: .tss, lat: tssLatitude, lon: tssLongitude, headingFactor: tssHeadingFactor)
-
-            // Add footprint
-            earthGlobe.addTSSViewingCircle(lat: tssLatitude, lon: tssLongitude)
-
-            // Add satellite marker
-            earthGlobe.addTSSMarker(lat: tssLatitude, lon: tssLongitude)
-            
-            
-            // MARK: Set up the Sun at the current subsolar point
-            earthGlobe.setUpTheSun(lat: subSolarPoint.latitude, lon: subSolarPoint.longitude)
-            
-        }
-        
-        // Saves last coordinate for each track to use in calculating north or south heading vector after the second track update
-        issLastLat = issLatitude
-        tssLastLat = tssLatitude
-    }
-    
-    
-    /// Remove the last child node in the nodes array
-    private func removeLastNode() {
-        if let nodeToRemove = earthGlobe.globe.childNodes.last {
-            nodeToRemove.removeFromParentNode()
-        }
-    }
-    
-    
-    /// Set up and start the timer
-    func startTimer() {
-        if !timer.isValid {
-            timer = Timer.scheduledTimer(timeInterval: timerValue, target: self, selector: #selector(update), userInfo: nil, repeats: true)
-        }
-    }
-    
-    
-    /// The selector that the timer calls
-    @objc func update() {
-        updateEarthGlobe()
-    }
-    
-    
-    /// Stop the timer
-    func stop() {
-        timer.invalidate()
     }
 }

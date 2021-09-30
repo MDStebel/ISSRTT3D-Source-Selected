@@ -6,14 +6,17 @@
 //  Copyright © 2021 Michael Stebel Consulting, LLC. All rights reserved.
 //
 
+import Combine
 import SwiftUI
 
 final class SatellitePositionViewModel: ObservableObject {
     
-    // MARK: - Properties
+    // MARK: - Published properties
     
     @Published var formattedLatitude: String  = ""
     @Published var formattedLongitude: String = ""
+    
+    // MARK: - Properties
     
     private var satellite: StationsAndSatellites
     
@@ -21,13 +24,14 @@ final class SatellitePositionViewModel: ObservableObject {
     private let apiKey                        = ApiKeys.ISSLocationKey
     private let timerValue                    = 3.0
     
-    private var timer                         = Timer()
     private var latitude: Float               = 0
     private var longitude: Float              = 0
+    private var timer: AnyCancellable?
     
     
     // MARK: - Methods
     
+    // Initialize with a specific satellite
     init(satellite: StationsAndSatellites) {
         
         self.satellite = satellite
@@ -38,7 +42,7 @@ final class SatellitePositionViewModel: ObservableObject {
     func startUp() {
         
         updatePosition()   // Get the data once before starting the timer
-        startTimer()
+        start()
     }
     
     
@@ -88,20 +92,20 @@ final class SatellitePositionViewModel: ObservableObject {
     
     
     /// Set up and start the timer
-    private func startTimer() {
+    private func start() {
         
-        timer = Timer.scheduledTimer(timeInterval: timerValue, target: self, selector: #selector(update), userInfo: nil, repeats: true)
+        timer = Timer
+            .publish(every: timerValue, on: .main, in: .common)
+            .autoconnect()
+            .sink { _ in
+                self.getSatellitePosition(for: self.satellite)
+            }
     }
     
-    
-    /// The selector the timer calls
-    @objc func update() {
-        getSatellitePosition(for: satellite)
-    }
-    
-    
+
     /// Stop the timer
     func stop() {
-        timer.invalidate()
+        
+        timer?.cancel()
     }
 }
