@@ -18,7 +18,6 @@ extension TrackingViewController {
         altitudeLabel.text    = altString
         coordinatesLabel.text = positionString
         velocityLabel.text    = velString
-        
     }
     
     
@@ -39,7 +38,6 @@ extension TrackingViewController {
         if index == maxCoordinatesInArray {
             listOfCoordinates.removeFirst(maxCoordinatesInArray - 1)
         }
-        
     }
     
     
@@ -77,14 +75,12 @@ extension TrackingViewController {
             }
             
             self.cursor.isHidden = false                        // Now, show the marker
-            
         }
-        
     }
     
     
     /// Method to get current ISS coordinates from JSON file and animate its display on map. Can be called by a timer.
-    @objc func locateISS() {
+    func locateISS() {
         
         setUpAllOverlaysAndButtons()
         
@@ -135,32 +131,24 @@ extension TrackingViewController {
                         if Globals.showCoordinatesIsOn {
                             self?.updateCoordinatesDisplay()
                         }
-                        
                     }
-                    
                 } else {
                     
                     DispatchQueue.main.async {
                         self?.stopAction()
                         self!.alert(for: "Can't get ISS location", message: "Wait a few minutes\nand then tap ▶︎ again.")
                     }
-                    
                 }
-                
             } else {
                 
                 DispatchQueue.main.async {
                     self?.stopAction()
                     self!.cannotConnectToInternetAlert()
                 }
-                
             }
-            
         }
         
         // Start task
         locateAndDisplayISSPositionTask.resume()
-        
     }
-    
 }

@@ -12,9 +12,7 @@ import SceneKit
 /// Handles the objects we're adding to the globe as well as coordinate transforms
 extension EarthGlobe {
     
-    //    #if !os(watchOS)
-    
-    /// Adds the ISS position marker at the precise latitude and longitude to our globe scene
+    /// This method adds the ISS position marker at the precise latitude and longitude to our globe scene
     /// - Parameters:
     ///   - lat: The current latitude as a decimal value
     ///   - lon: The current longitude as a decimal value
@@ -117,15 +115,21 @@ extension EarthGlobe {
         let orbitalCorrectionForLon                    = adjustedLon * Float(Globals.degreesToRadians)  // lon & lat used as angular displacement from the origin (lon-origin=lon-0=lon)
         let orbitalCorrectionForLat                    = adjustedLat * Float(Globals.degreesToRadians)
         let absLat                                     = abs(lat)
-        let exponent                                   = Float.pi / multiplier + absLat * Float(Globals.degreesToRadians) / orbitInclination  // Adjustment to the inclination (z-axis) as we approach max latitudes
+        let exponent                                   = .pi / multiplier + absLat * Float(Globals.degreesToRadians) / orbitInclination  // Adjustment to the inclination (z-axis) as we approach max latitudes
         
         switch station {
         case .iss :
             switch absLat {   // Apply a power function to the adjustment (exponent) based on the latitude
+            case _ where absLat <= 12.0 :
+                orbitalCorrectionForInclination        = pow(exponent, 0.8)
+            case _ where absLat <= 17.0 :
+                orbitalCorrectionForInclination        = pow(exponent, 0.85)
             case _ where absLat <= 25.0 :
-                orbitalCorrectionForInclination        = exponent
-            case _ where absLat <= 35.0 :
-                orbitalCorrectionForInclination        = pow(exponent, 1.5)
+                orbitalCorrectionForInclination        = pow(exponent, 1.0)
+            case _ where absLat <= 33.0 :
+                orbitalCorrectionForInclination        = pow(exponent, 1.25)
+            case _ where absLat <= 40.0 :
+                orbitalCorrectionForInclination        = pow(exponent, 1.6)
             case _ where absLat <= 45.0 :
                 orbitalCorrectionForInclination        = pow(exponent, 2.0)
             case _ where absLat <= 49.0 :
@@ -133,22 +137,30 @@ extension EarthGlobe {
             case _ where absLat <= 51.0 :
                 orbitalCorrectionForInclination        = pow(exponent, 3.0)
             default :
-                orbitalCorrectionForInclination        = pow(exponent, 4.0)
+                orbitalCorrectionForInclination        = pow(exponent, 3.5)
             }
-        case .tss  :
+        case .tss :
             switch absLat {   // Apply a power function to the adjustment (exponent) based on the latitude
+            case _ where absLat <= 15.0 :
+                orbitalCorrectionForInclination        = pow(exponent, 0.75)
             case _ where absLat <= 20.0 :
-                orbitalCorrectionForInclination        = exponent
-            case _ where absLat <= 27.0 :
+                orbitalCorrectionForInclination        = pow(exponent, 0.85)
+            case _ where absLat <= 25.0 :
                 orbitalCorrectionForInclination        = pow(exponent, 1.0)
-            case _ where absLat <= 35.5 :
-                orbitalCorrectionForInclination        = pow(exponent, 1.5)
-            case _ where absLat <= 39.0 :
+            case _ where absLat <= 30.0 :
+                orbitalCorrectionForInclination        = pow(exponent, 1.2)
+            case _ where absLat <= 35.0 :
+                orbitalCorrectionForInclination        = pow(exponent, 1.45)
+            case _ where absLat <= 38.0 :
+                orbitalCorrectionForInclination        = pow(exponent, 1.7)
+            case _ where absLat <= 40.0 :
                 orbitalCorrectionForInclination        = pow(exponent, 2.0)
             case _ where absLat <= 41.0 :
+                orbitalCorrectionForInclination        = pow(exponent, 2.3)
+            case _ where absLat <= 41.5 :
                 orbitalCorrectionForInclination        = pow(exponent, 2.5)
             default :
-                orbitalCorrectionForInclination        = pow(exponent, 3.0)
+                orbitalCorrectionForInclination        = pow(exponent, 2.8)
             }
         case .none :
             return
@@ -197,6 +209,7 @@ extension EarthGlobe {
     public func addMarker(_ marker: EarthGlobeMarkers, shouldPulse: Bool) {
         
         globe.addChildNode(marker.node)
+        
 #if !os(watchOS)
         if Globals.pulseISSMarkerForGlobe && shouldPulse {
             marker.addPulseAnimation()

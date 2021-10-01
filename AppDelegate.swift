@@ -13,7 +13,6 @@ import StoreKit
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
     
-    
     // MARK: - Properties
     
     
@@ -43,7 +42,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         Timer.scheduledTimer(timeInterval: timeInterval, target: self, selector: #selector(AppDelegate.requestReview), userInfo: nil, repeats: false)
 
         return true
-        
     }
     
     /// Selector called by timer for App Store reviews
@@ -76,14 +74,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         if referenceToGlobeFullViewController.isViewLoaded {                // Only stop the globe if the view is loaded to avoid nil error
             referenceToGlobeFullViewController.stopUpdatingGlobe()
         }
-        
     }
     
     
     func applicationWillEnterForeground(_ application: UIApplication) {
         
         SettingsDataModel.restoreUserSettings()
-        
     }
     
     
@@ -94,7 +90,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         if referenceToGlobeFullViewController.isViewLoaded {                // Only start-up the globe if the view is loaded to avoid nil error
             referenceToGlobeFullViewController.startUpdatingGlobe()
         }
-        
     }
     
     
@@ -107,7 +102,5 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         if referenceToGlobeFullViewController.isViewLoaded {                // Only stop the globe if the view is loaded to avoid nil error
             referenceToGlobeFullViewController.stopUpdatingGlobe()
         }
-        
     }
-    
 }

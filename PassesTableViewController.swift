@@ -160,7 +160,6 @@ class PassesTableViewController: UITableViewController, CLLocationManagerDelegat
         getNumberOfDaysOfPassesToReturn()
         setUpRefreshControl()
         setUpLocationManager()
-        
     }
     
     
@@ -190,14 +189,12 @@ class PassesTableViewController: UITableViewController, CLLocationManagerDelegat
         
         // Configure refresh control
         refreshControl?.addTarget(self, action: #selector(refreshTable(_:)), for: .valueChanged)
-        
     }
     
     /// Selector for refresh control
     @objc func refreshTable(_ sender: Any) {
         
         restartGettingUserLocation()
-        
     }
     
     
@@ -208,7 +205,6 @@ class PassesTableViewController: UITableViewController, CLLocationManagerDelegat
         ISSlocationManager.delegate        = self
         ISSlocationManager.desiredAccuracy = kCLLocationAccuracyBest
         ISSlocationManager.requestWhenInUseAuthorization()
-        
     }
     
     
@@ -216,21 +212,18 @@ class PassesTableViewController: UITableViewController, CLLocationManagerDelegat
     private func startGettingLocations() {
 
         ISSlocationManager.startUpdatingLocation()                              // Now, we can  get locations
-        
     }
     
     
     private func restartGettingUserLocation() {
         
         startGettingLocations()
-        
     }
 
     
     @IBAction func changeNumberOfDaysThisTimeOnlyAndRefreshPasses(_ sender: UIBarButtonItem) {
         
         noPasesPopup(withTitle: "Change Number of Days", withStyleToUse: .actionSheet)
-        
     }
     
     
@@ -244,29 +237,25 @@ class PassesTableViewController: UITableViewController, CLLocationManagerDelegat
         
         alertController.addAction(UIAlertAction(title: "Back", style: .cancel) { (dontShow) in
             self.dismiss(animated: true, completion: nil)
-        }
-        )
+        })
         
         // Add number-of-days selections from the dictionary in the Passes model
         for i in 0..<Int(Passes.numberOfDaysDictionary.count) {
             alertController.addAction(UIAlertAction(title: "\(Passes.numberOfDaysDictionary[i]!) days", style: .default) { (choice) in
                 self.numberOfDays = Int(Passes.numberOfDaysDictionary[i]!)!
                 self.restartGettingUserLocation()
-            }
-            )
+            })
         }
         
         alertController.addAction(UIAlertAction(title: "Switch stations", style: .default) { (choice) in
             self.switchStationPopup(withTitle: "Change Space Station", withStyleToUse: .actionSheet)
-        }
-        )
+        })
         
         if usingStyle == .actionSheet {
             alertController.popoverPresentationController?.barButtonItem = changeNumberOfDaysButton
         }
         
         self.present(alertController, animated: true, completion: nil)
-        
     }
     
     
@@ -287,16 +276,14 @@ class PassesTableViewController: UITableViewController, CLLocationManagerDelegat
         
         alertController.addAction(UIAlertAction(title: "Back", style: .cancel) { (dontShow) in
             self.dismiss(animated: true, completion: nil)
-        }
-        )
+        })
         
         // Add selection for each of the stations/satellites for which we can get pass predictions
         for target in [StationsAndSatellites.iss, StationsAndSatellites.tss] {
             alertController.addAction(UIAlertAction(title: "\(target.stationName)", style: .default) { (choice) in
                 self.station = target
                 self.restartGettingUserLocation()
-            }
-            )
+            })
         }
         
         if usingStyle == .actionSheet {
@@ -304,7 +291,6 @@ class PassesTableViewController: UITableViewController, CLLocationManagerDelegat
         }
         
         self.present(alertController, animated: true, completion: nil)
-        
     }
     
     
@@ -402,8 +388,8 @@ class PassesTableViewController: UITableViewController, CLLocationManagerDelegat
         } else {
             createEvent(eventStore, passEvent: passEvent)
         }
-        
     }
+    
     
     /// Create the calendar event
     /// - Parameters:
@@ -485,7 +471,6 @@ class PassesTableViewController: UITableViewController, CLLocationManagerDelegat
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
     }
-    
 }
 
 
@@ -493,16 +478,12 @@ class PassesTableViewController: UITableViewController, CLLocationManagerDelegat
 extension PassesTableViewController {
     
     override func numberOfSections(in tableView: UITableView) -> Int {
-        
         return 1
-        
     }
     
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        
         return numberOfOverheadTimesActuallyReported
-        
     }
     
     
@@ -630,9 +611,7 @@ extension PassesTableViewController {
         // Make a copy of the selected pass and create a calendar event for it
         let passToSave = overheadTimesList[indexPath.row]
         addEvent(passToSave)
-        
     }
-    
 }
 
 
@@ -673,9 +652,7 @@ extension PassesTableViewController {
             alert.preferredAction = goToSettingAction
             
             present(alert, animated: true)
-            
         }
-        
     }
     
     
@@ -689,7 +666,5 @@ extension PassesTableViewController {
         getISSOverheadtimes(for: station, then: decodeJSONPasses)                   // Get passes from API, then run callback to decode/parse JSON
         
         ISSLocationManager.stopUpdatingLocation()                                   // Now that we have user's location, we don't need it again, so stop updating location
-        
     }
-    
 }

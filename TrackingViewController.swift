@@ -7,6 +7,7 @@
 //
 
 import AVFoundation
+import Combine
 import MapKit
 import SceneKit
 import UIKit
@@ -26,12 +27,10 @@ class TrackingViewController: UIViewController, MKMapViewDelegate, UIGestureReco
         case small                              = 10.0
         case medium                             = 30.0
         case large                              = 90.0
-        
     }
     
     /// Segue names
     private struct Segues {
-        
         static let NASATVSegue                  = "segueToNasaTV"
         static let crewSeque                    = "segueToCurrentCrew"
         static let earthViewSegue               = "segueToStreamingVideo"
@@ -40,7 +39,6 @@ class TrackingViewController: UIViewController, MKMapViewDelegate, UIGestureReco
         static let passesSegue                  = "segueToPassTimes"
         static let segueToFullGlobeFromTabBar   = "segueToFullGlobeFromTabBar"
         static let settingsSegue                = "segueToSettings"
-        
     }
     
     /// Local constants
@@ -186,7 +184,7 @@ class TrackingViewController: UIViewController, MKMapViewDelegate, UIGestureReco
             }
         }
     }
-    var timer                               = Timer()
+    var timer: AnyCancellable? 
     var timerValue: TimeInterval            = 2.0
     var velString                           = ""
     var altitude                            = "" {
@@ -326,7 +324,6 @@ class TrackingViewController: UIViewController, MKMapViewDelegate, UIGestureReco
         displayInfoBox(false)                                                                       // Start up with map overlay info box and buttons off
         
         justStartedUp = true
-        
     }
     
     
@@ -341,7 +338,6 @@ class TrackingViewController: UIViewController, MKMapViewDelegate, UIGestureReco
             navigationController?.navigationBar.titleTextAttributes = attributes
             navigationController?.navigationBar.barTintColor = UIColor(named: Theme.tint)
         }
-
     }
     
     
@@ -358,9 +354,7 @@ class TrackingViewController: UIViewController, MKMapViewDelegate, UIGestureReco
             
             createZoomSliderRanges()
             alreadyAnimatedStartPrompt = true
-            
         }
-        
     }
     
     
@@ -371,7 +365,6 @@ class TrackingViewController: UIViewController, MKMapViewDelegate, UIGestureReco
             self.present(whatsNewViewController, animated: true)
             Globals.showWhatsNewUponNextStartup = false
         }
-        
     }
     
     
@@ -384,7 +377,6 @@ class TrackingViewController: UIViewController, MKMapViewDelegate, UIGestureReco
         
         map.isZoomEnabled   = Globals.mapScrollingAndZoomIsEnabled
         map.isScrollEnabled = Globals.mapScrollingAndZoomIsEnabled
-        
     }
     
     
@@ -414,7 +406,6 @@ class TrackingViewController: UIViewController, MKMapViewDelegate, UIGestureReco
             self.timerValue = self.getTimerInterval()
             self.playAction()
         }
-        
     }
     
     
@@ -425,7 +416,6 @@ class TrackingViewController: UIViewController, MKMapViewDelegate, UIGestureReco
         } else {
             stopAction()
         }
-        
     }
     
     
@@ -442,14 +432,13 @@ class TrackingViewController: UIViewController, MKMapViewDelegate, UIGestureReco
         
         running = true
         playButton.image = UIImage(named: TrackingButtonImages.pause, in: nil, compatibleWith: nil)     // While running, change play to pause
-        
     }
     
     
     /// This method is also called as a delegate method when the app goes into background or is closed
     func stopAction() {
         
-        timer.invalidate()
+        timer?.cancel()
         
         if running != nil {
             running = false
@@ -457,7 +446,6 @@ class TrackingViewController: UIViewController, MKMapViewDelegate, UIGestureReco
         
         soundtrackMusicPlayer?.pause()
         playButton?.image = UIImage(named: TrackingButtonImages.play, in: nil, compatibleWith: nil)     // While paused, change pause icon to play icon
-        
     }
     
     
@@ -465,7 +453,6 @@ class TrackingViewController: UIViewController, MKMapViewDelegate, UIGestureReco
     @IBAction private func startPromptButton(_ sender: UIButton) {
         
         playAction()
-
     }
     
     
@@ -473,7 +460,6 @@ class TrackingViewController: UIViewController, MKMapViewDelegate, UIGestureReco
     @IBAction private func play(_ sender: UIBarButtonItem) {
         
         playAction()
-        
     }
     
     
@@ -500,9 +486,7 @@ class TrackingViewController: UIViewController, MKMapViewDelegate, UIGestureReco
             
             locateISS()                                     // Call locateISS once to update screen quickly to current ISS position with current settings
             timerStartup()                                  // Call method to set up a timer
-
         }
-        
     }
     
     
@@ -511,8 +495,12 @@ class TrackingViewController: UIViewController, MKMapViewDelegate, UIGestureReco
     /// Calls locateISS (selector) at the current timerValue setting.
     private func timerStartup() {
         
-        timer = Timer.scheduledTimer(timeInterval: timerValue, target: self, selector: #selector(locateISS), userInfo: nil, repeats: true)
-        
+        timer = Timer
+            .publish(every: timerValue, on: .main, in: .common)
+            .autoconnect()
+            .sink { _ in
+                self.locateISS()
+            }
     }
     
     
@@ -536,7 +524,7 @@ class TrackingViewController: UIViewController, MKMapViewDelegate, UIGestureReco
         
         if (zoomValueWasChanged || Globals.zoomFactorWasResetInSettings) && running! {
             
-            timer.invalidate()
+            timer?.cancel()
             
             if running != nil {
                 running = false
@@ -561,7 +549,6 @@ class TrackingViewController: UIViewController, MKMapViewDelegate, UIGestureReco
         }
         
         return timerIntervalToReturn
-        
     }
     
     
@@ -579,7 +566,6 @@ class TrackingViewController: UIViewController, MKMapViewDelegate, UIGestureReco
         } else {
             zoomSlider.value = Float(zoomFactorDefaultValue)
         }
-        
     }
     
     
@@ -589,7 +575,6 @@ class TrackingViewController: UIViewController, MKMapViewDelegate, UIGestureReco
         let integerTimerInterval = Int(timerInterval)
         
         zoomFactorLabel.text! = "Scale: \(zoomRangeFactorLabel) \(Constants.linefeed)" + String(format: Constants.zoomFactorStringFormat, round(zoomSlider.value * 100.0) / 100.0) + "\(Constants.linefeed)Interval: \(integerTimerInterval)" + "\(integerTimerInterval > 1 ? " secs." : " sec.")"
-        
     }
     
     
@@ -610,7 +595,6 @@ class TrackingViewController: UIViewController, MKMapViewDelegate, UIGestureReco
         if Globals.displayZoomFactorBelowMarkerIsOn {
             setupZoomFactorLabel(timerValue)
         }
-        
     }
     
     
@@ -640,7 +624,7 @@ class TrackingViewController: UIViewController, MKMapViewDelegate, UIGestureReco
             }
             
             switch Globals.markerType {
-            
+
             case 0 :
                 
                 cursor.image = UIImage(named: Globals.ISSIconForMapView)
@@ -752,11 +736,8 @@ class TrackingViewController: UIViewController, MKMapViewDelegate, UIGestureReco
             default :
                 
                 cursor.image = UIImage(named: Globals.ISSIconForMapView)
-                
             }
-            
         }
-        
     }
       
     
@@ -764,19 +745,14 @@ class TrackingViewController: UIViewController, MKMapViewDelegate, UIGestureReco
     func displayInfoBox(_ isOn: Bool) {
         
         if isOn {
-            
             altitudeLabel.isHidden    = false
             coordinatesLabel.isHidden = false
             velocityLabel.isHidden    = false
-            
         } else {
-            
             altitudeLabel.isHidden    = true
             coordinatesLabel.isHidden = true
             velocityLabel.isHidden    = true
-            
         }
-        
     }
 
     
@@ -786,21 +762,16 @@ class TrackingViewController: UIViewController, MKMapViewDelegate, UIGestureReco
         guard let segueInProcess = segue.identifier else { return } // Prevents crash if a segue is unnamed
         
         switch segueInProcess {
-        
         case Segues.globeSegue, Segues.segueToFullGlobeFromTabBar : // Stop tracking if Globe segue was selected from either the mini globe or tab bar button
-            
             stopAction()
         
         case Segues.passesSegue :                                   // Stop tracking if Passes segue was selected
-            
             stopAction()
         
         case Segues.crewSeque :                                     // Stop tracking if Crew segue was selected
-            
             stopAction()
         
         case Segues.earthViewSegue :                                // Stop tracking and select live earth view channel
-            
             stopAction()
             let navigationController                          = segue.destination as! UINavigationController
             let destinationVC                                 = navigationController.topViewController as! LiveVideoViewController
@@ -808,7 +779,6 @@ class TrackingViewController: UIViewController, MKMapViewDelegate, UIGestureReco
             destinationVC.title                               = destinationVC.channelSelected.rawValue
             
         case Segues.NASATVSegue :                                   // Stop tracking and select NASA TV channel
-            
             stopAction()
             let navigationController                          = segue.destination as! UINavigationController
             let destinationVC                                 = navigationController.topViewController as! LiveVideoViewController
@@ -816,13 +786,11 @@ class TrackingViewController: UIViewController, MKMapViewDelegate, UIGestureReco
             destinationVC.title                               = destinationVC.channelSelected.rawValue
             
         case Segues.settingsSegue :                                 // Keep tracking, set popover arrow to point to middle, below settings button
-            
             let navigationController                          = segue.destination as! UINavigationController
             let destinationVC                                 = navigationController.topViewController as! SettingsTableViewController
             destinationVC.settingsButtonInCallingVCSourceView = settingsButton
             
         case Segues.helpSegue :                                     // Keep tracking, set popover arrow to point to middle, below help button
-            
             let navigationController                          = segue.destination as! UINavigationController
             let destinationVC                                 = navigationController.topViewController as! HelpViewController
             destinationVC.helpContentHTML                     = UserGuide.helpContentHTML
@@ -830,11 +798,8 @@ class TrackingViewController: UIViewController, MKMapViewDelegate, UIGestureReco
             destinationVC.title                               = Constants.helpTitle
             
         default :
-            
             stopAction()
-            
         }
-        
     }
     
     
@@ -862,7 +827,6 @@ class TrackingViewController: UIViewController, MKMapViewDelegate, UIGestureReco
         }
         
         soundtrackMusicPlayer?.numberOfLoops = -1       // Loop indefinitely
-        
     }
     
     
@@ -878,30 +842,26 @@ class TrackingViewController: UIViewController, MKMapViewDelegate, UIGestureReco
         }
         
         soundtrackButtonOn.toggle()
-        
     }
     
     
     /// Clear the ground track plot line
     @IBAction func clearOrbitGroundTrack(_ sender: UIButton) {
-
+        
         let alertController = UIAlertController(title: "Clear Ground Track", message: "Are you sure you wish to" + Constants.linefeed + "clear the ground track?" + Constants.linefeed + Constants.linefeed + "Note: You can turn off the" + Constants.linefeed + "ground track line in Settings.", preferredStyle: .alert)
+        
         alertController.addAction(UIAlertAction(title: "Clear", style: .destructive) { (clearIt) in
             self.map.removeOverlays(self.map.overlays)  // Need to remove all MKMap overlays, as multitple polylines are overlayed on the map as location is updated
-            }
-        )
+        })
+        
         alertController.addAction(UIAlertAction(title: "Cancel", style: .cancel))
         present(alertController, animated: true, completion: nil)
-        
     }
     
     
     override func didReceiveMemoryWarning() {
         
         super.didReceiveMemoryWarning()
-        
         stopAction()
-        
     }
-
 }

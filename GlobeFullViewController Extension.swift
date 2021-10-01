@@ -11,7 +11,6 @@ import UIKit
 
 extension GlobeFullViewController {
     
-    
     fileprivate func updateGlobeForPositionsOfStations() {
         
         DispatchQueue.main.async {
@@ -22,7 +21,7 @@ extension GlobeFullViewController {
     
     
     /// Method to get current ISS and TSS coordinates from the API and update the globe. Can be called by a timer.
-    @objc func earthGlobeLocateStations() {
+    func earthGlobeLocateStations() {
         
         // Make sure we can create the URL
         guard let ISSAPIEndpointURL = URL(string: Constants.ISSAPIEndpointString) else { return }
@@ -62,18 +61,14 @@ extension GlobeFullViewController {
                         self?.alert(for: "Can't get ISS location", message: "Will automatically start again when available.")
                         self?.isRunningLabel?.text = "Not running"
                     }
-                    
                 }
-                
             } else {
                 
                 DispatchQueue.main.async {
                     self?.alert(for: "Can't connect to Internet", message: "Will automatically start again when connected.")
                     self?.isRunningLabel?.text = "Not running"
                 }
-                
             }
-            
         }
         
         globeUpdateTask.resume()
@@ -100,30 +95,27 @@ extension GlobeFullViewController {
                     // Parse JSON
                     let parsedTSSOrbitalPosition = try decoder.decode(SatelliteOrbitPosition.self, from: urlContent)
                     
-                    // Get current TSS coordinates
-                    self?.TSSCoordinates         = parsedTSSOrbitalPosition.positions
-                    self?.TSSLatitude            = self?.TSSCoordinates[0].satlatitude ?? 0.0
-                    self?.TSSLongitude           = self?.TSSCoordinates[0].satlongitude ?? 0.0
-                    
-                    self?.tLat                   = String((self?.TSSLatitude)!)
-                    self?.tLon                   = String((self?.TSSLongitude)!)
-                    
+                    DispatchQueue.main.sync {
+                        // Get current TSS coordinates
+                        self?.TSSCoordinates         = parsedTSSOrbitalPosition.positions
+                        self?.TSSLatitude            = self?.TSSCoordinates[0].satlatitude ?? 0.0
+                        self?.TSSLongitude           = self?.TSSCoordinates[0].satlongitude ?? 0.0
+                        
+                        self?.tLat                   = String((self?.TSSLatitude)!)
+                        self?.tLon                   = String((self?.TSSLongitude)!)
+                    }
                 } catch {
                     
                     DispatchQueue.main.async {
                         self?.isRunningLabel?.text = "Can't get TSS location"
                     }
-                    
                 }
-                
             } else {
                 
                 DispatchQueue.main.async {
                     self?.isRunningLabel?.text = "Can't get TSS location"
                 }
-                
             }
-            
         }
         
         globeUpdateTaskForTSS.resume()

@@ -7,6 +7,7 @@
 //
 
 import AVFoundation
+import Combine
 import UIKit
 import MapKit
 import SceneKit
@@ -45,9 +46,7 @@ class GlobeFullViewController: UIViewController, AVAudioPlayerDelegate, EarthGlo
     var iLon                             = ""
     var tLat                             = ""
     var tLon                             = ""
-    
-    // Initialize timer
-    var ISSTimer                         = Timer()                                   // Timer for updating ISS position
+    var timer: AnyCancellable?
     
     private var helpTitle                = "3D Globe Help"
     
@@ -115,7 +114,6 @@ class GlobeFullViewController: UIViewController, AVAudioPlayerDelegate, EarthGlo
         }
         
         spaceBackgroundImage?.image = UIImage(named: globeBackgroundImageName)
-        
     }
     
     
@@ -124,7 +122,6 @@ class GlobeFullViewController: UIViewController, AVAudioPlayerDelegate, EarthGlo
         
         let appDelegate = UIApplication.shared.delegate! as! AppDelegate
         appDelegate.referenceToGlobeFullViewController = self
-        
     }
     
     
@@ -134,7 +131,6 @@ class GlobeFullViewController: UIViewController, AVAudioPlayerDelegate, EarthGlo
         
         setUpAppDelegate()
         setUpSoundTrackMusicPlayer()
-
     }
     
 
@@ -159,7 +155,6 @@ class GlobeFullViewController: UIViewController, AVAudioPlayerDelegate, EarthGlo
         
         Globals.globeBackgroundWasChanged = true
         startUpdatingGlobe()
-
     }
     
     
@@ -169,7 +164,6 @@ class GlobeFullViewController: UIViewController, AVAudioPlayerDelegate, EarthGlo
         soundtrackMusicPlayer?.stop()
         
         stopUpdatingGlobe()
-        
     }
     
     
@@ -177,24 +171,25 @@ class GlobeFullViewController: UIViewController, AVAudioPlayerDelegate, EarthGlo
         
         Globals.globeBackgroundWasChanged = true
         earthGlobeLocateStations()       // Call once to update the globe before the timer starts in order to immediately show the ISS location, etc.
-        startAllTimers()
-        
+        start()
     }
     
     
-    private func startAllTimers() {
-
-        ISSTimer = Timer.scheduledTimer(timeInterval: Constants.timerValue, target: self, selector: #selector(earthGlobeLocateStations), userInfo: nil, repeats: true)
-
+    private func start() {
+        
+        timer = Timer
+            .publish(every: Constants.timerValue, on: .main, in: .common)
+            .autoconnect()
+            .sink { _ in
+                self.earthGlobeLocateStations()
+            }
     }
     
     
     func stopUpdatingGlobe() {
         
-        ISSTimer.invalidate()
-        
+        timer?.cancel()
         isRunningLabel?.text = "Not Running"
-        
     }
     
     
@@ -212,7 +207,6 @@ class GlobeFullViewController: UIViewController, AVAudioPlayerDelegate, EarthGlo
             destinationVC.helpButtonInCallingVCSourceView     = navigationController.navigationBar
             destinationVC.title                               = helpTitle
             
-        
         case Constants.segueToSettings :                                 // Keep tracking, set popover arrow to point to middle, below settings button
             let navigationController                          = segue.destination as! UINavigationController
             let destinationVC                                 = navigationController.topViewController as! SettingsTableViewController
@@ -220,9 +214,7 @@ class GlobeFullViewController: UIViewController, AVAudioPlayerDelegate, EarthGlo
         
         default :
             break
-            
         }
-        
     }
     
     
@@ -244,18 +236,15 @@ class GlobeFullViewController: UIViewController, AVAudioPlayerDelegate, EarthGlo
             } catch {
                 return
             }
-            
         } else {
             return
         }
         
         soundtrackMusicPlayer?.numberOfLoops = -1       // Loop indefinitely
-        
     }
     
     
     /// Toggle soundtrack on and off
-    
     @IBAction func toggleMusicSoundtrack(_ sender: UIBarButtonItem) {
         
         if soundtrackButtonOn {
@@ -265,7 +254,6 @@ class GlobeFullViewController: UIViewController, AVAudioPlayerDelegate, EarthGlo
         }
         
         soundtrackButtonOn.toggle()
-        
     }
     
     
@@ -277,7 +265,5 @@ class GlobeFullViewController: UIViewController, AVAudioPlayerDelegate, EarthGlo
         delay(0.5) {
             self.startUpdatingGlobe()
         }
-        
     }
-    
 }

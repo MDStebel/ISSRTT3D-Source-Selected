@@ -79,7 +79,6 @@ class SettingsTableViewController: UITableViewController {
         
         Globals.zoomFactorWasResetInSettings   = false
         Globals.globeBackgroundWasChanged = true
-        
     }
     
     
@@ -112,7 +111,6 @@ class SettingsTableViewController: UITableViewController {
         } else {
             Globals.orbitGroundTrackLineEnabled = false
         }
-        
     }
     
     @IBAction private func showGlobe(_ sender: UISwitch) {
@@ -122,7 +120,6 @@ class SettingsTableViewController: UITableViewController {
         } else {
             Globals.displayGlobe = false
         }
-        
     }
     
     @IBAction private func autoRotateGlobeEnabled(_ sender: UISwitch) {
@@ -132,7 +129,6 @@ class SettingsTableViewController: UITableViewController {
         } else {
             Globals.autoRotateGlobeEnabled = false
         }
-        
     }
     
     
@@ -143,7 +139,6 @@ class SettingsTableViewController: UITableViewController {
         } else {
             Globals.showCoordinatesIsOn = false
         }
-        
     }
     
     
@@ -154,7 +149,6 @@ class SettingsTableViewController: UITableViewController {
         } else {
             Globals.displayZoomFactorBelowMarkerIsOn = false
         }
-        
     }
     
     
@@ -165,14 +159,12 @@ class SettingsTableViewController: UITableViewController {
         } else {
             Globals.mapScrollingAndZoomIsEnabled = false
         }
-        
     }
     
     
     @IBAction func markerTypeSelected(_ sender: UISegmentedControl) {
         
         Globals.markerType = sender.selectedSegmentIndex
-        
     }
     
 
@@ -184,7 +176,6 @@ class SettingsTableViewController: UITableViewController {
         } else {
             Globals.showWhatsNewUponNextStartup = false
         }
-        
     }
     
     
@@ -192,7 +183,6 @@ class SettingsTableViewController: UITableViewController {
         
         Globals.zoomRangeFactorSelection = sender.selectedSegmentIndex
         Globals.zoomFactorWasResetInSettings = true
-        
     }
     
     
@@ -200,14 +190,12 @@ class SettingsTableViewController: UITableViewController {
 
         Globals.globeBackgroundImageSelection = sender.selectedSegmentIndex
         Globals.globeBackgroundWasChanged = true
-        
     }
     
     
     @IBAction private func numberOfPassesWasSelected(_ sender: UISegmentedControl) {
         
         Globals.numberOfDaysOfPassesSelectedSegment = sender.selectedSegmentIndex
-        
     }
     
     
@@ -217,7 +205,6 @@ class SettingsTableViewController: UITableViewController {
         if let websiteAddress = URL(string: websiteURL), UIApplication.shared.canOpenURL(websiteAddress) {
             UIApplication.shared.open(websiteAddress, options: convertToUIApplicationOpenExternalURLOptionsKeyDictionary([:]), completionHandler: { (success) in })
         }
-        
     }
     
     
@@ -227,7 +214,6 @@ class SettingsTableViewController: UITableViewController {
         if let iTunesLinkForRating = URL(string: urlForRating), UIApplication.shared.canOpenURL(iTunesLinkForRating) {
             UIApplication.shared.open(iTunesLinkForRating, options: convertToUIApplicationOpenExternalURLOptionsKeyDictionary([:]), completionHandler: { (success) in })   // Replaced deprecated UIApplication.shared.openURL(iTunesLink)
         }
-        
     }
 
     
@@ -273,7 +259,6 @@ class SettingsTableViewController: UITableViewController {
         Globals.zoomFactorWasResetInSettings         = true       // Flag is set to indicate that TrackingViewController should check to restore zoom to its default values
         Globals.globeBackgroundWasChanged            = true
         Globals.blackScreenInHDEVExplanationPopsUp   = true
-        
     }
     
     
@@ -329,7 +314,6 @@ class SettingsTableViewController: UITableViewController {
         backgroundSelector?.selectedSegmentIndex      = Globals.globeBackgroundImageSelection
         dateAndTimeSaved                              = "Last saved: \(Globals.lastDateAndTimeSettingsWereSaved)"
         versionAndCopyrightFooter                     = "Version: \(versionNumber)  Build: \(buildNumber)\n\(copyrightNotice)\n\nIncludes: WhatsNewKit © 2020 Sven Tiigi"
-
     }
     
     
@@ -344,7 +328,6 @@ class SettingsTableViewController: UITableViewController {
         default:
             return nil
         }
-        
     }
 
     
@@ -361,20 +344,16 @@ class SettingsTableViewController: UITableViewController {
         default :
             break
         }
-        
     }
     
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
     }
-    
 }
 
 
 /// Helper function inserted by Swift 4.2 migrator.
 private func convertToUIApplicationOpenExternalURLOptionsKeyDictionary(_ input: [String: Any]) -> [UIApplication.OpenExternalURLOptionsKey: Any] {
-    
 	return Dictionary(uniqueKeysWithValues: input.map { key, value in (UIApplication.OpenExternalURLOptionsKey(rawValue: key), value)})
-
 }
