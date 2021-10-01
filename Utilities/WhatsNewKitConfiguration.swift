@@ -29,10 +29,10 @@ private let whatsNew = WhatsNew(
         WhatsNew.Item(
             title: "Improvements & Fixes",
             subtitle: """
-                      • Fixed additional issues with navigation bar appearance on iPhone and iPad.
-                      • Small tweaks to the Apple Watch app globe scene.
-                      • Updated help files.
-                      • Bug fixes.
+                      • Added error checking in the Apple Watch app.
+                      • Internal improvements to the iOS/iPadOS app.
+                      • Updated code to latest versions of SwiftUI and Combine frameworks.
+                      • Performance improvements throughout.
                       """,
             image: UIImage(named: "icons8-bug_filled")
         ),
