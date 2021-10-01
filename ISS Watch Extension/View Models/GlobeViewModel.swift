@@ -15,10 +15,11 @@ final class GlobeViewModel: ObservableObject {
     // MARK: - Published properties
     
     @Published var earthGlobe: EarthGlobe = EarthGlobe()
+    @Published var errorForAlert: ErrorCodes?
     @Published var globeMainNode: SCNNode?
     @Published var globeScene: SCNScene?
     @Published var isStartingUp: Bool                              = true
-    
+    @Published var wasError                                        = false
     
     // MARK: - Properties
     
@@ -26,6 +27,7 @@ final class GlobeViewModel: ObservableObject {
     private let apiKey                                             = ApiKeys.ISSLocationKey
     private let timerValue                                         = 3.0
     
+    private var cancellables: Set<AnyCancellable>                  = []
     private var issHeadingFactor: Float                            = 0.0
     private var tssHeadingFactor: Float                            = 0.0
     private var issLastLat: Float                                  = 0.0
@@ -112,8 +114,8 @@ final class GlobeViewModel: ObservableObject {
         }
         
         // Where are the satellites right now?
-        getISSPosition()
-        getTSSPosition()
+        getSatellitePosition(for: .iss)
+        getSatellitePosition(for: .tss)
         
         // Where is the subsolar point right now?
         subSolarPoint = AstroCalculations.getSubSolarCoordinates()
@@ -153,82 +155,44 @@ final class GlobeViewModel: ObservableObject {
         issLastLat = issLatitude
         tssLastLat = tssLatitude
     }
-    
-    
-    /// Get the current ISS coordinates
-    func getISSPosition() {
+
+    /// Get the current satellite coordinates
+    private func getSatellitePosition(for satellite: StationsAndSatellites) {
         
-        let satelliteCodeNumber = StationsAndSatellites.iss.satelliteNORADCode
+        /// Helper method to extract our coordinates
+        func getCoordinates(from positionData: SatelliteOrbitPosition) {
+            switch satellite {
+            case .iss:
+                issLatitude      = Float(positionData.positions[0].satlatitude)
+                issLongitude     = Float(positionData.positions[0].satlongitude)
+            case .tss:
+                tssLatitude      = Float(positionData.positions[0].satlatitude)
+                tssLongitude     = Float(positionData.positions[0].satlongitude)
+            case .none:
+                break
+            }
+        }
         
-        // Make sure we can create the URL
+        let satelliteCodeNumber = satellite.satelliteNORADCode
+        
+        /// Make sure we can create the URL from the endpoint and parameters
         guard let ISSAPIEndpointURL = URL(string: apiEndpointString + "\(satelliteCodeNumber)/0/0/0/1/" + "&apiKey=\(apiKey)") else { return }
         
-        /// Task to get JSON data from API by sending request to API endpoint, parse response for ISS data, and then display ISS position, etc.
-        let issUpdateTask = URLSession.shared.dataTask(with: ISSAPIEndpointURL) { [ weak self ] (data, response, error) -> Void in
-            // Uses a capture list to capture a weak reference to self. This should prevent a retain cycle and allow ARC to release instance and reduce memory load.
-            
-            if let urlContent = data {
-                let decoder = JSONDecoder()
-                do {
-                    
-                    // Call JSON parser and if successful (i.e., doesn't return nil) map the coordinates
-                    let parsedISSOrbitalPosition = try decoder.decode(SatelliteOrbitPosition.self, from: urlContent)
-                    
-                    // Get current ISS location
-                    let coordinates              = parsedISSOrbitalPosition.positions
-                    
-                    DispatchQueue.main.async {
-                        self?.issLatitude        = Float(coordinates[0].satlatitude)
-                        self?.issLongitude       = Float(coordinates[0].satlongitude)
-                    }
-                    
-                } catch {
-                    return
-                }
-            } else {
-                return
+        URLSession.shared.dataTaskPublisher(for: ISSAPIEndpointURL)
+            .receive(on: RunLoop.main)
+            .map { (data: Data, response: URLResponse) in
+                data
             }
-        }
-        
-        issUpdateTask.resume()
-    }
-    
-    
-    /// Get the current TSS coordinates
-    func getTSSPosition() {
-        
-        let satelliteCodeNumber = StationsAndSatellites.tss.satelliteNORADCode
-        
-        // Make sure we can create the URL
-        guard let TSSAPIEndpointURL = URL(string: apiEndpointString + "\(satelliteCodeNumber)/0/0/0/1/" + "&apiKey=\(apiKey)") else { return }
-        
-        /// Task to get JSON data from API by sending request to API endpoint, parse response for TSS data, and then display TSS position, etc.
-        let tssUpdateTask = URLSession.shared.dataTask(with: TSSAPIEndpointURL) { [ weak self ] (data, response, error) -> Void in
-            // Uses a capture list to capture a weak reference to self. This should prevent a retain cycle and allow ARC to release instance and reduce memory load.
-            
-            if let urlContent = data {
-                let decoder = JSONDecoder()
-                do {
-                    
-                    // Call JSON parser and if successful (i.e., doesn't return nil) map the coordinates
-                    let parsedTSSOrbitalPosition = try decoder.decode(SatelliteOrbitPosition.self, from: urlContent)
-                    
-                    // Get current TSS location
-                    let coordinates              = parsedTSSOrbitalPosition.positions
-                    
-                    DispatchQueue.main.async {
-                        self?.tssLatitude        = Float(coordinates[0].satlatitude)
-                        self?.tssLongitude       = Float(coordinates[0].satlongitude)
-                    }
-                    
-                } catch {
-                    return
-                }
-            } else {
-                return
-            }
-        }
-        
-        tssUpdateTask.resume()
+            .decode(type: SatelliteOrbitPosition.self, decoder: JSONDecoder())
+            .sink(receiveCompletion: { [unowned self] completion in
+                if case .failure(let error) = completion {
+                    wasError      = true
+                    errorForAlert = ErrorCodes(message: "\(error.localizedDescription)")
+                } else {
+                    wasError      = false                }
+            }, receiveValue: { position in
+                getCoordinates(from: position)
+            })
+            .store(in: &cancellables)
     }
 }

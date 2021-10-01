@@ -11,27 +11,29 @@ import SwiftUI
 
 final class SatellitePositionViewModel: ObservableObject {
     
+    
     // MARK: - Published properties
     
-    @Published var formattedLatitude: String  = ""
-    @Published var formattedLongitude: String = ""
+    @Published var errorForAlert: ErrorCodes?
+    @Published var formattedLatitude: String       = ""
+    @Published var formattedLongitude: String      = ""
     
     // MARK: - Properties
     
+    private let apiEndpointString                  = ApiEndpoints.issTrackerAPIEndpointC
+    private let apiKey                             = ApiKeys.ISSLocationKey
+    private let timerValue                         = 3.0
+    
+    private var cancellables: Set<AnyCancellable>  = []
+    private var latitude: Float                    = 0
+    private var longitude: Float                   = 0
     private var satellite: StationsAndSatellites
-    
-    private let apiEndpointString             = ApiEndpoints.issTrackerAPIEndpointC
-    private let apiKey                        = ApiKeys.ISSLocationKey
-    private let timerValue                    = 3.0
-    
-    private var latitude: Float               = 0
-    private var longitude: Float              = 0
     private var timer: AnyCancellable?
     
     
     // MARK: - Methods
     
-    // Initialize with a specific satellite
+    /// Initialize for a specific satellite
     init(satellite: StationsAndSatellites) {
         
         self.satellite = satellite
@@ -39,55 +41,11 @@ final class SatellitePositionViewModel: ObservableObject {
     }
     
     
+    /// Startup by calling
     func startUp() {
         
-        updatePosition()   // Get the data once before starting the timer
+        getSatellitePosition(for: satellite)   // Get the data once before starting the timer
         start()
-    }
-    
-    
-    /// Updates positions
-    private func updatePosition() {
-        
-        getSatellitePosition(for: satellite)
-    }
-    
-    
-    /// Get the current satellite coordinates
-    private func getSatellitePosition(for satellite: StationsAndSatellites) {
-        
-        let satelliteCodeNumber = satellite.satelliteNORADCode
-        
-        /// Make sure we can create the URL
-        guard let ISSAPIEndpointURL = URL(string: apiEndpointString + "\(satelliteCodeNumber)/0/0/0/1/" + "&apiKey=\(apiKey)") else { return }
-        
-        /// Task to get JSON data from API by sending request to API endpoint, parse response for satellite data, and then display satellite's position, etc.
-        let globeUpdateTask = URLSession.shared.dataTask(with: ISSAPIEndpointURL) { [ weak self ] (data, response, error) -> Void in
-            // Uses a capture list to capture a weak reference to self. This should prevent a retain cycle and allow ARC to release instance and reduce memory load.
-            
-            if let urlContent = data {
-                let decoder = JSONDecoder()
-                do {
-                    // Call JSON parser and if successful (i.e., doesn't return nil) map the coordinates
-                    let parsedISSOrbitalPosition = try decoder.decode(SatelliteOrbitPosition.self, from: urlContent)
-                    // Get current ISS location
-                    let coordinates              = parsedISSOrbitalPosition.positions
-                    
-                    DispatchQueue.main.async {
-                        self?.latitude           = Float(coordinates[0].satlatitude)
-                        self?.longitude          = Float(coordinates[0].satlongitude)
-                        self?.formattedLatitude  = CoordinateConversions.decimalCoordinatesToDegMinSec(coordinate: Double(self!.latitude), format: Globals.coordinatesStringFormat, isLatitude: true)
-                        self?.formattedLongitude = CoordinateConversions.decimalCoordinatesToDegMinSec(coordinate: Double(self!.longitude), format: Globals.coordinatesStringFormat, isLatitude: false)
-                    }
-                } catch {
-                    return
-                }
-            } else {
-                return
-            }
-        }
-        
-        globeUpdateTask.resume()
     }
     
     
@@ -102,10 +60,44 @@ final class SatellitePositionViewModel: ObservableObject {
             }
     }
     
-
+    
     /// Stop the timer
     func stop() {
         
         timer?.cancel()
+    }
+    
+    
+    /// Get the current satellite coordinates
+    private func getSatellitePosition(for satellite: StationsAndSatellites) {
+        
+        /// Helper method to extract our coordinates and format them
+        func getCoordinates(from positionData: SatelliteOrbitPosition) {
+            
+            latitude           = Float(positionData.positions[0].satlatitude)
+            longitude          = Float(positionData.positions[0].satlongitude)
+            formattedLatitude  = CoordinateConversions.decimalCoordinatesToDegMinSec(coordinate: Double(latitude), format: Globals.coordinatesStringFormat, isLatitude: true)
+            formattedLongitude = CoordinateConversions.decimalCoordinatesToDegMinSec(coordinate: Double(longitude), format: Globals.coordinatesStringFormat, isLatitude: false)
+        }
+        
+        let satelliteCodeNumber = satellite.satelliteNORADCode
+        
+        /// Make sure we can create the URL from the endpoint and parameters
+        guard let ISSAPIEndpointURL = URL(string: apiEndpointString + "\(satelliteCodeNumber)/0/0/0/1/" + "&apiKey=\(apiKey)") else { return }
+        
+        URLSession.shared.dataTaskPublisher(for: ISSAPIEndpointURL)
+            .receive(on: RunLoop.main)
+            .map { (data: Data, response: URLResponse) in
+                data
+            }
+            .decode(type: SatelliteOrbitPosition.self, decoder: JSONDecoder())
+            .sink(receiveCompletion: { [unowned self] completion in
+                if case .failure(let error) = completion {
+                    errorForAlert = ErrorCodes(message: "\(error.localizedDescription)")
+                }
+            }, receiveValue: { position in
+                getCoordinates(from: position)
+            })
+            .store(in: &cancellables)
     }
 }

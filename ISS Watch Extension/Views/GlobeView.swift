@@ -50,13 +50,20 @@ struct GlobeView: View {
                         
                         NavigationLink(
                             destination: DetailView()
-                        ) {
+                        ){
                             Image(systemName: "tablecells.fill")
                         }
                         .withMDSButtonModifier
                     }
                     .padding([.horizontal], 25)
                     .padding([.bottom], 7)
+                }
+                
+                // Pop up an alert if there was an error fetching data
+                .alert(isPresented: $globeViewModel.wasError) {
+                    Alert(title: Text(globeViewModel.errorForAlert?.title ?? "Oops!"),
+                          message: Text(globeViewModel.errorForAlert?.message ?? "Can't get data.")
+                    )
                 }
             }
             .ignoresSafeArea(edges: [.vertical])
@@ -65,6 +72,7 @@ struct GlobeView: View {
         }
     }
 }
+
     
 struct GlobeView_Previews: PreviewProvider {
     static var previews: some View {
