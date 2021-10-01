@@ -72,8 +72,8 @@ struct Globals {
 #else           // iOS and iPadOS-specific settings
     
     static let ambientLightIntensity: CGFloat                = 100
-    static let defaultCameraFov: CGFloat                     = 30
     static let coordinatesStringFormat                       = "%3d°%02d'%02d\"%@, %3d°%02d'%02d\"%@"
+    static let defaultCameraFov: CGFloat                     = 30
     static let globeRadiusMultiplierToPlaceOnSurface: Float  = 0.949
     static let globeSegments                                 = 1000
     static let ISSMarkerWidth: CGFloat                       = 0.16
@@ -98,7 +98,7 @@ struct Globals {
     static let TSSIconFor3DGlobeView                         = "Tiangong-mds-1200px"
     static let TSSMarkerWidth: CGFloat                       = 0.07
     static let TSSOrbitAltitudeInScene                       = TSSOrbitalAltitudeFactor
-    static let TSSOrbitInclinationInDegrees: Float           = 42.0
+    static let TSSOrbitInclinationInDegrees: Float           = 41.8
     static let TSSOrbitInclinationInRadians: Float           = TSSOrbitInclinationInDegrees * Float(degreesToRadians)
     static let TSSOrbitalAltitudeFactor                      = globeRadiusFactor * (1 + TSSAltitudeInKM / earthRadiusInKM) * 1.01
     static let TSSViewingCircleGraphic                       = "TSS-Visibility-Circle"

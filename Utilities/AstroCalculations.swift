@@ -185,10 +185,10 @@ public struct AstroCalculations {
         let subSolarLon = noonHourDelta * Globals.degreesLongitudePerHour
         
         // Now, determine if we've crossed the international date line. If so, we need to add 180 degrees.
-        if subSolarLon < -Globals.oneEightyDegrees && GMT <= Globals.noonTime {
+        if subSolarLon < -Globals.oneEightyDegrees && GMT < Globals.noonTime {
             lonCorrection = Globals.oneEightyDegrees
         } else if subSolarLon < -Globals.oneEightyDegrees && GMT >= Globals.noonTime {
-            lonCorrection = 0 //localHour >= GMT ? 0 : Globals.oneEightyDegrees
+            lonCorrection = 0               //localHour >= GMT ? 0 : Globals.oneEightyDegrees
         } else if GMT >= Globals.numberOfHoursInADay {
             lonCorrection = Globals.oneEightyDegrees
         } else {
