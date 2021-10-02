@@ -189,7 +189,8 @@ final class GlobeViewModel: ObservableObject {
                     wasError      = true
                     errorForAlert = ErrorCodes(message: "\(error.localizedDescription)")
                 } else {
-                    wasError      = false                }
+                    wasError      = false
+                }
             }, receiveValue: { position in
                 getCoordinates(from: position)
             })

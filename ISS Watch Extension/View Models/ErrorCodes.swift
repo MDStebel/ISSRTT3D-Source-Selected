@@ -9,7 +9,6 @@
 import Combine
 import SwiftUI
 
-
 /// Errors used in app
 struct ErrorCodes: Error, Identifiable {
     

@@ -23,7 +23,7 @@ struct GlobeView: View {
             
             ZStack {
                 
-                // Present the globe
+                // Render the globe. This will update as new coordinates are received.
                 SceneView(scene: globeViewModel.globeScene,
                           pointOfView: globeViewModel.globeMainNode,
                           options: [.allowsCameraControl])

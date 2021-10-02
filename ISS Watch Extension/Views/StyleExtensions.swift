@@ -27,7 +27,9 @@ extension Font {
 
 extension View {
     
-    /// Extends View to allow us to use custom modifier without using ".modifier(..."
+    /// Custom modifier for a button
+    ///
+    /// Produces a small round button with a white background and ISSRTT3DRed foreground.
     /// - Returns: Custom modifier as a view
     var withMDSButtonModifier: some View {
         self.modifier(MDSButtonModifier())
@@ -51,6 +53,5 @@ struct MDSButtonModifier: ViewModifier {
             .cornerRadius(.infinity)
             .shadow(color: .ISSRTT3DRed, radius: 7)
             .padding([.horizontal])
-//            .padding([.bottom], 3)
     }
 }
