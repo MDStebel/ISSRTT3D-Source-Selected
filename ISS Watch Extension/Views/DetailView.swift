@@ -14,34 +14,47 @@ struct DetailView: View {
     // Get the phase of the scene
     @Environment(\.scenePhase) private var scenePhase
     
-    // View models we're observing for updated data
+    // Publishers we're observing for updated position data
     @StateObject private var issPosition   = SatellitePositionViewModel(satellite: .iss)
     @StateObject private var tssPosition   = SatellitePositionViewModel(satellite: .tss)
     @StateObject private var subSolarPoint = SubSolarViewModel()
     
     var body: some View {
         
+        let issAltitude            = issPosition.altitude
+        let issAltitudeFormatted   = issPosition.formattedAltitude
         let issLatitudeFormatted   = issPosition.formattedLatitude
         let issLongitudeFormatted  = issPosition.formattedLongitude
-        let subsolarPointLatitude  = subSolarPoint.subsolarLatitude
-        let subsolarPointLongitude = subSolarPoint.subsolarLongitude
+        
+        let tssAltitude            = tssPosition.altitude
+        let tssAltitudeFormatted   = tssPosition.formattedAltitude
         let tssLatitudeFormatted   = tssPosition.formattedLatitude
         let tssLongitudeFormatted  = tssPosition.formattedLongitude
         
+        let subsolarPointLatitude  = subSolarPoint.subsolarLatitude
+        let subsolarPointLongitude = subSolarPoint.subsolarLongitude
+        
         ScrollView {
+            
             VStack {
                 
                 DataCellView(title: "ISS Position",
+                             altValue: issAltitude,
+                             altitude: issAltitudeFormatted,
                              latitude: issLatitudeFormatted,
                              longitude: issLongitudeFormatted,
                              sidebarColor: .ISSRTT3DRed)
                 
                 DataCellView(title: "TSS Position",
+                             altValue: tssAltitude,
+                             altitude: tssAltitudeFormatted,
                              latitude: tssLatitudeFormatted,
                              longitude: tssLongitudeFormatted,
                              sidebarColor: .ISSRTT3DGold)
                 
                 DataCellView(title: "Subsolar Point",
+                             altValue: nil,
+                             altitude: nil,
                              latitude: subsolarPointLatitude,
                              longitude: subsolarPointLongitude,
                              sidebarColor: .white)
@@ -54,12 +67,12 @@ struct DetailView: View {
         .onAppear() {
             start()
         }
-
+        
         // Stop updating when this view disappears
         .onDisappear() {
             stop()
         }
-
+        
         // Respond to lifecycle phases
         .onChange(of: scenePhase) { phase in
             switch phase {

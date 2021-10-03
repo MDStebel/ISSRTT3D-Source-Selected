@@ -14,7 +14,9 @@ final class SatellitePositionViewModel: ObservableObject {
     
     // MARK: - Published properties
     
+    @Published var altitude: Float                 = 0
     @Published var errorForAlert: ErrorCodes?
+    @Published var formattedAltitude: String       = ""
     @Published var formattedLatitude: String       = ""
     @Published var formattedLongitude: String      = ""
     
@@ -22,6 +24,7 @@ final class SatellitePositionViewModel: ObservableObject {
     
     private let apiEndpointString                  = ApiEndpoints.issTrackerAPIEndpointC
     private let apiKey                             = ApiKeys.ISSLocationKey
+    private let numberFormatter                    = NumberFormatter()
     private let timerValue                         = 3.0
     
     private var cancellables: Set<AnyCancellable>  = []
@@ -71,13 +74,19 @@ final class SatellitePositionViewModel: ObservableObject {
     /// Get the current satellite coordinates
     private func getSatellitePosition(for satellite: StationsAndSatellites) {
         
-        /// Helper method to extract our coordinates and format them
+        /// Helper method to extract our altitude and coordinates and format them
         func getCoordinates(from positionData: SatelliteOrbitPosition) {
             
-            latitude           = Float(positionData.positions[0].satlatitude)
-            longitude          = Float(positionData.positions[0].satlongitude)
-            formattedLatitude  = CoordinateConversions.decimalCoordinatesToDegMinSec(coordinate: Double(latitude), format: Globals.coordinatesStringFormat, isLatitude: true)
-            formattedLongitude = CoordinateConversions.decimalCoordinatesToDegMinSec(coordinate: Double(longitude), format: Globals.coordinatesStringFormat, isLatitude: false)
+            altitude            = Float(positionData.positions[0].sataltitude)
+            let altitudeInKm    = numberFormatter.string(from: NSNumber(value: Double(altitude))) ?? ""
+            let altitudeInMiles = numberFormatter.string(from: NSNumber(value: Double(altitude) * Globals.kilometersToMiles)) ?? ""
+            formattedAltitude   = "\(altitudeInKm) km\n(\(altitudeInMiles) mi)"
+            
+            latitude            = Float(positionData.positions[0].satlatitude)
+            formattedLatitude   = CoordinateConversions.decimalCoordinatesToDegMinSec(coordinate: Double(latitude), format: Globals.coordinatesStringFormat, isLatitude: true)
+            
+            longitude           = Float(positionData.positions[0].satlongitude)
+            formattedLongitude  = CoordinateConversions.decimalCoordinatesToDegMinSec(coordinate: Double(longitude), format: Globals.coordinatesStringFormat, isLatitude: false)
         }
         
         let satelliteCodeNumber = satellite.satelliteNORADCode

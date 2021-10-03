@@ -29,21 +29,19 @@ extension View {
     
     /// Custom modifier for a button
     ///
-    /// Produces a small round button with a white background and ISSRTT3DRed foreground.
-    /// - Returns: Custom modifier as a view
+    /// Returns a small round button with a white background and ISSRTT3DRed foreground.
     var withMDSButtonModifier: some View {
         self.modifier(MDSButtonModifier())
     }
 }
 
 
-/// Button style custom modifier
-///
-/// Produces a small round button with a white background and ISSRTT3DRed foreground.
-/// - Parameter content: The view being modified
-/// - Returns: Custom modifier
 struct MDSButtonModifier: ViewModifier {
     
+    /// Button style custom modifier
+    ///
+    /// Produces a small round button with a white background and ISSRTT3DRed foreground.
+    /// - Returns: Custom modifier
     func body(content: Content) -> some View {
         content
             .frame(width: 30, height: 30, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
@@ -53,5 +51,30 @@ struct MDSButtonModifier: ViewModifier {
             .cornerRadius(.infinity)
             .shadow(color: .ISSRTT3DRed, radius: 7)
             .padding([.horizontal])
+    }
+}
+
+
+extension View {
+    
+    /// Custom modifier for text
+    ///
+    /// Returns small ISSRed text
+    var withMDSDataLabelModifier: some View {
+        self.modifier(MDSDataLabelModifier())
+    }
+}
+
+
+struct MDSDataLabelModifier: ViewModifier {
+    
+    /// Custom modifier for text
+    ///
+    /// Produces a small ISSRed text
+    /// - Returns: Custom modifier
+    func body(content: Content) -> some View {
+        content
+            .font(.system(size: 8.0))
+            .foregroundColor(.ISSRTT3DRed)
     }
 }
