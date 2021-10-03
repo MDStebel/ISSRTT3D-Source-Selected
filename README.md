@@ -1,9 +1,9 @@
 #  ISS Real-Time Tracker 3D
 
-## App for iPhone, iPad, iPod touch, and Apple Watch
-## Selected source files
+### App for iPhone, iPad, iPod touch, and Apple Watch
+### Selected source files
 
-#### Requires iOS 15, iPadOS 15, watchOS 8 or higher
+##### Requires iOS 15, iPadOS 15, watchOS 8 or higher
 
 Note: Published for educational purposes only. Source files in this repository do not include resources, images, fonts, graphics, soundtracks, and certain other source files. API endpoints and keys have been hidden.
 Learn about the app or get support at https://www.issrtt.com
