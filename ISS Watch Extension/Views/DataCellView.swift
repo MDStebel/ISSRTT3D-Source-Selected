@@ -12,10 +12,16 @@ import SwiftUI
 struct DataCellView: View {
     
     let title: String
-    let altitude: String?
+    let altitude: Float?
+    let altitudeInKm: String?
+    let altitudeInMi: String?
     let latitude: String
     let longitude: String
     let sidebarColor: Color
+    
+    private let max: Float        = 460.0           // Scale max
+    private let min: Float        = 360.0           // Scale min
+    private let multiplier: Float = 20
     
     var body: some View {
         HStack {
@@ -24,7 +30,9 @@ struct DataCellView: View {
                 .frame(width: 6)
                 .foregroundColor(sidebarColor)
             
-            VStack {                                // Coordinates data here
+            VStack {
+                
+                // Data area
                 HStack {                            // Title
                     Text(title)
                         .font(.system(size: 14, weight: .semibold))
@@ -38,28 +46,46 @@ struct DataCellView: View {
                     
                     // Only show the altitude indicator if there's an altitude available
                     // If not, we'll assume we're showing the subsolar point, so show the Sun
-                    if let alt = altitude {
+                    if let altKm = altitudeInKm, let altMi = altitudeInMi, let alt = altitude {
                         
-                        HStack {
-//                            Image(systemName: "arrowtriangle.left.fill")
-//                                .resizable()
-//                                .frame(width: 9, height: 6)
-//                                .foregroundColor(sidebarColor)
-//                                .offset(x: -5)
+                        let range             = max - min                   // Scale range
+                        let boundedAlt        = fmin(fmax(alt, min), max)   // Keep within scale range
+                        let normalizedAlt     = (boundedAlt - min) / range
+                        let yOffsetComputed   = -CGFloat(normalizedAlt * multiplier) + 6
+                        
+                        // Show the altitude scale
+                        Image("Y-Axis")
+                            .offset(x: -5, y: -4)
+                        
+                        // Movable indicator with values
+                        HStack(spacing: -4) {
                             
-                            VStack(alignment: .leading) {
+                            Image(systemName: "arrowtriangle.left.fill")
+                                .resizable()
+                                .frame(width: 7, height: 6)
+                                .foregroundColor(sidebarColor)
+                                .offset(x: -9)
+                            
+                            VStack(alignment: .leading, spacing: -3) {
                                 Text("ALT")
                                     .bold()
                                     .withMDSDataLabelModifier
-                                Text(alt)
+                                Text(altKm)
                                     .font(.custom(Theme.appFont, size: 9.0))
                                     .foregroundColor(.white)
                                     .bold()
-                                    .lineLimit(2)
+                                    .lineLimit(1)
+                                Text(altMi)
+                                    .font(.custom(Theme.appFont, size: 9.0))
+                                    .foregroundColor(.white)
+                                    .bold()
+                                    .lineLimit(1)
                             }
-                            .offset(y: -1)
+                            .offset(x: -4,y: 1.5)
                         }
-                        
+                        .offset(y: yOffsetComputed) // This will position the alt on the scale
+                     
+                    // Show a Sun icon if this is not a satellite
                     } else {
                         
                         Image(systemName: "sun.max.fill")
@@ -67,30 +93,33 @@ struct DataCellView: View {
                             .scaledToFit()
                             .foregroundColor(.yellow)
                             .offset(y: -2)
+                        
                     }
                     
+                    // Coordinates area
                     VStack {
                         
-                        HStack (alignment: .firstTextBaseline) {
+                        HStack (alignment: .firstTextBaseline, spacing: 2) {
                             HStack {
                                 Spacer()
                                 Text(latitude)
                                     .font(.custom(Theme.appFont, size: 13))
                                     .bold()
                             }
-                            .offset(x: -2)
+                            .offset(x: 0)
                             Text("LAT")
                                 .bold()
                                 .withMDSDataLabelModifier
                         }
                         
-                        HStack(alignment: .firstTextBaseline) {
+                        HStack(alignment: .firstTextBaseline, spacing: 1) {
                             HStack {
                                 Spacer()
                                 Text(longitude)
                                     .font(.custom(Theme.appFont, size: 13))
                                     .bold()
                             }
+                            .offset(x: 0)
                             Text("LON")
                                 .bold()
                                 .withMDSDataLabelModifier
@@ -108,8 +137,9 @@ struct DataCellView: View {
     }
 }
 
+
 struct DataCellView_Previews: PreviewProvider {
     static var previews: some View {
-        DataCellView(title: "Title", altitude: "400 km\n(250 mi)", latitude: "test", longitude: "test", sidebarColor: .blue)
+        DataCellView(title: "Title", altitude: 400, altitudeInKm: "400 km", altitudeInMi: "249 mi", latitude: "test", longitude: "test", sidebarColor: .blue)
     }
 }

@@ -11,7 +11,7 @@ import SceneKit
 
 struct GlobeView: View {
     
-    // Get the phase of the scene
+    // Get the current phase of the scene
     @Environment(\.scenePhase) private var scenePhase
     
     // We're observing our view model
@@ -26,7 +26,8 @@ struct GlobeView: View {
                 // Render the globe. This will update as new coordinates are received.
                 SceneView(scene: globeViewModel.globeScene,
                           pointOfView: globeViewModel.globeMainNode,
-                          options: [.allowsCameraControl])
+                          options: [.allowsCameraControl]
+                )
                 
                 // Show progress indicator when starting up/resetting
                 if globeViewModel.isStartingUp {
@@ -41,7 +42,8 @@ struct GlobeView: View {
                     HStack {
                         Button(action: {
                             globeViewModel.reset()
-                        }) {
+                        })
+                        {
                             Image(systemName: "arrowshape.turn.up.backward.fill")
                         }
                         .withMDSButtonModifier
@@ -50,7 +52,8 @@ struct GlobeView: View {
                         
                         NavigationLink(
                             destination: DetailView()
-                        ) {
+                        )
+                        {
                             Image(systemName: "tablecells.fill")
                         }
                         .withMDSButtonModifier

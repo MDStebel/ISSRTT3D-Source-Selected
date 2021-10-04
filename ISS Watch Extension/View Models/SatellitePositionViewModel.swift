@@ -14,8 +14,10 @@ final class SatellitePositionViewModel: ObservableObject {
     
     // MARK: - Published properties
     
+    @Published var altitude: Float                 = 0
+    @Published var altitudeInKm: String            = ""
+    @Published var altitudeInMi: String            = ""
     @Published var errorForAlert: ErrorCodes?
-    @Published var formattedAltitude: String       = ""
     @Published var formattedLatitude: String       = ""
     @Published var formattedLongitude: String      = ""
     
@@ -26,7 +28,6 @@ final class SatellitePositionViewModel: ObservableObject {
     private let numberFormatter                    = NumberFormatter()
     private let timerValue                         = 3.0
     
-    private var altitude: Float                    = 0
     private var cancellables: Set<AnyCancellable>  = []
     private var latitude: Float                    = 0
     private var longitude: Float                   = 0
@@ -77,16 +78,15 @@ final class SatellitePositionViewModel: ObservableObject {
         /// Helper method to extract our altitude and coordinates and format them
         func getCoordinates(from positionData: SatelliteOrbitPosition) {
             
-            altitude            = Float(positionData.positions[0].sataltitude)
-            let altitudeInKm    = numberFormatter.string(from: NSNumber(value: Double(altitude))) ?? ""
-            let altitudeInMiles = numberFormatter.string(from: NSNumber(value: Double(altitude) * Globals.kilometersToMiles)) ?? ""
-            formattedAltitude   = "\(altitudeInKm) km\n(\(altitudeInMiles) mi)"
+            altitude           = Float(positionData.positions[0].sataltitude)
+            altitudeInKm       = "\(numberFormatter.string(from: NSNumber(value: Double(altitude))) ?? "")km"
+            altitudeInMi       = "\(numberFormatter.string(from: NSNumber(value: Double(altitude) * Globals.kilometersToMiles)) ?? "")mi"
             
-            latitude            = Float(positionData.positions[0].satlatitude)
-            formattedLatitude   = CoordinateConversions.decimalCoordinatesToDegMinSec(coordinate: Double(latitude), format: Globals.coordinatesStringFormat, isLatitude: true)
+            latitude           = Float(positionData.positions[0].satlatitude)
+            formattedLatitude  = CoordinateConversions.decimalCoordinatesToDegMinSec(coordinate: Double(latitude), format: Globals.coordinatesStringFormat, isLatitude: true)
             
-            longitude           = Float(positionData.positions[0].satlongitude)
-            formattedLongitude  = CoordinateConversions.decimalCoordinatesToDegMinSec(coordinate: Double(longitude), format: Globals.coordinatesStringFormat, isLatitude: false)
+            longitude          = Float(positionData.positions[0].satlongitude)
+            formattedLongitude = CoordinateConversions.decimalCoordinatesToDegMinSec(coordinate: Double(longitude), format: Globals.coordinatesStringFormat, isLatitude: false)
         }
         
         let satelliteCodeNumber = satellite.satelliteNORADCode

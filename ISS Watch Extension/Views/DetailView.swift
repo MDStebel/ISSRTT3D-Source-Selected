@@ -21,38 +21,36 @@ struct DetailView: View {
     
     var body: some View {
         
-        let issAltitudeFormatted   = issPosition.formattedAltitude
-        let issLatitudeFormatted   = issPosition.formattedLatitude
-        let issLongitudeFormatted  = issPosition.formattedLongitude
-
-        let tssAltitudeFormatted   = tssPosition.formattedAltitude
-        let tssLatitudeFormatted   = tssPosition.formattedLatitude
-        let tssLongitudeFormatted  = tssPosition.formattedLongitude
-        
-        let subsolarPointLatitude  = subSolarPoint.subsolarLatitude
-        let subsolarPointLongitude = subSolarPoint.subsolarLongitude
-        
         ScrollView {
             
             VStack {
                 
                 DataCellView(title: "ISS Position",
-                             altitude: issAltitudeFormatted,
-                             latitude: issLatitudeFormatted,
-                             longitude: issLongitudeFormatted,
-                             sidebarColor: .ISSRTT3DRed)
+                             altitude: issPosition.altitude,
+                             altitudeInKm: issPosition.altitudeInKm,
+                             altitudeInMi: issPosition.altitudeInMi,
+                             latitude: issPosition.formattedLatitude,
+                             longitude: issPosition.formattedLongitude,
+                             sidebarColor: .ISSRTT3DRed
+                )
                 
-                DataCellView(title: "TSS Position",
-                             altitude: tssAltitudeFormatted,
-                             latitude: tssLatitudeFormatted,
-                             longitude: tssLongitudeFormatted,
-                             sidebarColor: .ISSRTT3DGold)
+                DataCellView(title: "Tiangong Position",
+                             altitude: tssPosition.altitude,
+                             altitudeInKm: tssPosition.altitudeInKm,
+                             altitudeInMi: tssPosition.altitudeInMi,
+                             latitude: tssPosition.formattedLatitude,
+                             longitude: tssPosition.formattedLongitude,
+                             sidebarColor: .ISSRTT3DGold
+                )
                 
                 DataCellView(title: "Subsolar Point",
                              altitude: nil,
-                             latitude: subsolarPointLatitude,
-                             longitude: subsolarPointLongitude,
-                             sidebarColor: .yellow)
+                             altitudeInKm: nil,
+                             altitudeInMi: nil,
+                             latitude: subSolarPoint.subsolarLatitude,
+                             longitude: subSolarPoint.subsolarLongitude,
+                             sidebarColor: .yellow
+                )
             }
         }
         .ignoresSafeArea(edges: .bottom)
@@ -98,6 +96,7 @@ struct DetailView: View {
         subSolarPoint.stop()
     }
 }
+
 
 struct SubSolarPointView_Previews: PreviewProvider {
     static var previews: some View {
