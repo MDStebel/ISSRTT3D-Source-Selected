@@ -49,7 +49,7 @@ struct MDSButtonModifier: ViewModifier {
             .font(.system(size: 16, weight: .semibold, design: .default))
             .foregroundColor(.white)
             .cornerRadius(.infinity)
-            .shadow(color: .ISSRTT3DRed, radius: 7)
+//            .shadow(color: .ISSRTT3DRed, radius: 7)
             .padding([.horizontal])
     }
 }

@@ -14,7 +14,6 @@ final class SatellitePositionViewModel: ObservableObject {
     
     // MARK: - Published properties
     
-    @Published var altitude: Float                 = 0
     @Published var errorForAlert: ErrorCodes?
     @Published var formattedAltitude: String       = ""
     @Published var formattedLatitude: String       = ""
@@ -27,6 +26,7 @@ final class SatellitePositionViewModel: ObservableObject {
     private let numberFormatter                    = NumberFormatter()
     private let timerValue                         = 3.0
     
+    private var altitude: Float                    = 0
     private var cancellables: Set<AnyCancellable>  = []
     private var latitude: Float                    = 0
     private var longitude: Float                   = 0

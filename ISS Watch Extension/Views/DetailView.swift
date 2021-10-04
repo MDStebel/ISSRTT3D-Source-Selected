@@ -21,12 +21,10 @@ struct DetailView: View {
     
     var body: some View {
         
-        let issAltitude            = issPosition.altitude
         let issAltitudeFormatted   = issPosition.formattedAltitude
         let issLatitudeFormatted   = issPosition.formattedLatitude
         let issLongitudeFormatted  = issPosition.formattedLongitude
-        
-        let tssAltitude            = tssPosition.altitude
+
         let tssAltitudeFormatted   = tssPosition.formattedAltitude
         let tssLatitudeFormatted   = tssPosition.formattedLatitude
         let tssLongitudeFormatted  = tssPosition.formattedLongitude
@@ -39,25 +37,22 @@ struct DetailView: View {
             VStack {
                 
                 DataCellView(title: "ISS Position",
-                             altValue: issAltitude,
                              altitude: issAltitudeFormatted,
                              latitude: issLatitudeFormatted,
                              longitude: issLongitudeFormatted,
                              sidebarColor: .ISSRTT3DRed)
                 
                 DataCellView(title: "TSS Position",
-                             altValue: tssAltitude,
                              altitude: tssAltitudeFormatted,
                              latitude: tssLatitudeFormatted,
                              longitude: tssLongitudeFormatted,
                              sidebarColor: .ISSRTT3DGold)
                 
                 DataCellView(title: "Subsolar Point",
-                             altValue: nil,
                              altitude: nil,
                              latitude: subsolarPointLatitude,
                              longitude: subsolarPointLongitude,
-                             sidebarColor: .white)
+                             sidebarColor: .yellow)
             }
         }
         .ignoresSafeArea(edges: .bottom)

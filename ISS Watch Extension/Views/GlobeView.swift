@@ -50,7 +50,7 @@ struct GlobeView: View {
                         
                         NavigationLink(
                             destination: DetailView()
-                        ){
+                        ) {
                             Image(systemName: "tablecells.fill")
                         }
                         .withMDSButtonModifier
