@@ -49,7 +49,6 @@ class TrackingViewController: UIViewController, MKMapViewDelegate, UIGestureReco
         static let defaultTimerInterval         = 3.0
         static let fontForTitle                 = Theme.nasa
         static let helpTitle                    = "User Guide"
-        static let kilometersToMiles            = 0.621371192
         static let linefeed                     = "\n"
         static let numberFormatter              = NumberFormatter()
         static let numberOfZoomIntervals        = 6
@@ -189,14 +188,14 @@ class TrackingViewController: UIViewController, MKMapViewDelegate, UIGestureReco
     var velString                           = ""
     var altitude                            = "" {
         didSet{
-            altitudeInMiles = Constants.numberFormatter.string(from: NSNumber(value: Double(altitude)! * Constants.kilometersToMiles))!
+            altitudeInMiles = Constants.numberFormatter.string(from: NSNumber(value: Double(altitude)! * Globals.kilometersToMiles))!
             altitudeInKm    = Constants.numberFormatter.string(from: NSNumber(value: Double(altitude)!))!
-            altString       = "    Altitude: \(altitudeInKm) km  (\(altitudeInMiles) miles)"
+            altString       = "    Altitude: \(altitudeInKm) km  (\(altitudeInMiles) mi)"
         }
     }
     var velocity = "" {
         didSet {
-            velocityInMPH = Constants.numberFormatter.string(from: NSNumber(value: Double(velocity)! * Constants.kilometersToMiles))!
+            velocityInMPH = Constants.numberFormatter.string(from: NSNumber(value: Double(velocity)! * Globals.kilometersToMiles))!
             velocityInKmH = Constants.numberFormatter.string(from: NSNumber(value: Double(velocity)!))!
             velString     = "    Velocity: \(velocityInKmH) km/h  (\(velocityInMPH) mph)"
         }

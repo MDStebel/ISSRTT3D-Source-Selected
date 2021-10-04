@@ -8,9 +8,9 @@
 
 import AVFoundation
 import Combine
-import UIKit
 import MapKit
 import SceneKit
+import UIKit
 
 
 /// Full-screen 3D interactive globe VC
