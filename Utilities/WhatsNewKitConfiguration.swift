@@ -8,6 +8,7 @@
 //
 
 #if !os(watchOS)    // Only the iOS and iPadOS versions use this
+
 import WhatsNewKit
 import UIKit
 
@@ -22,17 +23,14 @@ private let whatsNew = WhatsNew(
         WhatsNew.Item(
             title: "Apple Watch App Included",
             subtitle: """
-                      Apple Watch app provides interactive 3D globe and detail view showing ISS, TSS, and subsolar point coordinates. Requires watchOS 8 or higher.
+                      Apple Watch app provides interactive 3D globe and detail view showing ISS, TSS, and subsolar point coordinates and altitudes. Requires watchOS 8 or higher.
                       """,
             image: UIImage(named: "icons8-megaphone_filled.imageset")
         ),
         WhatsNew.Item(
             title: "Improvements & Fixes",
             subtitle: """
-                      • Added error checking in the Apple Watch app.
-                      • Internal improvements to the iOS/iPadOS app.
-                      • Updated code to latest versions of SwiftUI and Combine frameworks.
-                      • Performance improvements throughout.
+                      • Increased the font size in the watchOS apps details screen.
                       """,
             image: UIImage(named: "icons8-bug_filled")
         ),
@@ -46,7 +44,7 @@ private let whatsNew = WhatsNew(
         WhatsNew.Item(
             title: "Getting Support",
             subtitle: """
-                      Have questions or issues? Use "Spacey" the chatbot at https://issrtt.com. You can get there easily from Settings. Just tap \(Globals.settingsChar) at the top-left.
+                      Have questions or issues? Use my chatbot at https://issrtt.com. You can get there easily from Settings. Just tap \(Globals.settingsChar) at the top-left.
                       """,
             image: UIImage(named: "icons8-customer_support")
         )

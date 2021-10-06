@@ -120,6 +120,7 @@ struct Globals {
     static let helpChar                                      = "(?)"
     static let hubbleDeepField                               = "Hubble Legacy Field Crop 2800px"
     static let julianDateForJan011970At0000GMT               = 2440587.5
+    static let kilometersToMiles                             = 0.621371192
     static let milkyWay                                      = "Milky Way Correct Rotation in the Sky Square"
     static let ninetyDegrees: Float                          = 90
     static let noonTime: Double                              = 12
