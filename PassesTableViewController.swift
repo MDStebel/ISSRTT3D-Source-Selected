@@ -93,8 +93,8 @@ class PassesTableViewController: UITableViewController, CLLocationManagerDelegat
             return Constants.selectISSButton
         case .tss :
             return Constants.selectTSSButton
-        case .none :
-        return Constants.selectISSButton
+        case .hubble, .none :
+            return Constants.selectISSButton
         }
     }
     

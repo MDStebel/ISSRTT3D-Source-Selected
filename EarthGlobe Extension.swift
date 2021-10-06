@@ -95,7 +95,7 @@ extension EarthGlobe {
             orbitTrack.ringRadius                      = CGFloat(Globals.TSSOrbitAltitudeInScene)
             orbitInclination                           = Globals.TSSOrbitInclinationInRadians
             multiplier                                 = 2.8
-        case .none :
+        case .hubble, .none :
             return
         }
         
@@ -162,7 +162,7 @@ extension EarthGlobe {
             default :
                 orbitalCorrectionForInclination        = pow(exponent, 2.8)
             }
-        case .none :
+        case .hubble, .none :
             return
         }
         

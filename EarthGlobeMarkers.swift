@@ -43,6 +43,9 @@ final class EarthGlobeMarkers {
         case .tss :
             widthAndHeight                               = Globals.TSSMarkerWidth
             altitude                                     = Globals.TSSAltitudeFactor
+        case .hubble:
+            widthAndHeight                               = 0
+            altitude                                     = 0
         case .none :
             widthAndHeight                               = Globals.ISSMarkerWidth * 2.25               // Factor to approximate the ground diameter of the sighting circle
             altitude                                     = Globals.globeRadiusFactor * Globals.globeRadiusMultiplierToPlaceOnSurface   // This is the footprint, so place it flush with the surface
