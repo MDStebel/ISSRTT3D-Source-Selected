@@ -162,13 +162,13 @@ final class GlobeViewModel: ObservableObject {
         /// Helper method to extract our coordinates
         func getCoordinates(from positionData: SatelliteOrbitPosition) {
             switch satellite {
-            case .iss:
+            case .iss :
                 issLatitude      = Float(positionData.positions[0].satlatitude)
                 issLongitude     = Float(positionData.positions[0].satlongitude)
-            case .tss:
+            case .tss :
                 tssLatitude      = Float(positionData.positions[0].satlatitude)
                 tssLongitude     = Float(positionData.positions[0].satlongitude)
-            case .none:
+            case .hubble, .none :
                 break
             }
         }

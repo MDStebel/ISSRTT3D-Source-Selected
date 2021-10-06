@@ -17,6 +17,7 @@ struct DetailView: View {
     // Publishers we're observing for updated position data
     @StateObject private var issPosition   = SatellitePositionViewModel(satellite: .iss)
     @StateObject private var tssPosition   = SatellitePositionViewModel(satellite: .tss)
+    @StateObject private var hubblePosition   = SatellitePositionViewModel(satellite: .hubble)
     @StateObject private var subSolarPoint = SubSolarViewModel()
     
     var body: some View {
@@ -41,6 +42,15 @@ struct DetailView: View {
                              latitude: tssPosition.formattedLatitude,
                              longitude: tssPosition.formattedLongitude,
                              sidebarColor: .ISSRTT3DGold
+                )
+                
+                DataCellView(title: "Hubble",
+                             altitude: hubblePosition.altitude,
+                             altitudeInKm: hubblePosition.altitudeInKm,
+                             altitudeInMi: hubblePosition.altitudeInMi,
+                             latitude: hubblePosition.formattedLatitude,
+                             longitude: hubblePosition.formattedLongitude,
+                             sidebarColor: .blue
                 )
                 
                 DataCellView(title: "Subsolar Point",

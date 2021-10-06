@@ -55,7 +55,7 @@ struct DataCellView: View {
                         
                         // Show the altitude scale
                         Image("Y-Axis")
-                            .offset(x: -5, y: -4)
+                            .offset(x: -4, y: -4)
                         
                         // Movable indicator with values
                         HStack(spacing: -4) {
@@ -64,35 +64,37 @@ struct DataCellView: View {
                                 .resizable()
                                 .frame(width: 7, height: 6)
                                 .foregroundColor(sidebarColor)
-                                .offset(x: -9)
+                                .offset(x: -7.5)
                             
                             VStack(alignment: .leading, spacing: -3) {
                                 Text("ALT")
                                     .bold()
                                     .withMDSDataLabelModifier
                                 Text(altKm)
-                                    .font(.custom(Theme.appFont, size: 9.0))
+                                    .font(.custom(Theme.appFont, size: 10.0))
                                     .foregroundColor(.white)
                                     .bold()
                                     .lineLimit(1)
                                 Text(altMi)
-                                    .font(.custom(Theme.appFont, size: 9.0))
+                                    .font(.custom(Theme.appFont, size: 10.0))
                                     .foregroundColor(.white)
                                     .bold()
                                     .lineLimit(1)
                             }
-                            .offset(x: -4,y: 1.5)
+                            .offset(x: -3, y: 1.0)
                         }
                         .offset(y: yOffsetComputed) // This will position the alt on the scale
                      
-                    // Show a Sun icon if this is not a satellite
+                    // Show the Sun icon if this is not a satellite
                     } else {
-                        
+                        Group {
                         Image(systemName: "sun.max.fill")
                             .resizable()
                             .scaledToFit()
                             .foregroundColor(.yellow)
-                            .offset(y: -2)
+                            .offset(x: 0, y: -5)
+                        }
+                        .frame(width: 40, height: 40, alignment: .leading)
                         
                     }
                     
@@ -103,26 +105,28 @@ struct DataCellView: View {
                             HStack {
                                 Spacer()
                                 Text(latitude)
-                                    .font(.custom(Theme.appFont, size: 13))
                                     .bold()
+                                    .minimumScaleFactor(0.9)
+                                    .font(.custom(Theme.appFont, size: 15))
                             }
                             .offset(x: 0)
-                            Text("LAT")
-                                .bold()
-                                .withMDSDataLabelModifier
+//                            Text("LAT")
+//                                .bold()
+//                                .withMDSDataLabelModifier
                         }
                         
                         HStack(alignment: .firstTextBaseline, spacing: 1) {
                             HStack {
                                 Spacer()
                                 Text(longitude)
-                                    .font(.custom(Theme.appFont, size: 13))
                                     .bold()
+                                    .minimumScaleFactor(0.9)
+                                    .font(.custom(Theme.appFont, size: 15))
                             }
                             .offset(x: 0)
-                            Text("LON")
-                                .bold()
-                                .withMDSDataLabelModifier
+//                            Text("LON")
+//                                .bold()
+//                                .withMDSDataLabelModifier
                         }
                     }
                 }
@@ -131,7 +135,7 @@ struct DataCellView: View {
             .padding([.leading], 1)
             .padding([.trailing], 6)
         }
-        .frame(height: 62)
+        .frame(height: 70)
         .background(Color.ISSRTT3DBackground)
         .cornerRadius(5.0)
     }
@@ -140,6 +144,6 @@ struct DataCellView: View {
 
 struct DataCellView_Previews: PreviewProvider {
     static var previews: some View {
-        DataCellView(title: "Title", altitude: 400, altitudeInKm: "400 km", altitudeInMi: "249 mi", latitude: "test", longitude: "test", sidebarColor: .blue)
+        DataCellView(title: "Title", altitude: 400, altitudeInKm: "400 km", altitudeInMi: "249 mi", latitude: "155°55'55\"N", longitude: "177°48'48\"E", sidebarColor: .blue)
     }
 }
