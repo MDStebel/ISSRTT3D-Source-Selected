@@ -30,10 +30,10 @@ struct Globals {
     static var copyrightString                               = ""
     static var displayGlobe                                  = true
     static var displayZoomFactorBelowMarkerIsOn              = true
+    static var footprintDiameter                             = ISSMarkerWidth * 2.25 
     static var globeBackgroundImageDefaultSelectionSegment   = 0
     static var globeBackgroundImageSelection                 = 0
     static var globeBackgroundWasChanged                     = true
-    static var globeRadiusFactor: Float                      = 0.555
     static var lastDateAndTimeSettingsWereSaved              = ""
     static var mapScrollingAndZoomIsEnabled                  = false
     static var mapTypeSelection                              = 2
@@ -44,7 +44,7 @@ struct Globals {
     static var numberOfDaysOfPassesSelectedSegment           = 0
     static var numberOfZoomFactors                           = 4
     static var orbitGroundTrackLineEnabled                   = true
-    static var pulseISSMarkerForGlobe                        = true
+    static var pulseSatelliteMarkerForGlobe                  = true
     static var showCoordinatesIsOn                           = true
     static var showWhatsNewUponNextStartup                   = false
     static var thisDevice                                    = ""
@@ -63,10 +63,10 @@ struct Globals {
     static let defaultCameraFov: CGFloat                     = 40
     static let coordinatesStringFormat                       = "%3d°%02d'%02d\"%@"
     static let globeRadiusMultiplierToPlaceOnSurface: Float  = 0.962
-    static let globeSegments                                 = 100
+    static let globeSegments                                 = 128
     static let ISSMarkerWidth: CGFloat                       = 0.15
-    static let pipeSegments                                  = 32
-    static let ringSegments                                  = 64
+    static let pipeSegments                                  = 64
+    static let ringSegments                                  = 128
     static let sunlightIntensity: CGFloat                    = 3600
     
 #else           // iOS and iPadOS-specific settings
@@ -94,11 +94,11 @@ struct Globals {
     static let ISSRTT3DWebsite                               = "https://www.issrtt.com"
     static let ISSViewingCircleGraphic                       = "iss_4_visibility_circle"
     static let TSSAltitudeFactor: Float                      = TSSOrbitalAltitudeFactor * 1.015
-    static let TSSAltitudeInKM: Float                        = 365
+    static let TSSAltitudeInKM: Float                        = 370
     static let TSSIconFor3DGlobeView                         = "Tiangong-mds-1200px"
     static let TSSMarkerWidth: CGFloat                       = 0.07
     static let TSSOrbitAltitudeInScene                       = TSSOrbitalAltitudeFactor
-    static let TSSOrbitInclinationInDegrees: Float           = 41.8
+    static let TSSOrbitInclinationInDegrees: Float           = 41.5
     static let TSSOrbitInclinationInRadians: Float           = TSSOrbitInclinationInDegrees * Float(degreesToRadians)
     static let TSSOrbitalAltitudeFactor                      = globeRadiusFactor * (1 + TSSAltitudeInKM / earthRadiusInKM) * 1.01
     static let TSSViewingCircleGraphic                       = "TSS-Visibility-Circle"
@@ -117,11 +117,22 @@ struct Globals {
     static let elevationFormat                               = "%2.1f"
     static let floatingPointWithThreePlusOneDecimalPlace     = "%3.1f"
     static let floatingPointWithTwoPlusOneDecimalPlace       = "%2.1f"
+    static let globeRadiusFactor: Float                      = 0.555
     static let helpChar                                      = "(?)"
+    static let hubbleAltitudeFactor: Float                   = hubbleOrbitalAltitudeFactor * 1.015
+    static let hubbleAltitudeInKM: Float                     = 550
     static let hubbleDeepField                               = "Hubble Legacy Field Crop 2800px"
+    static let hubbleIconFor3DGlobeView                      = "HST-Image"
+    static let hubbleMarkerWidth: CGFloat                    = 0.06
+    static let hubbleOrbitAltitudeInScene                    = hubbleOrbitalAltitudeFactor
+    static let hubbleOrbitInclinationInDegrees: Float        = 28.5
+    static let hubbleOrbitInclinationInRadians: Float        = hubbleOrbitInclinationInDegrees * Float(degreesToRadians)
+    static let hubbleOrbitalAltitudeFactor: Float            = globeRadiusFactor * (1 + hubbleAltitudeInKM / earthRadiusInKM) * 1.05
+    static let hubbleViewingCircleGraphic                    = "Hubble-Viewing-Circle-1"
     static let julianDateForJan011970At0000GMT               = 2440587.5
     static let kilometersToMiles                             = 0.621371192
     static let milkyWay                                      = "Milky Way Correct Rotation in the Sky Square"
+    static let newLine                                       = "\n"
     static let ninetyDegrees: Float                          = 90
     static let noonTime: Double                              = 12
     static let numberOfDaysInACentury: Double                = 36525

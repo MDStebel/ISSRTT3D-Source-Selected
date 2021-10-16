@@ -21,6 +21,7 @@ public struct AstroCalculations {
         let jD = Globals.julianDateForJan011970At0000GMT + date.timeIntervalSince1970 / Globals.numberOfSecondsInADay
         
         return jD
+        
     }
 
 
@@ -32,6 +33,7 @@ public struct AstroCalculations {
         let gD = NSDate(timeIntervalSince1970: (jd - Globals.julianDateForJan011970At0000GMT) * Globals.numberOfSecondsInADay)
         
         return gD
+        
     }
     
     
@@ -43,6 +45,7 @@ public struct AstroCalculations {
         let jc = (jDFromDate(date: date) - 2451545) / Globals.numberOfDaysInACentury
         
         return jc
+        
     }
     
     
@@ -56,6 +59,7 @@ public struct AstroCalculations {
         let ecc = 0.016708634 - t * (0.000042037 + 0.0000001267 * t)
         
         return ecc
+        
     }
     
     
@@ -72,6 +76,7 @@ public struct AstroCalculations {
         let m = 357.52911 + t * 35999.05029 - t * 0.0001537
         
         return m
+        
     }
     
     
@@ -99,6 +104,7 @@ public struct AstroCalculations {
         let eOT            = 4 * (part1 - part2 + part3 - part4 - part5) * Double(Globals.radiansToDegrees)
         
         return eOT
+        
     }
     
     
@@ -115,6 +121,7 @@ public struct AstroCalculations {
         let sEOC = sin(m * Double(Globals.degreesToRadians)) * (1.914602 - t * (0.004817 + 0.000014 * t)) + sin(2 * m * Double(Globals.degreesToRadians)) * (0.019993 - 0.000101 * t) + sin(3 * m * Double(Globals.degreesToRadians)) * 0.000289
         
         return sEOC
+        
     }
     
     
@@ -129,6 +136,7 @@ public struct AstroCalculations {
         let sunGeometricMeanLongitude = (280.46646 + t * 36000.76983 + t * t * 0.0003032).truncatingRemainder(dividingBy: Double(Globals.threeSixtyDegrees))
         
         return sunGeometricMeanLongitude
+        
     }
     
     
@@ -147,6 +155,7 @@ public struct AstroCalculations {
         let sunTrueLatitudeInDegrees = latitudeOfSun * Double(Globals.radiansToDegrees)
         
         return sunTrueLatitudeInDegrees
+        
     }
     
     
@@ -198,6 +207,7 @@ public struct AstroCalculations {
         let subSolarLongitudeActual = subSolarLon + lonCorrection
         
         return subSolarLongitudeActual
+        
     }
     
     
@@ -212,5 +222,7 @@ public struct AstroCalculations {
         let lon = Float(subSolarLongitudeOfSunAtCurrentTime(for: now))
         
         return (lat, lon)
+        
     }
+    
 }
