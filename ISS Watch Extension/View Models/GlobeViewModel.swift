@@ -28,17 +28,22 @@ final class GlobeViewModel: ObservableObject {
     private let timerValue                                         = 3.0
     
     private var cancellables: Set<AnyCancellable>                  = []
+    private var hubbleHeadingFactor: Float                         = 0.0
+    private var hubbleLastLat: Float                               = 0.0
+    private var hubbleLatitude: Float                              = 0.0
+    private var hubbleLongitude: Float                             = 0.0
     private var issHeadingFactor: Float                            = 0.0
-    private var tssHeadingFactor: Float                            = 0.0
     private var issLastLat: Float                                  = 0.0
-    private var tssLastLat: Float                                  = 0.0
     private var issLatitude: Float                                 = 0.0
     private var issLongitude: Float                                = 0.0
+    private var tssHeadingFactor: Float                            = 0.0
+    private var tssLastLat: Float                                  = 0.0
     private var tssLatitude: Float                                 = 0.0
     private var tssLongitude: Float                                = 0.0
+    
+    
     private var subSolarPoint: (latitude: Float, longitude: Float) = (0, 0)
     private var timer: AnyCancellable?
-    
     
     // MARK: - Methods
     
@@ -48,6 +53,7 @@ final class GlobeViewModel: ObservableObject {
         initHelper()
         updateEarthGlobe()                  // Update the globe once before starting the timer
         start()
+        
     }
     
     
@@ -60,6 +66,7 @@ final class GlobeViewModel: ObservableObject {
         tssLastLat         = 0
         
         initHelper()
+        
     }
     
     
@@ -74,6 +81,7 @@ final class GlobeViewModel: ObservableObject {
         globeMainNode = earthGlobe.cameraNode
         globeScene    = earthGlobe.scene
         earthGlobe.setupInSceneView()
+        
     }
     
     
@@ -86,6 +94,7 @@ final class GlobeViewModel: ObservableObject {
             .sink { _ in
                 self.updateEarthGlobe()
             }
+        
     }
  
     
@@ -93,6 +102,7 @@ final class GlobeViewModel: ObservableObject {
     func stop() {
         
         timer?.cancel()
+        
     }
     
     
@@ -106,8 +116,8 @@ final class GlobeViewModel: ObservableObject {
             }
         }
         
-        // We need to remove each of the nodes we've added before adding them again at new coordinates, or we get an f'ng mess!
-        var numberOfChildNodes  = earthGlobe.getNumberOfChildNodes()
+        /// We need to remove each of the nodes we've added before adding them again at new coordinates, or we get an f'ng mess!
+        var numberOfChildNodes = earthGlobe.getNumberOfChildNodes()
         while numberOfChildNodes > 0 {
             removeLastNode()
             numberOfChildNodes -= 1
@@ -116,13 +126,13 @@ final class GlobeViewModel: ObservableObject {
         // Where are the satellites right now?
         getSatellitePosition(for: .iss)
         getSatellitePosition(for: .tss)
+        getSatellitePosition(for: .hubble)
         
         // Where is the subsolar point right now?
         subSolarPoint = AstroCalculations.getSubSolarCoordinates()
         
-        // If we have a saved last coordinate, add the markers, otherwise we don't know which way the orbit is oriented
-        if issLastLat != 0 {
-            
+        // If we have last coordinate, add the markers, otherwise we don't know which way the orbit are oriented
+        if issLastLat != 0 && tssLastLat != 0 && hubbleLastLat != 0 {
             
             // MARK: Set up ISS
             issHeadingFactor = issLatitude - issLastLat < 0 ? -1 : 1
@@ -146,31 +156,51 @@ final class GlobeViewModel: ObservableObject {
             earthGlobe.addTSSMarker(lat: tssLatitude, lon: tssLongitude)
             
             
+            // MARK: Set up Hubble
+            hubbleHeadingFactor = hubbleLatitude - hubbleLastLat < 0 ? -1 : 1
+            earthGlobe.addOrbitTrackAroundTheGlobe(for: .hubble, lat: hubbleLatitude, lon: hubbleLongitude, headingFactor: hubbleHeadingFactor)
+            
+            // Add footprint
+            earthGlobe.addHubbleViewingCircle(lat: hubbleLatitude, lon: hubbleLongitude)
+            
+            // Add satellite marker
+            earthGlobe.addHubbleMarker(lat: hubbleLatitude, lon: hubbleLongitude)
+            
+            
             // MARK: Set up the Sun at the current subsolar point
             earthGlobe.setUpTheSun(lat: subSolarPoint.latitude, lon: subSolarPoint.longitude)
             
         }
         
         // Saves last coordinate for each track to use in calculating north or south heading vector after the second track update
-        issLastLat = issLatitude
-        tssLastLat = tssLatitude
+        issLastLat    = issLatitude
+        tssLastLat    = tssLatitude
+        hubbleLastLat = hubbleLatitude
+        
     }
 
+    
     /// Get the current satellite coordinates
+    /// - Parameter satellite: The satellite we're tracking as a StationAndSatellites.
     private func getSatellitePosition(for satellite: StationsAndSatellites) {
         
         /// Helper method to extract our coordinates
         func getCoordinates(from positionData: SatelliteOrbitPosition) {
+            
             switch satellite {
             case .iss :
-                issLatitude      = Float(positionData.positions[0].satlatitude)
-                issLongitude     = Float(positionData.positions[0].satlongitude)
+                issLatitude     = Float(positionData.positions[0].satlatitude)
+                issLongitude    = Float(positionData.positions[0].satlongitude)
             case .tss :
-                tssLatitude      = Float(positionData.positions[0].satlatitude)
-                tssLongitude     = Float(positionData.positions[0].satlongitude)
-            case .hubble, .none :
+                tssLatitude     = Float(positionData.positions[0].satlatitude)
+                tssLongitude    = Float(positionData.positions[0].satlongitude)
+            case .hubble :
+                hubbleLatitude  = Float(positionData.positions[0].satlatitude)
+                hubbleLongitude = Float(positionData.positions[0].satlongitude)
+            case .none :
                 break
             }
+            
         }
         
         let satelliteCodeNumber = satellite.satelliteNORADCode
@@ -178,6 +208,7 @@ final class GlobeViewModel: ObservableObject {
         /// Make sure we can create the URL from the endpoint and parameters
         guard let ISSAPIEndpointURL = URL(string: apiEndpointString + "\(satelliteCodeNumber)/0/0/0/1/" + "&apiKey=\(apiKey)") else { return }
         
+        /// Get data using Combine's dataTaskPublisher
         URLSession.shared.dataTaskPublisher(for: ISSAPIEndpointURL)
             .receive(on: RunLoop.main)
             .map { (data: Data, response: URLResponse) in
@@ -195,5 +226,7 @@ final class GlobeViewModel: ObservableObject {
                 getCoordinates(from: position)
             })
             .store(in: &cancellables)
+        
     }
+    
 }

@@ -11,7 +11,6 @@ import SwiftUI
 
 final class SatellitePositionViewModel: ObservableObject {
     
-    
     // MARK: - Published properties
     
     @Published var altitude: Float                 = 0
@@ -34,7 +33,6 @@ final class SatellitePositionViewModel: ObservableObject {
     private var satellite: StationsAndSatellites
     private var timer: AnyCancellable?
     
-    
     // MARK: - Methods
     
     /// Initialize for a specific satellite
@@ -42,6 +40,7 @@ final class SatellitePositionViewModel: ObservableObject {
         
         self.satellite = satellite
         startUp()
+        
     }
     
     
@@ -50,6 +49,7 @@ final class SatellitePositionViewModel: ObservableObject {
         
         getSatellitePosition(for: satellite)   // Get the data once before starting the timer
         start()
+        
     }
     
     
@@ -62,6 +62,7 @@ final class SatellitePositionViewModel: ObservableObject {
             .sink { _ in
                 self.getSatellitePosition(for: self.satellite)
             }
+        
     }
     
     
@@ -69,6 +70,7 @@ final class SatellitePositionViewModel: ObservableObject {
     func stop() {
         
         timer?.cancel()
+        
     }
     
     
@@ -87,6 +89,7 @@ final class SatellitePositionViewModel: ObservableObject {
             
             longitude          = Float(positionData.positions[0].satlongitude)
             formattedLongitude = CoordinateConversions.decimalCoordinatesToDegMinSec(coordinate: Double(longitude), format: Globals.coordinatesStringFormat, isLatitude: false)
+            
         }
         
         let satelliteCodeNumber = satellite.satelliteNORADCode
@@ -108,5 +111,7 @@ final class SatellitePositionViewModel: ObservableObject {
                 getCoordinates(from: position)
             })
             .store(in: &cancellables)
+        
     }
+    
 }

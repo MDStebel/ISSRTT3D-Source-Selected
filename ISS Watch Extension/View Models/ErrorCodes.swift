@@ -15,5 +15,6 @@ struct ErrorCodes: Error, Identifiable {
     let id      = UUID()
     let title   = "Error"
     var message = "Can't get data"
+    
 }
 

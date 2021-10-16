@@ -19,7 +19,6 @@ final class SubSolarViewModel: ObservableObject {
     // MARK: - Properties
     
     private let timerValue                   = 3.0
-    
     private var timer: AnyCancellable?
     
     
@@ -28,6 +27,7 @@ final class SubSolarViewModel: ObservableObject {
     init() {
         
         start()
+        
     }
     
     
@@ -35,6 +35,7 @@ final class SubSolarViewModel: ObservableObject {
         
         updateSubSolarPoint()   // Get the data once before starting the timer so we have something we can use immediately
         start()
+        
     }
     
     
@@ -43,6 +44,7 @@ final class SubSolarViewModel: ObservableObject {
         let subsolarCoordinates = AstroCalculations.getSubSolarCoordinates()
         subsolarLatitude        = CoordinateConversions.decimalCoordinatesToDegMinSec(coordinate: Double(subsolarCoordinates.latitude), format: Globals.coordinatesStringFormat, isLatitude: true)
         subsolarLongitude       = CoordinateConversions.decimalCoordinatesToDegMinSec(coordinate: Double(subsolarCoordinates.longitude), format: Globals.coordinatesStringFormat, isLatitude: false)
+        
     }
     
     
@@ -55,6 +57,7 @@ final class SubSolarViewModel: ObservableObject {
             .sink { _ in
                 self.updateSubSolarPoint()
             }
+        
     }
 
     
@@ -62,5 +65,7 @@ final class SubSolarViewModel: ObservableObject {
     func stop() {
         
         timer?.cancel()
+        
     }
+    
 }

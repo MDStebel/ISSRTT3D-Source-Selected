@@ -23,7 +23,7 @@ struct GlobeView: View {
             
             ZStack {
                 
-                // Render the globe. This will update as new coordinates are received.
+                // Render the globe. This will update continually as new coordinates are received from the view model.
                 SceneView(scene: globeViewModel.globeScene,
                           pointOfView: globeViewModel.globeMainNode,
                           options: [.allowsCameraControl]
@@ -61,7 +61,6 @@ struct GlobeView: View {
                     .padding([.horizontal], 25)
                     .padding([.bottom], 7)
                 }
-                
                 // Pop up an alert if there was an error fetching data
                 .alert(isPresented: $globeViewModel.wasError) {
                     Alert(title: Text(globeViewModel.errorForAlert?.title ?? "Oops!"),
@@ -73,7 +72,9 @@ struct GlobeView: View {
             .navigationTitle("Globe")
             .navigationBarTitleDisplayMode(.inline) // We want the small navigation title
         }
+        
     }
+    
 }
 
     
