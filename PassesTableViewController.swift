@@ -59,7 +59,7 @@ class PassesTableViewController: UITableViewController, CLLocationManagerDelegat
         static let endpointForPassesAPI                 = ApiEndpoints.passesAPIEndpoint           // API endpoint
         static let fontForTitle                         = Theme.nasa
         static let minObservationTime                   = 300                                      // In seconds
-        static let newLine                              = "\n"
+        static let newLine                              = Globals.newLine
         static let noRatingStar                         = #imageLiteral(resourceName: "star-unfilled")
         static let ratingStar                           = #imageLiteral(resourceName: "star")
         static let segueToHelpFromPasses                = "segueToHelpFromPasses"
@@ -93,7 +93,9 @@ class PassesTableViewController: UITableViewController, CLLocationManagerDelegat
             return Constants.selectISSButton
         case .tss :
             return Constants.selectTSSButton
-        case .hubble, .none :
+        case .hubble :
+            return Constants.selectISSButton
+        case .none :
             return Constants.selectISSButton
         }
     }
@@ -134,10 +136,11 @@ class PassesTableViewController: UITableViewController, CLLocationManagerDelegat
     /// - Parameter station: Station selector value.
     private func getStationID(for station: StationsAndSatellites) {
         
+        selectTarget.image     = stationSelectionButton
+        stationID              = station.satelliteNORADCode
         stationImage           = station.stationImage
         stationName            = station.stationName
-        stationID              = station.satelliteNORADCode
-        selectTarget.image     = stationSelectionButton
+        
     }
     
     
@@ -145,6 +148,7 @@ class PassesTableViewController: UITableViewController, CLLocationManagerDelegat
         
         dateFormatterForDate.dateFormat = Globals.outputDateOnlyFormatString
         dateFormatterForTime.dateFormat = Globals.outputTimeOnlyFormatString
+        
     }
     
     private func getNumberOfDaysOfPassesToReturn() {
@@ -160,6 +164,7 @@ class PassesTableViewController: UITableViewController, CLLocationManagerDelegat
         getNumberOfDaysOfPassesToReturn()
         setUpRefreshControl()
         setUpLocationManager()
+        
     }
     
     
@@ -173,6 +178,7 @@ class PassesTableViewController: UITableViewController, CLLocationManagerDelegat
         barAppearance.titleTextAttributes   = [.font : UIFont(name: Constants.fontForTitle, size: titleFontSize) as Any, .foregroundColor : UIColor.white]
         navigationItem.standardAppearance   = barAppearance
         navigationItem.scrollEdgeAppearance = barAppearance
+        
     }
     
     
@@ -189,12 +195,14 @@ class PassesTableViewController: UITableViewController, CLLocationManagerDelegat
         
         // Configure refresh control
         refreshControl?.addTarget(self, action: #selector(refreshTable(_:)), for: .valueChanged)
+        
     }
     
     /// Selector for refresh control
     @objc func refreshTable(_ sender: Any) {
         
         restartGettingUserLocation()
+        
     }
     
     
@@ -205,6 +213,7 @@ class PassesTableViewController: UITableViewController, CLLocationManagerDelegat
         ISSlocationManager.delegate        = self
         ISSlocationManager.desiredAccuracy = kCLLocationAccuracyBest
         ISSlocationManager.requestWhenInUseAuthorization()
+        
     }
     
     
@@ -212,18 +221,21 @@ class PassesTableViewController: UITableViewController, CLLocationManagerDelegat
     private func startGettingLocations() {
 
         ISSlocationManager.startUpdatingLocation()                              // Now, we can  get locations
+        
     }
     
     
     private func restartGettingUserLocation() {
         
         startGettingLocations()
+        
     }
 
     
     @IBAction func changeNumberOfDaysThisTimeOnlyAndRefreshPasses(_ sender: UIBarButtonItem) {
         
         noPasesPopup(withTitle: "Change Number of Days", withStyleToUse: .actionSheet)
+        
     }
     
     
@@ -256,6 +268,7 @@ class PassesTableViewController: UITableViewController, CLLocationManagerDelegat
         }
         
         self.present(alertController, animated: true, completion: nil)
+        
     }
     
     
@@ -279,7 +292,7 @@ class PassesTableViewController: UITableViewController, CLLocationManagerDelegat
         })
         
         // Add selection for each of the stations/satellites for which we can get pass predictions
-        for target in [StationsAndSatellites.iss, StationsAndSatellites.tss] {
+        for target in [StationsAndSatellites.iss, StationsAndSatellites.tss, StationsAndSatellites.hubble] {
             alertController.addAction(UIAlertAction(title: "\(target.stationName)", style: .default) { (choice) in
                 self.station = target
                 self.restartGettingUserLocation()
@@ -291,6 +304,7 @@ class PassesTableViewController: UITableViewController, CLLocationManagerDelegat
         }
         
         self.present(alertController, animated: true, completion: nil)
+        
     }
     
     
@@ -301,6 +315,7 @@ class PassesTableViewController: UITableViewController, CLLocationManagerDelegat
         let decoder = JSONDecoder()
 
         do {
+            
             let passesDataSet = try decoder.decode(Passes.self, from: data)
 
             numberOfOverheadTimesActuallyReported = passesDataSet.info.passescount
@@ -324,13 +339,16 @@ class PassesTableViewController: UITableViewController, CLLocationManagerDelegat
                 }
             }
         } catch {
+            
             DispatchQueue.main.async { [self] in
                 spinner.stopAnimating()
                 refreshControl?.endRefreshing()
                 promptLabel.text = "No visible passes for the next \(numberOfDays) days"
                 noPasesPopup(withTitle: "No \(station.stationName) Passes Found", withStyleToUse: .alert)
             }
+            
         }
+        
     }
     
     
@@ -367,6 +385,7 @@ class PassesTableViewController: UITableViewController, CLLocationManagerDelegat
         }
         
         getPassesDataFromAPI.resume()
+        
     }
     
     
@@ -388,6 +407,7 @@ class PassesTableViewController: UITableViewController, CLLocationManagerDelegat
         } else {
             createEvent(eventStore, passEvent: passEvent)
         }
+        
     }
     
     
@@ -431,6 +451,7 @@ class PassesTableViewController: UITableViewController, CLLocationManagerDelegat
                 self.alert(for: "Failed", message: "Could not add the \(self.station.stationName) pass reminder to your calendar")
             }
         }
+        
     }
     
     
@@ -459,6 +480,7 @@ class PassesTableViewController: UITableViewController, CLLocationManagerDelegat
         default :
             break
         }
+        
     }
     
     
@@ -471,6 +493,7 @@ class PassesTableViewController: UITableViewController, CLLocationManagerDelegat
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
     }
+    
 }
 
 
@@ -602,6 +625,7 @@ extension PassesTableViewController {
         }
         
         return cell
+        
     }
     
     
@@ -611,7 +635,9 @@ extension PassesTableViewController {
         // Make a copy of the selected pass and create a calendar event for it
         let passToSave = overheadTimesList[indexPath.row]
         addEvent(passToSave)
+        
     }
+    
 }
 
 
@@ -652,7 +678,9 @@ extension PassesTableViewController {
             alert.preferredAction = goToSettingAction
             
             present(alert, animated: true)
+            
         }
+        
     }
     
     
@@ -666,5 +694,7 @@ extension PassesTableViewController {
         getISSOverheadtimes(for: station, then: decodeJSONPasses)                   // Get passes from API, then run callback to decode/parse JSON
         
         ISSLocationManager.stopUpdatingLocation()                                   // Now that we have user's location, we don't need it again, so stop updating location
+        
     }
+    
 }

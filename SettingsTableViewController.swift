@@ -55,7 +55,6 @@ class SettingsTableViewController: UITableViewController {
     @IBOutlet private weak var showWhatsNewSwitch: UISwitch!
     @IBOutlet private weak var userMapScrollingEnbleSwitch: UISwitch!
     @IBOutlet private weak var zoomRangeFactorSelector: UISegmentedControl!
-    
     @IBOutlet private weak var numberOfDaysOfPasses: UISegmentedControl! {
         // Set up segment labels from dictionary
         didSet{

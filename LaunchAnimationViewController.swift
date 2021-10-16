@@ -94,6 +94,7 @@ class LaunchAnimationViewController: UIViewController {
             trans1          = trans1.rotated(by: iconAnimationRotationAngle)
         
         }
+        
     }
     
     
@@ -102,6 +103,7 @@ class LaunchAnimationViewController: UIViewController {
 
         scaleFactorForAppNameTitleForLaunchAnimation = 4.0
         trans2 = trans2.scaledBy(x: scaleFactorForAppNameTitleForLaunchAnimation, y: scaleFactorForAppNameTitleForLaunchAnimation)
+        
     }
     
     
@@ -120,6 +122,7 @@ class LaunchAnimationViewController: UIViewController {
         }
         
         trans3 = trans3.scaledBy(x: scaleFactorFor3DTextImageForLaunchAnimation, y: scaleFactorFor3DTextImageForLaunchAnimation)
+        
     }
     
     
@@ -131,6 +134,7 @@ class LaunchAnimationViewController: UIViewController {
         createTransformationsForTitle()
         createTransformationsFor3D()
         getVersionAndCopyrightData()
+        
     }
     
 
@@ -140,16 +144,20 @@ class LaunchAnimationViewController: UIViewController {
         
         // Animate ISS graphic using the stack of transforms we created above. At completion, segue to the tracking VC
         UIView.animate(withDuration: iconAnimationDuration, delay: 0, usingSpringWithDamping: 1.0, initialSpringVelocity: 0.2, options: .curveEaseInOut, animations: { [self] in
+            
             // Animate the footer
             launchScreenVersionLabel.text            = "Version: \(Globals.versionNumber)  Build: \(Globals.buildNumber)  \(Globals.copyrightString)"
+            
             // Animate the ISS graphic
             ISSImage.transform                       = trans1
             ISSImage.alpha                           = 0.0
             curves.alpha                             = 0.0
+            
             // Animate the title
             appNameTitleForLaunchAnimation.isHidden  = false
             appNameTitleForLaunchAnimation.alpha     = 1.0
             appNameTitleForLaunchAnimation.transform = trans2
+            
             // Animate the 3D text image
             threeDTextImage.isHidden                 = false
             threeDTextImage.alpha                    = 1.0
@@ -159,6 +167,7 @@ class LaunchAnimationViewController: UIViewController {
         completion: { [self] (completedOK) in
             performSegue(withIdentifier: segueToMainViewController, sender: self)           // Now, segue to the Tracking view controller
         })
+        
     }
     
     
@@ -170,6 +179,7 @@ class LaunchAnimationViewController: UIViewController {
             Globals.versionNumber   = versionNumber
             Globals.buildNumber     = buildNumber
         }
+        
     }
     
     
@@ -183,6 +193,7 @@ class LaunchAnimationViewController: UIViewController {
         if currentDevice.model.hasPrefix("iPhone")  {
             performSegue(withIdentifier: segueToMainViewController, sender: self)
         }
+        
     }
 
     
@@ -192,6 +203,7 @@ class LaunchAnimationViewController: UIViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
 
         guard let segueInProcess = segue.identifier, segueInProcess == segueToMainViewController else { return }  // Prevents crash if a segue is unnamed
+        
     }
 
     

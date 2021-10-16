@@ -15,10 +15,13 @@ final class EarthGlobeMarkers {
     
     // MARK: - Properties
     
-    var altitude: Float         = Globals.ISSOrbitalAltitudeFactor
+    var altitude: Float = Globals.ISSOrbitalAltitudeFactor
     var image: String
-    var node: SCNNode!                                                                                 // The SceneKit node for this marker
+    var node: SCNNode!                                                                                      // The SceneKit node for this marker
     var widthAndHeight: CGFloat
+    
+    private var heightAdj: Float = 0
+    private var scaling: CGFloat = 0
     
     
     // MARK: - Methods
@@ -32,31 +35,47 @@ final class EarthGlobeMarkers {
     ///   - isInOrbit: Flag that indicates if the marker is above Earth or on its surface as a Bool
     init(for satellite: StationsAndSatellites, using image: String, lat: Float, lon: Float, isInOrbit: Bool) {
         
-        self.image                                       = image
-        let adjustedLon                                  = lon + Globals.ninetyDegrees                 // Textures are centered on 0,0, so adjust by 90 degrees
+        self.image      = image
+        let adjustedLon = lon + Globals.ninetyDegrees                                                       // Textures are centered on 0,0, so adjust by 90 degrees
         
-        // Which object does our marker represent? .none implies footprint
-        switch satellite {
-        case .iss :
-            widthAndHeight                               = Globals.ISSMarkerWidth
-            altitude                                     = Globals.ISSAltitudeFactor
-        case .tss :
-            widthAndHeight                               = Globals.TSSMarkerWidth
-            altitude                                     = Globals.TSSAltitudeFactor
-        case .hubble:
-            widthAndHeight                               = 0
-            altitude                                     = 0
-        case .none :
-            widthAndHeight                               = Globals.ISSMarkerWidth * 2.25               // Factor to approximate the ground diameter of the sighting circle
-            altitude                                     = Globals.globeRadiusFactor * Globals.globeRadiusMultiplierToPlaceOnSurface   // This is the footprint, so place it flush with the surface
+        if !isInOrbit {                                                                                     // If false, it's the footprint circle
+            
+            if satellite == .hubble {
+                scaling    = CGFloat(1.2)
+                heightAdj  = 0.9 + Float(scaling / (.pi / 2)) / 10
+            } else {
+                scaling    = CGFloat(1.0)
+                heightAdj  = 1.0
+            }
+            
+            widthAndHeight     = Globals.footprintDiameter * scaling                                        // Factor to approximate the ground diameter of the sighting circle
+            altitude           = Globals.globeRadiusFactor * Globals.globeRadiusMultiplierToPlaceOnSurface * heightAdj
+            
+        } else {                                                                                            // Otherwise, it's a satellite, so which one is it?
+
+            switch satellite {
+            case .iss :
+                widthAndHeight = Globals.ISSMarkerWidth
+                altitude       = Globals.ISSAltitudeFactor
+            case .tss :
+                widthAndHeight = Globals.TSSMarkerWidth
+                altitude       = Globals.TSSAltitudeFactor
+            case .hubble:
+                widthAndHeight = Globals.hubbleMarkerWidth
+                altitude       = Globals.hubbleAltitudeFactor
+            case .none :
+                widthAndHeight = Globals.ISSMarkerWidth
+                altitude       = Globals.ISSAltitudeFactor
+            }
+            
         }
         
         // Initialize and configure the marker node
         node                                             = SCNNode(geometry: SCNPlane(width: widthAndHeight, height: widthAndHeight))
         node.geometry!.firstMaterial!.diffuse.contents   = image
-        node.geometry!.firstMaterial!.diffuse.intensity  = 1.0                                         // Appearance in daylight areas
+        node.geometry!.firstMaterial!.diffuse.intensity  = 1.0                                          // Appearance in daylight areas
         node.geometry!.firstMaterial!.emission.contents  = image
-        node.geometry!.firstMaterial!.emission.intensity = 0.75                                        // Appearance in nighttime areas (a bit less bright)
+        node.geometry!.firstMaterial!.emission.intensity = 0.75                                         // Appearance in nighttime areas (a bit less bright)
         node.geometry!.firstMaterial!.isDoubleSided      = true
         node.castsShadow                                 = false
         
@@ -87,6 +106,7 @@ final class EarthGlobeMarkers {
         animation.autoreverses   = true
         animation.repeatCount    = Float.infinity
         animation.timingFunction = CAMediaTimingFunction(name: CAMediaTimingFunctionName.easeOut)
+        
         node.addAnimation(animation, forKey: nil)
         
     }

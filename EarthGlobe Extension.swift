@@ -7,6 +7,7 @@
 //
 
 import SceneKit
+import UIKit
 
 
 /// Handles the objects we're adding to the globe as well as coordinate transforms
@@ -26,6 +27,7 @@ extension EarthGlobe {
         let pulse = false
 #endif
         self.addMarker(ISS, shouldPulse: pulse)
+        
     }
     
     
@@ -43,6 +45,24 @@ extension EarthGlobe {
         let pulse = false
 #endif
         self.addMarker(TSS, shouldPulse: pulse)
+        
+    }
+    
+    /// Adds the Hubble position marker at the precise latitude and longitude to our globe scene
+    /// - Parameters:
+    ///   - lat: The current latitude as a decimal value
+    ///   - lon: The current longitude as a decimal value
+    public func addHubbleMarker(lat: Float, lon: Float) {
+        
+        let hubble = EarthGlobeMarkers(for: .hubble, using: Globals.hubbleIconFor3DGlobeView, lat: lat, lon: lon, isInOrbit: true)
+        
+#if !os(watchOS)
+        let pulse = true
+#else
+        let pulse = false
+#endif
+        self.addMarker(hubble, shouldPulse: pulse)
+        
     }
     
     
@@ -52,8 +72,9 @@ extension EarthGlobe {
     ///   - lon: The current longitude as a decimal value
     public func addISSViewingCircle(lat: Float, lon: Float) {
         
-        let viewingCircle = EarthGlobeMarkers(for: .none, using: Globals.ISSViewingCircleGraphic, lat: lat, lon: lon, isInOrbit: false)
+        let viewingCircle = EarthGlobeMarkers(for: .iss, using: Globals.ISSViewingCircleGraphic, lat: lat, lon: lon, isInOrbit: false)
         self.addMarker(viewingCircle, shouldPulse: false)
+        
     }
     
     
@@ -63,8 +84,21 @@ extension EarthGlobe {
     ///   - lon: The current longitude as a decimal value
     public func addTSSViewingCircle(lat: Float, lon: Float) {
         
-        let viewingCircle = EarthGlobeMarkers(for: .none, using: Globals.TSSViewingCircleGraphic, lat: lat, lon: lon, isInOrbit: false)
+        let viewingCircle = EarthGlobeMarkers(for: .tss, using: Globals.TSSViewingCircleGraphic, lat: lat, lon: lon, isInOrbit: false)
         self.addMarker(viewingCircle, shouldPulse: false)
+        
+    }
+    
+    
+    /// Adds the satellite's viewing circle marker at the precise latitude and longitude to our globe scene
+    /// - Parameters:
+    ///   - lat: The current latitude as a decimal value
+    ///   - lon: The current longitude as a decimal value
+    public func addHubbleViewingCircle(lat: Float, lon: Float) {
+        
+        let viewingCircle = EarthGlobeMarkers(for: .hubble, using: Globals.hubbleViewingCircleGraphic, lat: lat, lon: lon, isInOrbit: false)
+        self.addMarker(viewingCircle, shouldPulse: false)
+        
     }
     
     
@@ -95,7 +129,12 @@ extension EarthGlobe {
             orbitTrack.ringRadius                      = CGFloat(Globals.TSSOrbitAltitudeInScene)
             orbitInclination                           = Globals.TSSOrbitInclinationInRadians
             multiplier                                 = 2.8
-        case .hubble, .none :
+        case .hubble :
+            orbitTrack.firstMaterial?.diffuse.contents = Theme.hubbleOrbitalCGColor
+            orbitTrack.ringRadius                      = CGFloat(Globals.hubbleOrbitAltitudeInScene)
+            orbitInclination                           = Globals.hubbleOrbitInclinationInRadians
+            multiplier                                 = 3.1
+        case .none :
             return
         }
         
@@ -121,23 +160,23 @@ extension EarthGlobe {
         case .iss :
             switch absLat {   // Apply a power function to the adjustment (exponent) based on the latitude
             case _ where absLat <= 12.0 :
-                orbitalCorrectionForInclination        = pow(exponent, 0.8)
+                orbitalCorrectionForInclination        = pow(exponent, 0.80)
             case _ where absLat <= 17.0 :
                 orbitalCorrectionForInclination        = pow(exponent, 0.85)
             case _ where absLat <= 25.0 :
-                orbitalCorrectionForInclination        = pow(exponent, 1.0)
+                orbitalCorrectionForInclination        = pow(exponent, 1.00)
             case _ where absLat <= 33.0 :
                 orbitalCorrectionForInclination        = pow(exponent, 1.25)
             case _ where absLat <= 40.0 :
-                orbitalCorrectionForInclination        = pow(exponent, 1.6)
+                orbitalCorrectionForInclination        = pow(exponent, 1.60)
             case _ where absLat <= 45.0 :
-                orbitalCorrectionForInclination        = pow(exponent, 2.0)
+                orbitalCorrectionForInclination        = pow(exponent, 2.00)
             case _ where absLat <= 49.0 :
-                orbitalCorrectionForInclination        = pow(exponent, 2.5)
+                orbitalCorrectionForInclination        = pow(exponent, 2.50)
             case _ where absLat <= 51.0 :
-                orbitalCorrectionForInclination        = pow(exponent, 3.0)
+                orbitalCorrectionForInclination        = pow(exponent, 3.20)
             default :
-                orbitalCorrectionForInclination        = pow(exponent, 3.5)
+                orbitalCorrectionForInclination        = pow(exponent, 4.00)
             }
         case .tss :
             switch absLat {   // Apply a power function to the adjustment (exponent) based on the latitude
@@ -146,23 +185,44 @@ extension EarthGlobe {
             case _ where absLat <= 20.0 :
                 orbitalCorrectionForInclination        = pow(exponent, 0.85)
             case _ where absLat <= 25.0 :
-                orbitalCorrectionForInclination        = pow(exponent, 1.0)
+                orbitalCorrectionForInclination        = pow(exponent, 1.00)
             case _ where absLat <= 30.0 :
-                orbitalCorrectionForInclination        = pow(exponent, 1.2)
+                orbitalCorrectionForInclination        = pow(exponent, 1.20)
             case _ where absLat <= 35.0 :
                 orbitalCorrectionForInclination        = pow(exponent, 1.45)
             case _ where absLat <= 38.0 :
-                orbitalCorrectionForInclination        = pow(exponent, 1.7)
+                orbitalCorrectionForInclination        = pow(exponent, 1.70)
             case _ where absLat <= 40.0 :
-                orbitalCorrectionForInclination        = pow(exponent, 2.0)
+                orbitalCorrectionForInclination        = pow(exponent, 2.00)
             case _ where absLat <= 41.0 :
-                orbitalCorrectionForInclination        = pow(exponent, 2.3)
+                orbitalCorrectionForInclination        = pow(exponent, 2.30)
             case _ where absLat <= 41.5 :
-                orbitalCorrectionForInclination        = pow(exponent, 2.5)
+                orbitalCorrectionForInclination        = pow(exponent, 2.50)
             default :
-                orbitalCorrectionForInclination        = pow(exponent, 2.8)
+                orbitalCorrectionForInclination        = pow(exponent, 2.80)
             }
-        case .hubble, .none :
+        case .hubble :
+            switch absLat {   // Apply a power function to the adjustment (exponent) based on the latitude
+            case _ where absLat <= 10.0 :
+                orbitalCorrectionForInclination        = pow(exponent, 0.35)
+            case _ where absLat <= 15.0 :
+                orbitalCorrectionForInclination        = pow(exponent, 0.50)
+            case _ where absLat <= 18.0 :
+                orbitalCorrectionForInclination        = pow(exponent, 0.65)
+            case _ where absLat <= 20.0 :
+                orbitalCorrectionForInclination        = pow(exponent, 0.80)
+            case _ where absLat <= 22.0 :
+                orbitalCorrectionForInclination        = pow(exponent, 1.00)
+            case _ where absLat <= 24.0 :
+                orbitalCorrectionForInclination        = pow(exponent, 1.30)
+            case _ where absLat <= 26.0 :
+                orbitalCorrectionForInclination        = pow(exponent, 1.75)
+            case _ where absLat <= 27.0 :
+                orbitalCorrectionForInclination        = pow(exponent, 2.10)
+            default :
+                orbitalCorrectionForInclination        = pow(exponent, 3.00)
+            }
+        case .none :
             return
         }
         
@@ -184,6 +244,7 @@ extension EarthGlobe {
         
         // Apply the transform
         orbitTrackNode.transform                       = compositeRotationMatrix
+        
     }
     
     
@@ -200,6 +261,7 @@ extension EarthGlobe {
         } else if !run && globe.hasActions {
             globe.removeAllActions()
         }
+        
     }
     
 #endif
@@ -211,10 +273,11 @@ extension EarthGlobe {
         globe.addChildNode(marker.node)
         
 #if !os(watchOS)
-        if Globals.pulseISSMarkerForGlobe && shouldPulse {
+        if Globals.pulseSatelliteMarkerForGlobe && shouldPulse {
             marker.addPulseAnimation()
         }
 #endif
+        
     }
     
     
@@ -224,6 +287,7 @@ extension EarthGlobe {
         if let nodeToRemove = globe.childNodes.last {
             nodeToRemove.removeFromParentNode()
         }
+        
     }
     
     
@@ -232,6 +296,7 @@ extension EarthGlobe {
     public func getNumberOfChildNodes() -> Int {
         
         return globe.childNodes.count
+        
     }
     
     
@@ -254,6 +319,7 @@ extension EarthGlobe {
         sun.light!.intensity   = sunlightIntensity      // Sunlight intensity in lumens
         
         globe.addChildNode(sun)
+        
     }
     
     
@@ -281,6 +347,7 @@ extension EarthGlobe {
         let position  = SCNVector3(x: sceneKitX, y: sceneKitY, z: sceneKitZ )
         
         return position
+        
     }
     
     
@@ -295,5 +362,7 @@ extension EarthGlobe {
     func SCNMatrix4RotateF(_ src: SCNMatrix4, _ angle : Float, _ x : Float, _ y : Float, _ z : Float) -> SCNMatrix4 {
         
         return SCNMatrix4Rotate(src, angle, x, y, z)
+        
     }
+    
 }

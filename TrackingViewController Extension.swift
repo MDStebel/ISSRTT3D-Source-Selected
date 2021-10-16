@@ -105,7 +105,7 @@ extension TrackingViewController {
                     self?.velocity      = String(parsedOrbitalPosition.velocity)
                     
                     // Update map and overlays in the main queue
-                    DispatchQueue.main.async {
+                    DispatchQueue.main.async { [self] in
                         
                         // Update ISS position on the map
                         self?.map.setRegion(self!.region, animated: true)
@@ -115,7 +115,7 @@ extension TrackingViewController {
                         
                         // Update globe with ISS position and orbital track, if enabled. Do not show other station(s)
                         if Globals.displayGlobe {
-                            self?.updateEarthGlobeScene(in: self!.globe, ISSLatitude: self!.latitude, ISSLongitude: self!.longitude, TSSLatitude: nil, TSSLongitude: nil, ISSLastLat: &self!.ISSLastLat, TSSLastLat: &self!.TSSLastLat)
+                            self?.updateEarthGlobeScene(in: self!.globe, hubbleLatitude: nil, hubbleLongitude: nil, ISSLatitude: self?.latitude, ISSLongitude: self?.longitude, TSSLatitude: nil, TSSLongitude: nil, hubbleLastLat: &self!.hubbleLastLat, ISSLastLat: &self!.ISSLastLat, TSSLastLat: &self!.TSSLastLat)
                             self?.setUpCoordinatesLabel(withTopCorners: false)
                             self?.globeScene.isHidden        = false
                             self?.globeExpandButton.isHidden = false

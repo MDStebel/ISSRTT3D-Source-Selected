@@ -22,8 +22,8 @@ class GlobeFullViewController: UIViewController, AVAudioPlayerDelegate, EarthGlo
     
     struct Constants {
         static let ISSAPIEndpointString  = ApiEndpoints.issTrackerAPIEndpointA       // ISS API
-        static let TSSAPIEndpointString  = ApiEndpoints.tssTrackerAPIEndpoint        // TSS API (Chinese space station Tiangong)
-        static let TSSAPIKey             = ApiKeys.TSSLocationKey
+        static let generalEndpointString = ApiEndpoints.generalTrackerAPIEndpoint    // General endpoint
+        static let generalAPIKey         = ApiKeys.generalLocationKey
         static let fontForTitle          = Theme.nasa
         static let segueToHelpFromGlobe  = "segueToHelpFromGlobe"
         static let segueToSettings       = "segueToSettings"
@@ -36,17 +36,25 @@ class GlobeFullViewController: UIViewController, AVAudioPlayerDelegate, EarthGlo
     }
 
     var ISSLastLat: Float                = 0                                         // To conform with the EarthGlobeProtocol, will save the last ISS latitude
-    var TSSCoordinates                   = [SatelliteOrbitPosition.Positions]()
+    var ISSLatitude                      = 0.0
+    var ISSLongitude                     = 0.0
     var TSSLastLat: Float                = 0                                         // To conform with the EarthGlobeProtocol, will save the last TSS latitude
     var TSSLatitude                      = 0.0
     var TSSLongitude                     = 0.0
+    var coordinates                      = [SatelliteOrbitPosition.Positions]()
     var fullGlobe                        = EarthGlobe()
     var globeBackgroundImageName         = ""
+    var hLat                             = ""
+    var hLon                             = ""
+    var hubbleLastLat: Float             = 0.0                                       // To conform with the EarthGlobeProtocol, will save the last Hubble latitude
+    var hubbleLatitude                   = 0.0
+    var hubbleLongitude                  = 0.0
     var iLat                             = ""
     var iLon                             = ""
     var tLat                             = ""
     var tLon                             = ""
     var timer: AnyCancellable?
+    
     
     private var helpTitle                = "3D Globe Help"
     
@@ -114,6 +122,7 @@ class GlobeFullViewController: UIViewController, AVAudioPlayerDelegate, EarthGlo
         }
         
         spaceBackgroundImage?.image = UIImage(named: globeBackgroundImageName)
+        
     }
     
     
@@ -122,6 +131,7 @@ class GlobeFullViewController: UIViewController, AVAudioPlayerDelegate, EarthGlo
         
         let appDelegate = UIApplication.shared.delegate! as! AppDelegate
         appDelegate.referenceToGlobeFullViewController = self
+        
     }
     
     
@@ -131,6 +141,7 @@ class GlobeFullViewController: UIViewController, AVAudioPlayerDelegate, EarthGlo
         
         setUpAppDelegate()
         setUpSoundTrackMusicPlayer()
+        
     }
     
 
@@ -146,6 +157,7 @@ class GlobeFullViewController: UIViewController, AVAudioPlayerDelegate, EarthGlo
         navigationItem.scrollEdgeAppearance = barAppearance
         
         setUpEarthGlobeScene(for: fullGlobe, in: fullScreenGlobeView, hasTintedBackground: false)
+        
     }
     
     
@@ -155,6 +167,7 @@ class GlobeFullViewController: UIViewController, AVAudioPlayerDelegate, EarthGlo
         
         Globals.globeBackgroundWasChanged = true
         startUpdatingGlobe()
+        
     }
     
     
@@ -164,13 +177,14 @@ class GlobeFullViewController: UIViewController, AVAudioPlayerDelegate, EarthGlo
         soundtrackMusicPlayer?.stop()
         
         stopUpdatingGlobe()
+        
     }
     
     
     func startUpdatingGlobe() {
         
         Globals.globeBackgroundWasChanged = true
-        earthGlobeLocateStations()       // Call once to update the globe before the timer starts in order to immediately show the ISS location, etc.
+        earthGlobeLocateSatellites()       // Call once to update the globe before the timer starts in order to immediately show the ISS location, etc.
         start()
     }
     
@@ -181,8 +195,9 @@ class GlobeFullViewController: UIViewController, AVAudioPlayerDelegate, EarthGlo
             .publish(every: Constants.timerValue, on: .main, in: .common)
             .autoconnect()
             .sink { _ in
-                self.earthGlobeLocateStations()
+                self.earthGlobeLocateSatellites()
             }
+        
     }
     
     
@@ -190,6 +205,7 @@ class GlobeFullViewController: UIViewController, AVAudioPlayerDelegate, EarthGlo
         
         timer?.cancel()
         isRunningLabel?.text = "Not Running"
+        
     }
     
     
@@ -215,6 +231,7 @@ class GlobeFullViewController: UIViewController, AVAudioPlayerDelegate, EarthGlo
         default :
             break
         }
+        
     }
     
     
@@ -241,6 +258,7 @@ class GlobeFullViewController: UIViewController, AVAudioPlayerDelegate, EarthGlo
         }
         
         soundtrackMusicPlayer?.numberOfLoops = -1       // Loop indefinitely
+        
     }
     
     
@@ -254,6 +272,7 @@ class GlobeFullViewController: UIViewController, AVAudioPlayerDelegate, EarthGlo
         }
         
         soundtrackButtonOn.toggle()
+        
     }
     
     
@@ -265,5 +284,7 @@ class GlobeFullViewController: UIViewController, AVAudioPlayerDelegate, EarthGlo
         delay(0.5) {
             self.startUpdatingGlobe()
         }
+        
     }
+    
 }

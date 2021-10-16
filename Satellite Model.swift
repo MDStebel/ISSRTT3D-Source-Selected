@@ -52,12 +52,14 @@ public enum StationsAndSatellites: String, CaseIterable {
         case .tss :
             return UIImage(named: Globals.TSSIconFor3DGlobeView)!
         case .hubble :
-            return nil
+            return UIImage(named: Globals.hubbleIconFor3DGlobeView)
         case .none :
             return UIImage(named: Globals.ISSIconFor3DGlobeView)!
         }
     }
 }
+
+
 
 //
 ///// Defines a satellite object
