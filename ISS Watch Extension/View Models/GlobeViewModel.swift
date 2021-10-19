@@ -131,7 +131,7 @@ final class GlobeViewModel: ObservableObject {
         // Where is the subsolar point right now?
         subSolarPoint = AstroCalculations.getSubSolarCoordinates()
         
-        // If we have last coordinate, add the markers, otherwise we don't know which way the orbit are oriented
+        // If we have the last coordinates, add the markers, otherwise we don't know which way the orbits are oriented
         if issLastLat != 0 && tssLastLat != 0 && hubbleLastLat != 0 {
             
             // MARK: Set up ISS

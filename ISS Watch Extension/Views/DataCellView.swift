@@ -19,20 +19,20 @@ struct DataCellView: View {
     let longitude: String
     let sidebarColor: Color
     
-    private let max: Float        = Globals.hubbleAltitudeInKM        // Scale max
-    private let min: Float        = Globals.TSSAltitudeInKM           // Scale min
+    private let max: Float        = Globals.hubbleMaxAltitudeInKM   // Scale max
+    private let min: Float        = Globals.TSSMinAltitudeInKM      // Scale min
     private let multiplier: Float = 20
     
     var body: some View {
         HStack {
             
-            Rectangle()                             // Sidebar with color indicator
+            Rectangle()                                             // Sidebar with color indicator
                 .frame(width: 6)
                 .foregroundColor(sidebarColor)
             
             VStack {
                 
-                HStack {                            // Title
+                HStack {                                            // Title
                     Text(title)
                         .font(.system(size: 14, weight: .semibold))
                         .foregroundColor(.gray)
