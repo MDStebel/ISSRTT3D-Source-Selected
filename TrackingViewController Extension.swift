@@ -18,6 +18,7 @@ extension TrackingViewController {
         altitudeLabel.text    = altString
         coordinatesLabel.text = positionString
         velocityLabel.text    = velString
+        
     }
     
     
@@ -38,6 +39,7 @@ extension TrackingViewController {
         if index == maxCoordinatesInArray {
             listOfCoordinates.removeFirst(maxCoordinatesInArray - 1)
         }
+        
     }
     
     
@@ -76,6 +78,7 @@ extension TrackingViewController {
             
             self.cursor.isHidden = false                        // Now, show the marker
         }
+        
     }
     
     
@@ -113,7 +116,7 @@ extension TrackingViewController {
                         // Draw ground track, if enabled
                         self?.drawOrbitGroundTrackLine()
                         
-                        // Update globe with ISS position and orbital track, if enabled. Do not show other station(s)
+                        // Update mini globe with ISS position, footprint, and orbital track, if enabled.
                         if Globals.displayGlobe {
                             self?.updateEarthGlobeScene(in: self!.globe, hubbleLatitude: nil, hubbleLongitude: nil, ISSLatitude: self?.latitude, ISSLongitude: self?.longitude, TSSLatitude: nil, TSSLongitude: nil, hubbleLastLat: &self!.hubbleLastLat, ISSLastLat: &self!.ISSLastLat, TSSLastLat: &self!.TSSLastLat)
                             self?.setUpCoordinatesLabel(withTopCorners: false)
@@ -151,4 +154,5 @@ extension TrackingViewController {
         // Start task
         locateAndDisplayISSPositionTask.resume()
     }
+    
 }

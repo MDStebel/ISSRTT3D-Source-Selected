@@ -11,26 +11,6 @@ import UIKit
 
 class CrewMembersTableViewController: UITableViewController, TableAnimatable {
     
-    // MARK: - Launch spacecraft enum
-    
-    private enum LaunchVehicles: String {
-        
-        case soyuz      = "Soyuz"
-        case crewDragon = "Crew Dragon"
-        case starliner  = "Starliner"
-        
-        var spacecraftImages: UIImage {
-            switch self {
-            case .soyuz      :
-                return #imageLiteral(resourceName: "Soyuz-2")
-            case .crewDragon :
-                return #imageLiteral(resourceName: "spacex-dragon-spacecraft-1")
-            case .starliner  :
-                return #imageLiteral(resourceName: "astronaut_filled_Grey")
-            }
-        }
-    }
-    
     // MARK: - Properties
     
     /// Constants
@@ -39,7 +19,7 @@ class CrewMembersTableViewController: UITableViewController, TableAnimatable {
         static let crewAPIEndpointURLString     = ApiEndpoints.crewAPIEndpoint    // API endpoint
         static let customCellIdentifier         = "crewMemberCell"
         static let fontForTitle                 = Theme.nasa
-        static let newLine                      = "\n"
+        static let newLine                      = Globals.newLine
         static let segueToFullBio               = "segueToFullBio"
         static let segueToHelpFromCrew          = "segueToHelpFromCrew"
         static let spacecraftID                 = "International Space Station"
@@ -117,7 +97,9 @@ class CrewMembersTableViewController: UITableViewController, TableAnimatable {
             DispatchQueue.global(qos: .userInteractive).async {
                 self.getCurrrentCrewMembers()
             }
+            
         }
+        
     }
     
     
@@ -274,18 +256,18 @@ class CrewMembersTableViewController: UITableViewController, TableAnimatable {
         guard segue.identifier != nil else { return }                                     // Prevents crash if a segue is unnamed
         
         switch segue.identifier {
-        
+            
         case Constants.segueToHelpFromCrew :
             
             DispatchQueue.main.async {
                 self.spinner.startAnimating()
             }
             
-            let navigationController = segue.destination as! UINavigationController
-            let destinationVC = navigationController.topViewController as! HelpViewController
-            destinationVC.helpContentHTML = UserGuide.crewHelp 
+            let navigationController                      = segue.destination as! UINavigationController
+            let destinationVC                             = navigationController.topViewController as! HelpViewController
+            destinationVC.helpContentHTML                 = UserGuide.crewHelp
             destinationVC.helpButtonInCallingVCSourceView = navigationController.navigationBar
-            destinationVC.title = helpTitle
+            destinationVC.title                           = helpTitle
             
             DispatchQueue.main.async {
                 self.spinner.stopAnimating()
@@ -363,7 +345,9 @@ extension CrewMembersTableViewController {
         var imageToReturn: UIImage? = nil
         
         if let imageURL = URL(string: currentCrew![index].image), let astonautImageData = try? Data(contentsOf: imageURL) {
+            
             imageToReturn = UIImage(data: astonautImageData)
+            
         }
         
         return imageToReturn
@@ -392,8 +376,8 @@ extension CrewMembersTableViewController {
             
             cell.astronautName.text        = name + Globals.spacer + flag
             
-            // Get launch spacecraft watermark image using vehicle name
-            let spacecraft                 = LaunchVehicles(rawValue: vehicle) ?? .crewDragon
+            // Get launch spacecraft image using vehicle name
+            let spacecraft                 = Spacecraft(rawValue: vehicle) ?? .crewDragon
             cell.spacecraftWatermark.image = spacecraft.spacecraftImages
             
             // Build string containing the basic crew member data

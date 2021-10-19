@@ -11,7 +11,7 @@ import UIKit
 
 // MARK: - Stations and/or other satellites that we can get pass predictions for
 
-/// Enum holds the NORAD codes for the stations and their corresponding names and images
+/// Model represents space  stations and their corresponding names and images
 public enum StationsAndSatellites: String, CaseIterable {
     
     case iss
@@ -37,7 +37,7 @@ public enum StationsAndSatellites: String, CaseIterable {
         case .iss :
             return "ISS"
         case .tss :
-            return "TSS"
+            return "Tiangong"
         case .hubble :
             return "Hubble"
         case .none :
@@ -52,7 +52,7 @@ public enum StationsAndSatellites: String, CaseIterable {
         case .tss :
             return UIImage(named: Globals.TSSIconFor3DGlobeView)!
         case .hubble :
-            return UIImage(named: Globals.hubbleIconFor3DGlobeView)
+            return UIImage(named: Globals.hubbleIconFor3DGlobeView)!
         case .none :
             return UIImage(named: Globals.ISSIconFor3DGlobeView)!
         }

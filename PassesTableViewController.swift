@@ -88,16 +88,7 @@ class PassesTableViewController: UITableViewController, CLLocationManagerDelegat
     private var userLatitude                            = 0.0
     private var userLongitude                           = 0.0
     private var stationSelectionButton: UIImage {
-        switch station {
-        case .iss :
-            return Constants.selectISSButton
-        case .tss :
-            return Constants.selectTSSButton
-        case .hubble :
-            return Constants.selectISSButton
-        case .none :
-            return Constants.selectISSButton
-        }
+        UIImage(systemName: "target")!
     }
     
     // Change status bar to light color for this VC
@@ -220,7 +211,7 @@ class PassesTableViewController: UITableViewController, CLLocationManagerDelegat
     /// Start getting locations
     private func startGettingLocations() {
 
-        ISSlocationManager.startUpdatingLocation()                              // Now, we can  get locations
+        ISSlocationManager.startUpdatingLocation()                              // Now, we can get locations
         
     }
     
@@ -259,8 +250,8 @@ class PassesTableViewController: UITableViewController, CLLocationManagerDelegat
             })
         }
         
-        alertController.addAction(UIAlertAction(title: "Switch stations", style: .default) { (choice) in
-            self.switchStationPopup(withTitle: "Change Space Station", withStyleToUse: .actionSheet)
+        alertController.addAction(UIAlertAction(title: "Select a Target", style: .default) { (choice) in
+            self.switchStationPopup(withTitle: "Select a Target", withStyleToUse: .actionSheet)
         })
         
         if usingStyle == .actionSheet {
@@ -274,7 +265,7 @@ class PassesTableViewController: UITableViewController, CLLocationManagerDelegat
     
     @IBAction func changeStation(_ sender: UIBarButtonItem) {
         
-        switchStationPopup(withTitle: "Change Space Station", withStyleToUse: .actionSheet)
+        switchStationPopup(withTitle: "Select a Target", withStyleToUse: .actionSheet)
         
     }
     
@@ -285,7 +276,7 @@ class PassesTableViewController: UITableViewController, CLLocationManagerDelegat
     ///   - usingStyle: The alert style
     private func switchStationPopup(withTitle title: String, withStyleToUse usingStyle : UIAlertController.Style) {
         
-        let alertController = UIAlertController(title: title, message: "Switch to a different space station for pass predictions", preferredStyle: usingStyle)
+        let alertController = UIAlertController(title: title, message: "Switch to a different target for pass predictions", preferredStyle: usingStyle)
         
         alertController.addAction(UIAlertAction(title: "Back", style: .cancel) { (dontShow) in
             self.dismiss(animated: true, completion: nil)
