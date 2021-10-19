@@ -16,7 +16,6 @@ class LaunchAnimationViewController: UIViewController {
     
     // MARK: - Properties
     
-    
     private let iconAnimationDuration                                 = 5.0
     private let iconAnimationRotationAngle: CGFloat                   = -CGFloat.pi / 6.0    // In radians
     private let iconAnimationScaleFactor: CGFloat                     = 0.5
@@ -43,10 +42,8 @@ class LaunchAnimationViewController: UIViewController {
     
     // MARK: - Outlets
     
-
     @IBOutlet private var curves: UIImageView!
     @IBOutlet private var ISSImage: UIImageView!
-    @IBOutlet private var launchScreenVersionLabel: UILabel!
     @IBOutlet private var appNameTitleForLaunchAnimation: UILabel! {
         didSet {
             // Initially shrink title label, which will zoom in later
@@ -70,7 +67,6 @@ class LaunchAnimationViewController: UIViewController {
     
     
     // MARK: - Methods
-    
     
     /// Create the transformations for ISS graphic
     private func createTransformationsForISSIcon() {
@@ -144,9 +140,6 @@ class LaunchAnimationViewController: UIViewController {
         
         // Animate ISS graphic using the stack of transforms we created above. At completion, segue to the tracking VC
         UIView.animate(withDuration: iconAnimationDuration, delay: 0, usingSpringWithDamping: 1.0, initialSpringVelocity: 0.2, options: .curveEaseInOut, animations: { [self] in
-            
-            // Animate the footer
-            launchScreenVersionLabel.text            = "Version: \(Globals.versionNumber)  Build: \(Globals.buildNumber)  \(Globals.copyrightString)"
             
             // Animate the ISS graphic
             ISSImage.transform                       = trans1
