@@ -84,23 +84,23 @@ struct Globals {
 #endif
     
     static let ISSAltitudeFactor: Float                      = ISSOrbitalAltitudeFactor * 1.015
-    static let ISSAltitudeInKM: Float                        = 428
+    static let ISSAvgAltitudeInKM: Float                     = 428
     static let ISSIconFor3DGlobeView                         = "ISS-mds-1350px"
     static let ISSIconForMapView                             = "ISS-mds-75px-Template-Image"
     static let ISSOrbitAltitudeInScene                       = ISSOrbitalAltitudeFactor
     static let ISSOrbitInclinationInDegrees: Float           = 51.6
     static let ISSOrbitInclinationInRadians: Float           = ISSOrbitInclinationInDegrees * Float(degreesToRadians)
-    static let ISSOrbitalAltitudeFactor                      = globeRadiusFactor * (1 + ISSAltitudeInKM / earthRadiusInKM) * 1.02
+    static let ISSOrbitalAltitudeFactor                      = globeRadiusFactor * (1 + ISSAvgAltitudeInKM / earthRadiusInKM) * 1.02
     static let ISSRTT3DWebsite                               = "https://www.issrtt.com"
     static let ISSViewingCircleGraphic                       = "iss_4_visibility_circle"
     static let TSSAltitudeFactor: Float                      = TSSOrbitalAltitudeFactor * 1.015
-    static let TSSAltitudeInKM: Float                        = 370
     static let TSSIconFor3DGlobeView                         = "Tiangong-mds-1200px"
     static let TSSMarkerWidth: CGFloat                       = 0.07
+    static let TSSMinAltitudeInKM: Float                     = 370
     static let TSSOrbitAltitudeInScene                       = TSSOrbitalAltitudeFactor
     static let TSSOrbitInclinationInDegrees: Float           = 41.5
     static let TSSOrbitInclinationInRadians: Float           = TSSOrbitInclinationInDegrees * Float(degreesToRadians)
-    static let TSSOrbitalAltitudeFactor                      = globeRadiusFactor * (1 + TSSAltitudeInKM / earthRadiusInKM) * 1.01
+    static let TSSOrbitalAltitudeFactor                      = globeRadiusFactor * (1 + TSSMinAltitudeInKM / earthRadiusInKM) * 1.01
     static let TSSViewingCircleGraphic                       = "TSS-Visibility-Circle"
     static let azimuthFormat                                 = "%3.0f"
     static let blackBackgroundImage                          = "blackBackgroundImage"
@@ -120,14 +120,14 @@ struct Globals {
     static let globeRadiusFactor: Float                      = 0.555
     static let helpChar                                      = "(?)"
     static let hubbleAltitudeFactor: Float                   = hubbleOrbitalAltitudeFactor * 1.015
-    static let hubbleAltitudeInKM: Float                     = 550
     static let hubbleDeepField                               = "Hubble Legacy Field Crop 2800px"
     static let hubbleIconFor3DGlobeView                      = "HST-Image"
     static let hubbleMarkerWidth: CGFloat                    = 0.06
+    static let hubbleMaxAltitudeInKM: Float                  = 550
     static let hubbleOrbitAltitudeInScene                    = hubbleOrbitalAltitudeFactor
     static let hubbleOrbitInclinationInDegrees: Float        = 28.5
     static let hubbleOrbitInclinationInRadians: Float        = hubbleOrbitInclinationInDegrees * Float(degreesToRadians)
-    static let hubbleOrbitalAltitudeFactor: Float            = globeRadiusFactor * (1 + hubbleAltitudeInKM / earthRadiusInKM) * 1.05
+    static let hubbleOrbitalAltitudeFactor: Float            = globeRadiusFactor * (1 + hubbleMaxAltitudeInKM / earthRadiusInKM) * 1.05
     static let hubbleViewingCircleGraphic                    = "Hubble-Viewing-Circle-1"
     static let julianDateForJan011970At0000GMT               = 2440587.5
     static let kilometersToMiles                             = 0.621371192

@@ -23,16 +23,14 @@ private let whatsNew = WhatsNew(
         WhatsNew.Item(
             title: "Apple Watch App Included",
             subtitle: """
-                      Apple Watch app provides interactive 3D globe and detail view showing ISS, Tiangong (TSS), Hubble Space Telescope, and subsolar point coordinates and altitudes. Requires watchOS 8 or higher.
+                      Apple Watch app provides interactive 3D globe and detail view showing ISS, Tiangong, Hubble Space Telescope, and subsolar point coordinates and altitudes. Requires watchOS 8 or higher.
                       """,
             image: UIImage(named: "icons8-megaphone_filled.imageset")
         ),
         WhatsNew.Item(
             title: "Improvements & Fixes",
             subtitle: """
-                      • Now tracks and predicts passes for the Hubble Space Telescope, in addition to the ISS and TSS.
-                      • Improved performance in iOS, iPadOS, and watchOS apps.
-                      • Bug fixes.
+                      • User interface tweaks.
                       """,
             image: UIImage(named: "icons8-bug_filled")
         ),
