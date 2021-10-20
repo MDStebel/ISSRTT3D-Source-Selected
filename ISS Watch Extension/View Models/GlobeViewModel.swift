@@ -28,6 +28,7 @@ final class GlobeViewModel: ObservableObject {
     private let timerValue                                         = 3.0
     
     private var cancellables: Set<AnyCancellable>                  = []
+    
     private var hubbleHeadingFactor: Float                         = 0.0
     private var hubbleLastLat: Float                               = 0.0
     private var hubbleLatitude: Float                              = 0.0
@@ -40,7 +41,6 @@ final class GlobeViewModel: ObservableObject {
     private var tssLastLat: Float                                  = 0.0
     private var tssLatitude: Float                                 = 0.0
     private var tssLongitude: Float                                = 0.0
-    
     
     private var subSolarPoint: (latitude: Float, longitude: Float) = (0, 0)
     private var timer: AnyCancellable?
@@ -60,10 +60,11 @@ final class GlobeViewModel: ObservableObject {
     /// Reset the globe
     func reset() {
         
-        earthGlobe         = EarthGlobe()
-        isStartingUp       = true
-        issLastLat         = 0
-        tssLastLat         = 0
+        earthGlobe    = EarthGlobe()
+        isStartingUp  = true
+        issLastLat    = 0
+        tssLastLat    = 0
+        hubbleLastLat = 0
         
         initHelper()
         
@@ -210,11 +211,11 @@ final class GlobeViewModel: ObservableObject {
         
         /// Get data using Combine's dataTaskPublisher
         URLSession.shared.dataTaskPublisher(for: ISSAPIEndpointURL)
-            .receive(on: RunLoop.main)
             .map { (data: Data, response: URLResponse) in
                 data
             }
             .decode(type: SatelliteOrbitPosition.self, decoder: JSONDecoder())
+            .receive(on: RunLoop.main)
             .sink(receiveCompletion: { [unowned self] completion in
                 if case .failure(let error) = completion {
                     wasError      = true
