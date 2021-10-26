@@ -8,7 +8,6 @@
 
 import UIKit
 
-
 /// Main user guide and context-sensitive help
 struct UserGuide {
     

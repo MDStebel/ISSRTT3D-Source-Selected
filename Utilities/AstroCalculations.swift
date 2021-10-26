@@ -8,7 +8,6 @@
 
 import Foundation
 
-
 /// A set of functions that provide solar position calculations
 public struct AstroCalculations {
     

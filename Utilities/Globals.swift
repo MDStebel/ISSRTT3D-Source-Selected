@@ -8,7 +8,6 @@
 
 import UIKit
 
-
 /// Struct used as a namespace to hold global variables and constants
 struct Globals {
     

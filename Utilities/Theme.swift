@@ -8,7 +8,6 @@
 
 import UIKit
 
-
 /// The main theme used in the app
 struct Theme {
     
