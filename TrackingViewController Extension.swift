@@ -9,7 +9,6 @@
 import UIKit
 import MapKit
 
-
 extension TrackingViewController {
     
     /// Update the info box data 
@@ -72,7 +71,7 @@ extension TrackingViewController {
                 self.clearOrbitTrackButton.alpha     = 1.0
                 self.clearOrbitTrackButton.isEnabled = true
             } else {
-                self.clearOrbitTrackButton.alpha     = 0.65
+                self.clearOrbitTrackButton.alpha     = 0.60
                 self.clearOrbitTrackButton.isEnabled = false
             }
             

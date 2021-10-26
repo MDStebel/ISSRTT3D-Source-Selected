@@ -12,7 +12,6 @@ import MapKit
 import SceneKit
 import UIKit
 
-
 class TrackingViewController: UIViewController, MKMapViewDelegate, UIGestureRecognizerDelegate, AVAudioPlayerDelegate, EarthGlobeProtocol {
     
     // MARK: - Types
@@ -62,8 +61,8 @@ class TrackingViewController: UIViewController, MKMapViewDelegate, UIGestureReco
     }
     
     private struct SoundtrackButtonImage {
-        static let on                           = "music on"
-        static let off                          = "music off"
+        static let on                           = "music.quarternote.3"
+        static let off                          = "music.quarternote.3"
     }
     
     
@@ -76,14 +75,18 @@ class TrackingViewController: UIViewController, MKMapViewDelegate, UIGestureReco
     }
     
     // Soundtrack
-    var soundtrackMusicPlayer: AVAudioPlayer?
     let soundtrackFilePathString = Theme.soundTrack
+    var soundtrackMusicPlayer: AVAudioPlayer?
     var soundtrackButtonOn: Bool = false {
         didSet {
             if soundtrackButtonOn {
-                soundtrackMusicButton.setImage(UIImage(named: SoundtrackButtonImage.on), for: .normal)
+                soundtrackMusicButton.setImage(UIImage(systemName: SoundtrackButtonImage.on), for: .normal)
+                soundtrackMusicButton.tintColor = .white
+                soundtrackMusicButton.alpha = 1.0
             } else {
-                soundtrackMusicButton.setImage(UIImage(named: SoundtrackButtonImage.off), for: .normal)
+                soundtrackMusicButton.setImage(UIImage(systemName: SoundtrackButtonImage.off), for: .normal)
+                soundtrackMusicButton.tintColor = .white
+                soundtrackMusicButton.alpha = 0.60
             }
         }
     }
@@ -845,6 +848,7 @@ class TrackingViewController: UIViewController, MKMapViewDelegate, UIGestureReco
             return
         }
         
+        soundtrackButtonOn = false
         soundtrackMusicPlayer?.numberOfLoops = -1       // Loop indefinitely
         
     }

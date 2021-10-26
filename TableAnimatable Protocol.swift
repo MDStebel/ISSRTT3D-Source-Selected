@@ -8,7 +8,6 @@
 
 import UIKit
 
-
 /// Protocol that provides animation of cells in a table
 protocol TableAnimatable: AnyObject {
     

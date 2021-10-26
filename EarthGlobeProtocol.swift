@@ -9,12 +9,12 @@
 import SceneKit
 import UIKit
 
-
 /// Protocol that adds EarthGlobe support to a UIViewController subclass, with properties and methods to create the scene and update it
 protocol EarthGlobeProtocol: UIViewController {
     
     var ISSLastLat: Float { get set }
     var TSSLastLat: Float { get set }
+    var hubbleLastLat: Float { get set }
     
     func setUpEarthGlobeScene(for globe: EarthGlobe, in scene: SCNView, hasTintedBackground: Bool)
     func updateEarthGlobeScene(in globe: EarthGlobe, hubbleLatitude: String?, hubbleLongitude: String?, ISSLatitude: String?, ISSLongitude: String?, TSSLatitude: String?, TSSLongitude: String?, hubbleLastLat: inout Float, ISSLastLat: inout Float, TSSLastLat: inout Float)

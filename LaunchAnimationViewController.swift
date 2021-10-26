@@ -8,7 +8,6 @@
 
 import UIKit
 
-
 /// Animated launchscreen
 ///
 /// This is the entry view controller for the app. Animates then segues to tracking view controller.

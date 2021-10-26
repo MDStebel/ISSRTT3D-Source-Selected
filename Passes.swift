@@ -8,7 +8,6 @@
 
 import Foundation
 
-
 /// Passes model
 ///
 /// Represents the JSON-returned data from Pass Predictions API

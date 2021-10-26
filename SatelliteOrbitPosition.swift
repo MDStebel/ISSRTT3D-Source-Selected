@@ -8,7 +8,6 @@
 
 import Foundation
 
-
 /// Satellite orbit position model
 ///
 /// Represents the JSON-returned data from the API

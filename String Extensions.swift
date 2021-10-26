@@ -8,7 +8,6 @@
 
 import Foundation
 
-
 extension String {
     
     /// Delete a prefix sustring from the beginning of a string.

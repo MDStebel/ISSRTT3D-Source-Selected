@@ -8,14 +8,13 @@
 
 import Foundation
 
-
 /// Model for user settings data
 struct SettingsDataModel {
     
     // MARK: - Properties
     
     
-    /// Constants for the user defaults keys
+    /// Constants for each of the user defaults keys
     private struct UserSettingsPropertyKeys {
         
         static let autoRotateGlobe                                  = "Auto-Rotate Globe"

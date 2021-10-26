@@ -9,7 +9,6 @@
 import UIKit
 import StoreKit
 
-
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
     
@@ -36,19 +35,22 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         Globals.isIPad              = Globals.thisDevice.hasPrefix("iPad")  // Determine if device is an iPad and set this constant to true if so
 
         // Request user review between shortestTime & longestTime of use
-        let shortestTime: UInt32    = 90                                    // In seconds
-        let longestTime: UInt32     = 250                                   // In seconds
+        let shortestTime: UInt32    = 70                                    // In seconds
+        let longestTime: UInt32     = 240                                   // In seconds
         guard let timeInterval      = TimeInterval(exactly: arc4random_uniform(longestTime - shortestTime) + shortestTime) else { return true }
         Timer.scheduledTimer(timeInterval: timeInterval, target: self, selector: #selector(AppDelegate.requestReview), userInfo: nil, repeats: false)
 
         return true
+        
     }
     
     /// Selector called by timer for App Store reviews
     @objc func requestReview() {
+        
         if let windowScene = window?.windowScene {
             SKStoreReviewController.requestReview(in: windowScene)
         }
+        
     }
     
     
@@ -74,6 +76,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         if referenceToGlobeFullViewController.isViewLoaded {                // Only stop the globe if the view is loaded to avoid nil error
             referenceToGlobeFullViewController.stopUpdatingGlobe()
         }
+        
     }
     
     
@@ -90,6 +93,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         if referenceToGlobeFullViewController.isViewLoaded {                // Only start-up the globe if the view is loaded to avoid nil error
             referenceToGlobeFullViewController.startUpdatingGlobe()
         }
+        
     }
     
     
@@ -102,5 +106,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         if referenceToGlobeFullViewController.isViewLoaded {                // Only stop the globe if the view is loaded to avoid nil error
             referenceToGlobeFullViewController.stopUpdatingGlobe()
         }
+        
     }
+    
 }

@@ -7,7 +7,6 @@
 
 import UIKit
 
-
 extension UIViewController: AlertHandler {
     
     ///  Convenience method to display a simple alert

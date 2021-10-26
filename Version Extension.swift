@@ -7,7 +7,6 @@
 
 import UIKit
 
-
 extension UIViewController {
   
     /// Get the version and build numbers, and the copyright for the app.

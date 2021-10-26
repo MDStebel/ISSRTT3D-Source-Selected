@@ -8,7 +8,6 @@
 
 import UIKit
 
-
 class SettingsTableViewController: UITableViewController {
     
     // MARK: - Properties

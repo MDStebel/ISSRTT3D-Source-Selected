@@ -8,7 +8,6 @@
 
 import Foundation
 
-
 /// Model encapsulating the orbital position (lat/lon), altitude, and velocity of a satellite or orbiting spacecraft
 struct ISSOrbitalPosition: Codable {
     

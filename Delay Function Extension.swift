@@ -7,7 +7,6 @@
 
 import UIKit
 
-
 extension UIViewController {
     
     /// Method to wait before executing a closure

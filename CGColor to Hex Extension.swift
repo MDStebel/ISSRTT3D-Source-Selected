@@ -8,7 +8,6 @@
 
 import UIKit
 
-
 // Extension to CGColor that converts a CGColor to a hex string representation with or without alpha
 extension CGColor {
 

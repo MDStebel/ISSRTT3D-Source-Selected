@@ -8,7 +8,6 @@
 
 import UIKit
 
-
 class CrewMembersTableViewController: UITableViewController, TableAnimatable {
     
     // MARK: - Properties

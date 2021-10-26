@@ -9,7 +9,6 @@
 import SceneKit
 import UIKit
 
-
 /// Handles the objects we're adding to the globe as well as coordinate transforms
 extension EarthGlobe {
     

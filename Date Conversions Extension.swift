@@ -8,7 +8,6 @@
 
 import UIKit
 
-
 /// Extension to DateFormatter to convert dates. Conforms to StringDateConversions protocol.
 extension DateFormatter: StringDateConversions {
     

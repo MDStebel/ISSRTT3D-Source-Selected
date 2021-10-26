@@ -9,7 +9,6 @@
 import UIKit
 import WebKit
 
-
 class LiveVideoViewController: UIViewController, WKUIDelegate, WKNavigationDelegate {
 
     // MARK: - Properties

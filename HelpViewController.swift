@@ -9,7 +9,6 @@
 import UIKit
 import WebKit
 
-
 class HelpViewController: UIViewController, WKUIDelegate, WKNavigationDelegate {
     
     // MARK: - Properties

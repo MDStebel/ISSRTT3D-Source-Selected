@@ -8,7 +8,6 @@
 
 import UIKit
 
-
 // MARK: - Spacecraft that shuttle crewmembers to/from space stations
 
 /// Model  for manned spacecraft

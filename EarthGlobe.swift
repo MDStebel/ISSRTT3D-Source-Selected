@@ -8,7 +8,6 @@
 
 import SceneKit
 
-
 /// The 3D Interactive 3D Earth Globe Model
 final class EarthGlobe: ObservableObject {
     
@@ -120,6 +119,7 @@ final class EarthGlobe: ObservableObject {
         scene.rootNode.addChildNode(userTilt)
         userTilt.addChildNode(userRotation)
         userRotation.addChildNode(globe)
+        
     }
     
 #if !os(watchOS)
@@ -135,6 +135,7 @@ final class EarthGlobe: ObservableObject {
         theScene.allowsCameraControl        = true
         
         completeTheSetup()
+        
     }
     
 #else
@@ -146,6 +147,7 @@ final class EarthGlobe: ObservableObject {
     func setupInSceneView() {
         
         completeTheSetup()
+        
     }
 #endif
     
@@ -168,5 +170,7 @@ final class EarthGlobe: ObservableObject {
         cameraNode.camera           = camera
         
         scene.rootNode.addChildNode(cameraNode)
+        
     }
+    
 }

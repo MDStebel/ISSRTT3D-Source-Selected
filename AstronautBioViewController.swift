@@ -9,7 +9,6 @@
 import UIKit
 import WebKit
 
-
 class AstronautBioViewController: UIViewController, WKUIDelegate, WKNavigationDelegate {
     
     // MARK: - Properties

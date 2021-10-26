@@ -9,7 +9,6 @@
 import MapKit
 import UIKit
 
-
 extension TrackingViewController {
     
     func mapView(_ mapView: MKMapView, rendererFor overlay: MKOverlay) -> MKOverlayRenderer {
@@ -20,5 +19,7 @@ extension TrackingViewController {
         renderer.lineCap     = .butt
         
         return renderer
+        
     }
+    
 }

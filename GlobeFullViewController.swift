@@ -12,7 +12,6 @@ import MapKit
 import SceneKit
 import UIKit
 
-
 /// Full-screen 3D interactive globe VC
 class GlobeFullViewController: UIViewController, AVAudioPlayerDelegate, EarthGlobeProtocol {
     
@@ -31,8 +30,8 @@ class GlobeFullViewController: UIViewController, AVAudioPlayerDelegate, EarthGlo
     }
     
     private struct SoundtrackButtonImage {
-        static let on                    = "music on"
-        static let off                   = "music off"
+        static let on                    = "music.quarternote.3"
+        static let off                   = "music.quarternote.3"
     }
 
     var ISSLastLat: Float                = 0                                         // To conform with the EarthGlobeProtocol, will save the last ISS latitude
@@ -58,15 +57,17 @@ class GlobeFullViewController: UIViewController, AVAudioPlayerDelegate, EarthGlo
     
     private var helpTitle                = "3D Globe Help"
     
-    // Soundtrack properties
-    var soundtrackMusicPlayer: AVAudioPlayer?
+    // Soundtrack
     let soundtrackFilePathString = Theme.soundTrack
+    var soundtrackMusicPlayer: AVAudioPlayer?
     var soundtrackButtonOn: Bool = false {
         didSet {
             if soundtrackButtonOn {
-                soundtrackMusicButton.image = UIImage(named: SoundtrackButtonImage.on)
+                soundtrackMusicButton.image = UIImage(systemName: SoundtrackButtonImage.on)
+                soundtrackMusicButton.tintColor = .white.withAlphaComponent(1.0)
             } else {
-                soundtrackMusicButton.image = UIImage(named: SoundtrackButtonImage.off)
+                soundtrackMusicButton.image = UIImage(systemName: SoundtrackButtonImage.off)
+                soundtrackMusicButton.tintColor = .white.withAlphaComponent(0.60)
             }
         }
     }
@@ -257,6 +258,7 @@ class GlobeFullViewController: UIViewController, AVAudioPlayerDelegate, EarthGlo
             return
         }
         
+        soundtrackButtonOn = false
         soundtrackMusicPlayer?.numberOfLoops = -1       // Loop indefinitely
         
     }

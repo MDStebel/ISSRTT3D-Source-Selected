@@ -9,7 +9,6 @@
 
 import SceneKit
 
-
 /// Model for markers to be added to the Earth model
 final class EarthGlobeMarkers {
     

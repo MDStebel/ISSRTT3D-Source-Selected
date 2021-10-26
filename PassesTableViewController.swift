@@ -10,7 +10,6 @@ import UIKit
 import EventKit
 import CoreLocation
 
-
 class PassesTableViewController: UITableViewController, CLLocationManagerDelegate, TableAnimatable {
     
     // MARK: - Rating System Enum

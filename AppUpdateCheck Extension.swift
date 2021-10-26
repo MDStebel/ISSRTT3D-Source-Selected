@@ -8,7 +8,6 @@
 
 import UIKit
 
-
 extension TrackingViewController {
 
     /// Save current version.
