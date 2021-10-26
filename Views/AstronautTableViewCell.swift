@@ -8,7 +8,6 @@
 
 import UIKit
 
-
 /// A card-style custom cell for crew table
 class AstronautTableViewCell: UITableViewCell {
     

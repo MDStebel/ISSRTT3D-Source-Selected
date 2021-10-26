@@ -8,7 +8,6 @@
 
 import UIKit
 
-
 /// Custom UILabel class adds a default background color
 class PassDateUILabel: UILabel {
     

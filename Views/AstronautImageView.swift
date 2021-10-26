@@ -8,7 +8,6 @@
 
 import UIKit
 
-
 /// Custom ImageView for an astronaut
 @IBDesignable
 class AstronautImageView: UIImageView {
