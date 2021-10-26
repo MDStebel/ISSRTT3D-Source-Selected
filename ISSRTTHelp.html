@@ -2,33 +2,70 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>ISS Real-Time Tracker User Guide</title>
+<title>User Guide | ISS Real-Time Tracker 3D</title>
 <meta name="viewport" content="initial-scale=1.0" />
 <style type="text/css">
+body {
+	color: #ffffff;
+}
 a {
-	color: #ff4c4c;
+	color: #ffffff;
 }
 a:link {
-	color: #ff4c4c;
+	color: #ffffff;
 }
 a:visited {
-	color: #ff4c4c;
+	color: #ffffff;
 }
 a:active {
-	color: #ff4c4c;
+	color: #ffffff;
 }
 a:hover {
 	color: #ff4c4c;
 }
+h1 {
+	color: #ffffff;
+	font-size: 28pt;
+	font-weight: bold;
+}
+h2 {
+	color: #ffffff;
+	font-size: 20pt;
+	font-weight: bold;
+}
+h3 {
+	color: #ffffff;
+	font-size: 18pt;
+}
 h4 {
-	color: #ff4c4c;
-	font-size: 15pt;
+	color: #ffffff;
+	font-size: 16pt;
+}
+h5 {
+	color: #ffffff;
+	font-size: 12pt;
+}
+h6 {
+	color: #ffffff;
+	font-size: 10pt;
+}
+p {
+	color: #ffffff;
+}
+li {
+	color: #ffffff;
+}
+ul {
+	color: #ffffff;
+}
+ul li:: {
+color: #ffffff;
 }
 </style>
 </head>
-<body style="font-family: 'Avenir Next', 'San Francisco', Helvetica, Arial, sans-serif; color: #333333;">
+<body style="font-family: 'Roboto', 'Avenir Next', 'San Francisco', Helvetica, Arial, sans-serif; color: #ffffff;">
 <h1>User Guide</h1>
-<h6>Covers version 7.1</h6>
+<h6>Covers version 7.7</h6>
 <h2>Contents</h2>
 <p>Tap an item from the list below to jump to that section:</p>
 <h4><a href="#passes">Pass Predictions</a></h4>
@@ -41,7 +78,7 @@ h4 {
 <div id="passes"><br>
 </div>
 <h2>Pass Predictions</h2>
-<p>Tapping the binoculars icon at the bottom of the main screen starts the process of computing up-coming visible ISS or TSS passes. First, ISS Real-Time Tracker 3D gets your current location's coordinates. Then, it computes the the ISS or TSS passes that should be visible (weather permitting) from your location. The default number of days to predict passes is set in Settings and can be overridden in the Passes screen. The passes are listed in chronological order along with detailed viewing data.</p>
+<p>Tapping the binoculars icon at the bottom of the main screen starts the process of computing up-coming visible ISS,  TSS, or Hubble Space Telescrope passes. First, ISS Real-Time Tracker 3D gets your current location's coordinates. Then, it computes the ISS, TSS, or Hubble passes that should be visible (weather permitting) from your location. The default number of days to predict passes is set in Settings and can be overridden in the Passes screen. The passes are listed in chronological order along with detailed viewing data.</p>
 <p>Data for each pass includes:</p>
 <ul>
   <li>
@@ -61,8 +98,8 @@ h4 {
   </li>
 </ul>
 <p>Each pass is rated based on its maximum magnitude (i.e., brightness). The brightest passes get the highest ratings. Passes are rated with 0, 1, 2, 3, or 4 stars corresponding to poor, fair, good, better, or best, respectively.</p>
-<h4>Switching Stations</h4>
-<p>Tap the ISS/TSS buton in the navigation bar to switch between the ISS and TSS (Chinese space station named Tiangong). The table will automatically refresh and present passes for the selected station.</p>
+<h4>Switching Targets</h4>
+<p>Tap the switch target button in the navigation bar to switch between the ISS, TSS (Chinese space station named Tiangong), and Hubble Space Telescope. The table will automatically refresh and present passes for the selected station.</p>
 <h4>Adding a Pass Event to Your Calendar</h4>
 <p>Tap any pass in the table to add it as an event in your calendar. When adding a pass to your calendar, two alerts will be set: the first for 1 hour before, and the second for 15 minutes before the start of the pass. The starting and ending times for the pass are saved in the event in your calendar, along with the maximum magnitude, as well as the starting, maximum, and ending azimuths and elevations for the pass.</p>
 <h4>Change Number of Days to Compute</h4>
@@ -84,7 +121,7 @@ h4 {
     <h6>If there are buildings, trees, or other obstructions, and depending upon the weather and other viewing conditions, you may not be able to spot the space station.</h6>
   </li>
   <li>
-    <h6>You must give ISS Real-Time Tracker 3D access to your location. When asked, tap &quot;OK.&quot; You can change this permission in your device's Settings app.</h6>
+    <h6>You must give ISS Real-Time Tracker 3D access to your location. When asked, tap &amp;quot;OK.&amp;quot; You can change this permission in your device's Settings app.</h6>
   </li>
   <li>
     <h6>Calendar events are saved in your default calendar.</h6>
@@ -155,8 +192,9 @@ h4 {
 </div>
 <h2>Fullscreen Interactive 3D Globe</h2>
 <p>From the Tracking screen, tapping the expand icon on the globe overlay, or the globe icon on the tab bar, expands the globe to fullscreen mode and hides the map.</p>
-<p>The 3D interactive globe shows the current position of the ISS, its orbital track, and footprint (viewing range circle). The globe also shows the current position of the new Chinese Space Station, Tiangong-3 (TSS), its orbital track, and footprint (viewing range circle). The ISS track and footprint are shown in red and those for the TSS are in gold. The globe is a photorealistic model of the Earth complete with accurate Sun subsolar position, specular reflections on the water, seasonal tilt, mountain shadows, and other details.</p>
-<p>The globe starts updating automatically when in full-screen mode.</p>
+<p>The 3D interactive globe shows the current position of the ISS, its orbital track, and footprint (viewing range circle). The globe also shows the current position of the new Chinese Space Station, Tiangong-3 (TSS), its orbital track, and footprint (viewing range circle), as well as those of the Hubble. The ISS track and footprint are shown in red, in gold for the TSS, and in blue for the Hubble.</p>
+<p>The globe is a photorealistic model of the Earth complete with accurate Sun subsolar position, specular reflections on the water, seasonal tilt, mountain shadows, and other details.</p>
+<p>The globe starts updating automatically when in fullscreen mode.</p>
 <h4>Using Gestures</h4>
 <ul>
   <li>
@@ -173,7 +211,7 @@ h4 {
   </li>
 </ul>
 <h4>Choose Your Background</h4>
-<p>From Settings you can select from four background images for your fullscreen globe. These are:</p>
+<p>From Settings, you can select from five backgrounds for your fullscreen globe. These are:</p>
 <ul>
   <li>
     <h5>Hubble Deep Field (the default)</h5>
@@ -187,11 +225,14 @@ h4 {
   <li>
     <h5>Tarantula Nebula in the Large Magellanic Cloud</h5>
   </li>
+  <li>
+    <h5>Just black</h5>
+  </li>
 </ul>
 <h5>Notes:</h5>
 <ul>
   <li>
-    <h6>The red and gold circles represent the approximate ISS and TSS sighting ranges, respectively, from ground level under perfect conditions. Use the Pass Predictor to get viewable ISS or TSS passes from your exact location.</h6>
+    <h6>The red, gold, and blue circles represent the approximate ISS, TSS, and Hubble sighting ranges (i.e., footprints), respectively, from ground level under perfect conditions. Use the Pass Predictor to get viewable ISS, TSS, or Hubble passes from your exact location.</h6>
   </li>
   <li>
     <h6>Auto-rotation is enabled by default and rotates the globe once every 90 seconds.</h6>
@@ -209,11 +250,11 @@ h4 {
 <h2>Current Crew</h2>
 <p>Tap the astronaut icon at the bottom of the screen to get a table of information about the current ISS crew.</p>
 <h4> Crew Bios &amp; Tweets</h4>
-<p>Tap any cell in the table to pop-up the detail view for that crew member. This will display a brief bio. To view the full bio, tap the biography icon.</p>
-<p>To visit the crew member's Twitter feed, open their Twitter profile by tapping the Twitter button. If you do not have the Twitter app installed, it will open in Safari instead. If the crew member does not have a Twitter profile, the Twitter button will not be displayed. Return to ISS Real-Time Tracker 3D by tapping "◀︎ ISS Tracker" on the top-left of Twitter.</p>
+<p>Tap any cell in the table to pop up the detail view for that crewmember. This will display a brief bio. To view the full bio, tap the biography icon.</p>
+<p>To visit the crewmember's Twitter feed, open their Twitter profile by tapping the Twitter button. If you do not have the Twitter app installed, it will open in Safari instead. If the crewmember does not have a Twitter profile, the Twitter button will not be displayed. Return to ISS Real-Time Tracker 3D by tapping "◀︎ ISS Tracker" on the top-left of Twitter.</p>
 <p>Tap X to close the pop-up and return to the crew table.</p>
 <h4>Copy Crew Data to the Clipboard</h4>
-<p>Tap the copy icon at the top-right of the screen to copy the crew names, titles, and nationalities to the clipboard. You can then paste them in another app.</p>
+<p>Tap the copy icon at the top-right of the screen to copy the crew names, titles, and nationalities to the clipboard. You can then paste them into another app.</p>
 <h4>Pull-to-Refresh</h4>
 <p>Pull down the table to refresh the data.</p>
 <p>Tap ⟵ icon to return to the map and resume tracking.</p>
@@ -237,7 +278,7 @@ h4 {
 <div id="nasatv"><br>
 </div>
 <h2>Live NASA TV</h2>
-<p>NASA TV airs a variety of regularly scheduled, pre-recorded educational and public relations programming 24 hours a day. The network also provides an array of live programming, such as 24-hour coverage of missions, events (spacewalks, media interviews, educational broadcasts), press conferences & rocket launches.</p>
+<p>NASA TV airs a variety of regularly scheduled, pre-recorded educational and public relations programming 24 hours a day. The network also provides an array of live programming, such as 24-hour coverage of missions, events (spacewalks, media interviews, educational broadcasts), press conferences &amp; rocket launches.</p>
 <h5>Notes:</h5>
 <ul>
   <li>
@@ -249,7 +290,7 @@ h4 {
 </div>
 <h2>Settings</h2>
 <p>All of your current user settings are automatically saved on your device when you exit the app or switch to another app. This also includes the current zoom slider position. Each time you run ISS Real-Time Tracker 3D, your settings are restored.</p>
-<p>Tapping the ⟳ button on the Settings title bar, will clear all your user settings and change them back to their defaults. The zoom slider will reset to its default (center) position, and What's New and other messages will be restored.</p>
+<p>Tapping the ⟳ button on the Settings title bar will clear all your user settings and change them back to their defaults. The zoom slider will reset to its default (center) position, and What's New and other messages will be restored.</p>
 <p>Tap ⟵ to return to the tracking view.</p>
 </body>
 </html>
