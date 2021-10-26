@@ -8,7 +8,7 @@
 Note: Published for educational purposes only. Source files in this repository do not include resources, images, fonts, graphics, soundtracks, and certain other source files. API endpoints and keys have been hidden.
 Learn about the app or get support at https://www.issrtt.com
 
-![banner](https://github.com/MDStebel/ISSRTT3D-Source-Public/blob/4d2d650504cc647f42dc4c27fc235afb69694636/New%20Facebook%20Cover%20-%20ISS%20Real-Time%20Tracker%203D.png)
+![banner](https://github.com/MDStebel/ISSRTT3D-Source-Public/blob/e1adb1fd41a02d836d84b9d3d9da045312cfed10/New%20Facebook%20Cover%20-%20ISS%20Real-Time%20Tracker%203D@3x.png)
 
 ![banner](https://github.com/MDStebel/ISSRTT-Source-Public/blob/master/Call%20for%20Beta%20Testers.png)
 
