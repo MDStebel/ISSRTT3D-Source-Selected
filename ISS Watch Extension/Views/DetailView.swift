@@ -11,14 +11,11 @@ import SceneKit
 
 struct DetailView: View {
     
-    //    // Get the phase of the scene
-    //    @Environment(\.scenePhase) private var scenePhase
+    // Get the phase of the scene
+    @Environment(\.scenePhase) private var scenePhase
     
     // Publishers we're observing for updated position data
-    @StateObject private var issPosition    = SatellitePositionViewModel(satellite: .iss)
-    @StateObject private var tssPosition    = SatellitePositionViewModel(satellite: .tss)
-    @StateObject private var hubblePosition = SatellitePositionViewModel(satellite: .hubble)
-    @StateObject private var subSolarPoint  = SubSolarViewModel()
+    @ObservedObject var vm: ViewModel
     
     var body: some View {
         
@@ -27,29 +24,29 @@ struct DetailView: View {
             VStack {
                 
                 DataCellView(title: "ISS Position",
-                             altitude: issPosition.altitude,
-                             altitudeInKm: issPosition.altitudeInKm,
-                             altitudeInMi: issPosition.altitudeInMi,
-                             latitude: issPosition.formattedLatitude,
-                             longitude: issPosition.formattedLongitude,
+                             altitude: vm.issAltitude,
+                             altitudeInKm: vm.issAltitudeInKm,
+                             altitudeInMi: vm.issAltitudeInMi,
+                             latitude: vm.issFormattedLatitude,
+                             longitude: vm.issFormattedLongitude,
                              sidebarColor: .ISSRTT3DRed
                 )
                 
                 DataCellView(title: "Tiangong Position",
-                             altitude: tssPosition.altitude,
-                             altitudeInKm: tssPosition.altitudeInKm,
-                             altitudeInMi: tssPosition.altitudeInMi,
-                             latitude: tssPosition.formattedLatitude,
-                             longitude: tssPosition.formattedLongitude,
+                             altitude: vm.tssAltitude,
+                             altitudeInKm: vm.tssAltitudeInKm,
+                             altitudeInMi: vm.tssAltitudeInMi,
+                             latitude: vm.tssFormattedLatitude,
+                             longitude: vm.tssFormattedLongitude,
                              sidebarColor: .ISSRTT3DGold
                 )
                 
                 DataCellView(title: "Hubble Position",
-                             altitude: hubblePosition.altitude,
-                             altitudeInKm: hubblePosition.altitudeInKm,
-                             altitudeInMi: hubblePosition.altitudeInMi,
-                             latitude: hubblePosition.formattedLatitude,
-                             longitude: hubblePosition.formattedLongitude,
+                             altitude: vm.hubbleAltitude,
+                             altitudeInKm: vm.hubbleAltitudeInKm,
+                             altitudeInMi: vm.hubbleAltitudeInMi,
+                             latitude: vm.hubbleFormattedLatitude,
+                             longitude: vm.hubbleFormattedLongitude,
                              sidebarColor: .hubbleColor
                 )
                 
@@ -57,8 +54,8 @@ struct DetailView: View {
                              altitude: nil,
                              altitudeInKm: nil,
                              altitudeInMi: nil,
-                             latitude: subSolarPoint.subsolarLatitude,
-                             longitude: subSolarPoint.subsolarLongitude,
+                             latitude: vm.subsolarLatitude,
+                             longitude: vm.subsolarLongitude,
                              sidebarColor: .subsolorColor
                 )
                 
@@ -79,42 +76,32 @@ struct DetailView: View {
             start()
         }
         
-        // Stop updating when this view disappears
-        .onDisappear() {
-            stop()
+        // Respond to lifecycle phases
+        .onChange(of: scenePhase) { phase in
+            switch phase {
+            case .active:
+                // The scene has become active, so start updating
+                start()
+            case .inactive:
+                // The app has become inactive, so stop updating
+                stop()
+            case .background:
+                // The app has moved to the background, so stop updating
+                stop()
+            @unknown default:
+                fatalError("The app has entered an unknown state.")
+            }
+            
         }
-        
-        //        // Respond to lifecycle phases
-        //        .onChange(of: scenePhase) { phase in
-        //            switch phase {
-        //            case .active:
-        //                // The scene has become active, so start updating
-        //                start()
-        //            case .inactive:
-        //                // The app has become inactive, so stop updating
-        //                stop()
-        //            case .background:
-        //                // The app has moved to the background, so stop updating
-        //                stop()
-        //            @unknown default:
-        //                fatalError("The app has entered an unknown state.")
-        //            }
-        //        }
         
     }
     
     private func start() {
-        issPosition.startUp()
-        tssPosition.startUp()
-        hubblePosition.startUp()
-        subSolarPoint.startUp()
+        vm.start()
     }
     
     private func stop() {
-        issPosition.stop()
-        tssPosition.stop()
-        hubblePosition.stop()
-        subSolarPoint.stop()
+        vm.stop()
     }
     
     private func getAppCurrentVersion() -> (version: String, build: String, copyright: String)? {
@@ -130,10 +117,10 @@ struct DetailView: View {
 }
 
 
-struct SubSolarPointView_Previews: PreviewProvider {
+struct DetailView_Previews: PreviewProvider {
     static var previews: some View {
         Group {
-            DetailView()
+            DetailView(vm: ViewModel())
         }
     }
 }
