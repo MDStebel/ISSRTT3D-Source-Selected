@@ -7,14 +7,13 @@
 //
 
 import SwiftUI
-import SceneKit
 
 struct DetailView: View {
     
     // Get the phase of the scene
     @Environment(\.scenePhase) private var scenePhase
     
-    // Publishers we're observing for updated position data
+    // Publisher we're observing for position data
     @ObservedObject var vm: ViewModel
     
     var body: some View {

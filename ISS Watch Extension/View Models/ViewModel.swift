@@ -18,25 +18,25 @@ final class ViewModel: ObservableObject {
     @Published var errorForAlert: ErrorCodes?
     @Published var globeMainNode: SCNNode?
     @Published var globeScene: SCNScene?
-    @Published var isStartingUp: Bool        = true
-    @Published var wasError                  = false
-    @Published var issAltitudeInKm           = ""
-    @Published var issAltitudeInMi           = ""
-    @Published var issFormattedLatitude      = ""
-    @Published var issFormattedLongitude     = ""
-    @Published var tssAltitudeInKm           = ""
-    @Published var tssAltitudeInMi           = ""
-    @Published var tssFormattedLatitude      = ""
-    @Published var tssFormattedLongitude     = ""
+    @Published var hubbleAltitude: Float     = 0.0
     @Published var hubbleAltitudeInKm        = ""
     @Published var hubbleAltitudeInMi        = ""
     @Published var hubbleFormattedLatitude   = ""
     @Published var hubbleFormattedLongitude  = ""
-    @Published var hubbleAltitude: Float     = 0.0
+    @Published var isStartingUp: Bool        = true
     @Published var issAltitude: Float        = 0.0
-    @Published var tssAltitude: Float        = 0.0
+    @Published var issAltitudeInKm           = ""
+    @Published var issAltitudeInMi           = ""
+    @Published var issFormattedLatitude      = ""
+    @Published var issFormattedLongitude     = ""
     @Published var subsolarLatitude: String  = ""
     @Published var subsolarLongitude: String = ""
+    @Published var tssAltitude: Float        = 0.0
+    @Published var tssAltitudeInKm           = ""
+    @Published var tssAltitudeInMi           = ""
+    @Published var tssFormattedLatitude      = ""
+    @Published var tssFormattedLongitude     = ""
+    @Published var wasError                  = false
     
     
     
@@ -133,6 +133,8 @@ final class ViewModel: ObservableObject {
     /// The engine that powers this view model. Updates the globe scene for the new coordinates
     private func updateEarthGlobe() {
         
+        // MARK: Helper functions
+        
         /// Helper function to remove the last child node in the nodes array
         func removeLastNode() {
             if let nodeToRemove = earthGlobe.globe.childNodes.last {
@@ -140,21 +142,23 @@ final class ViewModel: ObservableObject {
             }
         }
         
-        /// Helper fucntion to get and format subsolar point
+        /// Helper fucntion to get and format the subsolar point
         func updateSubSolarPoint() {
             subsolarCoordinates = AstroCalculations.getSubSolarCoordinates()
             subsolarLatitude    = CoordinateConversions.decimalCoordinatesToDegMinSec(coordinate: Double(subsolarCoordinates.latitude), format: Globals.coordinatesStringFormat, isLatitude: true)
             subsolarLongitude   = CoordinateConversions.decimalCoordinatesToDegMinSec(coordinate: Double(subsolarCoordinates.longitude), format: Globals.coordinatesStringFormat, isLatitude: false)
         }
         
-        /// We need to remove each of the nodes we've added before adding them again at new coordinates, or we get an f'ng mess!
+        
+        /// We need to remove each of the nodes we've added before adding them again at new coordinates, or we get a f'ng mess!
         var numberOfChildNodes = earthGlobe.getNumberOfChildNodes()
         while numberOfChildNodes > 0 {
             removeLastNode()
             numberOfChildNodes -= 1
         }
         
-        // MARK: - Get coordinates for everything we're tracking
+        // MARK: Get coordinates for everything we're tracking
+        
         // Where are the satellites right now?
         getSatellitePosition(for: .iss)
         getSatellitePosition(for: .tss)
@@ -163,7 +167,8 @@ final class ViewModel: ObservableObject {
         // Get the subsolar point
         updateSubSolarPoint()
         
-        // MARK: - Update the globe
+        // MARK: Update the globe scene
+        
         // If we have the last coordinates, add the markers, otherwise we don't know which way the orbits are oriented
         if issLastLat != 0 && tssLastLat != 0 && hubbleLastLat != 0 {
             

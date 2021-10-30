@@ -23,6 +23,8 @@ struct GlobeView: View {
             
             ZStack {
                 
+                // MARK: Globe
+                
                 // Render the globe. This will update continually as new coordinates are received from the view model.
                 SceneView(scene: vm.globeScene,
                           pointOfView: vm.globeMainNode,
@@ -34,9 +36,10 @@ struct GlobeView: View {
                     ProgressView()
                 }
                 
-                // Buttons
+                // MARK: Buttons
+                
                 VStack {
-                    Spacer()
+                    Spacer() // we want the buttons at the bottom of the screen
                     
                     // Button group
                     HStack {
@@ -51,7 +54,7 @@ struct GlobeView: View {
                         Spacer()
                         
                         NavigationLink(
-                            destination: DetailView(vm: vm)
+                            destination: DetailView(vm: vm)         // Show detail view with data from our view model
                         )
                         {
                             Image(systemName: "tablecells.fill")
@@ -71,6 +74,8 @@ struct GlobeView: View {
             .ignoresSafeArea(edges: [.vertical])
             .navigationTitle("Globe")
             .navigationBarTitleDisplayMode(.inline)     // We want the small navigation title
+            
+            // MARK: Handle lifecycle events
             
             // Update the coordinates when this view appears
             .onAppear() {
