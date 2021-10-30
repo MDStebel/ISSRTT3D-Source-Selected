@@ -21,25 +21,32 @@ private let whatsNew = WhatsNew(
     // The features and other information to showcase
     items: [
         WhatsNew.Item(
+            title: "What's New",
+            subtitle: """
+                       .
+                      """,
+            image: UIImage(systemName: "megaphone.fill")
+        ),
+        WhatsNew.Item(
+            title: "What's Fixed",
+            subtitle: """
+                       .
+                      """,
+            image: UIImage(systemName: "ant.fill")
+        ),
+        WhatsNew.Item(
             title: "Apple Watch App Included",
             subtitle: """
                       Apple Watch app provides interactive 3D globe and detail view showing ISS, Tiangong, Hubble Space Telescope, and subsolar point coordinates and altitudes. Requires watchOS 8 or higher.
                       """,
-            image: UIImage(named: "icons8-megaphone_filled.imageset")
-        ),
-        WhatsNew.Item(
-            title: "Improvements & Fixes",
-            subtitle: """
-                      • User interface tweaks.
-                      """,
-            image: UIImage(named: "icons8-bug_filled")
+            image: UIImage(systemName: "applewatch.watchface")
         ),
         WhatsNew.Item(
             title: "Built-In Help",
             subtitle: """
                       To learn how to use this app, please tap on the \(Globals.helpChar) button (top-right). Each screen has its own help button that explains how to use a specfic feature.
                       """,
-            image: UIImage(named: "icons8-help_filled")
+            image: UIImage(systemName: "questionmark.circle.fill")
         ),
         WhatsNew.Item(
             title: "Getting Support",
