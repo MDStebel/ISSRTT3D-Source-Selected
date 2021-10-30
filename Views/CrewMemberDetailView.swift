@@ -14,7 +14,7 @@ class CrewMemberDetailView: UIView {
     // MARK: - Properties
     
     
-    /// This will hold the Twitter URL passed from the VC, if it exists. If there's no Twitter URL, then don't show the button
+    /// This will contain the Twitter URL passed from the VC, if it exists. If there's no Twitter URL, then don't show the button
     var twitterHandleURL: String? = nil {
         willSet {
             twitterButton.isHidden = newValue == "" ? true : false
