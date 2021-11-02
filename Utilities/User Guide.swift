@@ -98,7 +98,7 @@ struct UserGuide {
     <h5>Time, azimuth, elevation, and compass direction for the start time, max elevation time, and end time</h5>
     </li>
     </ul>
-    <p>Each pass is rated based on its maximum magnitude (i.e., brightness). The brightest passes get the highest ratings. Passes are rated with 0, 1, 2, 3, or 4 stars corresponding to poor, fair, good, better, or best, respectively.</p>
+    <p>Each pass is rated based on its maximum magnitude (i.e., brightness). The brightest passes get the highest ratings. Passes are rated with 0, 1, 2, 3, or 4 stars corresponding to relatively poor, fair, good, better, or best, respectively.</p>
     <h4>Switching Targets</h4>
     <p>Tap the switch target button in the navigation bar to switch between the ISS, TSS (Chinese space station named Tiangong), and Hubble Space Telescope. The table will automatically refresh and present passes for the selected target.</p>
     <h4>Adding a Pass Event to Your Calendar</h4>
@@ -106,7 +106,7 @@ struct UserGuide {
     <h4>Change Number of Days to Compute</h4>
     <p>Tap the Calendar icon at the top-right of the screen to change the number of days to compute and refresh the list. To change the number of days so that the app remembers your setting for next time, change it in Settings.</p>
     <h4>Pull-to-Refresh</h4>
-    <p>Pull down the table to refresh the data.</p>
+    <p>Drag down the table to refresh the data.</p>
     <h5>Notes:</h5>
     <ul>
     <li>
@@ -128,7 +128,7 @@ struct UserGuide {
     <h6>Calendar events are saved in your default calendar.</h6>
     </li>
     </ul>
-    <p>Tap ⟵ to return to the map and resume tracking.</p>
+    <p>Tap < to return to the map and resume tracking.</p>
     <div id="track"></div>
     <h2>Tracking Map View</h2>
     <p>To locate and track the International Space Station in real time, tap the play button at the bottom of the screen. To pause tracking, tap the pause button.</p>
@@ -176,7 +176,7 @@ struct UserGuide {
     <h4>Ground Track</h4>
     <p>The orbit ground track line is drawn by default. This shows the ground track of the ISS. You can turn this on/off in Settings by tapping the settings icon from the Tracking screen. When the orbit track is on, the ground track clear button is displayed on the Tracking screen.</p>
     <h4>3D Globe Overlay</h4>
-    <p>The globe shows the current position of the ISS, its orbital track, and viewing range circle. The globe is a photorealistic model of the Earth complete with accurate Sun subsolar position, specular reflections on the water, seasonal tilt, mountain shadows, and other details. Drag the globe to rotate and pan it. The circle represents the approximate ISS sighting range from ground level. Auto-rotation is enabled by default and rotates the globe once every 90 seconds. To disable auto-rotation, as well as to enable/disable the globe overlay entirely, go to Settings. Tapping the expand icon on the globe overlay, or the globe button on the tab bar, expands the globe to fullscreen mode and hides the map.</p>
+    <p>The globe shows the current position of the ISS, its orbital track, and viewing range circle. The globe is a photorealistic model of the Earth complete with accurate Sun subsolar position, specular reflections on the water, seasonal tilt, mountain shadows, and other details. Drag the globe to rotate and pan it. The circle represents the approximate ISS sighting range from ground level. Auto-rotation is enabled by default and rotates the globe once every 90 seconds. To disable auto-rotation, as well as to enable/disable the globe overlay entirely, go to Settings. Tapping the expand icon on the globe overlay, or the globe button on the tab bar, expands the globe to fullscreen mode and hides the map. Tap the reset button to reset the globe.</p>
     <h4>Copy Info to the Clipboard</h4>
     <p>Tap the copy icon next to the info box on bottom of the map to copy the ISS's location, altitude, velocity, and associated time to the clipboard. You can then paste the data in another app.</p>
     <h5>Notes:</h5>
@@ -243,19 +243,20 @@ struct UserGuide {
     <h6>The music soundtrack will be disabled (not play) by default. Click the ♪ icon at the upper-right to toggle the soundtrack on/off.</h6>
     </li>
     </ul>
-    <p>Tap the collapse icon on the upper-right of the scene to return to the main tracking map screen.</p>
+    <p>Tap the reset button on the upper-middle of the globe scene to reset the globe.</p>
+    <p>Tap the collapse button on the upper-right of the globe scene, or <, to return to the tracking screen.</p>
     <div id="crew"></div>
     <h2>Current Crew</h2>
     <p>Tap the astronaut icon at the bottom of the screen to get a table of information about the current ISS crew.</p>
-    <h4> Crew Bios &amp; Tweets</h4>
+    <h4>Crew Bios &amp; Tweets</h4>
     <p>Tap any cell in the table to pop-up the detail view for that crewmember. This will display a brief bio. To view the full bio, tap the biography icon.</p>
     <p>To visit the crew member's Twitter feed, open their Twitter profile by tapping the Twitter button. If you do not have the Twitter app installed, it will open in Safari instead. If the crewmember does not have a Twitter profile, the Twitter button will not be displayed. Return to ISS Real-Time Tracker 3D by tapping "◀︎ ISS Tracker" on the top-left of Twitter.</p>
     <p>Tap X to close the pop-up and return to the crew table.</p>
     <h4>Copy Crew Data to the Clipboard</h4>
     <p>Tap the copy icon at the top-right of the screen to copy the crew names, titles, and nationalities to the clipboard. You can then paste them into another app.</p>
     <h4>Pull-to-Refresh</h4>
-    <p>Pull down the table to refresh the data.</p>
-    <p>Tap ⟵ icon to return to the map and resume tracking.</p>
+    <p>Drag down the table to refresh the data.</p>
+    <p>Tap < to return to the map and resume tracking.</p>
     <div id="streaming"></div>
     <h2>Live Earth View</h2>
     <p>Live streaming HD video of Earth is provided via NASA's External High Definition Camera (EHDC).</p>
@@ -271,7 +272,7 @@ struct UserGuide {
     <h6>If your screen is blank, then the EHDC is not currently operating, or the ISS is in nighttime. Just try again later.</h6>
     </li>
     </ul>
-    <p>Tap ⟵ to return to the map.</p>
+    <p>Tap < to return to the map.</p>
     <div id="nasatv"></div>
     <h2>Live NASA TV</h2>
     <p>NASA TV airs a variety of regularly scheduled, pre-recorded educational and public relations programming 24 hours a day. The network also provides an array of live programming, such as 24-hour coverage of missions, events (spacewalks, media interviews, educational broadcasts), press conferences & rocket launches.</p>
@@ -281,12 +282,12 @@ struct UserGuide {
     <h6>If your screen is blank, then NASA TV is currently off the air.</h6>
     </li>
     </ul>
-    <p>Tap ⟵ to return to the map.</p>
+    <p>Tap < to return to the map.</p>
     <div id="settings"></div>
     <h2>Settings</h2>
     <p>All of your current user settings are automatically saved on your device when you exit the app or switch to another app. This also includes the current zoom slider position. Each time you run ISS Real-Time Tracker 3D, your settings are restored.</p>
     <p>Tapping the ⟳ button on the Settings title bar will clear all your user settings and change them back to their defaults. The zoom slider will reset to its default (center) position, and What's New and other messages will be restored.</p>
-    <p>Tap ⟵ to return to the tracking view.</p>
+    <p>Tap < to return to the tracking view.</p>
     \(tail)
     """
     
@@ -312,7 +313,7 @@ struct UserGuide {
     <h5>Time, azimuth, elevation, and compass direction for the start time, max elevation time, and end time</h5>
     </li>
     </ul>
-    <p>Each pass is rated based on its maximum magnitude (i.e., brightness). The brightest passes get the highest ratings. Passes are rated with 0, 1, 2, 3, or 4 stars corresponding to poor, fair, good, better, or best, respectively.</p>
+    <p>Each pass is rated based on its maximum magnitude (i.e., brightness). The brightest passes get the highest ratings. Passes are rated with 0, 1, 2, 3, or 4 stars corresponding to relatively poor, fair, good, better, or best, respectively.</p>
     <h4>Switching Targets</h4>
     <p>Tap the switch target button in the navigation bar to switch between the ISS, TSS (Chinese space station named Tiangong), and Hubble Space Telescope. The table will automatically refresh and present passes for the selected station.</p>
     <h4>Adding a Pass Event to Your Calendar</h4>
@@ -320,7 +321,7 @@ struct UserGuide {
     <h4>Change Number of Days to Compute &amp; Refresh</h4>
     <p>Tap the Calendar icon at the top-right of the screen to change the number of days to compute and refresh the list. To change the number of days so that the app remembers your setting for next time, change it in Settings.</p>
     <h4>Pull-to-Refresh</h4>
-    <p>Pull down the table to refresh the data.</p>
+    <p>Drag down the table to refresh the data.</p>
     <h5>Notes:</h5>
     <ul>
     <li>
@@ -342,7 +343,7 @@ struct UserGuide {
     <h6>Calendar events are saved in your default calendar.</h6>
     </li>
     </ul>
-    <p>Tap ⟵ to return to the map and resume tracking.</p>
+    <p>Tap < to return to the map and resume tracking.</p>
     \(tail)
     """
     
@@ -403,7 +404,8 @@ struct UserGuide {
     <h6>The music soundtrack will be disabled (not play) by default. Click the ♪ icon at the upper-right to toggle the soundtrack on/off.</h6>
     </li>
     </ul>
-    <p>Tap the collapse icon on the upper-right of the scene to return to the main tracking screen.</p>
+    <p>Tap the reset button on the upper-middle of the globe scene to reset the globe.</p>
+    <p>Tap the collapse button on the upper-right of the globe scene, or <, to return to the tracking screen.</p>
     \(tail)
     """
     
@@ -418,8 +420,8 @@ struct UserGuide {
     <h4>Copy Crew Data to the Clipboard</h4>
     <p>Tap the copy icon at the top-right of the screen to copy the crew names, titles, and nationalities to the clipboard. You can then paste them into another app.</p>
     <h4>Pull-to-Refresh</h4>
-    <p>Pull down the table to refresh the data.</p>
-    <p>Tap ⟵ icon to return to the map and resume tracking.</p>
+    <p>Drag down the table to refresh the data.</p>
+    <p>Tap < to return to the map and resume tracking.</p>
     \(tail)
     """
     
@@ -439,7 +441,7 @@ struct UserGuide {
     <h6>If your screen is blank, then the EHDC is not currently operating, or the ISS is in nighttime. Just try again later.</h6>
     </li>
     </ul>
-    <p>Tap ⟵ to return to the map.</p>
+    <p>Tap < to return to the map.</p>
     \(tail)
     """
     
@@ -453,7 +455,7 @@ struct UserGuide {
     <h6>If your screen is blank, then NASA TV is currently off the air.</h6>
     </li>
     </ul>
-    <p>Tap ⟵ to return to the map.</p>
+    <p>Tap < to return to the map.</p>
     \(tail)
     """
     
@@ -461,8 +463,8 @@ struct UserGuide {
     """
     \(head)
     <p>All of your current user preferences are automatically saved on your device when you exit the app or switch to another app. This also includes the current zoom slider position. Each time you run ISS Real-Time Tracker 3D, your preferences are restored to their previous settings.</p>
-    <p>Tapping the ⟳ (reset) button on the Settings title bar will clear all your user settings and change them back to their defaults. The tracking map view zoom slider will also reset to its default (center) position, and What's New and other messages will be restored.</p>
-    <p>Tap ⟵ to return to the tracking view.</p>
+    <p>Tapping the reset button on the Settings title bar will clear all your user settings and change them back to their defaults. The tracking map view zoom slider will also reset to its default (center) position, and What's New and other messages will be restored.</p>
+    <p>Tap < to return to the tracking view.</p>
     \(tail)
     """
 }

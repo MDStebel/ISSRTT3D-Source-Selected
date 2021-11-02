@@ -23,14 +23,15 @@ private let whatsNew = WhatsNew(
         WhatsNew.Item(
             title: "What's New",
             subtitle: """
-                       .
+                       ● Added reset buttons to the globe views.
+                       ● Enhanced the details screen in the watchOS app.
                       """,
             image: UIImage(systemName: "megaphone.fill")
         ),
         WhatsNew.Item(
             title: "What's Fixed",
             subtitle: """
-                       .
+                       Bug fixes and performance improvements.
                       """,
             image: UIImage(systemName: "ant.fill")
         ),
@@ -51,7 +52,7 @@ private let whatsNew = WhatsNew(
         WhatsNew.Item(
             title: "Getting Support",
             subtitle: """
-                      Have questions or issues? Use my chatbot at https://issrtt.com. You can get there easily from Settings. Just tap \(Globals.settingsChar) at the top-left.
+                      Have questions or issues? Use my chatbot at https://issrtt.com. You can get there easily from Settings. Just tap the settings button at the top-left.
                       """,
             image: UIImage(named: "icons8-customer_support")
         )

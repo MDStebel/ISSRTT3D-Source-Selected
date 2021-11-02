@@ -117,7 +117,7 @@ struct Globals {
     static let floatingPointWithThreePlusOneDecimalPlace     = "%3.1f"
     static let floatingPointWithTwoPlusOneDecimalPlace       = "%2.1f"
     static let globeRadiusFactor: Float                      = 0.555
-    static let helpChar                                      = "(?)"
+    static let helpChar                                      = "?"
     static let hubbleAltitudeFactor: Float                   = hubbleOrbitalAltitudeFactor * 1.015
     static let hubbleDeepField                               = "Hubble Legacy Field Crop 2800px"
     static let hubbleIconFor3DGlobeView                      = "HST-Image"
