@@ -176,7 +176,6 @@ class GlobeFullViewController: UIViewController, AVAudioPlayerDelegate, EarthGlo
         
         super.viewWillDisappear(animated)
         soundtrackMusicPlayer?.stop()
-        
         stopUpdatingGlobe()
         
     }
@@ -206,6 +205,24 @@ class GlobeFullViewController: UIViewController, AVAudioPlayerDelegate, EarthGlo
         
         timer?.cancel()
         isRunningLabel?.text = "Not Running"
+        
+    }
+    
+    
+    @IBAction func resetGlobe(_ sender: UIButton) {
+        
+        reset()
+        
+    }
+    
+    
+    func reset() {
+        
+        soundtrackMusicPlayer?.stop()
+        stopUpdatingGlobe()
+        fullGlobe = EarthGlobe()
+        setUpEarthGlobeScene(for: fullGlobe, in: fullScreenGlobeView, hasTintedBackground: false)
+        startUpdatingGlobe()
         
     }
     

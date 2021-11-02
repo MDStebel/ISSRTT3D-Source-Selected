@@ -388,6 +388,22 @@ class TrackingViewController: UIViewController, MKMapViewDelegate, UIGestureReco
     }
     
     
+    @IBAction func resetGlobe(_ sender: UIButton) {
+        
+        reset()
+        
+    }
+    
+    
+    /// Reset the globe only
+    func reset() {
+        
+        globe = EarthGlobe()
+        setUpEarthGlobeScene(for: globe, in: globeScene, hasTintedBackground: true)
+        
+    }
+    
+    
     /// Copy position information to clipboard
     @IBAction func copyCoordinatesToClipboard(_ sender: Any) {
         guard !positionString.isEmpty else { return }
@@ -627,13 +643,13 @@ class TrackingViewController: UIViewController, MKMapViewDelegate, UIGestureReco
         case 0 :
             
             map.mapType                = .standard
-            zoomFactorLabel.textColor  = UIColor.black
-            coordinatesLabel.textColor = UIColor.black
-            altitudeLabel.textColor    = UIColor.black
-            velocityLabel.textColor    = UIColor.black
+            zoomFactorLabel.textColor  = UIColor.white
+            coordinatesLabel.textColor = UIColor.white
+            altitudeLabel.textColor    = UIColor.white
+            velocityLabel.textColor    = UIColor.white
             cursor.alpha               = 1.0
             zoomFactorLabel.alpha      = 1.0
-            copyButton.tintColor       = UIColor.black
+            copyButton.tintColor       = UIColor.white
             
             // Use appropriate cursor color for light or dark mode when using standard map mode
             if traitCollection.userInterfaceStyle == .light {
