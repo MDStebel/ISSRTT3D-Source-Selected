@@ -61,7 +61,7 @@ struct DetailView: View {
                 // Show version and copyright
                 if let (versionNumber, buildNumber, copyright) = getAppCurrentVersion() {
                     Text("Version: \(versionNumber)  Build: \(buildNumber)\(Globals.newLine)\(copyright)")
-                        .font(.system(size: 11, weight: .regular))
+                        .font(.system(size: 10, weight: .regular))
                         .foregroundColor(.gray)
                         .padding(.vertical)
                 }

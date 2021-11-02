@@ -76,12 +76,39 @@ struct MDSDataLabelModifier: ViewModifier {
     
     /// Custom modifier for text
     ///
-    /// Produces a small ISSRed text
+    /// Produces a small bold white text
     /// - Returns: Custom modifier
     func body(content: Content) -> some View {
         content
-            .font(.system(size: 8.0))
-            .foregroundColor(.ISSRTT3DRed)
+            .font(.custom(Theme.appFont, size: 10.0).bold())
+            .foregroundColor(.white)
+            .lineLimit(1)
+    }
+    
+}
+
+
+extension View {
+    
+    /// Custom modifier for coordinates text
+    ///
+    /// Returns medium sized bold text
+    var withCoordinatesTextModifier: some View {
+        self.modifier(CoordinatesTextModifier())
+    }
+    
+}
+
+
+struct CoordinatesTextModifier: ViewModifier {
+    
+    /// Custom modifier for coordinates text
+    ///
+    /// Returns medium sized bold text
+    func body(content: Content) -> some View {
+        content
+            .font(.custom(Theme.appFont, size: 15).bold())
+            .minimumScaleFactor(0.9)
     }
     
 }

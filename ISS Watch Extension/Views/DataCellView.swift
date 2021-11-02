@@ -70,26 +70,24 @@ struct DataCellView: View {
                             VStack(alignment: .leading, spacing: -3) {
                                 
                                 Text("ALT")
+                                    .font(.system(size: 10.0))
+                                    .foregroundColor(sidebarColor)
                                     .bold()
-                                    .withMDSDataLabelModifier
+                                    .offset(y: -1.5)
+                                
                                 Text(altKm)
-                                    .font(.custom(Theme.appFont, size: 10.0))
-                                    .foregroundColor(.white)
-                                    .bold()
-                                    .lineLimit(1)
+                                    .withMDSDataLabelModifier
+                                
                                 Text(altMi)
-                                    .font(.custom(Theme.appFont, size: 10.0))
-                                    .foregroundColor(.white)
-                                    .bold()
-                                    .lineLimit(1)
+                                    .withMDSDataLabelModifier
                                 
                             }
-                            .offset(x: -3, y: 1.0)
+                            .offset(x: -3, y: 1.5)
                             
                         }
-                        .offset(y: yOffsetComputed) // This will position the alt on the scale
-                        
-                        // Show the Sun icon if this is not a satellite
+                        .offset(y: yOffsetComputed)                 // This will position the alt on the scale
+                    
+                    // Show the Sun icon if this is not a satellite
                     } else {
                         
                         Image(systemName: "sun.max.fill")
@@ -107,18 +105,14 @@ struct DataCellView: View {
                         HStack {
                             Spacer()
                             Text(latitude)
-                                .bold()
-                                .minimumScaleFactor(0.9)
-                                .font(.custom(Theme.appFont, size: 15))
+                                .withCoordinatesTextModifier
                         }
                         .offset(x: 0)
                         
                         HStack {
                             Spacer()
                             Text(longitude)
-                                .bold()
-                                .minimumScaleFactor(0.9)
-                                .font(.custom(Theme.appFont, size: 15))
+                                .withCoordinatesTextModifier
                         }
                         .offset(x: 0)
                         
@@ -130,10 +124,12 @@ struct DataCellView: View {
             .padding([.vertical], 2)
             .padding([.leading], 1)
             .padding([.trailing], 6)
+            
         }
         .frame(height: 70)
         .background(Color.ISSRTT3DBackground)
         .cornerRadius(5.0)
+        
     }
     
 }
