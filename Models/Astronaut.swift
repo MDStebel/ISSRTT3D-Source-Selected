@@ -28,6 +28,7 @@ struct Astronaut {
     let image: String
     let twitter: String
     let mission: String
+    let expedition: String
     
     
     /// Dictionary of flag emoji for each nationality
@@ -110,8 +111,9 @@ struct Astronaut {
                     let twitter       = astronaut["twitter"] as! String
                     let mission       = astronaut["mission"] as! String
                     let launchVehicle = astronaut["launchvehicle"] as! String
+                    let expedition    = astronaut["expedition"] as! String
                     
-                    crew.append(Astronaut(name: name, title: title, country: country, spaceCraft: spaceCraft, launchDate: launchDate, bio: bio, launchVehicle: launchVehicle, shortBioBlurb: shortBioBlurb, image: image, twitter: twitter, mission: mission))
+                    crew.append(Astronaut(name: name, title: title, country: country, spaceCraft: spaceCraft, launchDate: launchDate, bio: bio, launchVehicle: launchVehicle, shortBioBlurb: shortBioBlurb, image: image, twitter: twitter, mission: mission, expedition: expedition))
                     
                 }
                 
