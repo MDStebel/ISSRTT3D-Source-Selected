@@ -62,7 +62,8 @@ class CrewMembersTableViewController: UITableViewController, TableAnimatable {
             promptLabel.layer.masksToBounds = true
         }
     }
-       
+    
+    
     // MARK: - Methods
     
     override func viewDidLoad() {
@@ -338,15 +339,19 @@ extension CrewMembersTableViewController {
     }
     
     
-    // Get astronaut's image, if available
+    /// Get astronaut's image, if available
+    /// - Parameter index: Cell index
+    /// - Returns: A n optional image
     private func getAstronautImage(forCell index: Int) -> UIImage? {
         
         var imageToReturn: UIImage? = nil
         
-        if let imageURL = URL(string: currentCrew![index].image), let astonautImageData = try? Data(contentsOf: imageURL) {
-            
-            imageToReturn = UIImage(data: astonautImageData)
-            
+        if let imageURL = URL(string: currentCrew![index].image) {
+            if let astonautImageData = try? Data(contentsOf: imageURL) {
+                
+                imageToReturn = UIImage(data: astonautImageData)
+                
+            }
         }
         
         return imageToReturn
@@ -365,13 +370,14 @@ extension CrewMembersTableViewController {
             
             cell.astronautImage.image      = getAstronautImage(forCell: row) ?? placeholderImage
             
-            let name                       = currentCrew![row].name
-            let flag                       = currentCrew![row].flag
-            let title                      = currentCrew![row].title
-            let mission                    = currentCrew![row].mission
-            let launchDate                 = currentCrew![row].launchDateFormatted
-            let vehicle                    = currentCrew![row].launchVehicle
             let daysInSpace                = currentCrew![row].numberOfDaysInSpace()
+            let expedition                 = currentCrew![row].expedition
+            let flag                       = currentCrew![row].flag
+            let launchDate                 = currentCrew![row].launchDateFormatted
+            let mission                    = currentCrew![row].mission
+            let name                       = currentCrew![row].name
+            let title                      = currentCrew![row].title
+            let vehicle                    = currentCrew![row].launchVehicle
             
             cell.astronautName.text        = name + Globals.spacer + flag
             
@@ -380,7 +386,7 @@ extension CrewMembersTableViewController {
             cell.spacecraftWatermark.image = spacecraft.spacecraftImages
             
             // Build string containing the basic crew member data
-            cell.astronautInfo.text        = "\(title)\n\(mission)\n\(launchDate)\n\(vehicle)\n\(daysInSpace)"
+            cell.astronautInfo.text        = "\(title)\n\(expedition)\n\(mission)\n\(launchDate)\n\(vehicle)\n\(daysInSpace)"
             
         }
         
@@ -389,7 +395,8 @@ extension CrewMembersTableViewController {
     }
     
     
-    //  If user scrolls the table and the short bio is presented, recenter the pop-up to keep the pop-up centered.
+    /// If user scrolls the table and the short bio is presented, recenter the pop-up to keep the pop-up centered.
+    /// - Parameter scrollView: scrollview fpr which this is a delegate
     override func scrollViewDidScroll(_ scrollView: UIScrollView) {
         
         centerPopover()
@@ -409,7 +416,7 @@ extension CrewMembersTableViewController {
     }
     
     
-    // This delegate will display the detail view if the cell is tapped
+    /// This delegate will display the detail view if the cell is tapped
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
         centerPopover()
@@ -427,7 +434,7 @@ extension CrewMembersTableViewController {
     }
     
     
-    // Return the cell height for the cell
+    /// Return the cell height for the cell
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         
         return Constants.tableRowSize
