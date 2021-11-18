@@ -49,12 +49,17 @@ struct MDSButtonModifier: ViewModifier {
     /// - Returns: Custom modifier
     func body(content: Content) -> some View {
         content
-            .frame(width: 60, height: 24, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
+            .frame(width: 60, height: 27, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
             .background(Color.white.opacity(0.10))
             .font(.system(size: 16, weight: .semibold, design: .default))
             .foregroundColor(.white)
             .clipShape(Capsule())
             .padding([.horizontal])
+        
+//            .padding(.top)
+//            .buttonStyle(.bordered)
+//            .buttonBorderShape(.roundedRectangle)
+//            .foregroundColor(.accentColor)
     }
     
 }

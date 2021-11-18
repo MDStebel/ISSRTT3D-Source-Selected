@@ -51,7 +51,7 @@ struct GlobeView: View {
                         }
                         .withMDSButtonModifier
                         
-                        Spacer()
+                        Spacer(minLength: 10)
                         
                         NavigationLink(
                             destination: DetailView(vm: vm)         // Show detail view with data from our view model
@@ -61,8 +61,8 @@ struct GlobeView: View {
                         }
                         .withMDSButtonModifier
                     }
-                    .padding([.horizontal], 25)
-                    .padding([.bottom], 6.0)
+                    .padding([.horizontal], 10)
+                    .padding([.bottom], 9.0)
                 }
                 // Pop up an alert if there was an error fetching data
                 .alert(isPresented: $vm.wasError) {
