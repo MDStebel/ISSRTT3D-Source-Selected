@@ -8,7 +8,7 @@
 
 import UIKit
 
-// MARK: - Stations and/or other satellites that we can get pass predictions for
+// MARK: - Space stations and/or other satellites that we can get pass predictions for
 
 /// Model represents space  stations and their corresponding names and images
 public enum StationsAndSatellites: String, CaseIterable {
