@@ -49,7 +49,7 @@ struct GlobeView: View {
                         {
                             Image(systemName: "arrow.clockwise")
                         }
-                        .withMDSButtonModifier
+                        .withSmallButtonModifier
                         
                         Spacer(minLength: 10)
                         
@@ -59,7 +59,7 @@ struct GlobeView: View {
                         {
                             Image(systemName: "tablecells.fill")
                         }
-                        .withMDSButtonModifier
+                        .withSmallButtonModifier
                     }
                     .padding([.horizontal], 10)
                     .padding([.bottom], 9.0)

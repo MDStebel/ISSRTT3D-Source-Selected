@@ -34,14 +34,14 @@ extension View {
     /// Custom modifier for a button
     ///
     /// Returns a small round button with a white background and ISSRTT3DRed foreground.
-    var withMDSButtonModifier: some View {
-        self.modifier(MDSButtonModifier())
+    var withSmallButtonModifier: some View {
+        self.modifier(smallButtonModifier())
     }
     
 }
 
 
-struct MDSButtonModifier: ViewModifier {
+struct smallButtonModifier: ViewModifier {
     
     /// Button style custom modifier
     ///
