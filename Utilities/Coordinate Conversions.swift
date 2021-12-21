@@ -22,15 +22,15 @@ struct CoordinateConversions: ConvertsToDegreesMinutesSeconds {
     ///   - format: String containing the format to use in the conversion.
     /// - Returns: The coordinates string in deg min sec format.
     static func decimalCoordinatesToDegMinSec(latitude: Double, longitude: Double, format: String) -> String {
-        var latSeconds = Int(latitude * Double(Globals.numberOfSecondsInAnHour))
-        let latDegrees = latSeconds / Int(Globals.numberOfSecondsInAnHour)
-        latSeconds = abs(latSeconds % Int(Globals.numberOfSecondsInAnHour))
-        let latMinutes = latSeconds / Int(Globals.numberOfSecondsInAMinute)
+        var latSeconds  = Int(latitude * Double(Globals.numberOfSecondsInAnHour))
+        let latDegrees  = latSeconds / Int(Globals.numberOfSecondsInAnHour)
+        latSeconds      = abs(latSeconds % Int(Globals.numberOfSecondsInAnHour))
+        let latMinutes  = latSeconds / Int(Globals.numberOfSecondsInAMinute)
         latSeconds %= Int(Globals.numberOfSecondsInAMinute)
         
         var longSeconds = Int(longitude * Double(Globals.numberOfSecondsInAnHour))
         let longDegrees = longSeconds / Int(Globals.numberOfSecondsInAnHour)
-        longSeconds = abs(longSeconds % Int(Globals.numberOfSecondsInAnHour))
+        longSeconds     = abs(longSeconds % Int(Globals.numberOfSecondsInAnHour))
         let longMinutes = longSeconds / Int(Globals.numberOfSecondsInAMinute)
         longSeconds %= Int(Globals.numberOfSecondsInAMinute)
         
@@ -53,7 +53,7 @@ struct CoordinateConversions: ConvertsToDegreesMinutesSeconds {
         
         var seconds = Int(coordinate * Double(Globals.numberOfSecondsInAnHour))
         let degrees = seconds / Int(Globals.numberOfSecondsInAnHour)
-        seconds = abs(seconds % Int(Globals.numberOfSecondsInAnHour))
+        seconds     = abs(seconds % Int(Globals.numberOfSecondsInAnHour))
         let minutes = seconds / Int(Globals.numberOfSecondsInAMinute)
         seconds %= Int(Globals.numberOfSecondsInAMinute)
         
@@ -79,15 +79,15 @@ struct CoordinateConversions: ConvertsToDegreesMinutesSeconds {
     ///   - format: String containing the format to use in the conversion.
     /// - Returns: The coordinates string in deg min format.
     static func decimalCoordinatesToDegMin(latitude: Double, longitude: Double, format: String) -> String {
-        var latSeconds = Int(latitude * Double(Globals.numberOfSecondsInAnHour))
-        let latDegrees = latSeconds / Int(Globals.numberOfSecondsInAnHour)
-        latSeconds = abs(latSeconds % Int(Globals.numberOfSecondsInAnHour))
-        let latMinutes = latSeconds / Int(Globals.numberOfSecondsInAMinute)
+        var latSeconds  = Int(latitude * Double(Globals.numberOfSecondsInAnHour))
+        let latDegrees  = latSeconds / Int(Globals.numberOfSecondsInAnHour)
+        latSeconds      = abs(latSeconds % Int(Globals.numberOfSecondsInAnHour))
+        let latMinutes  = latSeconds / Int(Globals.numberOfSecondsInAMinute)
         latSeconds %= Int(Globals.numberOfSecondsInAMinute)
         
         var longSeconds = Int(longitude * Double(Globals.numberOfSecondsInAnHour))
         let longDegrees = longSeconds / Int(Globals.numberOfSecondsInAnHour)
-        longSeconds = abs(longSeconds % Int(Globals.numberOfSecondsInAnHour))
+        longSeconds     = abs(longSeconds % Int(Globals.numberOfSecondsInAnHour))
         let longMinutes = longSeconds / Int(Globals.numberOfSecondsInAMinute)
         longSeconds %= Int(Globals.numberOfSecondsInAMinute)
         

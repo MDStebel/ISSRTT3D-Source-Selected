@@ -23,22 +23,21 @@ private let whatsNew = WhatsNew(
         WhatsNew.Item(
             title: "What's New",
             subtitle: """
-                       ● Added reset buttons to the globe views.
-                       ● Enhanced the details screen in the watchOS app.
+                      Globe autorotation is now available in the watchOS app. Can be toggled on/off. Default is on.
                       """,
             image: UIImage(systemName: "megaphone.fill")
         ),
         WhatsNew.Item(
             title: "What's Fixed",
             subtitle: """
-                       Bug fixes and performance improvements.
+                      Performance improvements and bug fixes.
                       """,
             image: UIImage(systemName: "ant.fill")
         ),
         WhatsNew.Item(
             title: "Apple Watch App Included",
             subtitle: """
-                      Apple Watch app provides interactive 3D globe and detail view showing ISS, Tiangong, Hubble Space Telescope, and subsolar point coordinates and altitudes. Requires watchOS 8 or higher.
+                      Own an Apple Watch? Installing ISS Real-Time Tracker 3D will also install the companion app on your watch. The watchOS app provides the interactive 3D globe and detail view showing ISS, Tiangong, Hubble Space Telescope, and the subsolar point coordinates and altitudes. Requires watchOS 8 or higher.
                       """,
             image: UIImage(systemName: "applewatch.watchface")
         ),
