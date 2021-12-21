@@ -14,29 +14,35 @@ final class ViewModel: ObservableObject {
     
     // MARK: - Published properties
     
-    @Published var earthGlobe: EarthGlobe    = EarthGlobe()
+    @Published var earthGlobe: EarthGlobe                                = EarthGlobe()
     @Published var errorForAlert: ErrorCodes?
     @Published var globeMainNode: SCNNode?
     @Published var globeScene: SCNScene?
-    @Published var hubbleAltitude: Float     = 0.0
-    @Published var hubbleAltitudeInKm        = ""
-    @Published var hubbleAltitudeInMi        = ""
-    @Published var hubbleFormattedLatitude   = ""
-    @Published var hubbleFormattedLongitude  = ""
-    @Published var isStartingUp: Bool        = true
-    @Published var issAltitude: Float        = 0.0
-    @Published var issAltitudeInKm           = ""
-    @Published var issAltitudeInMi           = ""
-    @Published var issFormattedLatitude      = ""
-    @Published var issFormattedLongitude     = ""
-    @Published var subsolarLatitude: String  = ""
-    @Published var subsolarLongitude: String = ""
-    @Published var tssAltitude: Float        = 0.0
-    @Published var tssAltitudeInKm           = ""
-    @Published var tssAltitudeInMi           = ""
-    @Published var tssFormattedLatitude      = ""
-    @Published var tssFormattedLongitude     = ""
-    @Published var wasError                  = false
+    
+    @Published var hubbleAltitude: Float                                 = 0.0
+    @Published var hubbleAltitudeInKm                                    = ""
+    @Published var hubbleAltitudeInMi                                    = ""
+    @Published var hubbleFormattedLatitude                               = ""
+    @Published var hubbleFormattedLongitude                              = ""
+    
+    @Published var issAltitude: Float                                    = 0.0
+    @Published var issAltitudeInKm                                       = ""
+    @Published var issAltitudeInMi                                       = ""
+    @Published var issFormattedLatitude                                  = ""
+    @Published var issFormattedLongitude                                 = ""
+   
+    @Published var subsolarLatitude: String                              = ""
+    @Published var subsolarLongitude: String                             = ""
+    
+    @Published var tssAltitude: Float                                    = 0.0
+    @Published var tssAltitudeInKm                                       = ""
+    @Published var tssAltitudeInMi                                       = ""
+    @Published var tssFormattedLatitude                                  = ""
+    @Published var tssFormattedLongitude                                 = ""
+    
+    @Published var isStartingUp                                          = true
+    @Published var spinEnabled                                           = true
+    @Published var wasError                                              = false
     
     
     
@@ -45,9 +51,9 @@ final class ViewModel: ObservableObject {
     private let apiEndpointString                                        = ApiEndpoints.issTrackerAPIEndpointC
     private let apiKey                                                   = ApiKeys.ISSLocationKey
     private let numberFormatter                                          = NumberFormatter()
-    private var timer: AnyCancellable?
     private let timerValue                                               = 3.0
     
+    private var timer: AnyCancellable?
     private var cancellables: Set<AnyCancellable>                        = []
     
     private var hubbleHeadingFactor: Float                               = 0.0
@@ -60,12 +66,12 @@ final class ViewModel: ObservableObject {
     private var issLatitude: Float                                       = 0.0
     private var issLongitude: Float                                      = 0.0
     
+    private var subsolarCoordinates: (latitude: Float, longitude: Float) = (0, 0)
+
     private var tssHeadingFactor: Float                                  = 0.0
     private var tssLastLat: Float                                        = 0.0
     private var tssLatitude: Float                                       = 0.0
     private var tssLongitude: Float                                      = 0.0
-
-    private var subsolarCoordinates: (latitude: Float, longitude: Float) = (0, 0)
 
     
     // MARK: - Methods
@@ -207,6 +213,8 @@ final class ViewModel: ObservableObject {
             
             // MARK: Set up the Sun at the current subsolar point
             earthGlobe.setUpTheSun(lat: subsolarCoordinates.latitude, lon: subsolarCoordinates.longitude)
+            
+            earthGlobe.autoSpinGlobeRun(run: spinEnabled)
             
         }
         

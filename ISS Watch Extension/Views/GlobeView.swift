@@ -42,7 +42,7 @@ struct GlobeView: View {
                     Spacer() // we want the buttons at the bottom of the screen
                     
                     // Button group
-                    HStack {
+                    HStack(spacing: -15) {
                         Button(action: {
                             vm.reset()
                         })
@@ -51,7 +51,13 @@ struct GlobeView: View {
                         }
                         .withSmallButtonModifier
                         
-                        Spacer(minLength: 10)
+                        Button(action: {
+                            vm.spinEnabled.toggle()
+                        })
+                        {
+                            Image("icons8-3d_rotate")
+                        }
+                        .withSmallButtonModifier
                         
                         NavigationLink(
                             destination: DetailView(vm: vm)         // Show detail view with data from our view model
@@ -61,8 +67,8 @@ struct GlobeView: View {
                         }
                         .withSmallButtonModifier
                     }
-                    .padding([.horizontal], 10)
-                    .padding([.bottom], 9.0)
+                    .padding([.horizontal])
+                    .padding([.bottom], 3.0)
                 }
                 // Pop up an alert if there was an error fetching data
                 .alert(isPresented: $vm.wasError) {

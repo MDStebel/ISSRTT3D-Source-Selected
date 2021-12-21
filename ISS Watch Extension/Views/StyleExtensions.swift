@@ -53,12 +53,12 @@ struct smallButtonModifier: ViewModifier {
             .background(Color.white.opacity(0.10))
             .font(.system(size: 16, weight: .semibold, design: .default))
             .foregroundColor(.white)
-            .clipShape(Capsule())
+            .clipShape(Circle())
             .padding([.horizontal])
         
-//            .padding(.top)
 //            .buttonStyle(.bordered)
 //            .buttonBorderShape(.roundedRectangle)
+//            .padding(.top)
 //            .foregroundColor(.accentColor)
     }
     
