@@ -116,7 +116,7 @@ extension EarthGlobeProtocol {
         }
         
         // We need to remove all each of the nodes we've added before adding them again at new coordinates
-        var numberOfChildNodes  = globe.getNumberOfChildNodes()
+        var numberOfChildNodes = globe.getNumberOfChildNodes()
         while numberOfChildNodes > 0 {
             globe.removeLastNode()
             numberOfChildNodes -= 1

@@ -68,7 +68,7 @@ final class EarthGlobe: ObservableObject {
 #endif
         earthMaterial.setValue(emission, forKey: "emissionTexture")
         
-        /// OpenGL/Metal lighting map in C++ code that brings forth our emitter texture
+        /// OpenGL fragment shader modifier (lighting map) in C++ code that brings forth our emitter texture
         let shaderModifier             = """
                                          uniform sampler2D emissionTexture;
                                          vec3 light = _lightingContribution.diffuse;

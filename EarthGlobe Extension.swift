@@ -247,7 +247,7 @@ extension EarthGlobe {
     }
     
     
-#if !os(watchOS)
+//#if !os(watchOS)
     
     /// Start/stop autospinning the globe
     /// - Parameter run: Start if true. Stop if false.
@@ -263,7 +263,7 @@ extension EarthGlobe {
         
     }
     
-#endif
+//#endif
     
     
     /// Add a marker to the globe and make it pulse
