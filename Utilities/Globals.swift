@@ -2,8 +2,8 @@
 //  Globals.swift
 //  ISS Real-Time Tracker 3D
 //
-//  Created by Michael Stebel on 2/26/2021.
-//  Copyright © 2016-2021 Michael Stebel Consulting, LLC. All rights reserved.
+//  Created by Michael Stebel on 2/26/2022.
+//  Copyright © 2016-2022 Michael Stebel Consulting, LLC. All rights reserved.
 //
 
 import UIKit
@@ -22,6 +22,7 @@ struct Globals {
             }
         }
     }
+    
     static var autoRotateGlobeEnabled                        = true
     static var blackScreenInHDEVExplanationPopsUp            = true
     static var buildNumber                                   = ""

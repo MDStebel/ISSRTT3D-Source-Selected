@@ -3,7 +3,7 @@
 //  ISS Real-Time Tracker 3D
 //
 //  Created by Michael Stebel on 9/15/20.
-//  Copyright © 2020-2021 Michael Stebel Consulting, LLC. All rights reserved.
+//  Copyright © 2020-2022 Michael Stebel Consulting, LLC. All rights reserved.
 //
 
 import UIKit
