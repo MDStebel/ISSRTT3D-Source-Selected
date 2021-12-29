@@ -3,7 +3,7 @@
 //  ISS Watch Extension
 //
 //  Created by Michael Stebel on 9/8/21.
-//  Copyright © 2021 Michael Stebel Consulting, LLC. All rights reserved.
+//  Copyright © 2021-2022 Michael Stebel Consulting, LLC. All rights reserved.
 //
 
 import Combine
@@ -49,7 +49,7 @@ final class ViewModel: ObservableObject {
     // MARK: - Properties
     
     private let apiEndpointString                                        = ApiEndpoints.issTrackerAPIEndpointC
-    private let apiKey                                                   = ApiKeys.ISSLocationKey
+    private let apiKey                                                   = ApiKeys.issLocationKey
     private let numberFormatter                                          = NumberFormatter()
     private let timerValue                                               = 3.0
     
