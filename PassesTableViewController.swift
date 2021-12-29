@@ -3,7 +3,7 @@
 //  ISS Real-Time Tracker 3D
 //
 //  Created by Michael Stebel on 3/16/16.
-//  Copyright © 2016-2021 Michael Stebel Consulting, LLC. All rights reserved.
+//  Copyright © 2016-2022 Michael Stebel Consulting, LLC. All rights reserved.
 //
 
 import UIKit
@@ -62,8 +62,6 @@ class PassesTableViewController: UITableViewController, CLLocationManagerDelegat
         static let noRatingStar                         = #imageLiteral(resourceName: "star-unfilled")
         static let ratingStar                           = #imageLiteral(resourceName: "star")
         static let segueToHelpFromPasses                = "segueToHelpFromPasses"
-        static let selectISSButton                      = #imageLiteral(resourceName: "ISS-Selected-3")
-        static let selectTSSButton                      = #imageLiteral(resourceName: "TSS-Selected-3")
         static let unknownRatingStar                    = #imageLiteral(resourceName: "unknownRatingStar")
     }
     
@@ -594,7 +592,7 @@ extension PassesTableViewController {
             
             // Show the correct number of rating stars based on the magnitude of the pass according the rating system enum
             // If the magnitude is unknown (.unknown) then show the greyed-out stars only
-            let totalStarsInRatingSystem = RatingSystem.allCases.count - 2         // Subtract 1 because there are less stars than values in the enum
+            let totalStarsInRatingSystem = RatingSystem.allCases.count - 2         // Subtract 1 because there are less actual stars than values in the enum
             if mag != RatingSystem.unknown.rawValue {                              // Only show stars if the rating is NOT unknown
                 let rating = numberOfRatingStars(for: mag)
                 for star in 0...(totalStarsInRatingSystem - 1) {                   // Less 1 since the index range of stars is from 0...3

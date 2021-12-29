@@ -3,7 +3,7 @@
 //  ISS Real-Time Tracker 3D
 //
 //  Created by Michael Stebel on 1/28/16.
-//  Copyright © 2016-2021 Michael Stebel Consulting, LLC. All rights reserved.
+//  Copyright © 2016-2022 Michael Stebel Consulting, LLC. All rights reserved.
 //
 
 import UIKit
@@ -35,8 +35,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         Globals.isIPad              = Globals.thisDevice.hasPrefix("iPad")  // Determine if device is an iPad and set this constant to true if so
 
         // Request user review between shortestTime & longestTime of use
-        let shortestTime: UInt32    = 60                                    // In seconds
-        let longestTime: UInt32     = 300                                   // In seconds
+        let shortestTime: UInt32    = 90                                    // In seconds
+        let longestTime: UInt32     = 360                                   // In seconds
         guard let timeInterval      = TimeInterval(exactly: arc4random_uniform(longestTime - shortestTime) + shortestTime) else { return true }
         Timer.scheduledTimer(timeInterval: timeInterval, target: self, selector: #selector(AppDelegate.requestReview), userInfo: nil, repeats: false)
 

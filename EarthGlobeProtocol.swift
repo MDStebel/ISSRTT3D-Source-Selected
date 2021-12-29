@@ -2,8 +2,8 @@
 //  EarthGlobeProtocol.swift
 //  ISS Real-Time Tracker 3D
 //
-//  Created by Michael Stebel on 2/26/2021.
-//  Copyright © 2020-2021 Michael Stebel Consulting, LLC. All rights reserved.
+//  Created by Michael Stebel on 2/26/2022.
+//  Copyright © 2020-2022 Michael Stebel Consulting, LLC. All rights reserved.
 //
 
 import SceneKit

@@ -3,7 +3,7 @@
 //  ISS Real-Time Tracker 3D
 //
 //  Created by Michael Stebel on 10/22/20.
-//  Copyright © 2020-2021 Michael Stebel Consulting, LLC. All rights reserved.
+//  Copyright © 2020-2022 Michael Stebel Consulting, LLC. All rights reserved.
 //
 
 import SceneKit
@@ -24,21 +24,21 @@ final class EarthGlobe: ObservableObject {
     var userRotation                       = SCNNode()
     var userTilt                           = SCNNode()
     
-    let ambientLightIntensity              = Globals.ambientLightIntensity      // Default value is 1000 lumens
+    let ambientLightIntensity              = Globals.ambientLightIntensity        // Default value is 1000 lumens
     let cameraAltitude                     = Globals.cameraAltitude
     let daysInAYear                        = Globals.numberOfDaysInAYear
     let defaultCameraFov                   = Globals.defaultCameraFov
     let globeRadiusFactor                  = Globals.globeRadiusFactor
-    let globeSegmentCount                  = Globals.globeSegments              // Number of subdivisions along the sphere's polar & azimuth angles, like latitude & longitude on a globe
-    let pipeSegmentCount                   = Globals.pipeSegments               // Number of subdivisions around the ring (orbit)
-    let ringSegmentCount                   = Globals.ringSegments               // Number of subdivisions along the ring (orbit)
-    let sunlightIntensity                  = Globals.sunlightIntensity          // Default value is 1000 lumens
+    let globeSegmentCount                  = Globals.globeSegments                // Number of subdivisions along the sphere's polar & azimuth angles, like latitude & longitude on a globe
+    let pipeSegmentCount                   = Globals.pipeSegments                 // Number of subdivisions around the ring (orbit)
+    let ringSegmentCount                   = Globals.ringSegments                 // Number of subdivisions along the ring (orbit)
+    let sunlightIntensity                  = Globals.sunlightIntensity            // Default value is 1000 lumens
     
-    let globeDefaultRotationSpeedInSeconds = 120.0                              // 360° revolution in n-seconds
+    let globeDefaultRotationSpeedInSeconds = 120.0                                // 360° revolution in n-seconds
     let pipeRadius: CGFloat                = 0.004
     let sceneBoxSize: CGFloat              = 1000
-    let sunDistance: Float                 = 1000                               // Relative distance to the Sun
-    let sunlightTemp: CGFloat              = 6000                               // Default value is 6500 Kelvin
+    let sunDistance: Float                 = 1000                                 // Relative distance to the Sun
+    let sunlightTemp: CGFloat              = 6000                                 // Note: the default value is 6500 Kelvin
     
     
     // MARK: - Methods
@@ -54,17 +54,17 @@ final class EarthGlobe: ObservableObject {
         
         /// The Earth's texture is revealed by diffuse light sources
 #if !os(watchOS)
-        earthMaterial.diffuse.contents = "8081_earthmap_8190px"                 // Use the high-resolution Earth image
+        earthMaterial.diffuse.contents = "8081_earthmap_8190px"                   // Use the high-resolution Earth image for all except watchOS
 #else
-        earthMaterial.diffuse.contents = "8081_earthmap_2048px"                 // Use low resolution Earth image for watchOS
+        earthMaterial.diffuse.contents = "8081_earthmap_2048px"                   // Use low resolution Earth image for watchOS
 #endif
         
         /// Our emitter will show city lights as Earth passes into nighttime
         let emission                   = SCNMaterialProperty()
 #if !os(watchOS)
-        emission.contents              = "8081_earthlights_8190px"              // High-resolution city lights map
+        emission.contents              = "8081_earthlights_8190px"                // High-resolution city lights map
 #else
-        emission.contents              = "8081_earthlights_4096px"              // Low-resolution city lights map
+        emission.contents              = "8081_earthlights_4096px"                // Low-resolution city lights map
 #endif
         earthMaterial.setValue(emission, forKey: "emissionTexture")
         
@@ -122,6 +122,7 @@ final class EarthGlobe: ObservableObject {
         
     }
     
+    
 #if !os(watchOS)
     /// Set up our scene
     /// - Parameters:
@@ -156,18 +157,18 @@ final class EarthGlobe: ObservableObject {
     private func completeTheSetup() {
         
         // Let's give the Earth a bit of ambient light to illuminate the globe when it's in nighttime
-        let ambientLight            = SCNLight()
-        ambientLight.type           = .ambient
-        ambientLight.intensity      = ambientLightIntensity
+        let ambientLight           = SCNLight()
+        ambientLight.type          = .ambient
+        ambientLight.intensity     = ambientLightIntensity
         
         // Add the camera
-        camera.fieldOfView          = defaultCameraFov
-        camera.zFar                 = 10000
-        let adjustedCameraAltitude  = globeRadiusFactor + cameraAltitude
-        cameraNode.position         = SCNVector3(x: 0, y: 0, z: adjustedCameraAltitude)
-        cameraNode.constraints      = [SCNLookAtConstraint(target: globe)]
-        cameraNode.light            = ambientLight
-        cameraNode.camera           = camera
+        camera.fieldOfView         = defaultCameraFov
+        camera.zFar                = 10000
+        let adjustedCameraAltitude = globeRadiusFactor + cameraAltitude
+        cameraNode.position        = SCNVector3(x: 0, y: 0, z: adjustedCameraAltitude)
+        cameraNode.constraints     = [SCNLookAtConstraint(target: globe)]
+        cameraNode.light           = ambientLight
+        cameraNode.camera          = camera
         
         scene.rootNode.addChildNode(cameraNode)
         
