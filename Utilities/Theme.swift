@@ -11,8 +11,6 @@ import UIKit
 /// The main theme used in the app
 struct Theme {
     
-    static let ISSOrbitalColor                              = tint
-    static let TSSOrbitalColor                              = "StarColor"
     static let appFont                                      = "Avenir Book"
     static let appFontBold                                  = "Avenir Next Medium"
     static let atlBgd                                       = "Alternate Background"
@@ -21,7 +19,8 @@ struct Theme {
     static let cornerRadius: CGFloat                        = 15
     static let hubbleOrbitalCGColor                         = UIColor(named: hubbleOrbitalColor)?.cgColor
     static let hubbleOrbitalColor                           = "HubbleBlue"
-    static let issrtt3dGoldCGColor                          = UIColor(named: TSSOrbitalColor)?.cgColor
+    static let issOrbitalColor                              = tint
+    static let issrtt3dGoldCGColor                          = UIColor(named: tssOrbitalColor)?.cgColor
     static let issrtt3dRedCGColor                           = UIColor(named: tint)?.cgColor
     static let issrttWhite                                  = "ISSRTT-White"
     static let lblBgd                                       = "Label Background"
@@ -33,6 +32,7 @@ struct Theme {
     static let star                                         = "StarColor"
     static let tblBgd                                       = "Table Background"
     static let tint                                         = "ISSRTT-Red"
+    static let tssOrbitalColor                              = "StarColor"
     static let usrGuide                                     = "User Guide Background"
     static let white                                        = "White"
     

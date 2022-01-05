@@ -28,13 +28,13 @@ struct CoordinateConversions: ConvertsToDegreesMinutesSeconds {
         let latMinutes  = latSeconds / Int(Globals.numberOfSecondsInAMinute)
         latSeconds %= Int(Globals.numberOfSecondsInAMinute)
         
-        var longSeconds = Int(longitude * Double(Globals.numberOfSecondsInAnHour))
-        let longDegrees = longSeconds / Int(Globals.numberOfSecondsInAnHour)
-        longSeconds     = abs(longSeconds % Int(Globals.numberOfSecondsInAnHour))
-        let longMinutes = longSeconds / Int(Globals.numberOfSecondsInAMinute)
-        longSeconds %= Int(Globals.numberOfSecondsInAMinute)
+        var lonSeconds = Int(longitude * Double(Globals.numberOfSecondsInAnHour))
+        let lonDegrees = lonSeconds / Int(Globals.numberOfSecondsInAnHour)
+        lonSeconds     = abs(lonSeconds % Int(Globals.numberOfSecondsInAnHour))
+        let lonMinutes = lonSeconds / Int(Globals.numberOfSecondsInAMinute)
+        lonSeconds %= Int(Globals.numberOfSecondsInAMinute)
         
-        return String(format: format, abs(latDegrees), latMinutes, latSeconds, { latDegrees >= 0 ? "N" : "S" }(), abs(longDegrees), longMinutes, longSeconds, { longDegrees >= 0 ? "E" : "W" }())
+        return String(format: format, abs(latDegrees), latMinutes, latSeconds, { latDegrees >= 0 ? "N" : "S" }(), abs(lonDegrees), lonMinutes, lonSeconds, { lonDegrees >= 0 ? "E" : "W" }())
     }
     
 #else // watchOS
@@ -85,13 +85,13 @@ struct CoordinateConversions: ConvertsToDegreesMinutesSeconds {
         let latMinutes  = latSeconds / Int(Globals.numberOfSecondsInAMinute)
         latSeconds %= Int(Globals.numberOfSecondsInAMinute)
         
-        var longSeconds = Int(longitude * Double(Globals.numberOfSecondsInAnHour))
-        let longDegrees = longSeconds / Int(Globals.numberOfSecondsInAnHour)
-        longSeconds     = abs(longSeconds % Int(Globals.numberOfSecondsInAnHour))
-        let longMinutes = longSeconds / Int(Globals.numberOfSecondsInAMinute)
-        longSeconds %= Int(Globals.numberOfSecondsInAMinute)
+        var lonSeconds = Int(longitude * Double(Globals.numberOfSecondsInAnHour))
+        let lonDegrees = lonSeconds / Int(Globals.numberOfSecondsInAnHour)
+        lonSeconds     = abs(lonSeconds % Int(Globals.numberOfSecondsInAnHour))
+        let lonMinutes = lonSeconds / Int(Globals.numberOfSecondsInAMinute)
+        lonSeconds %= Int(Globals.numberOfSecondsInAMinute)
         
-        return String(format: format, abs(latDegrees), latMinutes, { latDegrees >= 0 ? "N" : "S" }(), abs(longDegrees), longMinutes, { longDegrees >= 0 ? "E" : "W" }())
+        return String(format: format, abs(latDegrees), latMinutes, { latDegrees >= 0 ? "N" : "S" }(), abs(lonDegrees), lonMinutes, { lonDegrees >= 0 ? "E" : "W" }())
     }
     
     /// Convert coordinates from degrees, minutes, seconds, and direction to decimal
