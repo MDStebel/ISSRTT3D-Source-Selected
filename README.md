@@ -5,7 +5,7 @@
 
 ##### Requires iOS 15, iPadOS 15, watchOS 8, or higher
 
-Note: Published for educational purposes only. Source files in this repository do not include resources, images, fonts, graphics, soundtracks, and certain other source files. API endpoints and keys have been hidden.
+Note: Published for educational purposes only. Source files in this repository do not include resources, images, fonts, graphics, soundtracks, and certain other source files. API endpoints and keys have been hidden. The app cannot be built and run with this repository.
 Learn about the app or get support at https://www.issrtt.com
 
 ![banner](https://github.com/MDStebel/ISSRTT3D-Source-Selected/blob/959e131c2056ce5e9df25b8a2239609305b21cec/Ad%20Banner%20-%20ISS%20Real-Time%20Tracker%203D.png)
