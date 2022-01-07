@@ -20,7 +20,7 @@ struct DataCellView: View {
     let sidebarColor: Color
     
     private let max: Float        = Globals.hubbleMaxAltitudeInKM   // Scale max
-    private let min: Float        = Globals.TSSMinAltitudeInKM      // Scale min
+    private let min: Float        = Globals.tssMinAltitudeInKM      // Scale min
     private let multiplier: Float = 20
     
     var body: some View {
