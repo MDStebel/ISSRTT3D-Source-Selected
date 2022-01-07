@@ -169,8 +169,8 @@ class TrackingViewController: UIViewController, MKMapViewDelegate, UIGestureReco
     private var zoomValueWasChanged         = false
     
     var hubbleLastLat: Float                = 0
-    var ISSLastLat: Float                   = 0
-    var TSSLastLat: Float                   = 0
+    var issLastLat: Float                   = 0
+    var tssLastLat: Float                   = 0
     var aPolyLine                           = MKPolyline()
     var altString                           = ""
     var atDateAndTime                       = ""
@@ -662,7 +662,7 @@ class TrackingViewController: UIViewController, MKMapViewDelegate, UIGestureReco
 
             case 0 :
                 
-                cursor.image = UIImage(named: Globals.ISSIconForMapView)
+                cursor.image = UIImage(named: Globals.issIconForMapView)
                 
             case 1 :
                 
@@ -674,7 +674,7 @@ class TrackingViewController: UIViewController, MKMapViewDelegate, UIGestureReco
                 
             default :
                 
-                cursor.image = UIImage(named: Globals.ISSIconForMapView)
+                cursor.image = UIImage(named: Globals.issIconForMapView)
                 
             }
             
@@ -694,7 +694,7 @@ class TrackingViewController: UIViewController, MKMapViewDelegate, UIGestureReco
             
             case 0 :
                 
-                cursor.image = UIImage(named: Globals.ISSIconForMapView)
+                cursor.image = UIImage(named: Globals.issIconForMapView)
                 
             case 1 :
                 
@@ -706,7 +706,7 @@ class TrackingViewController: UIViewController, MKMapViewDelegate, UIGestureReco
                 
             default :
                 
-                cursor.image = UIImage(named: Globals.ISSIconForMapView)
+                cursor.image = UIImage(named: Globals.issIconForMapView)
                 
             }
             
@@ -726,7 +726,7 @@ class TrackingViewController: UIViewController, MKMapViewDelegate, UIGestureReco
             
             case 0 :
                 
-                cursor.image = UIImage(named: Globals.ISSIconForMapView)
+                cursor.image = UIImage(named: Globals.issIconForMapView)
                 
             case 1 :
                 
@@ -738,7 +738,7 @@ class TrackingViewController: UIViewController, MKMapViewDelegate, UIGestureReco
                 
             default :
                 
-                cursor.image = UIImage(named: Globals.ISSIconForMapView)
+                cursor.image = UIImage(named: Globals.issIconForMapView)
                 
             }
             
@@ -758,7 +758,7 @@ class TrackingViewController: UIViewController, MKMapViewDelegate, UIGestureReco
             
             case 0 :
                 
-                cursor.image = UIImage(named: Globals.ISSIconForMapView)
+                cursor.image = UIImage(named: Globals.issIconForMapView)
                 
             case 1 :
                 
@@ -770,7 +770,7 @@ class TrackingViewController: UIViewController, MKMapViewDelegate, UIGestureReco
                 
             default :
                 
-                cursor.image = UIImage(named: Globals.ISSIconForMapView)
+                cursor.image = UIImage(named: Globals.issIconForMapView)
             }
         }
         

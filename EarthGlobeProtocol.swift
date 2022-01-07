@@ -12,12 +12,12 @@ import UIKit
 /// Protocol that adds EarthGlobe support to a UIViewController subclass, with properties and methods to create the scene and update it
 protocol EarthGlobeProtocol: UIViewController {
     
-    var ISSLastLat: Float { get set }
-    var TSSLastLat: Float { get set }
+    var issLastLat: Float { get set }
+    var tssLastLat: Float { get set }
     var hubbleLastLat: Float { get set }
     
     func setUpEarthGlobeScene(for globe: EarthGlobe, in scene: SCNView, hasTintedBackground: Bool)
-    func updateEarthGlobeScene(in globe: EarthGlobe, hubbleLatitude: String?, hubbleLongitude: String?, ISSLatitude: String?, ISSLongitude: String?, TSSLatitude: String?, TSSLongitude: String?, hubbleLastLat: inout Float, ISSLastLat: inout Float, TSSLastLat: inout Float)
+    func updateEarthGlobeScene(in globe: EarthGlobe, hubbleLatitude: String?, hubbleLongitude: String?, issLatitude: String?, issLongitude: String?, tssLatitude: String?, tssLongitude: String?, hubbleLastLat: inout Float, issLastLat: inout Float, tssLastLat: inout Float)
     
 }
 
@@ -52,19 +52,19 @@ extension EarthGlobeProtocol {
     /// Since we are not always plotting the TSS, the coordinates parameters are optional
     /// - Parameters:
     ///   - globe: The globe instance to use
-    ///   - ISSLatitude: ISS latitude as a string
-    ///   - ISSLongitude: ISS longitude as a string
-    ///   - TSSLatitude: TSS latitude as an optional string
-    ///   - TSSLongitude: TSS longitude as an optional string
-    ///   - ISSLastLat: The last ISS latitude saved as a mutating float
-    ///   - TSSLastLat: The last TSS latitude saved as a mutating float
+    ///   - issLatitude: ISS latitude as a string
+    ///   - issLongitude: ISS longitude as a string
+    ///   - tssLatitude: TSS latitude as an optional string
+    ///   - tssLongitude: TSS longitude as an optional string
+    ///   - issLastLat: The last ISS latitude saved as a mutating float
+    ///   - tssLastLat: The last TSS latitude saved as a mutating float
     ///   - hubbleLatitude: Hubble latitude as an optional string
     ///   - hubbleLongitude: Hubble longitude as an optional string
     ///   - hubbleLastLat: The  last Hubble latitude  saved as a mutating float
-    func updateEarthGlobeScene(in globe: EarthGlobe, hubbleLatitude: String?, hubbleLongitude: String?, ISSLatitude: String?, ISSLongitude: String?, TSSLatitude: String?, TSSLongitude: String?, hubbleLastLat: inout Float, ISSLastLat: inout Float, TSSLastLat: inout Float ) {
+    func updateEarthGlobeScene(in globe: EarthGlobe, hubbleLatitude: String?, hubbleLongitude: String?, issLatitude: String?, issLongitude: String?, tssLatitude: String?, tssLongitude: String?, hubbleLastLat: inout Float, issLastLat: inout Float, tssLastLat: inout Float ) {
         
-        var ISSHeadingFactor: Float    = 1
-        var TSSHeadingFactor: Float    = 1
+        var issHeadingFactor: Float    = 1
+        var tssHeadingFactor: Float    = 1
         var hubbleHeadingFactor: Float = 1
         var showHubbleOrbitNow         = false
         var showISSOrbitNow            = false
@@ -79,9 +79,9 @@ extension EarthGlobeProtocol {
         var hLat: Float?               = nil
         var hLon: Float?               = nil
 
-        if ISSLatitude != nil && ISSLongitude != nil {  // Make sure we have valid ISS coordinates
-            iLat = Float(ISSLatitude!) ?? 0.0
-            iLon = Float(ISSLongitude!) ?? 0.0
+        if issLatitude != nil && issLongitude != nil {  // Make sure we have valid ISS coordinates
+            iLat = Float(issLatitude!) ?? 0.0
+            iLon = Float(issLongitude!) ?? 0.0
             if (iLat! + iLon!) != 0.0 {
                 addISS = true
             } else {
@@ -91,9 +91,9 @@ extension EarthGlobeProtocol {
             addISS = false
         }
         
-        if TSSLatitude != nil && TSSLongitude != nil {  // Make sure we have valid TSS coordinates
-            tLat = Float(TSSLatitude!) ?? 0.0
-            tLon = Float(TSSLongitude!) ?? 0.0
+        if tssLatitude != nil && tssLongitude != nil {  // Make sure we have valid TSS coordinates
+            tLat = Float(tssLatitude!) ?? 0.0
+            tLon = Float(tssLongitude!) ?? 0.0
             if (tLat! + tLon!) != 0.0 {
                 addTSS = true
             } else {
@@ -123,18 +123,18 @@ extension EarthGlobeProtocol {
         }
         
         // Determine if we have a prior ISS latitude saved, as we don't know which way the orbit is oriented unless we do
-        if ISSLastLat != 0 {
+        if issLastLat != 0 {
             showISSOrbitNow  = true
-            ISSHeadingFactor = iLat! - ISSLastLat < 0 ? -1 : 1
+            issHeadingFactor = iLat! - issLastLat < 0 ? -1 : 1
         }
-        ISSLastLat = iLat ?? 0
+        issLastLat = iLat ?? 0
         
         // Determine if we have a prior TSS latitude saved, as we don't know which way the orbit is oriented unless we do
-        if TSSLastLat != 0 {
+        if tssLastLat != 0 {
             showTSSOrbitNow  = true
-            TSSHeadingFactor = tLat! - TSSLastLat < 0 ? -1 : 1
+            tssHeadingFactor = tLat! - tssLastLat < 0 ? -1 : 1
         }
-        TSSLastLat = tLat ?? 0
+        tssLastLat = tLat ?? 0
         
         // Determine if we have a prior Hubble latitude saved, as we don't know which way the orbit is oriented unless we do
         if hubbleLastLat != 0 {
@@ -151,11 +151,11 @@ extension EarthGlobeProtocol {
         
         /// If we're ready to show the orbital tracks, render them now
         if addISS && showISSOrbitNow {
-            globe.addOrbitTrackAroundTheGlobe(for: .iss, lat: iLat!, lon: iLon!, headingFactor: ISSHeadingFactor)
+            globe.addOrbitTrackAroundTheGlobe(for: .iss, lat: iLat!, lon: iLon!, headingFactor: issHeadingFactor)
         }
         
         if addTSS && showTSSOrbitNow {
-            globe.addOrbitTrackAroundTheGlobe(for: .tss, lat: tLat!, lon: tLon!, headingFactor: TSSHeadingFactor)
+            globe.addOrbitTrackAroundTheGlobe(for: .tss, lat: tLat!, lon: tLon!, headingFactor: tssHeadingFactor)
         }
         
         if addHubble && showHubbleOrbitNow {

@@ -117,7 +117,7 @@ extension TrackingViewController {
                         
                         // Update mini globe with ISS position, footprint, and orbital track, if enabled.
                         if Globals.displayGlobe {
-                            self?.updateEarthGlobeScene(in: self!.globe, hubbleLatitude: nil, hubbleLongitude: nil, ISSLatitude: self?.latitude, ISSLongitude: self?.longitude, TSSLatitude: nil, TSSLongitude: nil, hubbleLastLat: &self!.hubbleLastLat, ISSLastLat: &self!.ISSLastLat, TSSLastLat: &self!.TSSLastLat)
+                            self?.updateEarthGlobeScene(in: self!.globe, hubbleLatitude: nil, hubbleLongitude: nil, issLatitude: self?.latitude, issLongitude: self?.longitude, tssLatitude: nil, tssLongitude: nil, hubbleLastLat: &self!.hubbleLastLat, issLastLat: &self!.issLastLat, tssLastLat: &self!.tssLastLat)
                             self?.setUpCoordinatesLabel(withTopCorners: false)
                             self?.globeScene.isHidden        = false
                             self?.globeExpandButton.isHidden = false

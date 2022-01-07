@@ -18,7 +18,7 @@ extension EarthGlobe {
     ///   - lon: The current longitude as a decimal value
     public func addISSMarker(lat: Float, lon: Float) {
         
-        let ISS = EarthGlobeMarkers(for: .iss, using: Globals.ISSIconFor3DGlobeView, lat: lat, lon: lon, isInOrbit: true)
+        let ISS = EarthGlobeMarkers(for: .iss, using: Globals.issIconFor3DGlobeView, lat: lat, lon: lon, isInOrbit: true)
         
 #if !os(watchOS)
         let pulse = true
@@ -36,7 +36,7 @@ extension EarthGlobe {
     ///   - lon: The current longitude as a decimal value
     public func addTSSMarker(lat: Float, lon: Float) {
         
-        let TSS = EarthGlobeMarkers(for: .tss, using: Globals.TSSIconFor3DGlobeView, lat: lat, lon: lon, isInOrbit: true)
+        let TSS = EarthGlobeMarkers(for: .tss, using: Globals.tssIconFor3DGlobeView, lat: lat, lon: lon, isInOrbit: true)
         
 #if !os(watchOS)
         let pulse = true
@@ -71,7 +71,7 @@ extension EarthGlobe {
     ///   - lon: The current longitude as a decimal value
     public func addISSViewingCircle(lat: Float, lon: Float) {
         
-        let viewingCircle = EarthGlobeMarkers(for: .iss, using: Globals.ISSViewingCircleGraphic, lat: lat, lon: lon, isInOrbit: false)
+        let viewingCircle = EarthGlobeMarkers(for: .iss, using: Globals.issViewingCircleGraphic, lat: lat, lon: lon, isInOrbit: false)
         self.addMarker(viewingCircle, shouldPulse: false)
         
     }
@@ -83,7 +83,7 @@ extension EarthGlobe {
     ///   - lon: The current longitude as a decimal value
     public func addTSSViewingCircle(lat: Float, lon: Float) {
         
-        let viewingCircle = EarthGlobeMarkers(for: .tss, using: Globals.TSSViewingCircleGraphic, lat: lat, lon: lon, isInOrbit: false)
+        let viewingCircle = EarthGlobeMarkers(for: .tss, using: Globals.tssViewingCircleGraphic, lat: lat, lon: lon, isInOrbit: false)
         self.addMarker(viewingCircle, shouldPulse: false)
         
     }
@@ -120,13 +120,13 @@ extension EarthGlobe {
         switch station {
         case .iss :
             orbitTrack.firstMaterial?.diffuse.contents = Theme.issrtt3dRedCGColor
-            orbitTrack.ringRadius                      = CGFloat(Globals.ISSOrbitAltitudeInScene)
-            orbitInclination                           = Globals.ISSOrbitInclinationInRadians
+            orbitTrack.ringRadius                      = CGFloat(Globals.issOrbitAltitudeInScene)
+            orbitInclination                           = Globals.issOrbitInclinationInRadians
             multiplier                                 = 2.5
         case .tss :
             orbitTrack.firstMaterial?.diffuse.contents = Theme.issrtt3dGoldCGColor
-            orbitTrack.ringRadius                      = CGFloat(Globals.TSSOrbitAltitudeInScene)
-            orbitInclination                           = Globals.TSSOrbitInclinationInRadians
+            orbitTrack.ringRadius                      = CGFloat(Globals.tssOrbitAltitudeInScene)
+            orbitInclination                           = Globals.tssOrbitInclinationInRadians
             multiplier                                 = 2.8
         case .hubble :
             orbitTrack.firstMaterial?.diffuse.contents = Theme.hubbleOrbitalCGColor

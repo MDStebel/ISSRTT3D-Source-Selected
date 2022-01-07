@@ -14,7 +14,7 @@ extension GlobeFullViewController {
         
         DispatchQueue.main.async {
             
-            self.updateEarthGlobeScene(in: self.fullGlobe, hubbleLatitude: self.hLat, hubbleLongitude: self.hLon, ISSLatitude: self.iLat, ISSLongitude: self.iLon, TSSLatitude: self.tLat, TSSLongitude: self.tLon, hubbleLastLat: &self.hubbleLastLat, ISSLastLat: &self.ISSLastLat, TSSLastLat: &self.TSSLastLat)
+            self.updateEarthGlobeScene(in: self.fullGlobe, hubbleLatitude: self.hLat, hubbleLongitude: self.hLon, issLatitude: self.iLat, issLongitude: self.iLon, tssLatitude: self.tLat, tssLongitude: self.tLon, hubbleLastLat: &self.hubbleLastLat, issLastLat: &self.issLastLat, tssLastLat: &self.tssLastLat)
             
             self.isRunningLabel?.text = "Running"
             

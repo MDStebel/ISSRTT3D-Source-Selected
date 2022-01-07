@@ -14,7 +14,7 @@ final class EarthGlobeMarkers {
     
     // MARK: - Properties
     
-    var altitude: Float = Globals.ISSOrbitalAltitudeFactor
+    var altitude: Float = Globals.issOrbitalAltitudeFactor
     var image: String
     var node: SCNNode!                                                                                      // The SceneKit node for this marker
     var widthAndHeight: CGFloat
@@ -54,17 +54,17 @@ final class EarthGlobeMarkers {
 
             switch satellite {
             case .iss :
-                widthAndHeight = Globals.ISSMarkerWidth
-                altitude       = Globals.ISSAltitudeFactor
+                widthAndHeight = Globals.issMarkerWidth
+                altitude       = Globals.issAltitudeFactor
             case .tss :
-                widthAndHeight = Globals.TSSMarkerWidth
-                altitude       = Globals.TSSAltitudeFactor
+                widthAndHeight = Globals.tssMarkerWidth
+                altitude       = Globals.tssAltitudeFactor
             case .hubble:
                 widthAndHeight = Globals.hubbleMarkerWidth
                 altitude       = Globals.hubbleAltitudeFactor
             case .none :
-                widthAndHeight = Globals.ISSMarkerWidth
-                altitude       = Globals.ISSAltitudeFactor
+                widthAndHeight = Globals.issMarkerWidth
+                altitude       = Globals.issAltitudeFactor
             }
             
         }
@@ -99,6 +99,7 @@ final class EarthGlobeMarkers {
         let scaleMin: Float      = 0.80
         let scaleMax: Float      = 1.05
         let animation            = CABasicAnimation(keyPath: "scale")
+        
         animation.fromValue      = SCNVector3(x: scaleMin, y: scaleMin, z: scaleMin)
         animation.toValue        = SCNVector3(x: scaleMax, y: scaleMax, z: scaleMax)
         animation.duration       = 0.25

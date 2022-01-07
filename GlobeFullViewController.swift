@@ -34,10 +34,10 @@ class GlobeFullViewController: UIViewController, AVAudioPlayerDelegate, EarthGlo
         static let off                   = "music.quarternote.3"
     }
 
-    var ISSLastLat: Float                = 0                                         // To conform with the EarthGlobeProtocol, will save the last ISS latitude
+    var issLastLat: Float                = 0                                         // To conform with the EarthGlobeProtocol, will save the last ISS latitude
     var ISSLatitude                      = 0.0
     var ISSLongitude                     = 0.0
-    var TSSLastLat: Float                = 0                                         // To conform with the EarthGlobeProtocol, will save the last TSS latitude
+    var tssLastLat: Float                = 0                                         // To conform with the EarthGlobeProtocol, will save the last TSS latitude
     var TSSLatitude                      = 0.0
     var TSSLongitude                     = 0.0
     var coordinates                      = [SatelliteOrbitPosition.Positions]()
