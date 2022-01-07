@@ -47,13 +47,13 @@ public enum StationsAndSatellites: String, CaseIterable {
     var stationImage: UIImage? {
         switch self {
         case .iss :
-            return UIImage(named: Globals.ISSIconFor3DGlobeView)!
+            return UIImage(named: Globals.issIconFor3DGlobeView)!
         case .tss :
-            return UIImage(named: Globals.TSSIconFor3DGlobeView)!
+            return UIImage(named: Globals.tssIconFor3DGlobeView)!
         case .hubble :
             return UIImage(named: Globals.hubbleIconFor3DGlobeView)!
         case .none :
-            return UIImage(named: Globals.ISSIconFor3DGlobeView)!
+            return UIImage(named: Globals.issIconFor3DGlobeView)!
         }
     }
 }
