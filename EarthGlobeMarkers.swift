@@ -16,7 +16,7 @@ final class EarthGlobeMarkers {
     
     var altitude: Float = Globals.issOrbitalAltitudeFactor
     var image: String
-    var node: SCNNode!                                                                                      // The SceneKit node for this marker
+    var node: SCNNode!                                                                                  // The SceneKit node for this marker
     var widthAndHeight: CGFloat
     
     private var heightAdj: Float = 0
@@ -34,23 +34,23 @@ final class EarthGlobeMarkers {
     ///   - isInOrbit: Flag that indicates if the marker is above Earth or on its surface as a Bool
     init(for satellite: StationsAndSatellites, using image: String, lat: Float, lon: Float, isInOrbit: Bool) {
         
-        self.image      = image
-        let adjustedLon = lon + Globals.ninetyDegrees                                                       // Textures are centered on 0,0, so adjust by 90 degrees
+        self.image             = image
+        let adjustedLon        = lon + Globals.ninetyDegrees                                            // Textures are centered on 0,0, so adjust by 90 degrees
         
-        if !isInOrbit {                                                                                     // If false, it's the footprint circle
+        if !isInOrbit {                                                                                 // If false, it's the footprint circle
             
             if satellite == .hubble {
-                scaling    = CGFloat(1.2)
-                heightAdj  = 0.9 + Float(scaling / (.pi / 2)) / 10
+                scaling        = CGFloat(1.2)
+                heightAdj      = 0.9 + Float(scaling / (.pi / 2)) / 10
             } else {
-                scaling    = CGFloat(1.0)
-                heightAdj  = 1.0
+                scaling        = CGFloat(1.0)
+                heightAdj      = 1.0
             }
             
-            widthAndHeight     = Globals.footprintDiameter * scaling                                        // Factor to approximate the ground diameter of the sighting circle
+            widthAndHeight     = Globals.footprintDiameter * scaling                                    // Factor to approximate the ground diameter of the sighting circle
             altitude           = Globals.globeRadiusFactor * Globals.globeRadiusMultiplierToPlaceOnSurface * heightAdj
             
-        } else {                                                                                            // Otherwise, it's a satellite, so which one is it?
+        } else {                                                                                        // Otherwise, it's a satellite, so which one is it?
 
             switch satellite {
             case .iss :
@@ -83,9 +83,9 @@ final class EarthGlobeMarkers {
         self.node.position                               = position
         
         // Compute the normal pitch, roll and yaw
-        let pitch                                        = -lat * Float(Globals.degreesToRadians)      // Pitch is the rotation about the node's x-axis in radians
-        let roll: Float                                  = Globals.zero                                // Roll is the rotation about the node's z-axis in radians
-        let yaw                                          = lon * Float(Globals.degreesToRadians)       // Yaw is the rotation about the node's y-axis in radians
+        let pitch                                        = -lat * Float(Globals.degreesToRadians)       // Pitch is the rotation about the node's x-axis in radians
+        let roll: Float                                  = Globals.zero                                 // Roll is the rotation about the node's z-axis in radians
+        let yaw                                          = lon * Float(Globals.degreesToRadians)        // Yaw is the rotation about the node's y-axis in radians
         
         // Set the marker's orientation using pitch, roll, and yaw
         node.eulerAngles                                 = SCNVector3(x: pitch, y: yaw, z: roll )
