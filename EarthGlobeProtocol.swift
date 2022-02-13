@@ -159,7 +159,7 @@ extension EarthGlobeProtocol {
         }
         
         if addHubble && showHubbleOrbitNow {
-            globe.addOrbitTrackAroundTheGlobe(for: .hubble, lat: hLat!, lon: hLon!, headingFactor: hubbleHeadingFactor)
+            globe.addOrbitTrackAroundTheGlobe(for: .hst, lat: hLat!, lon: hLon!, headingFactor: hubbleHeadingFactor)
         }
         
         // Add the ISS

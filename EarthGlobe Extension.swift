@@ -9,7 +9,7 @@
 import SceneKit
 import UIKit
 
-/// Handles the objects we're adding to the globe as well as coordinate transforms
+/// Handles the objects we're adding to the globe as well as coordinate and orbital transforms
 extension EarthGlobe {
     
     /// This method adds the ISS position marker at the precise latitude and longitude to our globe scene
@@ -53,7 +53,7 @@ extension EarthGlobe {
     ///   - lon: The current longitude as a decimal value
     public func addHubbleMarker(lat: Float, lon: Float) {
         
-        let hubble = EarthGlobeMarkers(for: .hubble, using: Globals.hubbleIconFor3DGlobeView, lat: lat, lon: lon, isInOrbit: true)
+        let hubble = EarthGlobeMarkers(for: .hst, using: Globals.hubbleIconFor3DGlobeView, lat: lat, lon: lon, isInOrbit: true)
         
 #if !os(watchOS)
         let pulse = true
@@ -95,7 +95,7 @@ extension EarthGlobe {
     ///   - lon: The current longitude as a decimal value
     public func addHubbleViewingCircle(lat: Float, lon: Float) {
         
-        let viewingCircle = EarthGlobeMarkers(for: .hubble, using: Globals.hubbleViewingCircleGraphic, lat: lat, lon: lon, isInOrbit: false)
+        let viewingCircle = EarthGlobeMarkers(for: .hst, using: Globals.hubbleViewingCircleGraphic, lat: lat, lon: lon, isInOrbit: false)
         self.addMarker(viewingCircle, shouldPulse: false)
         
     }
@@ -128,7 +128,7 @@ extension EarthGlobe {
             orbitTrack.ringRadius                      = CGFloat(Globals.tssOrbitAltitudeInScene)
             orbitInclination                           = Globals.tssOrbitInclinationInRadians
             multiplier                                 = 2.8
-        case .hubble :
+        case .hst :
             orbitTrack.firstMaterial?.diffuse.contents = Theme.hubbleOrbitalCGColor
             orbitTrack.ringRadius                      = CGFloat(Globals.hubbleOrbitAltitudeInScene)
             orbitInclination                           = Globals.hubbleOrbitInclinationInRadians
@@ -200,7 +200,7 @@ extension EarthGlobe {
             default :
                 orbitalCorrectionForInclination        = pow(exponent, 2.80)
             }
-        case .hubble :
+        case .hst :
             switch absLat {   // Apply a power function to the adjustment (exponent) based on the latitude
             case _ where absLat <= 10.0 :
                 orbitalCorrectionForInclination        = pow(exponent, 0.35)

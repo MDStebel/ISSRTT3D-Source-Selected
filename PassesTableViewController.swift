@@ -280,7 +280,7 @@ class PassesTableViewController: UITableViewController, CLLocationManagerDelegat
         })
         
         // Add selection for each of the stations/satellites for which we can get pass predictions
-        for target in [StationsAndSatellites.iss, StationsAndSatellites.tss, StationsAndSatellites.hubble] {
+        for target in [StationsAndSatellites.iss, StationsAndSatellites.tss, StationsAndSatellites.hst] {
             alertController.addAction(UIAlertAction(title: "\(target.stationName)", style: .default) { (choice) in
                 self.station = target
                 self.restartGettingUserLocation()

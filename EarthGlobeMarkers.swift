@@ -39,7 +39,7 @@ final class EarthGlobeMarkers {
         
         if !isInOrbit {                                                                                 // If false, it's the footprint circle
             
-            if satellite == .hubble {
+            if satellite == .hst {
                 scaling        = CGFloat(1.2)
                 heightAdj      = 0.9 + Float(scaling / (.pi / 2)) / 10
             } else {
@@ -59,7 +59,7 @@ final class EarthGlobeMarkers {
             case .tss :
                 widthAndHeight = Globals.tssMarkerWidth
                 altitude       = Globals.tssAltitudeFactor
-            case .hubble:
+            case .hst:
                 widthAndHeight = Globals.hubbleMarkerWidth
                 altitude       = Globals.hubbleAltitudeFactor
             case .none :

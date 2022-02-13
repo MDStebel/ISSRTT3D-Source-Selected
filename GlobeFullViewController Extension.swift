@@ -29,7 +29,7 @@ extension GlobeFullViewController {
         // Get the current satellite locations
         earthGlobeLocateSatellite(for: .iss)
         earthGlobeLocateSatellite(for: .tss)
-        earthGlobeLocateSatellite(for: .hubble)
+        earthGlobeLocateSatellite(for: .hst)
         
         // Update positions of all satellites
         updateGlobeForPositionsOfStations()
@@ -83,7 +83,7 @@ extension GlobeFullViewController {
                             self?.tLat                   = String((self?.TSSLatitude)!)
                             self?.tLon                   = String((self?.TSSLongitude)!)
                         }
-                    case .hubble:
+                    case .hst:
                         DispatchQueue.main.sync {
                             self?.coordinates            = parsedPosition.positions
                             self?.hubbleLatitude         = self?.coordinates[0].satlatitude ?? 0.0
