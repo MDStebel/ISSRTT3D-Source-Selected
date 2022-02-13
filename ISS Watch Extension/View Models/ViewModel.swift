@@ -168,7 +168,7 @@ final class ViewModel: ObservableObject {
         // Where are the satellites right now?
         getSatellitePosition(for: .iss)
         getSatellitePosition(for: .tss)
-        getSatellitePosition(for: .hubble)
+        getSatellitePosition(for: .hst)
         
         // Get the subsolar point
         updateSubSolarPoint()
@@ -202,7 +202,7 @@ final class ViewModel: ObservableObject {
             
             // MARK: Set up Hubble
             hubbleHeadingFactor = hubbleLatitude - hubbleLastLat < 0 ? -1 : 1
-            earthGlobe.addOrbitTrackAroundTheGlobe(for: .hubble, lat: hubbleLatitude, lon: hubbleLongitude, headingFactor: hubbleHeadingFactor)
+            earthGlobe.addOrbitTrackAroundTheGlobe(for: .hst, lat: hubbleLatitude, lon: hubbleLongitude, headingFactor: hubbleHeadingFactor)
             
             // Add footprint
             earthGlobe.addHubbleViewingCircle(lat: hubbleLatitude, lon: hubbleLongitude)
@@ -249,7 +249,7 @@ final class ViewModel: ObservableObject {
                 tssAltitudeInMi          = "\(numberFormatter.string(from: NSNumber(value: Double(tssAltitude) * Globals.kilometersToMiles)) ?? "")mi"
                 tssFormattedLatitude     = CoordinateConversions.decimalCoordinatesToDegMinSec(coordinate: Double(tssLatitude), format: Globals.coordinatesStringFormat, isLatitude: true)
                 tssFormattedLongitude    = CoordinateConversions.decimalCoordinatesToDegMinSec(coordinate: Double(tssLongitude), format: Globals.coordinatesStringFormat, isLatitude: false)
-            case .hubble :
+            case .hst :
                 hubbleLatitude           = Float(positionData.positions[0].satlatitude)
                 hubbleLongitude          = Float(positionData.positions[0].satlongitude)
                 hubbleAltitude           = Float(positionData.positions[0].sataltitude)
