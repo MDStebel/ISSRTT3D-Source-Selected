@@ -15,7 +15,7 @@ public enum StationsAndSatellites: String, CaseIterable {
     
     case iss
     case tss
-    case hubble
+    case hst
     case none
     
     var satelliteNORADCode: String {
@@ -23,8 +23,8 @@ public enum StationsAndSatellites: String, CaseIterable {
         case .iss :
             return "25544"
         case .tss :
-            return "48274"
-        case .hubble :
+            return "49222"
+        case .hst :
             return "20580"
         case .none :
             return "25544"
@@ -37,7 +37,7 @@ public enum StationsAndSatellites: String, CaseIterable {
             return "ISS"
         case .tss :
             return "Tiangong"
-        case .hubble :
+        case .hst :
             return "Hubble"
         case .none :
             return "ISS"
@@ -50,7 +50,7 @@ public enum StationsAndSatellites: String, CaseIterable {
             return UIImage(named: Globals.issIconFor3DGlobeView)!
         case .tss :
             return UIImage(named: Globals.tssIconFor3DGlobeView)!
-        case .hubble :
+        case .hst :
             return UIImage(named: Globals.hubbleIconFor3DGlobeView)!
         case .none :
             return UIImage(named: Globals.issIconFor3DGlobeView)!
