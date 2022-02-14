@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import SwiftUI
 
 extension GlobeFullViewController {
     
@@ -27,10 +28,10 @@ extension GlobeFullViewController {
     func earthGlobeLocateSatellites() {
         
         // Get the current satellite locations
-        earthGlobeLocateSatellite(for: .iss)
-        earthGlobeLocateSatellite(for: .tss)
-        earthGlobeLocateSatellite(for: .hst)
-        
+        for sat in [StationsAndSatellites.iss, .tss, .hst] {
+            earthGlobeLocateSatellite(for: sat)
+        }
+
         // Update positions of all satellites
         updateGlobeForPositionsOfStations()
         
