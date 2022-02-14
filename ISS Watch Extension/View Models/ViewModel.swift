@@ -166,9 +166,9 @@ final class ViewModel: ObservableObject {
         // MARK: Get coordinates for everything we're tracking
         
         // Where are the satellites right now?
-        getSatellitePosition(for: .iss)
-        getSatellitePosition(for: .tss)
-        getSatellitePosition(for: .hst)
+        for sat in [StationsAndSatellites.iss, .tss, .hst] {
+            getSatellitePosition(for: sat)
+        }
         
         // Get the subsolar point
         updateSubSolarPoint()
