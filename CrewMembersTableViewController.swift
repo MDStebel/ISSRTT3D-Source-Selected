@@ -208,7 +208,7 @@ class CrewMembersTableViewController: UITableViewController, TableAnimatable {
                     DispatchQueue.main.async {
                         weakSelf?.spinner.stopAnimating()
                         weakSelf?.refreshControl?.endRefreshing()
-                        weakSelf?.alert(for: "Can't get ISS crew info", message: "Tap Done, wait a few minutes, then try again")
+                        weakSelf?.alert(for: "Can't get crew info", message: "Tap Done, wait a few minutes, then try again")
                     }
                     
                 }
@@ -310,7 +310,7 @@ class CrewMembersTableViewController: UITableViewController, TableAnimatable {
                 self.spinner.startAnimating()
             }
             
-            if let crewMember = tableView.indexPathForSelectedRow?.row {                // Prevents crash when returning from full bio and tapping button again because index is undefined.
+            if let crewMember = tableView.indexPathForSelectedRow?.row {                 // Prevents crash when returning from full bio and tapping button again because index is undefined.
                 index = crewMember
                 lastIndex = index
             }
@@ -409,7 +409,7 @@ extension CrewMembersTableViewController {
         })
         
         // Add selection for each of the stations for which we can get crew data
-        for target in [StationsAndSatellites.iss, StationsAndSatellites.tss] {
+        for target in [StationsAndSatellites.iss, .tss] {
             alertController.addAction(UIAlertAction(title: "\(target.stationName)", style: .default) { (choice) in
                 self.station = target
                 DispatchQueue.global(qos: .userInteractive).async {
