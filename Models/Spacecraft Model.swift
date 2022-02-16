@@ -16,6 +16,7 @@ public enum Spacecraft: String, CaseIterable {
     case soyuz      = "Soyuz"
     case crewDragon = "Crew Dragon"
     case starliner  = "Starliner"
+    case shenzhou   = "Shenzhou"
     
     var spacecraftName: String {
         switch self {
@@ -25,6 +26,8 @@ public enum Spacecraft: String, CaseIterable {
             return "Crew Dragon"
         case .starliner :
             return "Starliner"
+        case .shenzhou :
+            return "Shenzhou"
         }
     }
     
@@ -36,6 +39,8 @@ public enum Spacecraft: String, CaseIterable {
             return #imageLiteral(resourceName: "spacex-dragon-spacecraft-1")
         case .starliner  :
             return #imageLiteral(resourceName: "astronaut_filled_Grey")
+        case .shenzhou   :
+            return #imageLiteral(resourceName: "Shenzhou")
         }
     }
 }

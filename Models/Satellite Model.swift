@@ -20,11 +20,11 @@ public enum StationsAndSatellites: String, CaseIterable {
     
     var satelliteNORADCode: String {
         switch self {
-        case .iss :
+        case .iss  :
             return "25544"
-        case .tss :
+        case .tss  :
             return "49222"
-        case .hst :
+        case .hst  :
             return "20580"
         case .none :
             return "25544"
@@ -33,11 +33,11 @@ public enum StationsAndSatellites: String, CaseIterable {
     
     var stationName: String {
         switch self {
-        case .iss :
+        case .iss  :
             return "ISS"
-        case .tss :
+        case .tss  :
             return "Tiangong"
-        case .hst :
+        case .hst  :
             return "Hubble"
         case .none :
             return "ISS"
