@@ -66,6 +66,7 @@ struct UserGuide {
     static let helpContentHTML =
     """
     \(head)
+    <div id="contents"></div>
     <h1>User Guide</h1>
     <h6>Covers version \(Globals.versionNumber)</h6>
     <h2>Contents</h2>
@@ -77,6 +78,7 @@ struct UserGuide {
     <h4><a href="#streaming">Live Earth View</a></h4>
     <h4><a href="#nasatv">Live NASA TV</a></h4>
     <h4><a href="#settings">Settings</a></h4>
+    <h4><a href="#watch">Using the Apple Watch App</a></h4>
     <div id="passes"></div>
     <h2>Pass Predictions</h2>
     <p>Tapping the binoculars icon at the bottom of the main screen starts the process of computing up-coming visible ISS, TSS, or Hubble Space Telescope passes. First, ISS Real-Time Tracker 3D gets your current location's coordinates. Then, it computes the ISS , TSS, or Hubble passes that should be visible (weather permitting) from your location. The default number of days to predict passes is set in Settings and can be overridden in the Passes screen. The passes are listed in chronological order along with detailed viewing data.</p>
@@ -129,6 +131,7 @@ struct UserGuide {
     </li>
     </ul>
     <p>Tap < to return to the map and resume tracking.</p>
+    <h4><a href="#contents">Back to contents</a></h4>
     <div id="track"></div>
     <h2>Tracking Map View</h2>
     <p>To locate and track the International Space Station in real time, tap the play button at the bottom of the screen. To pause tracking, tap the pause button.</p>
@@ -188,6 +191,7 @@ struct UserGuide {
     <h6>The music soundtrack will be disabled (not play) by default. Click the ♪ icon at the upper-right to toggle the soundtrack on/off.</h6>
     </li>
     </ul>
+    <h4><a href="#contents">Back to contents</a></h4>
     <div id="globe"></div>
     <h2>Fullscreen Interactive 3D Globe</h2>
     <p>From the Tracking screen, tapping the expand icon on the globe overlay, or the globe icon on the tab bar, expands the globe to fullscreen mode and hides the map.</p>
@@ -245,9 +249,11 @@ struct UserGuide {
     </ul>
     <p>Tap the reset button on the upper-middle of the globe scene to reset the globe.</p>
     <p>Tap the collapse button on the upper-right of the globe scene, or <, to return to the tracking screen.</p>
-    <div id="crew"></div>
+    <h4><a href="#contents">Back to contents</a></h4><div id="crew"></div>
     <h2>Current Crew</h2>
-    <p>Tap the astronaut icon at the bottom of the screen to get a table of information about the current ISS crew.</p>
+    <p>Tap the astronaut icon at the bottom of the screen to get a table of information about the current space station crew.</p>
+    <h4>Switching Stations</h4>
+    <p>Tap the switch target button in the navigation bar to switch between the ISS and the Chinese space station, Tiangong. The table will automatically refresh and present the crew data for the selected space station.</p>
     <h4>Crew Bios &amp; Tweets</h4>
     <p>Tap any cell in the table to pop-up the detail view for that crewmember. This will display a brief bio. To view the full bio, tap the biography icon.</p>
     <p>To visit the crew member's Twitter feed, open their Twitter profile by tapping the Twitter button. If you do not have the Twitter app installed, it will open in Safari instead. If the crewmember does not have a Twitter profile, the Twitter button will not be displayed. Return to ISS Real-Time Tracker 3D by tapping "◀︎ ISS Tracker" on the top-left of Twitter.</p>
@@ -257,6 +263,7 @@ struct UserGuide {
     <h4>Pull-to-Refresh</h4>
     <p>Drag down the table to refresh the data.</p>
     <p>Tap < to return to the map and resume tracking.</p>
+    <h4><a href="#contents">Back to contents</a></h4>
     <div id="streaming"></div>
     <h2>Live Earth View</h2>
     <p>Live streaming HD video of Earth is provided via NASA's External High Definition Camera (EHDC).</p>
@@ -273,6 +280,7 @@ struct UserGuide {
     </li>
     </ul>
     <p>Tap < to return to the map.</p>
+    <h4><a href="#contents">Back to contents</a></h4>
     <div id="nasatv"></div>
     <h2>Live NASA TV</h2>
     <p>NASA TV airs a variety of regularly scheduled, pre-recorded educational and public relations programming 24 hours a day. The network also provides an array of live programming, such as 24-hour coverage of missions, events (spacewalks, media interviews, educational broadcasts), press conferences & rocket launches.</p>
@@ -283,11 +291,19 @@ struct UserGuide {
     </li>
     </ul>
     <p>Tap < to return to the map.</p>
+    <h4><a href="#contents">Back to contents</a></h4>
     <div id="settings"></div>
     <h2>Settings</h2>
     <p>All of your current user settings are automatically saved on your device when you exit the app or switch to another app. This also includes the current zoom slider position. Each time you run ISS Real-Time Tracker 3D, your settings are restored.</p>
     <p>Tapping the ⟳ button on the Settings title bar will clear all your user settings and change them back to their defaults. The zoom slider will reset to its default (center) position, and What's New and other messages will be restored.</p>
     <p>Tap < to return to the tracking view.</p>
+    <h4><a href="#contents">Back to contents</a></h4>
+    <div id="watch"></div>
+    <h2>Using the Apple Watch App</h2>
+    <p>If you own an Apple Watch, then installing the app on your phone will also install it on your watch.</p>
+    <p>The watch app shows the interactive 3D globe with real-time positions of the ISS, Tiangong (Chinese space station), and the Hubble Space Telescope. From the globe tap on the reset button on the bottom-left of the watchface to restore the globe to its starting position. Tap the bottom-middle button to disable/enable the globe's autorotation. Tap the show details button on the bottom-right to display a table of the coordinates and altitudes of the three satellites, along with the subsolar point. The data update every three seconds.</p>
+    <p>Tap the back button to return to the globe.</p>
+    <h4><a href="#contents">Back to contents</a></h4>
     \(tail)
     """
     
@@ -412,7 +428,9 @@ struct UserGuide {
     static let crewHelp =
     """
     \(head)
-    <p>This screen provides a table of information about the current ISS crew. It also lets you drill down to deeper information about each crewmember and even tweet a crewmember.</p>
+    <p>This screen provides a table of information about the current space station crew. It also lets you drill down to deeper information about each crewmember and even tweet a crewmember.</p>
+    <h4>Switching Stations</h4>
+    <p>Tap the switch target button in the navigation bar to switch between the ISS and the Chinese space station, Tiangong. The table will automatically refresh and present the crew data for the selected space station.</p>
     <h4>Crew Bios &amp; Tweets</h4>
     <p>Tap any cell in the table to pop up the detail view for that crewmember. This will display a brief bio. To view the full bio, tap the biography icon.</p>
     <p>To visit the crew member's Twitter feed, open their Twitter profile by tapping the Twitter button. If you do not have the Twitter app installed, it will open in Safari instead. If the crewmember does not have a Twitter profile, the Twitter button will not be displayed. Return to ISS Real-Time Tracker 3D by tapping "◀︎ ISS Tracker" on the top-left of Twitter.</p>
