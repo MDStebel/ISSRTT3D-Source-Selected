@@ -21,7 +21,6 @@ class CrewMembersTableViewController: UITableViewController, TableAnimatable {
         static let newLine                      = Globals.newLine
         static let segueToFullBio               = "segueToFullBio"
         static let segueToHelpFromCrew          = "segueToHelpFromCrew"
-        static let spacecraftID                 = "International Space Station"
         static let tableRowSize: CGFloat        = 180
         static let tapAnyCrewMemberPromptText   = "Tap a crew member for bios & tweets"
         static let updatingDataPromptText       = "Updating crew data..."
@@ -33,6 +32,17 @@ class CrewMembersTableViewController: UITableViewController, TableAnimatable {
     private var helpTitle                       = "Crew Help"
     private var index                           = 0
     private var lastIndex                       = 0
+    private var station: StationsAndSatellites  = .iss {
+        didSet{
+            getStationID(for: station)
+        }
+    }
+    private var stationID                               = ""
+    private var stationImage: UIImage?                  = nil
+    private var stationName                             = ""
+    private var stationSelectionButton: UIImage {
+        UIImage(systemName: "target")!
+    }
     
     /// Placeholder image to use if there's no image for an astronaut returned by the API call
     private let placeholderImage                = #imageLiteral(resourceName: "astronaut_filled_Grey")
@@ -44,7 +54,6 @@ class CrewMembersTableViewController: UITableViewController, TableAnimatable {
     
     
     // MARK: - Outlets
-    
     
     @IBOutlet private var crewTable: UITableView!
     @IBOutlet var helpButton: UIBarButtonItem!
@@ -62,13 +71,35 @@ class CrewMembersTableViewController: UITableViewController, TableAnimatable {
             promptLabel.layer.masksToBounds = true
         }
     }
+    @IBOutlet private weak var selectTarget: UIBarButtonItem!{
+        didSet {
+            selectTarget.image = stationSelectionButton
+        }
+    }
     
     
     // MARK: - Methods
     
+    /// Get  NORAD ID, name, and icon to use in background for selected target satellite/space station
+    /// - Parameter station: Station selector value.
+    private func getStationID(for station: StationsAndSatellites) {
+        
+        selectTarget.image     = stationSelectionButton
+        stationID              = station.satelliteNORADCode
+        stationImage           = station.stationImage
+        stationName            = station.stationName
+        if stationName == "ISS" {
+            stationName = "International Space Station"     // We're using the long name for ISS here
+        }
+
+    }
+    
+    
     override func viewDidLoad() {
         
         super.viewDidLoad()
+        
+        getStationID(for: station)
         setUpRefreshControl()
         
     } 
@@ -153,9 +184,9 @@ class CrewMembersTableViewController: UITableViewController, TableAnimatable {
                 if let parsedCrewMembers = Astronaut.parseCurrentCrew(from: urlContent) {
                     
                     weakSelf?.currentCrew = parsedCrewMembers
-                    
+                    print(self.stationName)
                     // Remove non-ISS people
-                    let ISSCrewOnly = weakSelf?.currentCrew?.filter { $0.spaceCraft == Constants.spacecraftID }
+                    let ISSCrewOnly = weakSelf?.currentCrew?.filter { $0.spaceCraft == self.stationName }
                     
                     // Sort by name and then by title
                     weakSelf?.currentCrew = ISSCrewOnly?.sorted {$0.name < $1.name}
@@ -167,7 +198,7 @@ class CrewMembersTableViewController: UITableViewController, TableAnimatable {
                         weakSelf?.spinner.stopAnimating()
                         weakSelf?.refreshControl?.endRefreshing()
                         weakSelf?.animate(table: self.crewTable)
-                        self.promptLabel.text = "\(self.currentCrewSize) current crew members\n\(Constants.tapAnyCrewMemberPromptText)"
+                        self.promptLabel.text = "\(self.currentCrewSize) current \(self.station.stationName) crew members\n\(Constants.tapAnyCrewMemberPromptText)"
                     }
                     
                     self.getCurrentCrewMembersAlreadyRun = true
@@ -211,7 +242,7 @@ class CrewMembersTableViewController: UITableViewController, TableAnimatable {
         }
         UIPasteboard.general.string = crewListString                                      // Copy to general pasteboard
         
-        alert(for: "\(currentCrewSize) ISS Crew Members\nCopied to Your Clipboard", message: crewListString)
+        alert(for: "\(currentCrewSize) \(self.station.stationName) Crew Members\nCopied to Your Clipboard", message: crewListString)
         
     }
       
@@ -355,6 +386,43 @@ extension CrewMembersTableViewController {
         }
         
         return imageToReturn
+        
+    }
+    
+    @IBAction func changeStation(_ sender: UIBarButtonItem) {
+        
+        switchStationPopup(withTitle: "Select a Station", withStyleToUse: .actionSheet)
+        
+    }
+    
+    
+    /// Switch to a different station to get crew data for
+    /// - Parameters:
+    ///   - title: Pop-up title
+    ///   - usingStyle: The alert style
+    private func switchStationPopup(withTitle title: String, withStyleToUse usingStyle : UIAlertController.Style) {
+        
+        let alertController = UIAlertController(title: title, message: "Select a space station for crew data", preferredStyle: usingStyle)
+        
+        alertController.addAction(UIAlertAction(title: "Back", style: .cancel) { (dontShow) in
+            self.dismiss(animated: true, completion: nil)
+        })
+        
+        // Add selection for each of the stations for which we can get crew data
+        for target in [StationsAndSatellites.iss, StationsAndSatellites.tss] {
+            alertController.addAction(UIAlertAction(title: "\(target.stationName)", style: .default) { (choice) in
+                self.station = target
+                DispatchQueue.global(qos: .userInteractive).async {
+                    self.getCurrrentCrewMembers()
+                }
+            })
+        }
+        
+        if usingStyle == .actionSheet {
+            alertController.popoverPresentationController?.barButtonItem = selectTarget
+        }
+        
+        self.present(alertController, animated: true, completion: nil)
         
     }
     
