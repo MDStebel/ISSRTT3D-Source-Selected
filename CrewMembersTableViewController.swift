@@ -37,9 +37,9 @@ class CrewMembersTableViewController: UITableViewController, TableAnimatable {
             getStationID(for: station)
         }
     }
-    private var stationID                               = ""
-    private var stationImage: UIImage?                  = nil
-    private var stationName                             = ""
+    private var stationID                       = ""
+    private var stationImage: UIImage?          = nil
+    private var stationName                     = ""
     private var stationSelectionButton: UIImage {
         UIImage(systemName: "target")!
     }
