@@ -37,9 +37,9 @@ class CrewMembersTableViewController: UITableViewController, TableAnimatable {
             getStationID(for: station)
         }
     }
-    private var stationID                       = ""
-    private var stationImage: UIImage?          = nil
-    private var stationName                     = ""
+    private var stationID                               = ""
+    private var stationImage: UIImage?                  = nil
+    private var stationName                             = ""
     private var stationSelectionButton: UIImage {
         UIImage(systemName: "target")!
     }
@@ -184,13 +184,13 @@ class CrewMembersTableViewController: UITableViewController, TableAnimatable {
                 if let parsedCrewMembers = Astronaut.parseCurrentCrew(from: urlContent) {
                     
                     weakSelf?.currentCrew = parsedCrewMembers
-
-                    // Show crew members for currently-selected space station only
+                    print(self.stationName)
+                    // Remove non-ISS people
                     let ISSCrewOnly = weakSelf?.currentCrew?.filter { $0.spaceCraft == self.stationName }
                     
                     // Sort by name and then by title
                     weakSelf?.currentCrew = ISSCrewOnly?.sorted {$0.name < $1.name}
-                    weakSelf?.currentCrew?.sort {$0.title < $1.title}
+                    weakSelf?.currentCrew?.sort() {$0.title < $1.title}
                     
                     weakSelf?.currentCrewSize = (weakSelf?.currentCrew!.count)!
                     
@@ -208,7 +208,7 @@ class CrewMembersTableViewController: UITableViewController, TableAnimatable {
                     DispatchQueue.main.async {
                         weakSelf?.spinner.stopAnimating()
                         weakSelf?.refreshControl?.endRefreshing()
-                        weakSelf?.alert(for: "Can't get crew info", message: "Tap Done, wait a few minutes, then try again")
+                        weakSelf?.alert(for: "Can't get ISS crew info", message: "Tap Done, wait a few minutes, then try again")
                     }
                     
                 }
@@ -310,7 +310,7 @@ class CrewMembersTableViewController: UITableViewController, TableAnimatable {
                 self.spinner.startAnimating()
             }
             
-            if let crewMember = tableView.indexPathForSelectedRow?.row {                 // Prevents crash when returning from full bio and tapping button again because index is undefined.
+            if let crewMember = tableView.indexPathForSelectedRow?.row {                // Prevents crash when returning from full bio and tapping button again because index is undefined.
                 index = crewMember
                 lastIndex = index
             }
@@ -409,7 +409,7 @@ extension CrewMembersTableViewController {
         })
         
         // Add selection for each of the stations for which we can get crew data
-        for target in [StationsAndSatellites.iss, .tss] {
+        for target in [StationsAndSatellites.iss, StationsAndSatellites.tss] {
             alertController.addAction(UIAlertAction(title: "\(target.stationName)", style: .default) { (choice) in
                 self.station = target
                 DispatchQueue.global(qos: .userInteractive).async {

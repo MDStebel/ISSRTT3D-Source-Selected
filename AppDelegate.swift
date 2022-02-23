@@ -35,8 +35,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         Globals.isIPad              = Globals.thisDevice.hasPrefix("iPad")  // Determine if device is an iPad and set this constant to true if so
 
         // Request user review between shortestTime & longestTime of use
-        let shortestTime: UInt32    = 90                                    // In seconds
-        let longestTime: UInt32     = 360                                   // In seconds
+        let shortestTime: UInt32    = 50                                    // In seconds
+        let longestTime: UInt32     = 300                                   // In seconds
         guard let timeInterval      = TimeInterval(exactly: arc4random_uniform(longestTime - shortestTime) + shortestTime) else { return true }
         Timer.scheduledTimer(timeInterval: timeInterval, target: self, selector: #selector(AppDelegate.requestReview), userInfo: nil, repeats: false)
 

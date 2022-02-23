@@ -28,7 +28,7 @@ extension GlobeFullViewController {
     func earthGlobeLocateSatellites() {
         
         // Get the current satellite locations
-        for sat in [StationsAndSatellites.iss, .tss, .hst] {
+        for sat: StationsAndSatellites in [.iss, .tss, .hst] {
             earthGlobeLocateSatellite(for: sat)
         }
 
