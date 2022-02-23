@@ -44,7 +44,7 @@ struct DataCellView: View {
                 // MARK: - Data area
                 HStack {
                     
-                    // MARK: - Conditional view
+                    // MARK: - Conditional view shows altitude scale for satellites only
                     // Only show the altitude indicator if there's an altitude available
                     // If not, we'll assume we're showing the subsolar point, so show the Sun
                     if let altKm = altitudeInKm, let altMi = altitudeInMi, let alt = altitude {

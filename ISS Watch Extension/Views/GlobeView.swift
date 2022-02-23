@@ -47,7 +47,7 @@ struct GlobeView: View {
                             vm.reset()
                         })
                         {
-                            Image(systemName: "arrow.clockwise")
+                            Image("reset")
                         }
                         .withSmallButtonModifier
                         
@@ -55,7 +55,7 @@ struct GlobeView: View {
                             vm.spinEnabled.toggle()
                         })
                         {
-                            Image("icons8-3d_rotate")
+                            Image("rotate3D")
                         }
                         .withSmallButtonModifier
                         
