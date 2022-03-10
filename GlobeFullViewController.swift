@@ -21,9 +21,9 @@ class GlobeFullViewController: UIViewController, AVAudioPlayerDelegate, EarthGlo
     
     struct Constants {
         static let ISSAPIEndpointString  = ApiEndpoints.issTrackerAPIEndpointA       // ISS API
-        static let generalEndpointString = ApiEndpoints.generalTrackerAPIEndpoint    // General endpoint
-        static let generalAPIKey         = ApiKeys.generalLocationKey
         static let fontForTitle          = Theme.nasa
+        static let generalAPIKey         = ApiKeys.generalLocationKey
+        static let generalEndpointString = ApiEndpoints.generalTrackerAPIEndpoint    // General endpoint
         static let segueToHelpFromGlobe  = "segueToHelpFromGlobe"
         static let segueToSettings       = "segueToSettings"
         static let timerValue            = 3.0                                       // Number of seconds between position updates
@@ -34,12 +34,6 @@ class GlobeFullViewController: UIViewController, AVAudioPlayerDelegate, EarthGlo
         static let off                   = "music.quarternote.3"
     }
 
-    var issLastLat: Float                = 0                                         // To conform with the EarthGlobeProtocol, will save the last ISS latitude
-    var ISSLatitude                      = 0.0
-    var ISSLongitude                     = 0.0
-    var tssLastLat: Float                = 0                                         // To conform with the EarthGlobeProtocol, will save the last TSS latitude
-    var TSSLatitude                      = 0.0
-    var TSSLongitude                     = 0.0
     var coordinates                      = [SatelliteOrbitPosition.Positions]()
     var fullGlobe                        = EarthGlobe()
     var globeBackgroundImageName         = ""
@@ -50,9 +44,15 @@ class GlobeFullViewController: UIViewController, AVAudioPlayerDelegate, EarthGlo
     var hubbleLongitude                  = 0.0
     var iLat                             = ""
     var iLon                             = ""
+    var issLastLat: Float                = 0                                         // To conform with the EarthGlobeProtocol, will save the last ISS latitude
+    var issLatitude                      = 0.0
+    var issLongitude                     = 0.0
     var tLat                             = ""
     var tLon                             = ""
     var timer: AnyCancellable?
+    var tssLastLat: Float                = 0                                         // To conform with the EarthGlobeProtocol, will save the last TSS latitude
+    var tssLatitude                      = 0.0
+    var tssLongitude                     = 0.0
     
     
     private var helpTitle                = "3D Globe Help"

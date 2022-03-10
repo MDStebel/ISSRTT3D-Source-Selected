@@ -71,18 +71,18 @@ extension GlobeFullViewController {
                     case .iss:
                         DispatchQueue.main.sync {
                             self?.coordinates            = parsedPosition.positions
-                            self?.ISSLatitude            = self?.coordinates[0].satlatitude ?? 0.0
-                            self?.ISSLongitude           = self?.coordinates[0].satlongitude ?? 0.0
-                            self?.iLat                   = String((self?.ISSLatitude)!)
-                            self?.iLon                   = String((self?.ISSLongitude)!)
+                            self?.issLatitude            = self?.coordinates[0].satlatitude ?? 0.0
+                            self?.issLongitude           = self?.coordinates[0].satlongitude ?? 0.0
+                            self?.iLat                   = String((self?.issLatitude)!)
+                            self?.iLon                   = String((self?.issLongitude)!)
                         }
                     case .tss:
                         DispatchQueue.main.sync {
                             self?.coordinates            = parsedPosition.positions
-                            self?.TSSLatitude            = self?.coordinates[0].satlatitude ?? 0.0
-                            self?.TSSLongitude           = self?.coordinates[0].satlongitude ?? 0.0
-                            self?.tLat                   = String((self?.TSSLatitude)!)
-                            self?.tLon                   = String((self?.TSSLongitude)!)
+                            self?.tssLatitude            = self?.coordinates[0].satlatitude ?? 0.0
+                            self?.tssLongitude           = self?.coordinates[0].satlongitude ?? 0.0
+                            self?.tLat                   = String((self?.tssLatitude)!)
+                            self?.tLon                   = String((self?.tssLongitude)!)
                         }
                     case .hst:
                         DispatchQueue.main.sync {

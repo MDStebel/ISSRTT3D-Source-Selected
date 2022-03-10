@@ -184,7 +184,6 @@ class CrewMembersTableViewController: UITableViewController, TableAnimatable {
                 if let parsedCrewMembers = Astronaut.parseCurrentCrew(from: urlContent) {
                     
                     weakSelf?.currentCrew = parsedCrewMembers
-                    print(self.stationName)
                     // Remove non-ISS people
                     let ISSCrewOnly = weakSelf?.currentCrew?.filter { $0.spaceCraft == self.stationName }
                     
