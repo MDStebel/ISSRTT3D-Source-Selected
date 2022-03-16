@@ -388,7 +388,7 @@ class PassesTableViewController: UITableViewController, CLLocationManagerDelegat
                     createEvent(eventStore, passEvent: passEvent)
                 } else {
                     DispatchQueue.main.async {
-                        alert(for: "Can't create reminder", message: "Access to your calendar was previously denied. Please update your device Settings to change this")
+                        self.alert(for: "Can't create reminder", message: "Access to your calendar was previously denied. Please update your device Settings to change this")
                     }
                 }
             }
