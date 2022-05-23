@@ -142,9 +142,6 @@ final class EarthGlobe: ObservableObject {
 #else
     
     /// Set up our scene
-    /// - Parameters:
-    ///   - theScene: The scene view to use
-    ///   - pinchGestureIsEnabled: True if we're rendering the full globe and want to pinch to zoom
     func setupInSceneView() {
         
         completeTheSetup()

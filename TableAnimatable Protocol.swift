@@ -30,7 +30,6 @@ extension TableAnimatable {
         let tableViewHeight = tableToAnimate.bounds.size.height
         
         DispatchQueue.main.async {
-            
             var delayCounter = 0
             for cell in cells {
                 cell.transform = CGAffineTransform(translationX: 0, y: tableViewHeight)
@@ -39,9 +38,6 @@ extension TableAnimatable {
                                completion: nil)
                 delayCounter += 1
             }
-            
         }
-        
     }
-    
 }

@@ -184,11 +184,12 @@ class CrewMembersTableViewController: UITableViewController, TableAnimatable {
                 if let parsedCrewMembers = Astronaut.parseCurrentCrew(from: urlContent) {
                     
                     weakSelf?.currentCrew = parsedCrewMembers
+                  
                     // Remove non-ISS people
-                    let ISSCrewOnly = weakSelf?.currentCrew?.filter { $0.spaceCraft == self.stationName }
+                    let issCrewOnly = weakSelf?.currentCrew?.filter { $0.spaceCraft == self.stationName }
                     
                     // Sort by name and then by title
-                    weakSelf?.currentCrew = ISSCrewOnly?.sorted {$0.name < $1.name}
+                    weakSelf?.currentCrew = issCrewOnly?.sorted {$0.name < $1.name}
                     weakSelf?.currentCrew?.sort() {$0.title < $1.title}
                     
                     weakSelf?.currentCrewSize = (weakSelf?.currentCrew!.count)!
@@ -197,7 +198,11 @@ class CrewMembersTableViewController: UITableViewController, TableAnimatable {
                         weakSelf?.spinner.stopAnimating()
                         weakSelf?.refreshControl?.endRefreshing()
                         weakSelf?.animate(table: self.crewTable)
+                        if weakSelf?.currentCrewSize != 0 {
                         self.promptLabel.text = "\(self.currentCrewSize) current \(self.station.stationName) crew members\n\(Constants.tapAnyCrewMemberPromptText)"
+                        } else {
+                            self.promptLabel.text = "No crew is currently onboard \(self.station.stationName)"
+                        }
                     }
                     
                     self.getCurrentCrewMembersAlreadyRun = true
@@ -207,7 +212,7 @@ class CrewMembersTableViewController: UITableViewController, TableAnimatable {
                     DispatchQueue.main.async {
                         weakSelf?.spinner.stopAnimating()
                         weakSelf?.refreshControl?.endRefreshing()
-                        weakSelf?.alert(for: "Can't get ISS crew info", message: "Tap Done, wait a few minutes, then try again")
+                        weakSelf?.alert(for: "Can't get crew data", message: "Tap Done, wait a few minutes, then try again")
                     }
                     
                 }
@@ -493,7 +498,7 @@ extension CrewMembersTableViewController {
         let flagImageURLString                          = currentCrew![row].flag 
         
         crewMemberDetailView.shortBioName?.text         = startOfLabelText + flagImageURLString
-        crewMemberDetailView.shortBioInforomation?.text = currentCrew?[row].shortBioBlurb ?? "No brief bio is available."
+        crewMemberDetailView.shortBioInforomation?.text = currentCrew?[row].shortBioBlurb ?? "No short bio is available."
         crewMemberDetailView.twitterHandleURL           = currentCrew?[row].twitter
         
         view.addSubview(crewMemberDetailView)
