@@ -224,8 +224,9 @@ final class ViewModel: ObservableObject {
         hubbleLastLat = hubbleLatitude
         
     }
+}
 
-    
+extension ViewModel {
     /// Get the current satellite coordinates
     /// - Parameter satellite: The satellite we're tracking as a StationAndSatellites.
     private func getSatellitePosition(for satellite: StationsAndSatellites) {
@@ -287,5 +288,4 @@ final class ViewModel: ObservableObject {
             .store(in: &cancellables)
         
     }
-    
 }

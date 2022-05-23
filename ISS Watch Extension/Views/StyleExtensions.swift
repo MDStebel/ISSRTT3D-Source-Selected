@@ -37,7 +37,6 @@ extension View {
     var withSmallButtonModifier: some View {
         self.modifier(smallButtonModifier())
     }
-    
 }
 
 
@@ -55,13 +54,8 @@ struct smallButtonModifier: ViewModifier {
             .foregroundColor(.white)
             .clipShape(Circle())
             .padding([.horizontal])
-        
-//            .buttonStyle(.bordered)
-//            .buttonBorderShape(.roundedRectangle)
-//            .padding(.top)
-//            .foregroundColor(.accentColor)
+
     }
-    
 }
 
 
@@ -73,7 +67,6 @@ extension View {
     var withMDSDataLabelModifier: some View {
         self.modifier(MDSDataLabelModifier())
     }
-    
 }
 
 
@@ -89,7 +82,6 @@ struct MDSDataLabelModifier: ViewModifier {
             .foregroundColor(.white)
             .lineLimit(1)
     }
-    
 }
 
 
@@ -101,7 +93,6 @@ extension View {
     var withCoordinatesTextModifier: some View {
         self.modifier(CoordinatesTextModifier())
     }
-    
 }
 
 
@@ -115,5 +106,4 @@ struct CoordinatesTextModifier: ViewModifier {
             .font(.custom(Theme.appFont, size: 15).bold())
             .minimumScaleFactor(0.9)
     }
-    
 }
