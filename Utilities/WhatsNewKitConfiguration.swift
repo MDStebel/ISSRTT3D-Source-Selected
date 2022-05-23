@@ -21,37 +21,37 @@ private let whatsNew = WhatsNew(
     // The features and other information to showcase
     items: [
         WhatsNew.Item(
-            title: "What's new",
+            title: "What's New",
             subtitle: """
                       You can now get crew data for both the International Space Station and Tiangong! Tap the switch target button in the navigation bar to switch between the stations.
                       """,
             image: UIImage(systemName: "megaphone.fill")
         ),
         WhatsNew.Item(
-            title: "What's Fixed",
+            title: "What's Improved",
             subtitle: """
-                      Performance tweaks and bug fixes.
+                      Crew member table now reports when no crew members are present on the given station.
                       """,
             image: UIImage(systemName: "ant.fill")
         ),
         WhatsNew.Item(
             title: "Apple Watch App Included",
             subtitle: """
-                      Own an Apple Watch? Installing ISS Real-Time Tracker 3D will also install the companion app on your watch. The watchOS app provides the interactive 3D globe and detail view showing ISS, Tiangong, Hubble Space Telescope, and the subsolar point coordinates and altitudes. See the User Guide for more information.
+                      Installing ISS Real-Time Tracker 3D will also install the companion app on your Apple Watch. See the User Guide for more information.
                       """,
             image: UIImage(systemName: "applewatch.watchface")
         ),
         WhatsNew.Item(
             title: "Built-In Help",
             subtitle: """
-                      To learn how to use this app, please tap on the \(Globals.helpChar) button (top-right). Each screen has its own help button that explains how to use a specfic feature.
+                      To learn how to use this app, please tap on the \(Globals.helpChar) button (top-right). Each screen has a help button.
                       """,
             image: UIImage(systemName: "questionmark.circle.fill")
         ),
         WhatsNew.Item(
             title: "Getting Support",
             subtitle: """
-                      Have questions or issues? Use my chatbot at https://issrtt.com. You can get there easily from Settings. Just tap the settings button at the top-left.
+                      Have questions or issues? Use my chatbot at https://issrtt.com. You can get there easily from Settings.
                       """,
             image: UIImage(named: "icons8-customer_support")
         )
