@@ -228,7 +228,7 @@ final class ViewModel: ObservableObject {
 
 extension ViewModel {
     /// Get the current satellite coordinates
-    /// - Parameter satellite: The satellite we're tracking as a StationAndSatellites.
+    /// - Parameter satellite: The satellite we're tracking as a StationAndSatellites object.
     private func getSatellitePosition(for satellite: StationsAndSatellites) {
         
         /// Helper method to extract our coordinates
