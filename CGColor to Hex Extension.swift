@@ -27,7 +27,7 @@ extension CGColor {
         let g = Float(components[1])
         let b = Float(components[2])
         var a = Float(1.0)              // Default alpha value
-
+        
         if components.count >= 4 {
             a = Float(components[3])    // Actual alpha value, if provided
         }

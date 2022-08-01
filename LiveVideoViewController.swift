@@ -118,7 +118,7 @@ class LiveVideoViewController: UIViewController, WKUIDelegate, WKNavigationDeleg
                     switch self.channelSelected {
                     case .liveEarth :
                         self.videoURL = parsedURL.liveURL
-                    case .nasaTV :
+                    case .nasaTv :
                         self.videoURL = parsedURL.nasatvURL
                     }
                     
@@ -213,7 +213,7 @@ class LiveVideoViewController: UIViewController, WKUIDelegate, WKNavigationDeleg
             switch channelSelected {
             case .liveEarth :
                 destinationVC.helpContentHTML = UserGuide.streamingVideoHelp
-            case .nasaTV :
+            case .nasaTv :
                 destinationVC.helpContentHTML = UserGuide.NASATVVideoHelp
             }
             

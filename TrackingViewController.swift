@@ -30,11 +30,11 @@ class TrackingViewController: UIViewController, MKMapViewDelegate, UIGestureReco
     
     /// Segue names
     private struct Segues {
-        static let NASATVSegue                  = "segueToNasaTV"
         static let crewSeque                    = "segueToCurrentCrew"
         static let earthViewSegue               = "segueToStreamingVideo"
         static let globeSegue                   = "segueToFullGlobe"
         static let helpSegue                    = "helpViewSegue"
+        static let nasaTvSegue                  = "segueToNasaTV"
         static let passesSegue                  = "segueToPassTimes"
         static let segueToFullGlobeFromTabBar   = "segueToFullGlobeFromTabBar"
         static let settingsSegue                = "segueToSettings"
@@ -815,11 +815,11 @@ class TrackingViewController: UIViewController, MKMapViewDelegate, UIGestureReco
             destinationVC.channelSelected                     = .liveEarth
             destinationVC.title                               = destinationVC.channelSelected.rawValue
             
-        case Segues.NASATVSegue :                                   // Stop tracking and select NASA TV channel
+        case Segues.nasaTvSegue :                                   // Stop tracking and select NASA TV channel
             stopAction()
             let navigationController                          = segue.destination as! UINavigationController
             let destinationVC                                 = navigationController.topViewController as! LiveVideoViewController
-            destinationVC.channelSelected                     = .nasaTV
+            destinationVC.channelSelected                     = .nasaTv
             destinationVC.title                               = destinationVC.channelSelected.rawValue
             
         case Segues.settingsSegue :                                 // Keep tracking, set popover arrow to point to middle, below settings button
