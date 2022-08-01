@@ -45,7 +45,6 @@ final class ViewModel: ObservableObject {
     @Published var wasError                                              = false
     
     
-    
     // MARK: - Properties
     
     private let apiEndpointString                                        = ApiEndpoints.issTrackerAPIEndpointC
@@ -175,9 +174,8 @@ final class ViewModel: ObservableObject {
         
         // MARK: Update the globe scene
         
-        // If we have the last coordinates, add the markers, otherwise we don't know which way the orbits are oriented
-        if issLastLat != 0 && tssLastLat != 0 && hubbleLastLat != 0 {
-            
+        // For each target, if we have the last coordinates, add the markers, otherwise we don't know which way the orbits are oriented
+        if issLastLat != 0 {
             // MARK: Set up ISS
             issHeadingFactor = issLatitude - issLastLat < 0 ? -1 : 1
             earthGlobe.addOrbitTrackAroundTheGlobe(for: .iss, lat: issLatitude, lon: issLongitude, headingFactor: issHeadingFactor)
@@ -187,8 +185,9 @@ final class ViewModel: ObservableObject {
             
             // Add satellite marker
             earthGlobe.addISSMarker(lat: issLatitude, lon: issLongitude)
+        }
             
-            
+        if tssLastLat != 0 {
             // MARK: Set up TSS
             tssHeadingFactor = tssLatitude - tssLastLat < 0 ? -1 : 1
             earthGlobe.addOrbitTrackAroundTheGlobe(for: .tss, lat: tssLatitude, lon: tssLongitude, headingFactor: tssHeadingFactor)
@@ -198,8 +197,9 @@ final class ViewModel: ObservableObject {
             
             // Add satellite marker
             earthGlobe.addTSSMarker(lat: tssLatitude, lon: tssLongitude)
+        }
             
-            
+        if hubbleLastLat != 0 {
             // MARK: Set up Hubble
             hubbleHeadingFactor = hubbleLatitude - hubbleLastLat < 0 ? -1 : 1
             earthGlobe.addOrbitTrackAroundTheGlobe(for: .hst, lat: hubbleLatitude, lon: hubbleLongitude, headingFactor: hubbleHeadingFactor)
@@ -210,15 +210,14 @@ final class ViewModel: ObservableObject {
             // Add satellite marker
             earthGlobe.addHubbleMarker(lat: hubbleLatitude, lon: hubbleLongitude)
             
+        }
             
             // MARK: Set up the Sun at the current subsolar point
             earthGlobe.setUpTheSun(lat: subsolarCoordinates.latitude, lon: subsolarCoordinates.longitude)
             
             earthGlobe.autoSpinGlobeRun(run: spinEnabled)
-            
-        }
-        
-        // Saves last coordinate for each track to use in calculating north or south heading vector after the second track update
+
+        // Save last latitude for each track to use in calculating north or south heading vector after the second track update
         issLastLat    = issLatitude
         tssLastLat    = tssLatitude
         hubbleLastLat = hubbleLatitude
