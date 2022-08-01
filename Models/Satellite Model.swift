@@ -23,7 +23,7 @@ public enum StationsAndSatellites: String, CaseIterable {
         case .iss  :
             return "25544"
         case .tss  :
-            return "49222"
+            return "48274"
         case .hst  :
             return "20580"
         case .none :
