@@ -15,7 +15,7 @@ class ComplicationController: NSObject, CLKComplicationDataSource {
 
     func getComplicationDescriptors(handler: @escaping ([CLKComplicationDescriptor]) -> Void) {
         let descriptors = [
-            CLKComplicationDescriptor(identifier: "complication", displayName: "ISS Real-Time Tracker", supportedFamilies: CLKComplicationFamily.allCases)
+            CLKComplicationDescriptor(identifier: "complication", displayName: "Track", supportedFamilies: CLKComplicationFamily.allCases)
             // Multiple complication support can be added here with more descriptors
         ]
         
