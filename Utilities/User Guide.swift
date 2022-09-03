@@ -214,7 +214,7 @@ struct UserGuide {
     </li>
     </ul>
     <h4>Choose Your Background</h4>
-    <p>From Settings, you can select from five backgrounds for your fullscreen globe. These are:</p>
+    <p>From Settings, you can select from six backgrounds for your fullscreen globe. These are:</p>
     <ul>
     <li>
     <h5>Hubble Deep Field (the default)</h5>
@@ -227,6 +227,9 @@ struct UserGuide {
     </li>
     <li>
     <h5>Tarantula Nebula in the Large Magellanic Cloud</h5>
+    </li>
+    <li>
+    <h5>James Webb Space Telescope Deep Field</h5>
     </li>
     <li>
     <h5>Just black</h5>
@@ -387,7 +390,7 @@ struct UserGuide {
     </li>
     </ul>
     <h4>Choose Your Background</h4>
-    <p>From Settings, you can select from five backgrounds for your fullscreen globe. These are:</p>
+    <p>From Settings, you can select from six backgrounds for your fullscreen globe. These are:</p>
     <ul>
     <li>
     <h5>Hubble Deep Field (the default)</h5>
@@ -400,6 +403,9 @@ struct UserGuide {
     </li>
     <li>
     <h5>Tarantula Nebula in the Large Magellanic Cloud</h5>
+    </li>
+    <li>
+    <h5>James Webb Space Telescope Deep Field</h5>
     </li>
     <li>
     <h5>Just black</h5>

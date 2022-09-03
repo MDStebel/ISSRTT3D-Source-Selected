@@ -21,18 +21,18 @@ private let whatsNew = WhatsNew(
     // The features and other information to showcase
     items: [
         WhatsNew.Item(
-            title: "What's New",
+            title: "Fixes & Improvements",
             subtitle: """
-                      You can now get crew data for both the International Space Station and Tiangong! Tap the switch target button in the navigation bar to switch between the stations.
-                      """,
-            image: UIImage(systemName: "megaphone.fill")
+            A few small bug fixes.
+            """,
+            image: UIImage(systemName: "ant.fill")
         ),
         WhatsNew.Item(
-            title: "What's Improved",
+            title: "Announcements",
             subtitle: """
-                      Crew member table now reports when no crew members are present on the given station.
+                      120,000+ downloads to date. Thanks users for the great reviews!
                       """,
-            image: UIImage(systemName: "ant.fill")
+            image: UIImage(systemName: "megaphone.fill")
         ),
         WhatsNew.Item(
             title: "Apple Watch App Included",

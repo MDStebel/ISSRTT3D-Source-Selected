@@ -31,7 +31,6 @@ struct Globals {
     static var displayGlobe                                  = true
     static var displayZoomFactorBelowMarkerIsOn              = true
     static var footprintDiameter                             = issMarkerWidth * 2.25
-    static var globeBackgroundImageDefaultSelectionSegment   = 0
     static var globeBackgroundImageSelection                 = 0
     static var globeBackgroundWasChanged                     = true
     static var lastDateAndTimeSettingsWereSaved              = ""
@@ -98,6 +97,7 @@ struct Globals {
     static let elevationFormat                               = "%2.1f"
     static let floatingPointWithThreePlusOneDecimalPlace     = "%3.1f"
     static let floatingPointWithTwoPlusOneDecimalPlace       = "%2.1f"
+    static let globeBackgroundImageDefaultSelectionSegment   = 0
     static let globeRadiusFactor: Float                      = 0.555
     static let helpChar                                      = "?"
     static let hubbleAltitudeFactor: Float                   = hubbleOrbitalAltitudeFactor * 1.015
@@ -120,6 +120,7 @@ struct Globals {
     static let issOrbitalAltitudeFactor                      = globeRadiusFactor * (1 + issAvgAltitudeInKM / earthRadiusInKM) * 1.02
     static let issViewingCircleGraphic                       = "iss_4_visibility_circle"
     static let issrtt3DWebsite                               = "https://www.issrtt.com"
+    static let jamesWebDeepField                             = "jwst-deep-field-2800px"
     static let julianDateForJan011970At0000GMT               = 2440587.5
     static let kilometersToMiles                             = 0.621371192
     static let milkyWay                                      = "Milky Way Correct Rotation in the Sky Square"
