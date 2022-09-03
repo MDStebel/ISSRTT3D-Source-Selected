@@ -139,9 +139,13 @@ class PassesTableViewController: UITableViewController, CLLocationManagerDelegat
         
     }
     
+    
     private func getNumberOfDaysOfPassesToReturn() {
+        
         numberOfDays = Int(Passes.numberOfDaysDictionary[Globals.numberOfDaysOfPassesSelectedSegment] ?? String(Globals.numberOfDaysOfPassesDefaultSelectionSegment))!
+    
     }
+    
     
     override func viewDidLoad() {
         
@@ -185,6 +189,7 @@ class PassesTableViewController: UITableViewController, CLLocationManagerDelegat
         refreshControl?.addTarget(self, action: #selector(refreshTable(_:)), for: .valueChanged)
         
     }
+    
     
     /// Selector for refresh control
     @objc func refreshTable(_ sender: Any) {
