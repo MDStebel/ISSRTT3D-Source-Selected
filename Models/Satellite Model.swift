@@ -10,7 +10,7 @@ import UIKit
 
 // MARK: - Space stations and/or other satellites that we can get pass predictions for
 
-/// Model represents space  stations and their corresponding names and images
+/// Model represents space stations, or any Earth-orbiting satellite, and their corresponding names and images
 public enum StationsAndSatellites: String, CaseIterable {
     
     case iss
@@ -56,6 +56,7 @@ public enum StationsAndSatellites: String, CaseIterable {
             return UIImage(named: Globals.issIconFor3DGlobeView)!
         }
     }
+    
 }
 
 
