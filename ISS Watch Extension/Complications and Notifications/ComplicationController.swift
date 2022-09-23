@@ -3,7 +3,7 @@
 //  ISS Watch Extension
 //
 //  Created by Michael Stebel on 8/26/21.
-//  Copyright © 2021-2022 Michael Stebel Consulting, LLC. All rights reserved.
+//  Copyright © 2021-2022 ISS Real-Time Tracker. All rights reserved.
 //
 
 import ClockKit
@@ -57,4 +57,5 @@ class ComplicationController: NSObject, CLKComplicationDataSource {
         // This method will be called once per supported complication, and the results will be cached
         handler(nil)
     }
+    
 }
