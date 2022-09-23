@@ -714,6 +714,7 @@ TRACKER
                                                         <segment title="" image="Milky Way Correct Rotation in the Sky Square Thumb"/>
                                                         <segment title="" image="Orion Nebula Thumb"/>
                                                         <segment title="" image="Tarantula Nebula in the Large Magellanic Cloud Thumb"/>
+                                                        <segment title="" image="jwst-deep-field-thumb"/>
                                                         <segment title="" image="blackBackgroundImage_thumb"/>
                                                     </segments>
                                                     <color key="tintColor" name="Tint"/>
@@ -2455,7 +2456,7 @@ Days in Space:</string>
     <inferredMetricsTieBreakers>
         <segue reference="cR5-3C-RSS"/>
         <segue reference="ZG3-kZ-xmb"/>
-        <segue reference="QZj-XB-PmD"/>
+        <segue reference="bZ3-Go-siV"/>
         <segue reference="7Ix-1h-Ypp"/>
     </inferredMetricsTieBreakers>
     <color key="tintColor" name="Tint"/>
@@ -2493,6 +2494,7 @@ Days in Space:</string>
         <image name="icons8-sun-1" width="25" height="25"/>
         <image name="icons8-time_span-1" width="25" height="25"/>
         <image name="icons8-twitter_filled" width="33.333332061767578" height="33.333332061767578"/>
+        <image name="jwst-deep-field-thumb" width="100" height="102"/>
         <image name="music.quarternote.3" catalog="system" width="128" height="103"/>
         <image name="noun_Astronaut_110034-3" width="40" height="42"/>
         <image name="noun_Binoculars_22637" width="45" height="45"/>

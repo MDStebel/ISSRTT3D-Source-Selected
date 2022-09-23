@@ -3,7 +3,7 @@
 //  ISS Real-Time Tracker 3D
 //
 //  Created by Michael Stebel on 10/27/20.
-//  Copyright © 2020-2022 Michael Stebel Consulting, LLC. All rights reserved.
+//  Copyright © 2020-2022 ISS Real-Time Tracker. All rights reserved.
 //
 
 import AVFoundation
@@ -117,9 +117,11 @@ class GlobeFullViewController: UIViewController, AVAudioPlayerDelegate, EarthGlo
         case 3 :
             globeBackgroundImageName = Globals.tarantulaNebula
         case 4 :
+            globeBackgroundImageName = Globals.jamesWebDeepField
+        case 5 :
             globeBackgroundImageName = Globals.blackBackgroundImage
         default :
-            globeBackgroundImageName = Globals.hubbleDeepField
+            globeBackgroundImageName = Globals.jamesWebDeepField
         }
         
         spaceBackgroundImage?.image = UIImage(named: globeBackgroundImageName)
