@@ -3,7 +3,7 @@
 //  ISS Real-Time Tracker 3D
 //
 //  Created by Michael Stebel on 10/3/19.
-//  Copyright © 2019-2022 Michael Stebel Consulting, LLC. All rights reserved.
+//  Copyright © 2019-2022 ISS Real-Time Tracker. All rights reserved.
 //  Uses WhatsNewKit by Sven Tiigi
 //
 
@@ -23,7 +23,7 @@ private let whatsNew = WhatsNew(
         WhatsNew.Item(
             title: "Fixes & Improvements",
             subtitle: """
-            A few small bug fixes.
+            Some internal tweaks to support iOS 16 and WatchOS 9. New Apple Watch icon.
             """,
             image: UIImage(systemName: "ant.fill")
         ),
