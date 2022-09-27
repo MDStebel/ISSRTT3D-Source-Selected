@@ -175,7 +175,7 @@ class CrewMembersTableViewController: UITableViewController, TableAnimatable {
         crewURLSession.configuration.urlCache = nil                         // Turn off caching
         
         let urlForCurrentCrew = URL(string: Constants.crewAPIEndpointURLString)!
-
+        
         let crewMembersTask = crewURLSession.dataTask(with: urlForCurrentCrew) { [ weak weakSelf = self ] (data, response, error) -> Void in
             
             if let urlContent = data {
@@ -184,12 +184,12 @@ class CrewMembersTableViewController: UITableViewController, TableAnimatable {
                 if let parsedCrewMembers = Astronaut.parseCurrentCrew(from: urlContent) {
                     
                     weakSelf?.currentCrew = parsedCrewMembers
-                  
-                    // Remove non-ISS people
-                    let issCrewOnly = weakSelf?.currentCrew?.filter { $0.spaceCraft == self.stationName }
                     
-                    // Sort by name and then by title
-                    weakSelf?.currentCrew = issCrewOnly?.sorted {$0.name < $1.name}
+                    // Select only crew members from the target space station
+                    let selectedTargetStationCrewOnly = weakSelf?.currentCrew?.filter { $0.spaceCraft == self.stationName }
+                    
+                    // Sort the list by name and then by title
+                    weakSelf?.currentCrew = selectedTargetStationCrewOnly?.sorted {$0.name < $1.name}
                     weakSelf?.currentCrew?.sort() {$0.title < $1.title}
                     
                     weakSelf?.currentCrewSize = (weakSelf?.currentCrew!.count)!
@@ -199,7 +199,7 @@ class CrewMembersTableViewController: UITableViewController, TableAnimatable {
                         weakSelf?.refreshControl?.endRefreshing()
                         weakSelf?.animate(table: self.crewTable)
                         if weakSelf?.currentCrewSize != 0 {
-                        self.promptLabel.text = "\(self.currentCrewSize) current \(self.station.stationName) crew members\n\(Constants.tapAnyCrewMemberPromptText)"
+                            self.promptLabel.text = "\(self.currentCrewSize) current \(self.station.stationName) crew members\n\(Constants.tapAnyCrewMemberPromptText)"
                         } else {
                             self.promptLabel.text = "No crew is currently onboard \(self.station.stationName)"
                         }
@@ -214,7 +214,6 @@ class CrewMembersTableViewController: UITableViewController, TableAnimatable {
                         weakSelf?.refreshControl?.endRefreshing()
                         weakSelf?.alert(for: "Can't get crew data", message: "Tap Done, wait a few minutes, then try again")
                     }
-                    
                 }
                 
             } else {
@@ -224,9 +223,7 @@ class CrewMembersTableViewController: UITableViewController, TableAnimatable {
                     weakSelf?.refreshControl?.endRefreshing()
                     weakSelf?.cannotConnectToInternetAlert()
                 }
-                
             }
-            
         }
         
         // Start task
