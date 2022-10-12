@@ -110,10 +110,10 @@ class LiveVideoViewController: UIViewController, WKUIDelegate, WKNavigationDeleg
         guard let myJsonFile = URL(string: whichJSONFileToUse) else { return }
         
         let getURLTask = URLSession.shared.dataTask(with: myJsonFile) { (data, response, error) -> Void in
-            if let unparsedData = data {
+            if let data {
                 
                 // Call parser with data and if successful (not nil) copy crew member names to currentCrew string array and fill the table
-                if let parsedURL = try? JSONDecoder().decode(LiveTVChoices.self, from: unparsedData) {
+                if let parsedURL = try? JSONDecoder().decode(LiveTVChoices.self, from: data) {
                     
                     switch self.channelSelected {
                     case .liveEarth :

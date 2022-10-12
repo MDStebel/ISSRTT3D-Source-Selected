@@ -60,7 +60,7 @@ class GlobeFullViewController: UIViewController, AVAudioPlayerDelegate, EarthGlo
     // Soundtrack
     let soundtrackFilePathString = Theme.soundTrack
     var soundtrackMusicPlayer: AVAudioPlayer?
-    var soundtrackButtonOn: Bool = false {
+    var soundtrackButtonOn = false {
         didSet {
             if soundtrackButtonOn {
                 soundtrackMusicButton.image = UIImage(systemName: SoundtrackButtonImage.on)

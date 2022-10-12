@@ -35,8 +35,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         Globals.isIPad              = Globals.thisDevice.hasPrefix("iPad")  // Determine if device is an iPad and set this constant to true if so
 
         // Request user review between shortestTime & longestTime of use
-        let shortestTime: UInt32    = 40                                    // In seconds
-        let longestTime: UInt32     = 140                                   // In seconds
+        let shortestTime: UInt32    = 30                                    // In seconds
+        let longestTime: UInt32     = 100                                   // In seconds
         guard let timeInterval      = TimeInterval(exactly: arc4random_uniform(longestTime - shortestTime) + shortestTime) else { return true }
         Timer.scheduledTimer(timeInterval: timeInterval, target: self, selector: #selector(AppDelegate.requestReview), userInfo: nil, repeats: false)
 
@@ -83,6 +83,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func applicationWillEnterForeground(_ application: UIApplication) {
         
         SettingsDataModel.restoreUserSettings()
+        
     }
     
     

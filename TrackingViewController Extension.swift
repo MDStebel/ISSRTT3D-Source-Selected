@@ -94,10 +94,10 @@ extension TrackingViewController {
             
             // Uses a capture list to capture a weak reference to self. This should prevent a retain cycle and allow ARC to release instance and reduce memory load.
             
-            if let urlContent = data {
+            if let data {
                 
                 // Call JSON parser and if successful (i.e., doesn't return nil) map the coordinates
-                if let parsedOrbitalPosition = ISSOrbitalPosition.parseLocationSpeedAndAltitude(from: urlContent) {
+                if let parsedOrbitalPosition = ISSOrbitalPosition.parseLocationSpeedAndAltitude(from: data) {
                     
                     // Get current location
                     self?.latitude      = String(parsedOrbitalPosition.latitude)

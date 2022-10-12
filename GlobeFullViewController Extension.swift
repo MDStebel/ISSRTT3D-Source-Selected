@@ -50,14 +50,14 @@ extension GlobeFullViewController {
         /// Uses a capture list to capture a weak reference to self. This should prevent a retain cycle and allow ARC to release instance and reduce memory load.
         let globeUpdateTask = URLSession.shared.dataTask(with: endpointURL) { [ weak self ] (data, response, error) in
 
-            if let urlContent = data {
+            if let data {
                 
                 let decoder = JSONDecoder()
                 
                 do {
                     
                     // Parse JSON
-                    let parsedPosition = try decoder.decode(SatelliteOrbitPosition.self, from: urlContent)
+                    let parsedPosition = try decoder.decode(SatelliteOrbitPosition.self, from: data)
                     
                     // Background image may have been changed by user in Settings. If so, change it.
                     if Globals.globeBackgroundWasChanged {

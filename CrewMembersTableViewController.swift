@@ -115,6 +115,7 @@ class CrewMembersTableViewController: UITableViewController, TableAnimatable {
         barAppearance.titleTextAttributes   = [.font : UIFont(name: Constants.fontForTitle, size: titleFontSize) as Any, .foregroundColor : UIColor.white]
         navigationItem.standardAppearance   = barAppearance
         navigationItem.scrollEdgeAppearance = barAppearance
+        
     }
     
     
@@ -178,10 +179,10 @@ class CrewMembersTableViewController: UITableViewController, TableAnimatable {
         
         let crewMembersTask = crewURLSession.dataTask(with: urlForCurrentCrew) { [ weak weakSelf = self ] (data, response, error) -> Void in
             
-            if let urlContent = data {
+            if let data {
                 
                 // Parse data and if successful (not nil) copy crew member names to currentCrew string array and fill the table
-                if let parsedCrewMembers = Astronaut.parseCurrentCrew(from: urlContent) {
+                if let parsedCrewMembers = Astronaut.parseCurrentCrew(from: data) {
                     
                     weakSelf?.currentCrew = parsedCrewMembers
                     
