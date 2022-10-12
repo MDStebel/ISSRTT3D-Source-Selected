@@ -1,6 +1,6 @@
 #  ISS Real-Time Tracker 3D
 
-### App for iPhone, iPad, Mac (with Apple silicon), and Apple Watch
+### App for iPhone, iPad, Apple Watch, and Mac with Apple silicon, 
 ##### Requires iOS 15+, iPadOS 15+, MacOS 12+, and watchOS 8+, respectively
 
 ### Selected source files
@@ -10,7 +10,7 @@ Learn about the app or get support at https://www.issrtt.com
 
 ![banner](https://github.com/MDStebel/ISSRTT3D-Source-Selected/blob/6b67ee73b6474e261112de48f6975fee157236b1/Banner%20-%20ISS%20Real-Time%20Tracker%203D.png)
 
-![banner](https://github.com/MDStebel/ISSRTT-Source-Public/blob/master/Call%20for%20Beta%20Testers.png)
+![banner](https://github.com/MDStebel/ISSRTT3D-Source-Selected/blob/afb3273a3790f2403a8e3cab3ec536dfffac3daa/Call%20for%20Beta%20Testers.png)
 
 
 ###### © 2016-2022 ISS Real-Time Tracker. All Rights Reserved.
