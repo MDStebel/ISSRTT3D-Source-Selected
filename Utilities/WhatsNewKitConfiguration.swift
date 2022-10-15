@@ -12,6 +12,8 @@
 import WhatsNewKit
 import UIKit
 
+// TODO: - Don't forget to update the subtitle for the Fixes & Improvements section
+
 // Initialize a WhatsNew instance
 private let whatsNew = WhatsNew(
     
