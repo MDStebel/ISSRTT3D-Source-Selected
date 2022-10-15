@@ -3,7 +3,7 @@
 //  ISS Real-Time Tracker 3D
 //
 //  Created by Michael Stebel on 5/11/19.
-//  Copyright © 2019-2022 Michael Stebel Photography, LLC. All rights reserved.
+//  Copyright © 2016-2022 ISS Real-Time Tracker. All rights reserved.
 //
 
 import Foundation
@@ -20,5 +20,4 @@ extension String {
         return String(self.dropFirst(prefix.count))
         
     }
-    
 }
