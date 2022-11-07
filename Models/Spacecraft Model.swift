@@ -38,7 +38,7 @@ public enum Spacecraft: String, CaseIterable {
         case .crewDragon :
             return #imageLiteral(resourceName: "spacex-dragon-spacecraft-1")
         case .starliner  :
-            return #imageLiteral(resourceName: "astronaut_filled_Grey")
+            return #imageLiteral(resourceName: "starliner-spacecraft")
         case .shenzhou   :
             return #imageLiteral(resourceName: "Shenzhou")
         }
