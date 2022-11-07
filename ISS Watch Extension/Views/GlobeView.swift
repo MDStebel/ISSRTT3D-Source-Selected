@@ -55,7 +55,7 @@ struct GlobeView: View {
                             vm.spinEnabled.toggle()
                         })
                         {
-                            Image("rotate3D")
+                            Image(systemName: "rotate.3d")
                         }
                         .withSmallButtonModifier
                         
