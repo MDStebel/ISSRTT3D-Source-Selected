@@ -193,7 +193,7 @@ struct UserGuide {
     </ul>
     <h4><a href="#contents">Back to contents</a></h4>
     <div id="globe"></div>
-    <h2>Fullscreen Interactive 3D Globe</h2>
+    <h2>Interactive 3D Globe</h2>
     <p>From the Tracking screen, tapping the expand icon on the globe overlay, or the globe icon on the tab bar, expands the globe to fullscreen mode and hides the map.</p>
     <p>The 3D interactive globe shows the current position of the ISS, its orbital track, and footprint (viewing range circle). The globe also shows the current position of the new Chinese Space Station, Tiangong-3 (TSS), its orbital track, and footprint (viewing range circle), as well as those of the Hubble. The ISS track and footprint are shown in red, in gold for the TSS, and in blue for the Hubble.</p>
     <p>The globe is a photorealistic model of the Earth complete with accurate Sun subsolar position, specular reflections on the water, seasonal tilt, mountain shadows, and other details.</p>
@@ -237,22 +237,15 @@ struct UserGuide {
     </ul>
     <h5>Notes:</h5>
     <ul>
-    <li>
-    <h6>The red, gold, and blue circles represent the approximate ISS, TSS, and Hubble sighting ranges (i.e., footprints), respectively, from ground level under perfect conditions. Use the Pass Predictor to get viewable ISS, TSS, or Hubble passes from your exact location.</h6>
-    </li>
-    <li>
-    <h6>Auto-rotation is enabled by default and rotates the globe once every 90 seconds.</h6>
-    </li>
-    <li>
-    <h6>To disable auto-rotation, as well as to enable/disable the globe entirely, go to Settings.</h6>
-    </li>
-    <li>
-    <h6>The music soundtrack will be disabled (not play) by default. Click the ♪ icon at the upper-right to toggle the soundtrack on/off.</h6>
-    </li>
+    <li><h6>The red, gold, and blue circles represent the approximate ISS, TSS, and Hubble sighting ranges (i.e., footprints), respectively, from ground level under perfect conditions. Use the Pass Predictor to get viewable ISS, TSS, or Hubble passes from your exact location.</h6></li>
+    <li><h6>Auto-rotation is enabled by default and rotates the globe once every 90 seconds.</h6></li>
+    <li><h6>To enable/disable auto-rotation, tap the toggle auto-rotation button on the upper-right, or go to Settings.</h6></li>
+    <li><h6>Tap the reset button on the upper-right of the globe scene to reset the globe.</h6></li>
+    <li><h6>The music soundtrack will be disabled (not play) by default. Click the ♪ icon at the upper-right to toggle the soundtrack on/off.</h6></li>
     </ul>
-    <p>Tap the reset button on the upper-middle of the globe scene to reset the globe.</p>
-    <p>Tap the collapse button on the upper-right of the globe scene, or <, to return to the tracking screen.</p>
-    <h4><a href="#contents">Back to contents</a></h4><div id="crew"></div>
+    <p>Tap the collapse button on the upper-right of the globe scene, or the back button, to return to the tracking screen.</p>
+    <h4><a href="#contents">Back to contents</a></h4>
+    <div id="crew"></div>
     <h2>Current Crew</h2>
     <p>Tap the astronaut icon at the bottom of the screen to get a table of information about the current space station crew.</p>
     <h4>Switching Stations</h4>
@@ -413,21 +406,13 @@ struct UserGuide {
     </ul>
     <h5>Notes:</h5>
     <ul>
-    <li>
-    <h6>The red, gold, and blue circles represent the approximate ISS, TSS, and Hubble sighting ranges (i.e., footprints), respectively, from ground level under perfect conditions. Use the Pass Predictor to get viewable ISS, TSS, or Hubble passes from your exact location.</h6>
-    </li>
-    <li>
-    <h6>Auto-rotation is enabled by default and rotates the globe once every 90 seconds.</h6>
-    </li>
-    <li>
-    <h6>To disable auto-rotation, as well as to enable/disable the globe entirely, go to Settings.</h6>
-    </li>
-    <li>
-    <h6>The music soundtrack will be disabled (not play) by default. Click the ♪ icon at the upper-right to toggle the soundtrack on/off.</h6>
-    </li>
+    <li><h6>The red, gold, and blue circles represent the approximate ISS, TSS, and Hubble sighting ranges (i.e., footprints), respectively, from ground level under perfect conditions. Use the Pass Predictor to get viewable ISS, TSS, or Hubble passes from your exact location.</h6></li>
+    <li><h6>Auto-rotation is enabled by default and rotates the globe once every 90 seconds.</h6></li>
+    <li><h6>To enable/disable auto-rotation, tap the toggle auto-rotation button on the upper-right, or go to Settings.</h6></li>
+    <li><h6>Tap the reset button on the upper-right of the globe scene to reset the globe.</h6></li>
+    <li><h6>The music soundtrack will be disabled (not play) by default. Click the ♪ icon at the upper-right to toggle the soundtrack on/off.</h6></li>
     </ul>
-    <p>Tap the reset button on the upper-middle of the globe scene to reset the globe.</p>
-    <p>Tap the collapse button on the upper-right of the globe scene, or <, to return to the tracking screen.</p>
+    <p>Tap the collapse button on the upper-right of the globe scene, or the back button, to return to the tracking screen.</p>
     \(tail)
     """
     

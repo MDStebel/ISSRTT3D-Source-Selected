@@ -12,7 +12,7 @@
 import WhatsNewKit
 import UIKit
 
-// TODO: - Don't forget to update the subtitle for the Fixes & Improvements section
+#warning("Update Fixes and Announcements before uploading to App Store")
 
 // Initialize a WhatsNew instance
 private let whatsNew = WhatsNew(
@@ -25,14 +25,14 @@ private let whatsNew = WhatsNew(
         WhatsNew.Item(
             title: "Fixes & Improvements",
             subtitle: """
-            Some internal tweaks to support iOS 16 and WatchOS 9. New Apple Watch icon.
+            Added autorotation enable/disable button to 3D globe screen.
             """,
             image: UIImage(systemName: "ant.fill")
         ),
         WhatsNew.Item(
             title: "Announcements",
             subtitle: """
-                      120,000+ downloads to date. Thanks users for the great reviews!
+                      Like this? Please give this app a rating/review in Settings.
                       """,
             image: UIImage(systemName: "megaphone.fill")
         ),
