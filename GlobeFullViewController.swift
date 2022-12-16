@@ -3,7 +3,7 @@
 //  ISS Real-Time Tracker 3D
 //
 //  Created by Michael Stebel on 10/27/20.
-//  Copyright © 2020-2022 ISS Real-Time Tracker. All rights reserved.
+//  Copyright © 2020-2023 ISS Real-Time Tracker. All rights reserved.
 //
 
 import AVFoundation
@@ -203,14 +203,6 @@ class GlobeFullViewController: UIViewController, AVAudioPlayerDelegate, EarthGlo
     }
     
     
-    func stopUpdatingGlobe() {
-        
-        timer?.cancel()
-        isRunningLabel?.text = "Not Running"
-        
-    }
-    
-    
     @IBAction func resetGlobe(_ sender: UIButton) {
         
         reset()
@@ -225,6 +217,21 @@ class GlobeFullViewController: UIViewController, AVAudioPlayerDelegate, EarthGlo
         fullGlobe = EarthGlobe()
         setUpEarthGlobeScene(for: fullGlobe, in: fullScreenGlobeView, hasTintedBackground: false)
         startUpdatingGlobe()
+        
+    }
+    
+    
+    func stopUpdatingGlobe() {
+        
+        timer?.cancel()
+        isRunningLabel?.text = "Not Running"
+        
+    }
+    
+    
+    @IBAction func toggleAutoRotation() {
+        
+        Globals.autoRotateGlobeEnabled.toggle()
         
     }
     
@@ -250,6 +257,7 @@ class GlobeFullViewController: UIViewController, AVAudioPlayerDelegate, EarthGlo
         
         default :
             break
+            
         }
         
     }
