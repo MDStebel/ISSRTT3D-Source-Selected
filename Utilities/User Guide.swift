@@ -3,7 +3,7 @@
 //  ISS Real-Time Tracker 3D
 //
 //  Created by Michael Stebel on 6/15/18.
-//  Copyright © 2018-2022 ISS Real-Time Tracker. All rights reserved.
+//  Copyright © 2018-2023 ISS Real-Time Tracker. All rights reserved.
 //
 
 import UIKit
@@ -179,7 +179,7 @@ struct UserGuide {
     <h4>Ground Track</h4>
     <p>The orbit ground track line is drawn by default. This shows the ground track of the ISS. You can turn this on/off in Settings by tapping the settings icon from the Tracking screen. When the orbit track is on, the ground track clear button is displayed on the Tracking screen.</p>
     <h4>3D Globe Overlay</h4>
-    <p>The globe shows the current position of the ISS, its orbital track, and viewing range circle. The globe is a photorealistic model of the Earth complete with accurate Sun subsolar position, specular reflections on the water, seasonal tilt, mountain shadows, and other details. Drag the globe to rotate and pan it. The circle represents the approximate ISS sighting range from ground level. Auto-rotation is enabled by default and rotates the globe once every 90 seconds. To disable auto-rotation, as well as to enable/disable the globe overlay entirely, go to Settings. Tapping the expand icon on the globe overlay, or the globe button on the tab bar, expands the globe to fullscreen mode and hides the map. Tap the reset button to reset the globe.</p>
+    <p>The globe shows the current position of the ISS, its orbital track, and viewing range circle. The globe is a photorealistic model of the Earth complete with accurate Sun subsolar position, specular reflections on the water, seasonal tilt, mountain shadows, and other details. Drag the globe to rotate and pan it. The circle represents the approximate ISS sighting range from ground level. Autorotation is enabled by default and rotates the globe once every 90 seconds. To disable autorotation, as well as to enable/disable the globe overlay entirely, go to Settings. Tapping the expand icon on the globe overlay, or the globe button on the tab bar, expands the globe to fullscreen mode and hides the map. Tap the reset button to reset the globe.</p>
     <h4>Copy Info to the Clipboard</h4>
     <p>Tap the copy icon next to the info box on bottom of the map to copy the ISS's location, altitude, velocity, and associated time to the clipboard. You can then paste the data in another app.</p>
     <h5>Notes:</h5>
@@ -238,8 +238,8 @@ struct UserGuide {
     <h5>Notes:</h5>
     <ul>
     <li><h6>The red, gold, and blue circles represent the approximate ISS, TSS, and Hubble sighting ranges (i.e., footprints), respectively, from ground level under perfect conditions. Use the Pass Predictor to get viewable ISS, TSS, or Hubble passes from your exact location.</h6></li>
-    <li><h6>Auto-rotation is enabled by default and rotates the globe once every 90 seconds.</h6></li>
-    <li><h6>To enable/disable auto-rotation, tap the toggle auto-rotation button on the upper-right, or go to Settings.</h6></li>
+    <li><h6>Autorotation is enabled by default and rotates the globe once every 90 seconds.</h6></li>
+    <li><h6>To enable/disable autorotation, tap the toggle autorotation button on the upper-right, or go to Settings.</h6></li>
     <li><h6>Tap the reset button on the upper-right of the globe scene to reset the globe.</h6></li>
     <li><h6>The music soundtrack will be disabled (not play) by default. Click the ♪ icon at the upper-right to toggle the soundtrack on/off.</h6></li>
     </ul>
@@ -407,8 +407,8 @@ struct UserGuide {
     <h5>Notes:</h5>
     <ul>
     <li><h6>The red, gold, and blue circles represent the approximate ISS, TSS, and Hubble sighting ranges (i.e., footprints), respectively, from ground level under perfect conditions. Use the Pass Predictor to get viewable ISS, TSS, or Hubble passes from your exact location.</h6></li>
-    <li><h6>Auto-rotation is enabled by default and rotates the globe once every 90 seconds.</h6></li>
-    <li><h6>To enable/disable auto-rotation, tap the toggle auto-rotation button on the upper-right, or go to Settings.</h6></li>
+    <li><h6>Autorotation is enabled by default and rotates the globe once every 90 seconds.</h6></li>
+    <li><h6>To enable/disable autorotation, tap the toggle autorotation button on the upper-right, or go to Settings.</h6></li>
     <li><h6>Tap the reset button on the upper-right of the globe scene to reset the globe.</h6></li>
     <li><h6>The music soundtrack will be disabled (not play) by default. Click the ♪ icon at the upper-right to toggle the soundtrack on/off.</h6></li>
     </ul>

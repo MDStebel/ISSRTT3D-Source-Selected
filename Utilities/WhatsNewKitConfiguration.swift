@@ -3,7 +3,7 @@
 //  ISS Real-Time Tracker 3D
 //
 //  Created by Michael Stebel on 10/3/19.
-//  Copyright © 2019-2022 ISS Real-Time Tracker. All rights reserved.
+//  Copyright © 2019-2023 ISS Real-Time Tracker. All rights reserved.
 //  Uses WhatsNewKit by Sven Tiigi
 //
 
@@ -25,8 +25,8 @@ private let whatsNew = WhatsNew(
         WhatsNew.Item(
             title: "Fixes & Improvements",
             subtitle: """
-            Added autorotation enable/disable button to 3D globe screen.
-            """,
+                      Just some under-the-hood stuff.
+                      """,
             image: UIImage(systemName: "ant.fill")
         ),
         WhatsNew.Item(
