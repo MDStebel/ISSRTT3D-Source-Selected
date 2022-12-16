@@ -3,7 +3,7 @@
 //  ISS Watch Extension
 //
 //  Created by Michael Stebel on 9/8/21.
-//  Copyright © 2021-2022 ISS Real-Time Tracker. All rights reserved.
+//  Copyright © 2021-2023 ISS Real-Time Tracker. All rights reserved.
 //
 
 import Combine
