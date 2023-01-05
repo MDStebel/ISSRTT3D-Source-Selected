@@ -25,7 +25,7 @@ private let whatsNew = WhatsNew(
         WhatsNew.Item(
             title: "Fixes & Improvements",
             subtitle: """
-                      Just some under-the-hood stuff.
+                      .
                       """,
             image: UIImage(systemName: "ant.fill")
         ),

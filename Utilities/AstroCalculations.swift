@@ -48,7 +48,7 @@ public struct AstroCalculations {
     }
     
     
-    /// Calculate the orbital eccentricity of the Earth
+    /// Calculate the Orbital Eccentricity of the Earth
     ///
     /// The orbital eccentricity of an astronomical object is a dimensionless parameter that determines the amount by which its orbit around another body deviates from a perfect circle.
     /// - Parameter t: Julian century as a Double
@@ -62,7 +62,7 @@ public struct AstroCalculations {
     }
     
     
-    /// Calculate the mean anomaly of the Sun for a given date
+    /// Calculate the Mean Anomaly of the Sun for a given date
     ///
     /// The mean anomaly is the angle between lines drawn from the Sun to the perihelion and to a point moving in the orbit at a uniform rate corresponding to the period of revolution of the planet.
     /// If the orbit of the planet were a perfect circle, then the planet as seen from the Sun would move along its orbit at a fixed speed.
@@ -79,7 +79,7 @@ public struct AstroCalculations {
     }
     
     
-    /// Calculate the equation of time for a given date
+    /// Calculate the Equation of Time for a given date
     ///
     /// The equation of time (EOT) is a formula used in the process of converting between solar time and clock time to compensate for the earth's elliptical orbit around the sun and its axial tilt.
     /// Essentially, the earth does not move perfectly smoothly in a perfectly circular orbit, so the EOT adjusts for that.
@@ -107,7 +107,7 @@ public struct AstroCalculations {
     }
     
     
-    /// Calculate the Sun equation of Center
+    /// Calculate the Sun Equation of Center
     ///
     /// The orbits of the planets are not perfect circles but rather ellipses, so the speed of the planet in its orbit varies, and therefore the apparent speed of the Sun along the ecliptic also varies throughout the planet's year.
     /// The true anomaly is the angular distance of the planet from the perihelion of the planet, as seen from the Sun. For a circular orbit, the mean anomaly and the true anomaly are the same.
@@ -124,7 +124,7 @@ public struct AstroCalculations {
     }
     
     
-    /// Calculate the geometric mean longitude of the Sun
+    /// Calculate the Geometric Mean Longitude of the Sun
     ///
     /// The mean longitude of the Sun, corrected for the aberration of light. Mean longitude is the ecliptic longitude at which an orbiting body could be found if its orbit were circular and free of perturbations.
     /// While nominally a simple longitude, in practice the mean longitude does not correspond to any one physical angle.
