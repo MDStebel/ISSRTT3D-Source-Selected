@@ -32,7 +32,7 @@ private let whatsNew = WhatsNew(
         WhatsNew.Item(
             title: "Announcements",
             subtitle: """
-                      Like this? Please give this app a rating/review in Settings.
+                      Like it? Please give this app a rating/review in Settings.
                       """,
             image: UIImage(systemName: "megaphone.fill")
         ),

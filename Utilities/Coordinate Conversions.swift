@@ -37,7 +37,7 @@ struct CoordinateConversions: ConvertsToDegreesMinutesSeconds {
         return String(format: format, abs(latDegrees), latMinutes, latSeconds, { latDegrees >= 0 ? "N" : "S" }(), abs(lonDegrees), lonMinutes, lonSeconds, { lonDegrees >= 0 ? "E" : "W" }())
     }
     
-#else // watchOS
+#else // WatchOS
     
     /// Convert an individual coordinate from decimal to degrees, minutes, seconds, and direction
     ///
