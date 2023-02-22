@@ -265,10 +265,10 @@ extension ViewModel {
         let satelliteCodeNumber = satellite.satelliteNORADCode
         
         /// Make sure we can create the URL from the endpoint and parameters
-        guard let ISSAPIEndpointURL = URL(string: apiEndpointString + "\(satelliteCodeNumber)/0/0/0/1/" + "&apiKey=\(apiKey)") else { return }
+        guard let url = URL(string: apiEndpointString + "\(satelliteCodeNumber)/0/0/0/1/" + "&apiKey=\(apiKey)") else { return }
         
         /// Get data using Combine's dataTaskPublisher
-        URLSession.shared.dataTaskPublisher(for: ISSAPIEndpointURL)
+        URLSession.shared.dataTaskPublisher(for: url)
             .map { (data: Data, response: URLResponse) in
                 data
             }

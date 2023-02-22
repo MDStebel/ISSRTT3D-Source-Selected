@@ -34,9 +34,9 @@ class LiveVideoViewController: UIViewController, WKUIDelegate, WKNavigationDeleg
     
     
     /// Live video feed address
-    private var videoURL    = ""
+    private var videoURL  = ""
     
-    private var helpTitle   = ""
+    private var helpTitle = ""
     
     /// The web view
     private var webView: WKWebView! {
@@ -109,7 +109,11 @@ class LiveVideoViewController: UIViewController, WKUIDelegate, WKNavigationDeleg
         // Make sure we can create the URL
         guard let myJsonFile = URL(string: whichJSONFileToUse) else { return }
         
-        let getURLTask = URLSession.shared.dataTask(with: myJsonFile) { (data, response, error) -> Void in
+        let configuration = URLSessionConfiguration.ephemeral               // Set up an ephemeral session, which uses only RAM and no persistent storage for cache, etc.
+        let tvURLSession = URLSession(configuration: configuration)
+        tvURLSession.configuration.urlCache = nil                           // Turn off caching
+        
+        let getURLTask = tvURLSession.dataTask(with: myJsonFile) { (data, response, error) -> Void in
             if let data {
                 
                 // Call parser with data and if successful (not nil) copy crew member names to currentCrew string array and fill the table
@@ -171,7 +175,7 @@ class LiveVideoViewController: UIViewController, WKUIDelegate, WKNavigationDeleg
             DispatchQueue.main.async {
                 self.webView.load(urlRequest)                       // Load web page from the main queue
                 
-                // Only the live Earth view needs to present this popup
+                // Only the Live Earth view needs to present this popup
                 if Globals.blackScreenInHDEVExplanationPopsUp && self.channelSelected == .liveEarth {
                     self.explainBlankScreenToUserPopup()
                 }

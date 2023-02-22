@@ -72,7 +72,7 @@ struct UserGuide {
     <h2>Contents</h2>
     <p>Tap an item from the list below to jump to that section:</p>
     <h4><a href="#passes">Pass Predictions</a></h4>
-    <h4><a href="#track">Tracking Map View</a></h4>
+    <h4><a href="#track">2D Tracking Map</a></h4>
     <h4><a href="#globe">Fullscreen Interactive 3D Globe</a></h4>
     <h4><a href="#crew">Current Crew</a></h4>
     <h4><a href="#streaming">Live Earth View</a></h4>
@@ -133,8 +133,11 @@ struct UserGuide {
     <p>Tap < to return to the map and resume tracking.</p>
     <h4><a href="#contents">Back to contents</a></h4>
     <div id="track"></div>
-    <h2>Tracking Map View</h2>
-    <p>To locate and track the International Space Station in real time, tap the play button at the bottom of the screen. To pause tracking, tap the pause button.</p>
+    <h2>2D Tracking Map</h2>
+    <p>To locate and track the ISS (default), TSS, or Hubble in real time, tap the play button at the bottom of the screen. To pause tracking, tap the pause button.</p>
+    <h4>Switching Targets</h4>
+    <p>To change the target satellite to ISS, TSS, or Hubble, tap the target button at the top-left of the screen.</p>
+    <h4>Map Formats</h4>
     <p>You can select from the following map types in Settings from the Tracking screen:</p>
     <ul>
     <li>
@@ -177,11 +180,11 @@ struct UserGuide {
     </ul>
     <p>The time interval between map updates is automatically set from 1 to 6 seconds, based upon the zoom slider setting. With the slider all the way to the left, the update interval is set at 1 second. As you drag the slider right, it increases by 1 second up to a maximum interval of 6 seconds. This keeps the relative motion of the map roughly equal at all scales within a given range.</p>
     <h4>Ground Track</h4>
-    <p>The orbit ground track line is drawn by default. This shows the ground track of the ISS. You can turn this on/off in Settings by tapping the settings icon from the Tracking screen. When the orbit track is on, the ground track clear button is displayed on the Tracking screen.</p>
+    <p>The orbit ground track line is drawn by default. This shows the ground track of the selected target. You can turn this on/off in Settings by tapping the settings icon from the 2D tracking map. When the orbit track is on, the ground track clear button is displayed on the Tracking screen. The track is automatically cleared when the target is switched to another satellite.</p>
     <h4>3D Globe Overlay</h4>
-    <p>The globe shows the current position of the ISS, its orbital track, and viewing range circle. The globe is a photorealistic model of the Earth complete with accurate Sun subsolar position, specular reflections on the water, seasonal tilt, mountain shadows, and other details. Drag the globe to rotate and pan it. The circle represents the approximate ISS sighting range from ground level. Autorotation is enabled by default and rotates the globe once every 90 seconds. To disable autorotation, as well as to enable/disable the globe overlay entirely, go to Settings. Tapping the expand icon on the globe overlay, or the globe button on the tab bar, expands the globe to fullscreen mode and hides the map. Tap the reset button to reset the globe.</p>
+    <p>The globe shows the current position of selected target, its orbital track, and viewing range circle. The globe is a photorealistic model of the Earth complete with accurate Sun subsolar position, specular reflections on the water, seasonal tilt, mountain shadows, and other details. Drag the globe to rotate and pan it. The circle represents the approximate target sighting range from ground level. Autorotation is enabled by default and rotates the globe once every 90 seconds. To disable autorotation, as well as to enable/disable the globe overlay entirely, go to Settings. Tapping the expand icon on the globe overlay, or the globe button on the tab bar, expands the globe to fullscreen mode and hides the map. Tap the reset button to reset the globe.</p>
     <h4>Copy Info to the Clipboard</h4>
-    <p>Tap the copy icon next to the info box on bottom of the map to copy the ISS's location, altitude, velocity, and associated time to the clipboard. You can then paste the data in another app.</p>
+    <p>Tap the copy icon next to the info box on bottom of the map to copy the target's location, altitude, velocity, and associated time to the clipboard. You can then paste the data in another app.</p>
     <h5>Notes:</h5>
     <ul>
     <li>
@@ -195,7 +198,7 @@ struct UserGuide {
     <div id="globe"></div>
     <h2>Interactive 3D Globe</h2>
     <p>From the Tracking screen, tapping the expand icon on the globe overlay, or the globe icon on the tab bar, expands the globe to fullscreen mode and hides the map.</p>
-    <p>The 3D interactive globe shows the current position of the ISS, its orbital track, and footprint (viewing range circle). The globe also shows the current position of the new Chinese Space Station, Tiangong-3 (TSS), its orbital track, and footprint (viewing range circle), as well as those of the Hubble. The ISS track and footprint are shown in red, in gold for the TSS, and in blue for the Hubble.</p>
+    <p>The fullscreen 3D interactive globe shows the current position of the ISS, TSS, and Hubble. It plots their orbital tracks and groundtrack footprints (viewing range circle). The ISS track and footprint are shown in red, in gold for the TSS, and in blue for the Hubble.</p>
     <p>The globe is a photorealistic model of the Earth complete with accurate Sun subsolar position, specular reflections on the water, seasonal tilt, mountain shadows, and other details.</p>
     <p>The globe starts updating automatically when in fullscreen mode.</p>
     <h4>Using Gestures</h4>
@@ -363,8 +366,7 @@ struct UserGuide {
     """
     \(head)
     <h2>Interactive 3D Globe</h2>
-    <p>From the Tracking screen, tapping the expand icon on the globe overlay, or the globe icon on the tab bar, expands the globe to fullscreen mode and hides the map.</p>
-    <p>The 3D interactive globe shows the current position of the ISS, its orbital track, and footprint (viewing range circle). The globe also shows the current position of the new Chinese Space Station, Tiangong-3 (TSS), its orbital track, and footprint (viewing range circle), as well as those of the Hubble. The ISS track and footprint are shown in red, in gold for the TSS, and in blue for the Hubble.</p>
+    <p>The fullscreen 3D interactive globe shows the current position of the ISS, TSS, and Hubble. It plots their orbital tracks and groundtrack footprints (viewing range circle). The ISS track and footprint are shown in red, in gold for the TSS, and in blue for the Hubble.</p>
     <p>The globe is a photorealistic model of the Earth complete with accurate Sun subsolar position, specular reflections on the water, seasonal tilt, mountain shadows, and other details.</p>
     <p>The globe starts updating automatically when in fullscreen mode.</p>
     <h4>Using Gestures</h4>

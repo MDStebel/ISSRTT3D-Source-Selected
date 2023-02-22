@@ -86,8 +86,8 @@ class CrewMembersTableViewController: UITableViewController, TableAnimatable {
         
         selectTarget.image     = stationSelectionButton
         stationID              = station.satelliteNORADCode
-        stationImage           = station.stationImage
-        stationName            = station.stationName
+        stationImage           = station.satelliteImage
+        stationName            = station.satelliteName
         if stationName == "ISS" {
             stationName = "International Space Station"     // We're using the long name for ISS here
         }
@@ -200,9 +200,9 @@ class CrewMembersTableViewController: UITableViewController, TableAnimatable {
                         weakSelf?.refreshControl?.endRefreshing()
                         weakSelf?.animate(table: self.crewTable)
                         if weakSelf?.currentCrewSize != 0 {
-                            self.promptLabel.text = "\(self.currentCrewSize) current \(self.station.stationName) crew members\n\(Constants.tapAnyCrewMemberPromptText)"
+                            self.promptLabel.text = "\(self.currentCrewSize) current \(self.station.satelliteName) crew members\n\(Constants.tapAnyCrewMemberPromptText)"
                         } else {
-                            self.promptLabel.text = "No crew is currently onboard \(self.station.stationName)"
+                            self.promptLabel.text = "No crew is currently onboard \(self.station.satelliteName)"
                         }
                     }
                     
@@ -244,7 +244,7 @@ class CrewMembersTableViewController: UITableViewController, TableAnimatable {
         }
         UIPasteboard.general.string = crewListString                                      // Copy to general pasteboard
         
-        alert(for: "\(currentCrewSize) \(self.station.stationName) Crew Members\nCopied to Your Clipboard", message: crewListString)
+        alert(for: "\(currentCrewSize) \(self.station.satelliteName) Crew Members\nCopied to Your Clipboard", message: crewListString)
         
     }
       
@@ -412,7 +412,7 @@ extension CrewMembersTableViewController {
         
         // Add selection for each of the stations for which we can get crew data
         for target in [StationsAndSatellites.iss, StationsAndSatellites.tss] {
-            alertController.addAction(UIAlertAction(title: "\(target.stationName)", style: .default) { (choice) in
+            alertController.addAction(UIAlertAction(title: "\(target.satelliteName)", style: .default) { (choice) in
                 self.station = target
                 DispatchQueue.global(qos: .userInteractive).async {
                     self.getCurrrentCrewMembers()

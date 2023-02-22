@@ -56,7 +56,7 @@ struct Globals {
     
     // MARK: - Global Constants
     
-#if os(watchOS) // watchOS-specific settings
+#if os(watchOS) // watchOS specific settings
     
     static let ambientLightIntensity: CGFloat                = 200
     static let coordinatesStringFormat                       = "%3d°%02d'%02d\"%@"
@@ -68,7 +68,7 @@ struct Globals {
     static let ringSegments                                  = 100
     static let sunlightIntensity: CGFloat                    = 3600
     
-#else           // iOS and iPadOS-specific settings
+#else           // iOS and iPadOS specific settings
     
     static let ambientLightIntensity: CGFloat                = 100
     static let coordinatesStringFormat                       = "%3d°%02d'%02d\"%@, %3d°%02d'%02d\"%@"
@@ -103,6 +103,7 @@ struct Globals {
     static let hubbleAltitudeFactor: Float                   = hubbleOrbitalAltitudeFactor * 1.015
     static let hubbleDeepField                               = "Hubble Legacy Field Crop 2800px"
     static let hubbleIconFor3DGlobeView                      = "HST-Image"
+    static let hubbleIconForMapView                          = "HST-Icon-75px"
     static let hubbleMarkerWidth: CGFloat                    = 0.06
     static let hubbleMaxAltitudeInKM: Float                  = 550
     static let hubbleOrbitAltitudeInScene                    = hubbleOrbitalAltitudeFactor
@@ -150,6 +151,7 @@ struct Globals {
     static let threeSixtyDegrees: Float                      = 360
     static let tssAltitudeFactor: Float                      = tssOrbitalAltitudeFactor * 1.015
     static let tssIconFor3DGlobeView                         = "Tiangong-mds-1200px"
+    static let tssIconForMapView                             = "Tiangong-mds-75px"
     static let tssMarkerWidth: CGFloat                       = 0.07
     static let tssMinAltitudeInKM: Float                     = 370
     static let tssOrbitAltitudeInScene                       = tssOrbitalAltitudeFactor

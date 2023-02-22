@@ -8,7 +8,7 @@
 
 import SceneKit
 
-/// The 3D Interactive 3D Earth Globe Model
+/// ISSRTT3D's 3D Interactive 3D Earth Globe Model
 final class EarthGlobe: ObservableObject {
     
     // MARK: - Properties
@@ -124,6 +124,7 @@ final class EarthGlobe: ObservableObject {
     
     
 #if !os(watchOS)
+    
     /// Set up our scene
     /// - Parameters:
     ///   - theScene: The scene view to use
@@ -147,6 +148,7 @@ final class EarthGlobe: ObservableObject {
         completeTheSetup()
         
     }
+    
 #endif
     
     

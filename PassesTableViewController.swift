@@ -126,8 +126,8 @@ class PassesTableViewController: UITableViewController, CLLocationManagerDelegat
         
         selectTarget.image     = stationSelectionButton
         stationID              = station.satelliteNORADCode
-        stationImage           = station.stationImage
-        stationName            = station.stationName
+        stationImage           = station.satelliteImage
+        stationName            = station.satelliteName
         
     }
     
@@ -278,7 +278,7 @@ class PassesTableViewController: UITableViewController, CLLocationManagerDelegat
     ///   - usingStyle: The alert style
     private func switchStationPopup(withTitle title: String, withStyleToUse usingStyle : UIAlertController.Style) {
         
-        let alertController = UIAlertController(title: title, message: "Switch to a different target for pass predictions", preferredStyle: usingStyle)
+        let alertController = UIAlertController(title: title, message: "Select a satellite target for pass predictions", preferredStyle: usingStyle)
         
         alertController.addAction(UIAlertAction(title: "Back", style: .cancel) { (dontShow) in
             self.dismiss(animated: true, completion: nil)
@@ -286,7 +286,7 @@ class PassesTableViewController: UITableViewController, CLLocationManagerDelegat
         
         // Add selection for each of the stations/satellites for which we can get pass predictions
         for target in [StationsAndSatellites.iss, StationsAndSatellites.tss, StationsAndSatellites.hst] {
-            alertController.addAction(UIAlertAction(title: "\(target.stationName)", style: .default) { (choice) in
+            alertController.addAction(UIAlertAction(title: "\(target.satelliteName)", style: .default) { (choice) in
                 self.station = target
                 self.restartGettingUserLocation()
             })
@@ -321,14 +321,14 @@ class PassesTableViewController: UITableViewController, CLLocationManagerDelegat
                     refreshControl?.endRefreshing()
                     animate(table: overheadTimes)
                     userCurrentCoordinatesString = CoordinateConversions.decimalCoordinatesToDegMinSec(latitude: userLatitude, longitude: userLongitude, format: Globals.coordinatesStringFormat)
-                    promptLabel.text = "\(numberOfOverheadTimesActuallyReported) \(numberOfOverheadTimesActuallyReported > 1 ? "\(station.stationName) passes" : "\(station.stationName) pass") found over next \(numberOfDays) days\nYour location: \(userCurrentCoordinatesString)\nTap a pass to add alert to your calendar"
+                    promptLabel.text = "\(numberOfOverheadTimesActuallyReported) \(numberOfOverheadTimesActuallyReported > 1 ? "\(station.satelliteName) passes" : "\(station.satelliteName) pass") found over next \(numberOfDays) days\nYour location: \(userCurrentCoordinatesString)\nTap a pass to add alert to your calendar"
                 }
             } else {
                 DispatchQueue.main.async { [self] in
                     spinner.stopAnimating()
                     refreshControl?.endRefreshing()
                     promptLabel.text = "No visible passes for the next \(numberOfDays) days"
-                    noPasesPopup(withTitle: "No \(station.stationName) Passes Found", withStyleToUse: .alert)
+                    noPasesPopup(withTitle: "No \(station.satelliteName) Passes Found", withStyleToUse: .alert)
                 }
             }
         } catch {
@@ -337,7 +337,7 @@ class PassesTableViewController: UITableViewController, CLLocationManagerDelegat
                 spinner.stopAnimating()
                 refreshControl?.endRefreshing()
                 promptLabel.text = "No visible passes for the next \(numberOfDays) days"
-                noPasesPopup(withTitle: "No \(station.stationName) Passes Found", withStyleToUse: .alert)
+                noPasesPopup(withTitle: "No \(station.satelliteName) Passes Found", withStyleToUse: .alert)
             }
             
         }
@@ -351,7 +351,7 @@ class PassesTableViewController: UITableViewController, CLLocationManagerDelegat
         
         DispatchQueue.main.async { [self] in
             spinner.startAnimating()
-            promptLabel.text = "Computing \(station.stationName) passes for next \(numberOfDays) days"
+            promptLabel.text = "Computing \(station.satelliteName) passes for next \(numberOfDays) days"
         }
         
         // Create the API URL request from endpoint. If not succesful, then return
@@ -412,7 +412,7 @@ class PassesTableViewController: UITableViewController, CLLocationManagerDelegat
         
         // Create an event
         let event       = EKEvent(eventStore: eventStore)
-        event.title     = "\(station.stationName) Pass Starts"
+        event.title     = "\(station.satelliteName) Pass Starts"
         event.calendar  = eventStore.defaultCalendarForNewEvents
         event.startDate = Date(timeIntervalSince1970: Double(passEvent.startUTC))
         event.endDate   = Date(timeIntervalSince1970: Double(passEvent.endUTC))
@@ -437,11 +437,11 @@ class PassesTableViewController: UITableViewController, CLLocationManagerDelegat
         do {
             try eventStore.save(event, span: whichEvent)
             DispatchQueue.main.async {
-                self.alert(for: "Pass Reminded Saved!", message: "A \(self.station.stationName) pass reminder was added to your calendar. You'll be alerted 1 hour in advance, and again 15 minutes before it begins.")
+                self.alert(for: "Pass Reminded Saved!", message: "A \(self.station.satelliteName) pass reminder was added to your calendar. You'll be alerted 1 hour in advance, and again 15 minutes before it begins.")
             }
         } catch {
             DispatchQueue.main.async {
-                self.alert(for: "Failed", message: "Could not add the \(self.station.stationName) pass reminder to your calendar")
+                self.alert(for: "Failed", message: "Could not add the \(self.station.satelliteName) pass reminder to your calendar")
             }
         }
         
@@ -613,7 +613,7 @@ extension PassesTableViewController {
             
         } else {
             // If there there's no passes data show alert and clear cells, as any data in the table is invalid
-            alert(for: "No Visible Passes", message: "No visible \(station.stationName) passes found during the next \(numberOfDays) days")
+            alert(for: "No Visible Passes", message: "No visible \(station.satelliteName) passes found during the next \(numberOfDays) days")
             clearDataIn(thisCell: cell)
         }
         

@@ -23,18 +23,18 @@ private let whatsNew = WhatsNew(
     // The features and other information to showcase
     items: [
         WhatsNew.Item(
-            title: "Fixes & Improvements",
+            title: "New Features in 7.13",
             subtitle: """
-                      .
-                      """,
-            image: UIImage(systemName: "ant.fill")
-        ),
-        WhatsNew.Item(
-            title: "Announcements",
-            subtitle: """
-                      Like it? Please give this app a rating/review in Settings.
+                      You can now select which target satellite to track on the 2D map. Tap the target button on the upper-left to select either the ISS, Tiangong, or Hubble. The fullscreen 3D globe view continues to show all three concurrently.
                       """,
             image: UIImage(systemName: "megaphone.fill")
+        ),
+        WhatsNew.Item(
+            title: "Fixes & Improvements",
+            subtitle: """
+                      Bug fixes.
+                      """,
+            image: UIImage(systemName: "ant.fill")
         ),
         WhatsNew.Item(
             title: "Apple Watch App Included",
@@ -58,7 +58,6 @@ private let whatsNew = WhatsNew(
             image: UIImage(named: "icons8-customer_support")
         )
     ]
-    
 )
 
 

@@ -2,8 +2,8 @@
 //  TrackingViewController.swift
 //  ISS Real-Time Tracker 3D
 //
-//  Created by Michael Stebel on 1/28/2016
-//  Copyright © 2016-2023 ISS Real-Time Tracker. All rights reserved.
+//  Created by Michael Stebel on 2/23/2023
+//  Copyright © 2023 ISS Real-Time Tracker. All rights reserved.
 //
 
 import AVFoundation
@@ -19,50 +19,50 @@ class TrackingViewController: UIViewController, MKMapViewDelegate, UIGestureReco
     
     /// Zoom factor ranges and their maximum values
     private enum ZoomFactorRanges: Double {
-        
         typealias RawValue = Double
         
-        case fine                               = 3.0
-        case small                              = 10.0
-        case medium                             = 30.0
-        case large                              = 90.0
+        case fine                             = 3.0
+        case small                            = 10.0
+        case medium                           = 30.0
+        case large                            = 90.0
     }
     
     /// Segue names
     private struct Segues {
-        static let crewSeque                    = "segueToCurrentCrew"
-        static let earthViewSegue               = "segueToStreamingVideo"
-        static let globeSegue                   = "segueToFullGlobe"
-        static let helpSegue                    = "helpViewSegue"
-        static let nasaTvSegue                  = "segueToNasaTV"
-        static let passesSegue                  = "segueToPassTimes"
-        static let segueToFullGlobeFromTabBar   = "segueToFullGlobeFromTabBar"
-        static let settingsSegue                = "segueToSettings"
+        static let crewSeque                  = "segueToCurrentCrew"
+        static let earthViewSegue             = "segueToStreamingVideo"
+        static let globeSegue                 = "segueToFullGlobe"
+        static let helpSegue                  = "helpViewSegue"
+        static let nasaTvSegue                = "segueToNasaTV"
+        static let passesSegue                = "segueToPassTimes"
+        static let segueToFullGlobeFromTabBar = "segueToFullGlobeFromTabBar"
+        static let settingsSegue              = "segueToSettings"
     }
     
     /// Local constants
     struct Constants {
-        static let animationOffsetY: CGFloat    = 90.0
-        static let apiEndpointAString           = ApiEndpoints.issTrackerAPIEndpointA
-        static let apiEndpointBString           = ApiEndpoints.issTrackerAPIEndpointB
-        static let defaultTimerInterval         = 3.0
-        static let fontForTitle                 = Theme.nasa
-        static let helpTitle                    = "User Guide"
-        static let linefeed                     = Globals.newLine
-        static let numberFormatter              = NumberFormatter()
-        static let numberOfZoomIntervals        = 6
-        static let zoomFactorStringFormat       = "Zoom: %2.2f°"
-        static let zoomScaleFactor              = 30.0
+        static let animationOffsetY: CGFloat  = 90.0
+        static let apiKey                     = ApiKeys.issLocationKey
+        static let defaultTimerInterval       = 3.0
+        static let fontForTitle               = Theme.nasa
+        static let generalAPIKey              = ApiKeys.generalLocationKey
+        static let generalEndpointString      = ApiEndpoints.generalTrackerAPIEndpoint    // General endpoint
+        static let helpTitle                  = "User Guide"
+        static let linefeed                   = Globals.newLine
+        static let numberFormatter            = NumberFormatter()
+        static let numberOfZoomIntervals      = 6
+        static let zoomFactorStringFormat     = "Zoom: %2.2f°"
+        static let zoomScaleFactor            = 30.0
     }
     
     private struct TrackingButtonImages {
-        static let play                         = "Track-Play"
-        static let pause                        = "Track-Pause"
+        static let pause                      = "Track-Pause"
+        static let play                       = "Track-Play"
     }
     
     private struct SoundtrackButtonImage {
-        static let on                           = "music.quarternote.3"
-        static let off                          = "music.quarternote.3"
+        static let off                        = "music.quarternote.3"
+        static let on                         = "music.quarternote.3"
     }
     
     
@@ -135,78 +135,88 @@ class TrackingViewController: UIViewController, MKMapViewDelegate, UIGestureReco
         }
     }
      
-    var location: CLLocationCoordinate2D {
-        CLLocationCoordinate2DMake(CLLocationDegrees(latitude)!, CLLocationDegrees(longitude)!)
-    }
-    
-    private var span: MKCoordinateSpan {
-        MKCoordinateSpan.init(latitudeDelta: latDelta, longitudeDelta: lonDelta)
-    }
-    
-    private var latDelta: CLLocationDegrees {
+    var location = CLLocationCoordinate2D()
+    var span     = MKCoordinateSpan()
+    var region   = MKCoordinateRegion()
+    var latDelta: CLLocationDegrees {
         Double(zoomSlider.value)
     }
-    
-    private var lonDelta: CLLocationDegrees {
+    var lonDelta: CLLocationDegrees {
         latDelta
     }
-    
-    var region: MKCoordinateRegion {
-        MKCoordinateRegion.init(center: location, span: span)
-    }
-    
-   
-    /// String format for zoom factor label
-    var dateFormatter: DateFormatter?       = DateFormatter()         // This is declared as an optional so that we can test it for nil in save settings in case it wasn't set before being called
        
-    private var alreadyAnimatedStartPrompt  = false
-    private var altitudeInMiles             = ""
-    private var justStartedUp               = false
-    private var velocityInKmH               = ""
-    private var velocityInMPH               = ""
-    private var zoomInterval                = [Float]()
-    private var zoomRangeFactorLabel        = ""
-    private var zoomValueWasChanged         = false
+    private var alreadyAnimatedStartPrompt = false
+    private var altitudeInMiles            = ""
+    private var justStartedUp              = false
+    private var targetID                   = ""
+    private var targetImageMap: UIImage?   = StationsAndSatellites.iss.satelliteImageSmall        // Default map marker image
+    private var targetImageGlobe: UIImage? = StationsAndSatellites.iss.satelliteImage             // Default globe marker image
+    private var targetName                 = ""
+    private var velocityInKmH              = ""
+    private var velocityInMPH              = ""
+    private var zoomInterval               = [Float]()
+    private var zoomRangeFactorLabel       = ""
+    private var zoomValueWasChanged        = false
     
-    var hubbleLastLat: Float                = 0
-    var issLastLat: Float                   = 0
-    var tssLastLat: Float                   = 0
-    var aPolyLine                           = MKPolyline()
-    var altString                           = ""
-    var atDateAndTime                       = ""
-    var globe                               = EarthGlobe()
-    var latitude                            = ""
-    var listOfCoordinates                   = [CLLocationCoordinate2D]()
-    var longitude                           = ""
-    var positionString                      = ""
-    var ranAtLeastOnce                      = false
-    var running: Bool?                      = false {
+    var aPolyLine                          = MKPolyline()
+    var altString                          = ""
+    var atDateAndTime                      = ""
+    var coordinates                        = [SatelliteOrbitPosition.Positions]()
+    var dateFormatter: DateFormatter?      = DateFormatter()     // String format for zoom factor label. Declared as an optional so we can test for nil in save settings in case it wasn't set before being called
+    var globe                              = EarthGlobe()
+    var hLat                               = ""
+    var hLon                               = ""
+    var hubbleLastLat: Float               = 0
+    var hubbleLatitude                     = 0.0
+    var hubbleLongitude                    = 0.0
+    var iLat                               = ""
+    var iLon                               = ""
+    var issLastLat: Float                  = 0
+    var issLatitude                        = 0.0
+    var issLongitude                       = 0.0
+    var latitude                           = ""
+    var listOfCoordinates                  = [CLLocationCoordinate2D]()
+    var longitude                          = ""
+    var positionString                     = ""
+    var ranAtLeastOnce                     = false
+    var tLat                               = ""
+    var tLon                               = ""
+    var tssLastLat: Float                  = 0
+    var tssLatitude                        = 0.0
+    var tssLongitude                       = 0.0
+    var target: StationsAndSatellites      = .iss {
+        didSet{
+            getTargetID(for: target)
+        }
+    }
+    var running: Bool?                     = false {
         didSet {
-            if let isRunning = running {
-                globeStatusLabel?.text = isRunning ? "Running" : "Not running"
+            if let isRunning               = running {
+                globeStatusLabel?.text     = isRunning ? "Running" : "Not running"
             }
         }
     }
     var timer: AnyCancellable? 
-    var timerValue: TimeInterval            = 2.0
-    var velString                           = ""
-    var altitude                            = "" {
+    var timerValue: TimeInterval           = 2.0
+    var satelliteCode                      = StationsAndSatellites.iss.satelliteNORADCode   // Get the NORAD code for the default target
+    var velString                          = ""
+    var altitude               = "" {
         didSet{
-            altitudeInMiles = Constants.numberFormatter.string(from: NSNumber(value: Double(altitude)! * Globals.kilometersToMiles))!
-            altitudeInKm    = Constants.numberFormatter.string(from: NSNumber(value: Double(altitude)!))!
-            altString       = "    Altitude: \(altitudeInKm) km  (\(altitudeInMiles) mi)"
+            altitudeInMiles    = Constants.numberFormatter.string(from: NSNumber(value: Double(altitude)! * Globals.kilometersToMiles))!
+            altitudeInKm       = Constants.numberFormatter.string(from: NSNumber(value: Double(altitude)!))!
+            altString          = "    Altitude: \(altitudeInKm) km  (\(altitudeInMiles) mi)"
         }
     }
-    var velocity = "" {
+    var velocity               = "" {
         didSet {
-            velocityInMPH = Constants.numberFormatter.string(from: NSNumber(value: Double(velocity)! * Globals.kilometersToMiles))!
-            velocityInKmH = Constants.numberFormatter.string(from: NSNumber(value: Double(velocity)!))!
-            velString     = "    Velocity: \(velocityInKmH) km/h  (\(velocityInMPH) mph)"
+            velocityInMPH      = Constants.numberFormatter.string(from: NSNumber(value: Double(velocity)! * Globals.kilometersToMiles))!
+            velocityInKmH      = Constants.numberFormatter.string(from: NSNumber(value: Double(velocity)!))!
+            velString          = "    Velocity: \(velocityInKmH) km/h  (\(velocityInMPH) mph)"
         }
     }
-    private var altitudeInKm = "" {
+    private var altitudeInKm   = "" {
         willSet {
-            if let lat = Double(latitude), let lon = Double(longitude) {
+            if let lat         = Double(latitude), let lon = Double(longitude) {
                 positionString = "    Position: \(CoordinateConversions.decimalCoordinatesToDegMinSec(latitude: lat, longitude: lon, format: Globals.coordinatesStringFormat))"
             } else {
                 positionString = Globals.spacer
@@ -257,15 +267,16 @@ class TrackingViewController: UIViewController, MKMapViewDelegate, UIGestureReco
     @IBOutlet var altitudeLabel: UILabel!
     @IBOutlet var coordinatesLabel: UILabel!
     @IBOutlet var velocityLabel: UILabel!
-    @IBOutlet weak var copyButton: UIButton!
-
-    @IBOutlet weak var globeScene: SCNView!
-    @IBOutlet weak var globeExpandButton: UIButton!
-    @IBOutlet weak var globeStatusLabel: UILabel! {
+    @IBOutlet var copyButton: UIButton!
+    @IBOutlet var globeScene: SCNView!
+    @IBOutlet var globeExpandButton: UIButton!
+    @IBOutlet var globeStatusLabel: UILabel! {
         didSet {
             globeStatusLabel.text = "Not running"
         }
     }
+    @IBOutlet var selectTargetButton: UIButton!
+    
     
     // MARK: - Methods
     
@@ -293,7 +304,7 @@ class TrackingViewController: UIViewController, MKMapViewDelegate, UIGestureReco
     
     
     private func setUpNumberFormatter() {
-        Constants.numberFormatter.numberStyle           = NumberFormatter.Style.decimal
+        Constants.numberFormatter.numberStyle = NumberFormatter.Style.decimal
         Constants.numberFormatter.maximumFractionDigits = 0
     }
     
@@ -390,13 +401,13 @@ class TrackingViewController: UIViewController, MKMapViewDelegate, UIGestureReco
     
     @IBAction func resetGlobe(_ sender: UIButton) {
         
-        reset()
+        resetGlobeAction()
         
     }
     
     
     /// Reset the globe only
-    func reset() {
+    func resetGlobeAction() {
         
         globe = EarthGlobe()
         setUpEarthGlobeScene(for: globe, in: globeScene, hasTintedBackground: true)
@@ -425,7 +436,7 @@ class TrackingViewController: UIViewController, MKMapViewDelegate, UIGestureReco
 
         stopAction()
         
-        delay(1.0) {                // Delay 1 sec to make sure we don't violate the API's 1 second rate limit if moving the slider too fast
+        delay(1.0) {                                        // Delay a bit to make sure we don't violate the API's 1 second rate limit if moving the slider too fast
             Globals.zoomFactorLastValue = sender.value
             self.zoomValueWasChanged = true
             self.timerValue = self.getTimerInterval()
@@ -515,23 +526,35 @@ class TrackingViewController: UIViewController, MKMapViewDelegate, UIGestureReco
                 justStartedUp = false                       // To keep this code from runing each time the view reappears
             }
             
-            locateISS()                                     // Call locateISS once to update screen quickly to current ISS position with current settings
+            locateSatellite(for: target)                   // Call once to update screen quickly to current ISS position with current settings
             timerStartup()                                  // Call method to set up a timer
         }
         
     }
     
     
+    /// Get  NORAD ID, name, and icon to use in background for selected target
+    /// - Parameter station: Target satellite selector value.
+    private func getTargetID(for target: StationsAndSatellites) {
+        
+        targetID         = target.satelliteNORADCode
+        targetName       = target.satelliteName
+        targetImageGlobe = target.satelliteImage
+        targetImageMap   = target.satelliteImageSmall
+        
+    }
+    
+    
     /// Method to set up the map refresh timer.
     ///
-    /// Calls locateISS (selector) at the current timerValue setting.
+    /// Calls locateSatellites selector at the current timerValue setting.
     private func timerStartup() {
         
         timer = Timer
             .publish(every: timerValue, on: .main, in: .common)
             .autoconnect()
             .sink { _ in
-                self.locateISS()
+                self.locateSatellite(for: self.target)
             }
         
     }
@@ -564,8 +587,10 @@ class TrackingViewController: UIViewController, MKMapViewDelegate, UIGestureReco
         }
         
         if Globals.zoomFactorWasResetInSettings {
+            
             createZoomSliderRanges()
             setUpZoomSlider(usingSavedZoomFactor: false)
+            
         }
         
         // Calculate the update interval in seconds, based on the zoom scale and zoom expansion multiplier
@@ -575,7 +600,7 @@ class TrackingViewController: UIViewController, MKMapViewDelegate, UIGestureReco
         case zoomInterval[2]..<zoomInterval[3] : timerIntervalToReturn = 3.0
         case zoomInterval[3]..<zoomInterval[4] : timerIntervalToReturn = 4.0
         case zoomInterval[4]..<zoomInterval[5] : timerIntervalToReturn = 5.0
-        case zoomInterval[5]...zoomInterval[6] : timerIntervalToReturn = 6.0 
+        case zoomInterval[5]...zoomInterval[6] : timerIntervalToReturn = 6.0
         default : timerIntervalToReturn = Constants.defaultTimerInterval
         }
         
@@ -603,6 +628,7 @@ class TrackingViewController: UIViewController, MKMapViewDelegate, UIGestureReco
     
     
     /// Set the zoom and scale label
+    /// - Parameter timerInterval: Time in seconds as a TimeInterval
     func setupZoomFactorLabel(_ timerInterval: TimeInterval) {
         
         let integerTimerInterval = Int(timerInterval)
@@ -662,7 +688,7 @@ class TrackingViewController: UIViewController, MKMapViewDelegate, UIGestureReco
 
             case 0 :
                 
-                cursor.image = UIImage(named: Globals.issIconForMapView)
+                cursor.image = targetImageMap
                 
             case 1 :
                 
@@ -674,7 +700,7 @@ class TrackingViewController: UIViewController, MKMapViewDelegate, UIGestureReco
                 
             default :
                 
-                cursor.image = UIImage(named: Globals.issIconForMapView)
+                cursor.image = targetImageMap
                 
             }
             
@@ -694,7 +720,7 @@ class TrackingViewController: UIViewController, MKMapViewDelegate, UIGestureReco
             
             case 0 :
                 
-                cursor.image = UIImage(named: Globals.issIconForMapView)
+                cursor.image = targetImageMap
                 
             case 1 :
                 
@@ -706,7 +732,7 @@ class TrackingViewController: UIViewController, MKMapViewDelegate, UIGestureReco
                 
             default :
                 
-                cursor.image = UIImage(named: Globals.issIconForMapView)
+                cursor.image = targetImageMap
                 
             }
             
@@ -726,7 +752,7 @@ class TrackingViewController: UIViewController, MKMapViewDelegate, UIGestureReco
             
             case 0 :
                 
-                cursor.image = UIImage(named: Globals.issIconForMapView)
+                cursor.image = targetImageMap
                 
             case 1 :
                 
@@ -738,7 +764,7 @@ class TrackingViewController: UIViewController, MKMapViewDelegate, UIGestureReco
                 
             default :
                 
-                cursor.image = UIImage(named: Globals.issIconForMapView)
+                cursor.image = targetImageMap
                 
             }
             
@@ -758,7 +784,7 @@ class TrackingViewController: UIViewController, MKMapViewDelegate, UIGestureReco
             
             case 0 :
                 
-                cursor.image = UIImage(named: Globals.issIconForMapView)
+                cursor.image = targetImageMap
                 
             case 1 :
                 
@@ -770,7 +796,7 @@ class TrackingViewController: UIViewController, MKMapViewDelegate, UIGestureReco
                 
             default :
                 
-                cursor.image = UIImage(named: Globals.issIconForMapView)
+                cursor.image = targetImageMap
             }
         }
         
@@ -892,7 +918,7 @@ class TrackingViewController: UIViewController, MKMapViewDelegate, UIGestureReco
         let alertController = UIAlertController(title: "Clear Ground Track", message: "Are you sure you wish to" + Constants.linefeed + "clear the ground track?" + Constants.linefeed + Constants.linefeed + "Note: You can turn off the" + Constants.linefeed + "ground track line in Settings.", preferredStyle: .alert)
         
         alertController.addAction(UIAlertAction(title: "Clear", style: .destructive) { (clearIt) in
-            self.map.removeOverlays(self.map.overlays)  // Need to remove all MKMap overlays, as multitple polylines are overlayed on the map as location is updated
+            self.map.removeOverlays(self.map.overlays)              // Need to remove all MKMap overlays, as multitple polylines are overlayed on the map as location is updated
         })
         
         alertController.addAction(UIAlertAction(title: "Cancel", style: .cancel))
@@ -900,6 +926,60 @@ class TrackingViewController: UIViewController, MKMapViewDelegate, UIGestureReco
         
     }
     
+    
+    @IBAction func switchTarget(_ sender: UIButton) {
+        
+        switchStationPopup(withTitle: "Select a Target", withStyleToUse: .actionSheet)
+        
+    }
+    
+    
+    /// Switch to a different station to get pass predictions for
+    /// - Parameters:
+    ///   - title: Pop-up title
+    ///   - usingStyle: The alert style
+    private func switchStationPopup(withTitle title: String, withStyleToUse usingStyle: UIAlertController.Style) {
+        
+        let alertController = UIAlertController(title: title, message: "Select a satellite target for tracking", preferredStyle: usingStyle)
+        
+        alertController.addAction(UIAlertAction(title: "Back", style: .cancel) { (_) in
+            return
+        })
+        
+        // Add a selection for each of the targets we can track
+        for target in [StationsAndSatellites.iss, StationsAndSatellites.tss, StationsAndSatellites.hst] {
+            alertController.addAction(UIAlertAction(title: "\(target.satelliteName)", style: .default) { (_) in
+                action(selectedTarget: target)
+            })
+        }
+        
+        func action(selectedTarget: StationsAndSatellites) {
+            DispatchQueue.main.async {
+                self.stopAction()
+                self.delay(1.0) {                               // Delay 1 sec to make sure we don't violate the API's 1 second rate limit if moving the slider too fast
+                    self.zoomValueWasChanged = true
+                    self.timerValue          = self.getTimerInterval()
+                    self.target              = selectedTarget
+                    self.satelliteCode       = self.target.satelliteNORADCode
+                    self.listOfCoordinates.removeAll()          // Needed before we can clear the track
+                    self.map.removeOverlays(self.map.overlays)  // Need to remove all MKMap overlays, as multitple polylines are overlayed on the map as location is updated
+                    self.resetGlobeAction()
+                    self.startAction()
+                }
+            }
+        }
+
+        if usingStyle == .actionSheet {
+            // Set the target rect for the popover
+            alertController.popoverPresentationController?.permittedArrowDirections = UIPopoverArrowDirection([.up])
+            alertController.popoverPresentationController?.sourceView = selectTargetButton
+            alertController.popoverPresentationController?.sourceRect = CGRect(x: 1.00, y: 3.0, width: selectTargetButton.bounds.width, height: selectTargetButton.bounds.height)
+        }
+        
+        self.present(alertController, animated: true, completion: nil)
+
+    }
+ 
     
     override func didReceiveMemoryWarning() {
         

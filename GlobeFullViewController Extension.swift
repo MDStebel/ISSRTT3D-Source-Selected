@@ -99,7 +99,7 @@ extension GlobeFullViewController {
                 } catch {
                     
                     DispatchQueue.main.async {
-                        self?.isRunningLabel?.text = "Can't get \(satellite.stationName) location."
+                        self?.isRunningLabel?.text = "Can't get \(satellite.satelliteName) location."
                     }
                     
                 }
@@ -107,7 +107,7 @@ extension GlobeFullViewController {
             } else {
                 
                 DispatchQueue.main.async {
-                    self?.isRunningLabel?.text = "Can't get \(satellite.stationName) location."
+                    self?.isRunningLabel?.text = "Can't get \(satellite.satelliteName) location."
                 }
                 
             }

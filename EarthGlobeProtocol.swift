@@ -17,6 +17,7 @@ protocol EarthGlobeProtocol: UIViewController {
     var hubbleLastLat: Float { get set }
     
     func setUpEarthGlobeScene(for globe: EarthGlobe, in scene: SCNView, hasTintedBackground: Bool)
+    
     func updateEarthGlobeScene(in globe: EarthGlobe, hubbleLatitude: String?, hubbleLongitude: String?, issLatitude: String?, issLongitude: String?, tssLatitude: String?, tssLongitude: String?, hubbleLastLat: inout Float, issLastLat: inout Float, tssLastLat: inout Float)
     
 }
@@ -162,7 +163,7 @@ extension EarthGlobeProtocol {
             globe.addOrbitTrackAroundTheGlobe(for: .hst, lat: hLat!, lon: hLon!, headingFactor: hubbleHeadingFactor)
         }
         
-        // Add the ISS
+        // Add the ISS if valid
         if addISS {
             globe.addISSMarker(lat: iLat!, lon: iLon!)
             globe.addISSViewingCircle(lat: iLat!, lon: iLon!)
