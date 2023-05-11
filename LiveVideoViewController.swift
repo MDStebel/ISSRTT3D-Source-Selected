@@ -75,6 +75,7 @@ class LiveVideoViewController: UIViewController, WKUIDelegate, WKNavigationDeleg
     
     
     override func viewWillAppear(_ animated: Bool) {
+        
         super .viewWillAppear(animated)
         
         // Set navigation and status bar font and color to our Theme
@@ -84,14 +85,16 @@ class LiveVideoViewController: UIViewController, WKUIDelegate, WKNavigationDeleg
         barAppearance.titleTextAttributes   = [.font : UIFont(name: Constants.fontForTitle, size: titleFontSize) as Any, .foregroundColor : UIColor.white]
         navigationItem.standardAppearance   = barAppearance
         navigationItem.scrollEdgeAppearance = barAppearance
+        
     }
     
     
     private func setUpWebView() {
         
         let webConfiguration = WKWebViewConfiguration()
-        webConfiguration.mediaTypesRequiringUserActionForPlayback = .audio
-
+//        webConfiguration.mediaTypesRequiringUserActionForPlayback = .audiod
+        webConfiguration.allowsInlineMediaPlayback = Globals.isIPad ? true : false
+        
         webView = WKWebView(frame: .zero, configuration: webConfiguration)
         webView.uiDelegate = self
         webView.navigationDelegate = self
@@ -182,7 +185,7 @@ class LiveVideoViewController: UIViewController, WKUIDelegate, WKNavigationDeleg
             }
         } else {
             DispatchQueue.main.async {
-                self.alert(for: "URL Error!", message: "Can't access video feed.")
+                self.alert(for: "URL Error", message: "Can't access live video feed.")
             }
         }
         
