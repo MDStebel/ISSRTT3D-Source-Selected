@@ -2,8 +2,8 @@
 //  TrackingViewController.swift
 //  ISS Real-Time Tracker 3D
 //
-//  Created by Michael Stebel on 2/23/2023
-//  Copyright © 2023 ISS Real-Time Tracker. All rights reserved.
+//  Created by Michael Stebel on 2/23/2024
+//  Copyright © 2024 ISS Real-Time Tracker. All rights reserved.
 //
 
 import AVFoundation
