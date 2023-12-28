@@ -3,7 +3,7 @@
 //  ISS Watch Extension
 //
 //  Created by Michael Stebel on 9/8/21.
-//  Copyright © 2021-2023 ISS Real-Time Tracker. All rights reserved.
+//  Copyright © 2021-2024 ISS Real-Time Tracker. All rights reserved.
 //
 
 import Combine
@@ -164,7 +164,7 @@ final class ViewModel: ObservableObject {
         
         // MARK: Get coordinates for everything we're tracking
         
-        // Where are the satellites right now?
+        // Iterate over all the satellites to determiine where are each of the satellites right now?
         for sat: StationsAndSatellites in [.iss, .tss, .hst] {
             getSatellitePosition(for: sat)
         }
