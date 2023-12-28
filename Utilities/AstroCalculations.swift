@@ -3,7 +3,7 @@
 //  ISS Real-Time Tracker 3D
 //
 //  Created by Michael Stebel on 02/26/2022.
-//  Copyright © 2020-2023 ISS Real-Time Tracker. All rights reserved.
+//  Copyright © 2020-2024 ISS Real-Time Tracker. All rights reserved.
 //
 
 import Foundation

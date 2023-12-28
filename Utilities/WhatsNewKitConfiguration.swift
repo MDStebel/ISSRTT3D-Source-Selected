@@ -3,7 +3,7 @@
 //  ISS Real-Time Tracker 3D
 //
 //  Created by Michael Stebel on 10/3/19.
-//  Copyright © 2019-2023 ISS Real-Time Tracker. All rights reserved.
+//  Copyright © 2019-2024 ISS Real-Time Tracker. All rights reserved.
 //  Uses WhatsNewKit by Sven Tiigi
 //
 
@@ -22,17 +22,17 @@ private let whatsNew = WhatsNew(
     
     // The features and other information to showcase
     items: [
-        WhatsNew.Item(
-            title: "New Features in 7.13",
-            subtitle: """
-                      You can now select which target satellite to track on the 2D map. Tap the target button on the upper-left to select either the ISS, Tiangong, or Hubble. The fullscreen 3D globe view continues to show all three concurrently.
-                      """,
-            image: UIImage(systemName: "megaphone.fill")
-        ),
+//        WhatsNew.Item(
+//            title: "New Features in 7.13",
+//            subtitle: """
+//                      You can now select which target satellite to track on the 2D map. Tap the target button on the upper-left to select either the ISS, Tiangong, or Hubble. The fullscreen 3D globe view continues to show all three concurrently.
+//                      """,
+//            image: UIImage(systemName: "megaphone.fill")
+//        ),
         WhatsNew.Item(
             title: "Fixes & Improvements",
             subtitle: """
-                      Bug fixes.
+                      Under-the-hood stuff.
                       """,
             image: UIImage(systemName: "ant.fill")
         ),

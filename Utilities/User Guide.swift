@@ -3,7 +3,7 @@
 //  ISS Real-Time Tracker 3D
 //
 //  Created by Michael Stebel on 6/15/18.
-//  Copyright © 2018-2023 ISS Real-Time Tracker. All rights reserved.
+//  Copyright © 2018-2024 ISS Real-Time Tracker. All rights reserved.
 //
 
 import UIKit
@@ -71,69 +71,17 @@ struct UserGuide {
     <h6>Covers version \(Globals.versionNumber)</h6>
     <h2>Contents</h2>
     <p>Tap an item from the list below to jump to that section:</p>
-    <h4><a href="#passes">Pass Predictions</a></h4>
-    <h4><a href="#track">2D Tracking Map</a></h4>
-    <h4><a href="#globe">Fullscreen Interactive 3D Globe</a></h4>
-    <h4><a href="#crew">Current Crew</a></h4>
-    <h4><a href="#streaming">Live Earth View</a></h4>
-    <h4><a href="#nasatv">Live NASA TV</a></h4>
+    <h4><a href="#track">Track</a></h4>
+    <h4><a href="#globe">Globe</a></h4>
+    <h4><a href="#passes">Passes</a></h4>
+    <h4><a href="#crew">Crew</a></h4>
+    <h4><a href="#streaming">Earth View</a></h4>
+    <h4><a href="#nasatv">NASA TV</a></h4>
     <h4><a href="#settings">Settings</a></h4>
     <h4><a href="#watch">Using the Apple Watch App</a></h4>
-    <div id="passes"></div>
-    <h2>Pass Predictions</h2>
-    <p>Tapping the binoculars icon at the bottom of the main screen starts the process of computing up-coming visible ISS, TSS, or Hubble Space Telescope passes. First, ISS Real-Time Tracker 3D gets your current location's coordinates. Then, it computes the ISS , TSS, or Hubble passes that should be visible (weather permitting) from your location. The default number of days to predict passes is set in Settings and can be overridden in the Passes screen. The passes are listed in chronological order along with detailed viewing data.</p>
-    <p>Data for each pass includes:</p>
-    <ul>
-    <li>
-    <h5>Date of the pass</h5>
-    </li>
-    <li>
-    <h5>Rating (0, 1, 2, 3, or 4 stars)</h5>
-    </li>
-    <li>
-    <h5>Visible duration (in minutes and seconds)</h5>
-    </li>
-    <li>
-    <h5>Max visual magnitude (using same scale as astronomical brightness, i.e., apparent magnitude)</h5>
-    </li>
-    <li>
-    <h5>Time, azimuth, elevation, and compass direction for the start time, max elevation time, and end time</h5>
-    </li>
-    </ul>
-    <p>Each pass is rated based on its maximum magnitude (i.e., brightness). The brightest passes get the highest ratings. Passes are rated with 0, 1, 2, 3, or 4 stars corresponding to relatively poor, fair, good, better, or best, respectively.</p>
-    <h4>Switching Targets</h4>
-    <p>Tap the switch target button in the navigation bar to switch between the ISS, TSS (Chinese space station named Tiangong), and Hubble Space Telescope. The table will automatically refresh and present passes for the selected target.</p>
-    <h4>Adding a Pass Event to Your Calendar</h4>
-    <p>Tap any pass in the table to add it as an event in your calendar. When adding a pass to your calendar, two alerts will be set: the first for 1 hour before, and the second for 15 minutes before the start of the pass. The starting and ending times for the pass are saved in the event in your calendar, along with the maximum magnitude, as well as the starting, maximum, and ending azimuths and elevations for the pass.</p>
-    <h4>Change Number of Days to Compute</h4>
-    <p>Tap the Calendar icon at the top-right of the screen to change the number of days to compute and refresh the list. To change the number of days so that the app remembers your setting for next time, change it in Settings.</p>
-    <h4>Pull-to-Refresh</h4>
-    <p>Drag down the table to refresh the data.</p>
-    <h5>Notes:</h5>
-    <ul>
-    <li>
-    <h6>The pass predictions become less certain the further out in time they go.</h6>
-    </li>
-    <li>
-    <h6>Overhead passes returned are only those visible from your location for at least 300 seconds (5 minutes) and where the ISS is illuminated by the Sun.</h6>
-    </li>
-    <li>
-    <h6>Tiangong (TSS) pass predictions do not include the magnitude of the passes and are, therefore, not rated. The stars are greyed-out. This may change in the future, as the magnitude data are provided for the TSS.</h6>
-    </li>
-    <li>
-    <h6>If there are buildings, trees, or other obstructions, and depending upon the weather and other viewing conditions, you may not be able to spot the space station.</h6>
-    </li>
-    <li>
-    <h6>You must give ISS Real-Time Tracker 3D access to your location. When asked, tap &quot;OK.&quot; You can change this permission in your device's Settings app.</h6>
-    </li>
-    <li>
-    <h6>Calendar events are saved in your default calendar.</h6>
-    </li>
-    </ul>
-    <p>Tap < to return to the map and resume tracking.</p>
-    <h4><a href="#contents">Back to contents</a></h4>
+
     <div id="track"></div>
-    <h2>2D Tracking Map</h2>
+    <h2>Track</h2>
     <p>To locate and track the ISS (default), TSS, or Hubble in real time, tap the play button at the bottom of the screen. To pause tracking, tap the pause button.</p>
     <h4>Switching Targets</h4>
     <p>To change the target satellite to ISS, TSS, or Hubble, tap the target button at the top-left of the screen.</p>
@@ -169,7 +117,7 @@ struct UserGuide {
     <p>There are three styles of markers, which you can select in Settings: </p>
     <ul>
     <li>
-    <h5>ISS icon (the default setting)</h5>
+    <h5>Icon &#8212; The icon changes to represent the current target. This is the default setting.</h5>
     </li>
     <li>
     <h5>Circular</h5>
@@ -179,7 +127,7 @@ struct UserGuide {
     </li>
     </ul>
     <p>The time interval between map updates is automatically set from 1 to 6 seconds, based upon the zoom slider setting. With the slider all the way to the left, the update interval is set at 1 second. As you drag the slider right, it increases by 1 second up to a maximum interval of 6 seconds. This keeps the relative motion of the map roughly equal at all scales within a given range.</p>
-    <h4>Ground Track</h4>
+    <h4>Track</h4>
     <p>The orbit ground track line is drawn by default. This shows the ground track of the selected target. You can turn this on/off in Settings by tapping the settings icon from the 2D tracking map. When the orbit track is on, the ground track clear button is displayed on the Tracking screen. The track is automatically cleared when the target is switched to another satellite.</p>
     <h4>3D Globe Overlay</h4>
     <p>The globe shows the current position of selected target, its orbital track, and viewing range circle. The globe is a photorealistic model of the Earth complete with accurate Sun subsolar position, specular reflections on the water, seasonal tilt, mountain shadows, and other details. Drag the globe to rotate and pan it. The circle represents the approximate target sighting range from ground level. Autorotation is enabled by default and rotates the globe once every 90 seconds. To disable autorotation, as well as to enable/disable the globe overlay entirely, go to Settings. Tapping the expand icon on the globe overlay, or the globe button on the tab bar, expands the globe to fullscreen mode and hides the map. Tap the reset button to reset the globe.</p>
@@ -196,7 +144,7 @@ struct UserGuide {
     </ul>
     <h4><a href="#contents">Back to contents</a></h4>
     <div id="globe"></div>
-    <h2>Interactive 3D Globe</h2>
+    <h2>Globe</h2>
     <p>From the Tracking screen, tapping the expand icon on the globe overlay, or the globe icon on the tab bar, expands the globe to fullscreen mode and hides the map.</p>
     <p>The fullscreen 3D interactive globe shows the current position of the ISS, TSS, and Hubble. It plots their orbital tracks and groundtrack footprints (viewing range circle). The ISS track and footprint are shown in red, in gold for the TSS, and in blue for the Hubble.</p>
     <p>The globe is a photorealistic model of the Earth complete with accurate Sun subsolar position, specular reflections on the water, seasonal tilt, mountain shadows, and other details.</p>
@@ -248,8 +196,61 @@ struct UserGuide {
     </ul>
     <p>Tap the collapse button on the upper-right of the globe scene, or the back button, to return to the tracking screen.</p>
     <h4><a href="#contents">Back to contents</a></h4>
+    <div id="passes"></div>
+    <h2>Passes</h2>
+    <p>Tapping the binoculars icon at the bottom of the main screen starts the process of computing up-coming visible ISS, TSS, or Hubble Space Telescope passes. First, ISS Real-Time Tracker 3D gets your current location's coordinates. Then, it computes the ISS , TSS, or Hubble passes that should be visible (weather permitting) from your location. The default number of days to predict passes is set in Settings and can be overridden in the Passes screen. The passes are listed in chronological order along with detailed viewing data.</p>
+    <p>Data for each pass includes:</p>
+    <ul>
+    <li>
+    <h5>Date of the pass</h5>
+    </li>
+    <li>
+    <h5>Rating (0, 1, 2, 3, or 4 stars)</h5>
+    </li>
+    <li>
+    <h5>Visible duration (in minutes and seconds)</h5>
+    </li>
+    <li>
+    <h5>Max visual magnitude (using same scale as astronomical brightness, i.e., apparent magnitude)</h5>
+    </li>
+    <li>
+    <h5>Time, azimuth, elevation, and compass direction for the start time, max elevation time, and end time</h5>
+    </li>
+    </ul>
+    <p>Each pass is rated based on its maximum magnitude (i.e., brightness). The brightest passes get the highest ratings. Passes are rated with 0, 1, 2, 3, or 4 stars corresponding to relatively poor, fair, good, better, or best, respectively.</p>
+    <h4>Switching Targets</h4>
+    <p>Tap the switch target button in the navigation bar to switch between the ISS, TSS (Chinese space station named Tiangong), and Hubble Space Telescope. The table will automatically refresh and present passes for the selected target.</p>
+    <h4>Adding a Pass Event to Your Calendar</h4>
+    <p>Tap any pass in the table to add it as an event in your calendar. When adding a pass to your calendar, two alerts will be set: the first for 1 hour before, and the second for 15 minutes before the start of the pass. The starting and ending times for the pass are saved in the event in your calendar, along with the maximum magnitude, as well as the starting, maximum, and ending azimuths and elevations for the pass.</p>
+    <h4>Change Number of Days to Compute</h4>
+    <p>Tap the Calendar icon at the top-right of the screen to change the number of days to compute and refresh the list. To change the number of days so that the app remembers your setting for next time, change it in Settings.</p>
+    <h4>Pull-to-Refresh</h4>
+    <p>Drag down the table to refresh the data.</p>
+    <h5>Notes:</h5>
+    <ul>
+    <li>
+    <h6>The pass predictions become less certain the further out in time they go.</h6>
+    </li>
+    <li>
+    <h6>Overhead passes returned are only those visible from your location for at least 300 seconds (5 minutes) and where the ISS is illuminated by the Sun.</h6>
+    </li>
+    <li>
+    <h6>Tiangong (TSS) pass predictions do not currently include the magnitude of the passes and are, therefore, not rated. The stars are greyed-out. This may change in the future, as the magnitude data are provided for the TSS.</h6>
+    </li>
+    <li>
+    <h6>If there are buildings, trees, or other obstructions, and depending upon the weather and other viewing conditions, you may not be able to spot the space station.</h6>
+    </li>
+    <li>
+    <h6>You must give ISS Real-Time Tracker 3D access to your location. When asked, tap &quot;OK.&quot; You can change this permission in your device's Settings app.</h6>
+    </li>
+    <li>
+    <h6>Calendar events are saved in your default calendar.</h6>
+    </li>
+    </ul>
+    <p>Tap < to return to the map and resume tracking.</p>
+    <h4><a href="#contents">Back to contents</a></h4>
     <div id="crew"></div>
-    <h2>Current Crew</h2>
+    <h2>Crew</h2>
     <p>Tap the astronaut icon at the bottom of the screen to get a table of information about the current space station crew.</p>
     <h4>Switching Stations</h4>
     <p>Tap the switch target button in the navigation bar to switch between the ISS and the Chinese space station, Tiangong. The table will automatically refresh and present the crew data for the selected space station.</p>
@@ -264,7 +265,7 @@ struct UserGuide {
     <p>Tap < to return to the map and resume tracking.</p>
     <h4><a href="#contents">Back to contents</a></h4>
     <div id="streaming"></div>
-    <h2>Live Earth View</h2>
+    <h2>Earth View</h2>
     <p>Live streaming HD video of Earth is provided via NASA's External High Definition Camera (EHDC).</p>
     <h5>Notes:</h5>
     <ul>
@@ -281,7 +282,7 @@ struct UserGuide {
     <p>Tap < to return to the map.</p>
     <h4><a href="#contents">Back to contents</a></h4>
     <div id="nasatv"></div>
-    <h2>Live NASA TV</h2>
+    <h2>NASA TV</h2>
     <p>NASA TV airs a variety of regularly scheduled, pre-recorded educational and public relations programming 24 hours a day. The network also provides an array of live programming, such as 24-hour coverage of missions, events (spacewalks, media interviews, educational broadcasts), press conferences & rocket launches.</p>
     <h5>Notes:</h5>
     <ul>
@@ -346,7 +347,7 @@ struct UserGuide {
     <h6>Overhead passes returned are only those visible from your location for at least 300 seconds (5 minutes) and where the ISS is illuminated by the Sun.</h6>
     </li>
     <li>
-    <h6>Tiangong (TSS) pass predictions do not include the magnitude of the passes and are, therefore, not rated. The stars are greyed-out. This may change in the future, as the magnitude data are provided for the TSS.</h6>
+    <h6>Tiangong (TSS) pass predictions do not currently include the magnitude of the passes and are, therefore, not rated. The stars are greyed-out. This may change in the future, as the magnitude data are provided for the TSS.</h6>
     </li>
     <li>
     <h6>If there are buildings, trees, or other obstructions, and depending upon the weather and other viewing conditions, you may not be able to spot the space station.</h6>
@@ -365,7 +366,6 @@ struct UserGuide {
     static let fullGlobe =
     """
     \(head)
-    <h2>Interactive 3D Globe</h2>
     <p>The fullscreen 3D interactive globe shows the current position of the ISS, TSS, and Hubble. It plots their orbital tracks and groundtrack footprints (viewing range circle). The ISS track and footprint are shown in red, in gold for the TSS, and in blue for the Hubble.</p>
     <p>The globe is a photorealistic model of the Earth complete with accurate Sun subsolar position, specular reflections on the water, seasonal tilt, mountain shadows, and other details.</p>
     <p>The globe starts updating automatically when in fullscreen mode.</p>
