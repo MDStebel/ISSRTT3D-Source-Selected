@@ -2,7 +2,7 @@
 //  Delay Function.swift
 //
 //  Created by Michael Stebel on 12/4/15.
-//  Copyright © 2015-2023 ISS Real-Time Tracker. All rights reserved.
+//  Copyright © 2015-2024 ISS Real-Time Tracker. All rights reserved.
 //
 
 import UIKit

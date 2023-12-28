@@ -3,7 +3,7 @@
 //  ISS Real-Time Tracker 3D
 //
 //  Created by Michael Stebel on 2/22/16.
-//  Copyright © 2016-2023 ISS Real-Time Tracker. All rights reserved.
+//  Copyright © 2016-2024 ISS Real-Time Tracker. All rights reserved.
 //
 
 import UIKit
@@ -15,7 +15,7 @@ class CrewMembersTableViewController: UITableViewController, TableAnimatable {
     /// Constants
     private struct Constants {
         static let bioBackupURLString           = ApiEndpoints.crewBioBackupURL   // Backup URL is used if a bio URL is not returned in the JSON file
-        static let crewAPIEndpointURLString     = ApiEndpoints.crewAPIEndpoint    // API endpoint
+        static let crewAPIEndpointURLString     = ApiEndpoints.crewAPIEndpoint    // API endpoint (use .crewAPIEndpointTest for testing)
         static let customCellIdentifier         = "crewMemberCell"
         static let fontForTitle                 = Theme.nasa
         static let newLine                      = Globals.newLine

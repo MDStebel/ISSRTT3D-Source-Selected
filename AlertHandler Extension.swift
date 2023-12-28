@@ -2,7 +2,7 @@
 //  AlertHandler Extension.swift
 //
 //  Created by Michael Stebel on 11/9/15.
-//  Copyright © 2016-2023 ISS Real-Time Tracker. All rights reserved..
+//  Copyright © 2016-2024 ISS Real-Time Tracker. All rights reserved..
 //
 
 import UIKit
