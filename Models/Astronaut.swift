@@ -3,7 +3,7 @@
 //  ISS Real-Time Tracker 3D
 //
 //  Created by Michael Stebel on 7/9/16.
-//  Copyright © 2016-2023 ISS Real-Time Tracker. All rights reserved.
+//  Copyright © 2016-2024 ISS Real-Time Tracker. All rights reserved.
 //
 
 import Foundation
@@ -95,8 +95,8 @@ struct Astronaut: Decodable {
         do {
             
             if let json = try JSONSerialization.jsonObject(with: data!, options: []) as? JSONDictionary,
-                let numberOfAstronauts = json["number"] as? Int,
-                let astronauts = json["people"] as? [JSONDictionary]
+               let numberOfAstronauts = json["number"] as? Int,
+               let astronauts = json["people"] as? [JSONDictionary]
             {
                 for astronaut in astronauts  {
                     
@@ -125,7 +125,7 @@ struct Astronaut: Decodable {
             }
             
         }
-            
+        
         catch {
             return nil
         }
