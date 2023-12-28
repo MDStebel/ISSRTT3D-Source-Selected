@@ -3,7 +3,7 @@
 //  ISS Watch Extension
 //
 //  Created by Michael Stebel on 9/5/21.
-//  Copyright © 2021-2023 ISS Real-Time Tracker. All rights reserved.
+//  Copyright © 2021-2024 ISS Real-Time Tracker. All rights reserved.
 //
 
 import SwiftUI
@@ -51,7 +51,7 @@ struct smallButtonModifier: ViewModifier {
             .frame(width: 60, height: 27, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
             .background(Color.white.opacity(0.10))
             .font(.system(size: 16, weight: .semibold, design: .default))
-            .foregroundColor(.white)
+            .foregroundStyle(.white)
             .clipShape(Circle())
             .padding([.horizontal])
 
@@ -79,7 +79,7 @@ struct MDSDataLabelModifier: ViewModifier {
     func body(content: Content) -> some View {
         content
             .font(.custom(Theme.appFont, size: 10.0).bold())
-            .foregroundColor(.white)
+            .foregroundStyle(.white)
             .lineLimit(1)
     }
 }

@@ -3,7 +3,7 @@
 //  ISS Real-Time Tracker
 //
 //  Created by Michael Stebel on 9/17/21.
-//  Copyright © 2021-2023 ISS Real-Time Tracker. All rights reserved.
+//  Copyright © 2021-2024 ISS Real-Time Tracker. All rights reserved.
 //
 
 import SwiftUI
@@ -28,14 +28,14 @@ struct DataCellView: View {
             
             Rectangle()                                             // Sidebar with color indicator
                 .frame(width: 6)
-                .foregroundColor(sidebarColor)
+                .foregroundStyle(sidebarColor)
             
             VStack {
                 
                 HStack {                                            // Title
                     Text(title)
                         .font(.system(size: 14, weight: .semibold))
-                        .foregroundColor(.gray)
+                        .foregroundStyle(.gray)
                     Spacer()
                 }
                 
@@ -64,14 +64,14 @@ struct DataCellView: View {
                             Image(systemName: "arrowtriangle.left.fill")
                                 .resizable()
                                 .frame(width: 7, height: 6)
-                                .foregroundColor(sidebarColor)
+                                .foregroundStyle(sidebarColor)
                                 .offset(x: -7.5)
                             
                             VStack(alignment: .leading, spacing: -3) {
                                 
                                 Text("ALT")
                                     .font(.system(size: 10.0))
-                                    .foregroundColor(sidebarColor)
+                                    .foregroundStyle(sidebarColor)
                                     .bold()
                                     .offset(y: -1.5)
                                 
@@ -93,7 +93,7 @@ struct DataCellView: View {
                         Image(systemName: "sun.max.fill")
                             .resizable()
                             .scaledToFit()
-                            .foregroundColor(.yellow)
+                            .foregroundStyle(.yellow)
                             .offset(x: 1, y: -5)
                             .frame(width: 40, height: 40, alignment: .leading)
                         
