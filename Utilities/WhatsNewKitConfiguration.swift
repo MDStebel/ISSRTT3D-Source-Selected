@@ -22,17 +22,17 @@ private let whatsNew = WhatsNew(
     
     // The features and other information to showcase
     items: [
-//        WhatsNew.Item(
-//            title: "New Features in 7.13",
-//            subtitle: """
-//                      You can now select which target satellite to track on the 2D map. Tap the target button on the upper-left to select either the ISS, Tiangong, or Hubble. The fullscreen 3D globe view continues to show all three concurrently.
-//                      """,
-//            image: UIImage(systemName: "megaphone.fill")
-//        ),
         WhatsNew.Item(
-            title: "Fixes & Improvements",
+            title: "New Features in 7.13",
             subtitle: """
-                      Under-the-hood stuff.
+                      You can now select which target satellite to track on the 2D map. Tap the target button on the upper-left to select either the ISS, Tiangong, or Hubble. The fullscreen 3D globe view continues to show all three concurrently.
+                      """,
+            image: UIImage(systemName: "megaphone.fill")
+        ),
+        WhatsNew.Item(
+            title: "What's in This Release",
+            subtitle: """
+                      Added Belarus to list of countries sending astronauts to the ISS. Updated Twitter icon to X.
                       """,
             image: UIImage(systemName: "ant.fill")
         ),
