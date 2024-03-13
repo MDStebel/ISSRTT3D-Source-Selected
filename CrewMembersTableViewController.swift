@@ -312,7 +312,7 @@ class CrewMembersTableViewController: UITableViewController, TableAnimatable {
                 self.spinner.startAnimating()
             }
             
-            if let crewMember = tableView.indexPathForSelectedRow?.row {                // Prevents crash when returning from full bio and tapping button again because index is undefined.
+            if let crewMember = tableView.indexPathForSelectedRow?.row {                 // Prevents crash when returning from full bio and tapping button again because index is undefined.
                 index = crewMember
                 lastIndex = index
             }

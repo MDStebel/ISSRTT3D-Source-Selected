@@ -17,9 +17,9 @@ extension TrackingViewController {
         
         DispatchQueue.main.async { [self] in
             
-            self.altitudeLabel.text    = self.altString
-            self.coordinatesLabel.text = self.positionString
-            self.velocityLabel.text    = self.velString
+            altitudeLabel.text    = altString
+            coordinatesLabel.text = positionString
+            velocityLabel.text    = velString
             
         }
         
