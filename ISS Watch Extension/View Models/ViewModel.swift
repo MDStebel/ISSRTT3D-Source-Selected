@@ -103,7 +103,7 @@ final class ViewModel: ObservableObject {
     private func initHelper() {
         
         DispatchQueue.main.asyncAfter(deadline: .now() + 5.5) { [self] in       // Show the progress indicator
-            self.isStartingUp = false
+            isStartingUp = false
         }
         
         // Set up our scene
