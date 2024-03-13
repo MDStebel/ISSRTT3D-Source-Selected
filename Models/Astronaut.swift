@@ -13,9 +13,7 @@ import Foundation
 /// Initialize an Astronaut instance with member-wise initializer: Astronaut(name: name, title: title, country: country, countryFlag: countryFlag, spaceCraft: spaceCraft, launchDate: launchDate, bio: bio, shortBioBlurb: shortBioBlurb, image: image, twitter: twitter, mission: mission, launchVehicle: launchVehicle).
 struct Astronaut: Decodable {
     
-    
     // MARK: - Properties
-    
     
     let name: String
     let title: String
@@ -30,9 +28,95 @@ struct Astronaut: Decodable {
     let mission: String
     let expedition: String
     
-    
     /// Dictionary of flag emoji for each nationality
-    private var countryFlags = ["usa": "🇺🇸", "USA": "🇺🇸", "united states": "🇺🇸", "United States": "🇺🇸","russia": "🇷🇺", "Russia": "🇷🇺", "italy": "🇮🇹", "Italy": "🇮🇹", "united kingdom": "🇬🇧", "United Kingdom": "🇬🇧", "uk": "🇬🇧", "UK": "🇬🇧", "england": "🇬🇧", "England": "🇬🇧", "canada": "🇨🇦", "Canada": "🇨🇦", "japan": "🇯🇵", "Japan": "🇯🇵", "germany": "🇩🇪", "Germany": "🇩🇪", "israel": "🇮🇱", "Israel": "🇮🇱", "france": "🇫🇷", "France": "🇫🇷", "netherlands": "🇳🇱", "Netherlands": "🇳🇱", "the netherlands": "🇳🇱", "The Netherlands": "🇳🇱","belgium": "🇧🇪", "Belgium": "🇧🇪", "denmark": "🇩🇰", "Denmark": "🇩🇰", "norway": "🇳🇴", "Norway": "🇳🇴", "china": "🇨🇳", "China": "🇨🇳", "CHINA": "🇨🇳", "PRC": "🇨🇳", "prc": "🇨🇳", "spain": "🇪🇸", "Spain": "🇪🇸", "india": "🇮🇳", "India": "🇮🇳", "brazil": "🇧🇷", "Brazil": "🇧🇷","sweden": "🇸🇪", "Sweden": "🇸🇪", "greece": "🇬🇷", "Greece": "🇬🇷", "estonia": "🇪🇪", "Estonia": "🇪🇪", "austria": "🇦🇹", "Austria": "🇦🇹", "czech republic": "🇨🇿", "Czech Republic": "🇨🇿", "czech": "🇨🇿", "Czech": "🇨🇿", "switzerland": "🇨🇭", "Switzerland": "🇨🇭", "switz": "🇨🇭", "Switz": "🇨🇭", "finland": "🇫🇮", "Finland": "🇫🇮", "hungary": "🇭🇺", "Hungary": "🇭🇺", "poland": "🇵🇱", "Poland": "🇵🇱", "luxembourg": "🇱🇺", "Luxembourg": "🇱🇺", "romainia": "🇷🇴", "Romainia": "🇷🇴", "portugal": "🇵🇹", "Portugal": "🇵🇹", "ireland": "🇮🇪", "Ireland": "🇮🇪", "UAE": "🇦🇪", "uae": "🇦🇪", "U.A.E.": "🇦🇪", "United Arab Emirates": "🇦🇪", "united arab emirates": "🇦🇪", "saudi arabia": "🇸🇦", "Saudi Arabia": "🇸🇦"]
+    private var countryFlags = [
+        "Austria": "🇦🇹",
+        "Belarus": "🇧🇾",
+        "Belgium": "🇧🇪",
+        "Brazil": "🇧🇷",
+        "CHINA": "🇨🇳",
+        "Canada": "🇨🇦",
+        "China": "🇨🇳",
+        "Czech Republic": "🇨🇿",
+        "Czech": "🇨🇿",
+        "Denmark": "🇩🇰",
+        "England": "🇬🇧",
+        "Estonia": "🇪🇪",
+        "Finland": "🇫🇮",
+        "France": "🇫🇷",
+        "Germany": "🇩🇪",
+        "Greece": "🇬🇷",
+        "Hungary": "🇭🇺",
+        "India": "🇮🇳",
+        "Ireland": "🇮🇪",
+        "Israel": "🇮🇱",
+        "Italy": "🇮🇹",
+        "Japan": "🇯🇵",
+        "Luxembourg": "🇱🇺",
+        "Netherlands": "🇳🇱",
+        "Nigeria": "🇳🇬",
+        "Norway": "🇳🇴",
+        "PRC": "🇨🇳",
+        "Poland": "🇵🇱",
+        "Portugal": "🇵🇹",
+        "Romainia": "🇷🇴",
+        "Russia": "🇷🇺",
+        "Saudi Arabia": "🇸🇦",
+        "Spain": "🇪🇸",
+        "Sweden": "🇸🇪",
+        "Switz": "🇨🇭",
+        "Switzerland": "🇨🇭",
+        "The Netherlands": "🇳🇱",
+        "Turkey": "🇹🇷",
+        "Türkiye": "🇹🇷",
+        "U.A.E.": "🇦🇪",
+        "UAE": "🇦🇪",
+        "UK": "🇬🇧",
+        "USA": "🇺🇸",
+        "United Arab Emirates": "🇦🇪",
+        "United Kingdom": "🇬🇧",
+        "United States": "🇺🇸",
+        "austria": "🇦🇹",
+        "belgium": "🇧🇪",
+        "brazil": "🇧🇷",
+        "canada": "🇨🇦",
+        "china": "🇨🇳",
+        "czech republic": "🇨🇿",
+        "czech": "🇨🇿",
+        "denmark": "🇩🇰",
+        "england": "🇬🇧",
+        "estonia": "🇪🇪",
+        "finland": "🇫🇮",
+        "france": "🇫🇷",
+        "germany": "🇩🇪",
+        "greece": "🇬🇷",
+        "hungary": "🇭🇺",
+        "india": "🇮🇳",
+        "ireland": "🇮🇪",
+        "israel": "🇮🇱",
+        "italy": "🇮🇹",
+        "japan": "🇯🇵",
+        "luxembourg": "🇱🇺",
+        "netherlands": "🇳🇱",
+        "norway": "🇳🇴",
+        "poland": "🇵🇱",
+        "portugal": "🇵🇹",
+        "prc": "🇨🇳",
+        "romainia": "🇷🇴",
+        "russia": "🇷🇺",
+        "saudi arabia": "🇸🇦",
+        "spain": "🇪🇸",
+        "sweden": "🇸🇪",
+        "switz": "🇨🇭",
+        "switzerland": "🇨🇭",
+        "the netherlands": "🇳🇱",
+        "uae": "🇦🇪",
+        "uk": "🇬🇧",
+        "united arab emirates": "🇦🇪",
+        "united kingdom": "🇬🇧",
+        "united states": "🇺🇸",
+        "usa": "🇺🇸",
+    ]
     
     
     /// This computed property returns the uppercase string of the country
