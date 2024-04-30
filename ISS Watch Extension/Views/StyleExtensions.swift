@@ -104,6 +104,6 @@ struct CoordinatesTextModifier: ViewModifier {
     func body(content: Content) -> some View {
         content
             .font(.custom(Theme.appFont, size: 15).bold())
-            .minimumScaleFactor(0.9)
+            .minimumScaleFactor(0.5)
     }
 }

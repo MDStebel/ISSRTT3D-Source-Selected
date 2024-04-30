@@ -15,11 +15,11 @@ struct GlobeView: View {
     @Environment(\.scenePhase) private var scenePhase
     
     // We're observing our view model
-    @StateObject private var vm = ViewModel()
+    @StateObject private var vm = PositionViewModel()
     
     var body: some View {
         
-        NavigationView {
+        NavigationStack {
             
             ZStack {
                 
@@ -42,7 +42,7 @@ struct GlobeView: View {
                     Spacer() // we want the buttons at the bottom of the screen
                     
                     // Button group
-                    HStack(spacing: -15) {
+                    HStack(spacing: -35) {
                         Button(action: {
                             vm.reset()
                         })
@@ -64,6 +64,14 @@ struct GlobeView: View {
                         )
                         {
                             Image(systemName: "tablecells.fill")
+                        }
+                        .withSmallButtonModifier
+                        
+                        NavigationLink(
+                            destination: CrewView()                 // Show crew view
+                        )
+                        {
+                            Image("astronaut_helmet_filled_watch")
                         }
                         .withSmallButtonModifier
                     }
