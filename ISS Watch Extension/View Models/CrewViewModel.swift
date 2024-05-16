@@ -3,26 +3,49 @@
 //  ISS Watch Extension
 //
 //  Created by Michael Stebel on 4/24/24.
-//  Copyright © 2024 ISS Real-Time Tracker, LLC. All rights reserved.
+//  Copyright © 2024 ISS Real-Time Tracker. All rights reserved.
 //
 
 import SwiftUI
 import Combine
 
-class CrewViewModel: ObservableObject {
+@Observable
+final class CrewViewModel: ObservableObject {
     
     // MARK: - Published properties
     
-    @Published var crews    = [Crews.People]()
-    @Published var wasError = false
-    @Published var errorForAlert: ErrorCodes?
+    var crews                            = [Crews.People]()
+    var wasError                         = false
+    var errorForAlert: ErrorCodes?
     
     // MARK: - Properties
     
-    private var cancellables = Set<AnyCancellable>()
     private let crewAPIEndpointURLString = ApiEndpoints.crewAPIEndpoint
+    private let timerValue               = 5.0
+    private var cancellables             = Set<AnyCancellable>()
+    private var timer: AnyCancellable?
 
     // MARK: - Methods
+    
+    init() {
+        fetchData()                      // Update the globe once before starting the timer
+        start()
+    }
+    
+    /// Set up and start the timer
+    func start() {
+        timer = Timer
+            .publish(every: timerValue, on: .main, in: .common)
+            .autoconnect()
+            .sink { _ in
+                self.fetchData()
+            }
+    }
+     
+    /// Stop the timer
+    func stop() {
+        timer?.cancel()
+    }
     
     /// Get crew data using Combine pipeline
     func fetchData() {

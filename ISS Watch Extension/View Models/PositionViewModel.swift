@@ -10,40 +10,40 @@ import Combine
 import SceneKit
 import SwiftUI
 
+@Observable
 final class PositionViewModel: ObservableObject {
     
     // MARK: - Published properties
     
-    @Published var earthGlobe: EarthGlobe                                = EarthGlobe()
-    @Published var errorForAlert: ErrorCodes?
-    @Published var globeMainNode: SCNNode?
-    @Published var globeScene: SCNScene?
+    var earthGlobe: EarthGlobe    = EarthGlobe()
+    var errorForAlert: ErrorCodes?
+    var globeMainNode: SCNNode?
+    var globeScene: SCNScene?
     
-    @Published var hubbleAltitude: Float                                 = 0.0
-    @Published var hubbleAltitudeInKm                                    = ""
-    @Published var hubbleAltitudeInMi                                    = ""
-    @Published var hubbleFormattedLatitude                               = ""
-    @Published var hubbleFormattedLongitude                              = ""
+    var hubbleAltitude: Float     = 0.0
+    var hubbleAltitudeInKm        = ""
+    var hubbleAltitudeInMi        = ""
+    var hubbleFormattedLatitude   = ""
+    var hubbleFormattedLongitude  = ""
     
-    @Published var issAltitude: Float                                    = 0.0
-    @Published var issAltitudeInKm                                       = ""
-    @Published var issAltitudeInMi                                       = ""
-    @Published var issFormattedLatitude                                  = ""
-    @Published var issFormattedLongitude                                 = ""
+    var issAltitude: Float        = 0.0
+    var issAltitudeInKm           = ""
+    var issAltitudeInMi           = ""
+    var issFormattedLatitude      = ""
+    var issFormattedLongitude     = ""
    
-    @Published var subsolarLatitude: String                              = ""
-    @Published var subsolarLongitude: String                             = ""
+    var subsolarLatitude: String  = ""
+    var subsolarLongitude: String = ""
     
-    @Published var tssAltitude: Float                                    = 0.0
-    @Published var tssAltitudeInKm                                       = ""
-    @Published var tssAltitudeInMi                                       = ""
-    @Published var tssFormattedLatitude                                  = ""
-    @Published var tssFormattedLongitude                                 = ""
+    var tssAltitude: Float        = 0.0
+    var tssAltitudeInKm           = ""
+    var tssAltitudeInMi           = ""
+    var tssFormattedLatitude      = ""
+    var tssFormattedLongitude     = ""
     
-    @Published var isStartingUp                                          = true
-    @Published var spinEnabled                                           = true
-    @Published var wasError                                              = false
-    
+    var isStartingUp              = true
+    var spinEnabled               = true
+    var wasError                  = false
     
     // MARK: - Properties
     
@@ -71,38 +71,31 @@ final class PositionViewModel: ObservableObject {
     private var tssLastLat: Float                                        = 0.0
     private var tssLatitude: Float                                       = 0.0
     private var tssLongitude: Float                                      = 0.0
-
     
     // MARK: - Methods
     
     init() {
-        
         reset()
         initHelper()
         updateEarthGlobe()                  // Update the globe once before starting the timer
         start()
-        
     }
-    
     
     /// Reset the globe
     func reset() {
-        
         earthGlobe    = EarthGlobe()
         isStartingUp  = true
+        spinEnabled   = true
         issLastLat    = 0
         tssLastLat    = 0
         hubbleLastLat = 0
         
         initHelper()
-        
     }
-    
     
     /// Helps with initialization and reset
     private func initHelper() {
-        
-        DispatchQueue.main.asyncAfter(deadline: .now() + 5.5) { [self] in       // Show the progress indicator
+        DispatchQueue.main.asyncAfter(deadline: .now() + 5.5) { [self] in       // Will tell the view to show the progress indicator
             isStartingUp = false
         }
         
@@ -110,30 +103,22 @@ final class PositionViewModel: ObservableObject {
         globeMainNode = earthGlobe.cameraNode
         globeScene    = earthGlobe.scene
         earthGlobe.setupInSceneView()
-        
     }
-    
     
     /// Set up and start the timer
     func start() {
-        
         timer = Timer
             .publish(every: timerValue, on: .main, in: .common)
             .autoconnect()
             .sink { _ in
                 self.updateEarthGlobe()
             }
-        
     }
  
-    
     /// Stop the timer
     func stop() {
-        
         timer?.cancel()
-        
     }
-    
     
     /// The engine that powers this view model. Updates the globe scene for the new coordinates
     private func updateEarthGlobe() {
