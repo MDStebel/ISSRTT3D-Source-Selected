@@ -19,7 +19,6 @@ struct DetailView: View {
     var body: some View {
         
         ScrollView {
-            
             VStack {
                 
                 DataCellView(title: "ISS Position",
@@ -76,7 +75,7 @@ struct DetailView: View {
         }
         
         // Respond to lifecycle phases
-        .onChange(of: scenePhase) { phase in
+        .onChange(of: scenePhase) { _, phase in
             switch phase {
             case .active:
                 // The scene has become active, so start updating
@@ -90,9 +89,7 @@ struct DetailView: View {
             @unknown default:
                 fatalError("The app has entered an unknown state.")
             }
-            
         }
-        
     }
     
     private func start() {
@@ -114,7 +111,6 @@ struct DetailView: View {
         return (currentVersion, currentBuild, copyright)
         
     }
-    
 }
 
 
