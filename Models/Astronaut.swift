@@ -11,7 +11,7 @@ import Foundation
 /// Model that encapsulates an astronaut.
 ///
 /// Initialize an Astronaut instance with member-wise initializer: Astronaut(name: name, title: title, country: country, countryFlag: countryFlag, spaceCraft: spaceCraft, launchDate: launchDate, bio: bio, shortBioBlurb: shortBioBlurb, image: image, twitter: twitter, mission: mission, launchVehicle: launchVehicle).
-struct Astronaut: Decodable {
+struct Astronaut: Decodable, Hashable {
     
     // MARK: - Properties
     
@@ -28,122 +28,26 @@ struct Astronaut: Decodable {
     let mission: String
     let expedition: String
     
-    /// Dictionary of flag emoji for each nationality
-    private var countryFlags = [
-        "Austria": "🇦🇹",
-        "Belarus": "🇧🇾",
-        "Belgium": "🇧🇪",
-        "Brazil": "🇧🇷",
-        "CHINA": "🇨🇳",
-        "Canada": "🇨🇦",
-        "China": "🇨🇳",
-        "Czech Republic": "🇨🇿",
-        "Czech": "🇨🇿",
-        "Denmark": "🇩🇰",
-        "England": "🇬🇧",
-        "Estonia": "🇪🇪",
-        "Finland": "🇫🇮",
-        "France": "🇫🇷",
-        "Germany": "🇩🇪",
-        "Greece": "🇬🇷",
-        "Hungary": "🇭🇺",
-        "India": "🇮🇳",
-        "Ireland": "🇮🇪",
-        "Israel": "🇮🇱",
-        "Italy": "🇮🇹",
-        "Japan": "🇯🇵",
-        "Luxembourg": "🇱🇺",
-        "Netherlands": "🇳🇱",
-        "Nigeria": "🇳🇬",
-        "Norway": "🇳🇴",
-        "PRC": "🇨🇳",
-        "Poland": "🇵🇱",
-        "Portugal": "🇵🇹",
-        "Romainia": "🇷🇴",
-        "Russia": "🇷🇺",
-        "Saudi Arabia": "🇸🇦",
-        "Spain": "🇪🇸",
-        "Sweden": "🇸🇪",
-        "Switz": "🇨🇭",
-        "Switzerland": "🇨🇭",
-        "The Netherlands": "🇳🇱",
-        "Turkey": "🇹🇷",
-        "Türkiye": "🇹🇷",
-        "U.A.E.": "🇦🇪",
-        "UAE": "🇦🇪",
-        "UK": "🇬🇧",
-        "USA": "🇺🇸",
-        "United Arab Emirates": "🇦🇪",
-        "United Kingdom": "🇬🇧",
-        "United States": "🇺🇸",
-        "austria": "🇦🇹",
-        "belgium": "🇧🇪",
-        "brazil": "🇧🇷",
-        "canada": "🇨🇦",
-        "china": "🇨🇳",
-        "czech republic": "🇨🇿",
-        "czech": "🇨🇿",
-        "denmark": "🇩🇰",
-        "england": "🇬🇧",
-        "estonia": "🇪🇪",
-        "finland": "🇫🇮",
-        "france": "🇫🇷",
-        "germany": "🇩🇪",
-        "greece": "🇬🇷",
-        "hungary": "🇭🇺",
-        "india": "🇮🇳",
-        "ireland": "🇮🇪",
-        "israel": "🇮🇱",
-        "italy": "🇮🇹",
-        "japan": "🇯🇵",
-        "luxembourg": "🇱🇺",
-        "netherlands": "🇳🇱",
-        "norway": "🇳🇴",
-        "poland": "🇵🇱",
-        "portugal": "🇵🇹",
-        "prc": "🇨🇳",
-        "romainia": "🇷🇴",
-        "russia": "🇷🇺",
-        "saudi arabia": "🇸🇦",
-        "spain": "🇪🇸",
-        "sweden": "🇸🇪",
-        "switz": "🇨🇭",
-        "switzerland": "🇨🇭",
-        "the netherlands": "🇳🇱",
-        "uae": "🇦🇪",
-        "uk": "🇬🇧",
-        "united arab emirates": "🇦🇪",
-        "united kingdom": "🇬🇧",
-        "united states": "🇺🇸",
-        "usa": "🇺🇸",
-    ]
-    
-    
     /// This computed property returns the uppercase string of the country
     private var countryFormatted: String {
         country.uppercased()
     }
     
-    
     /// This computed property returns a flag representing the country, if available. If there's no flag, return the flag image, or else return the country name.
     var flag: String {
-        countryFlags[country] ?? countryFormatted
+        Globals.countryFlags[country] ?? countryFormatted
     }
-    
     
     var shortAstronautDescription: String {
         name + "  " + (flag)
     }
-    
     
     /// This computed property returns a date formatted according to output date format string in Globals. If not successful, return an empty string
     var launchDateFormatted: String {
         DateFormatter().convert(from: launchDate, fromStringFormat: Globals.dateFormatStringEuropeanForm, toStringFormat: Globals.outputDateFormatStringShortForm) ?? ""
     }
     
-    
     // MARK: - Methods
-    
     
     /// Method to calculate the number of days an astronaut has been in space (today - launch date).
     /// If there's an error in the JSON data, this will detect it and return 0 days.
@@ -164,7 +68,6 @@ struct Astronaut: Decodable {
         }
         
     }
-    
     
     /// Parses JSON file with current crew names from my API and returns an optional array of Astronauts.
     /// - Parameter data: The data returned from API.
@@ -213,11 +116,8 @@ struct Astronaut: Decodable {
         catch {
             return nil
         }
-        
     }
-    
 }
-
 
 extension Astronaut: CustomStringConvertible, Comparable {
     
@@ -233,5 +133,4 @@ extension Astronaut: CustomStringConvertible, Comparable {
     var description: String {
         "\(name), \(title), \(flag)"
     }
-    
 }

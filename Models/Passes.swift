@@ -54,5 +54,4 @@ struct Passes: Decodable {
         4 : "20",
         5 : "30"
     ]
-    
 }

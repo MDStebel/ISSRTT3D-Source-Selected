@@ -17,7 +17,6 @@ struct ISSOrbitalPosition: Codable {
     let velocity: Double
     let time: Double
     
-    
     /// Parses JSON file with coordinates, altitude, velocity, and date & time from the data returned from the API.
     /// - Parameter data: The data returned from API
     /// - Returns: An OrbitalPosition instance
@@ -40,22 +39,16 @@ struct ISSOrbitalPosition: Codable {
             } else {
                 return nil
             }
-            
         }
             
         catch {
             return nil
         }
-        
     }
-    
 }
 
-
 extension ISSOrbitalPosition: CustomStringConvertible {
-    
     var description: String {
         return "Lat: \(latitude) Lon: \(longitude) Alt: \(altitude) km Vel: \(velocity) km/h"
     }
-    
 }
