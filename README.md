@@ -1,7 +1,7 @@
 #  ISS Real-Time Tracker 3D
 
 ### App for iPhone, iPad, Apple Watch, and Mac with Apple silicon, 
-##### Requires iOS 16+, iPadOS 16+, watchOS 9+, and macOS 13+, respectively
+##### Requires iOS 17+, iPadOS 17+, watchOS 10+, and macOS 14+, respectively
 
 ### Selected source files
  
