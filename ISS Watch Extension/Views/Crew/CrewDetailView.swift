@@ -16,8 +16,6 @@ struct CrewDetailView: View {
     
     @State private var image: Image? = nil    
     
-    /// Placeholder image to use if there's no image for an astronaut returned by the API call
-    private let placeholderImage  = "astronaut_helmet_filled_watch"
     private let corner   = 15.0
     
     var body: some View {
@@ -43,43 +41,35 @@ struct CrewDetailView: View {
                     }
                 }
                 
-                Group {
+                VStack {
                     
                     // Date calculations
                     let launchdate = DateFormatter().convert(from:  crewMember.launchdate, fromStringFormat: Globals.dateFormatStringEuropeanForm, toStringFormat: Globals.outputDateFormatStringShortForm) ?? ""
                     let numDays = numberOfDaysInSpace(since: launchdate)
                     
-                    Text("General")
-                        .font(.title3)
-                        .bold()
+                    CrewDetailSubheading(heading: "General")
                     
                     CrewStatView(label: "Name", stat: crewMember.name)
                     CrewStatView(label: "Country", stat: crewMember.country)
+                    
+                    CrewDetailSubheading(heading: "On Station")
+                    
                     CrewStatView(label: "Title", stat: crewMember.title)
-                    
-                    Text("Station Stats")
-                        .font(.title3)
-                        .bold()
-                    
                     CrewStatView(label: "Expediiton", stat: crewMember.expedition)
                     CrewStatView(label: "Days in space", stat: "\(numDays)")
                     
-                    Text("Launch")
-                        .font(.title3)
-                        .bold()
+                    CrewDetailSubheading(heading: "Launch")
                     
                     CrewStatView(label: "Date", stat: launchdate)
                     CrewStatView(label: "Mission", stat: crewMember.mission)
                     CrewStatView(label: "Vehicle", stat: crewMember.launchvehicle)
 
-                    Text("Biography")
-                        .font(.title3)
-                        .bold()
+                    CrewDetailSubheading(heading: "Biography")
                     
                     Text(crewMember.bio)
                         .font(.caption)
                         .foregroundColor(.white.opacity(1))
-                        .padding(EdgeInsets(top: 0, leading: 2, bottom: 0, trailing: 2))
+                        .padding(EdgeInsets(top: 0, leading: 1, bottom: 0, trailing: 1))
                 }
                 .padding(2)
             }
@@ -89,16 +79,20 @@ struct CrewDetailView: View {
                 Task {
                     do {
                         let urlString = crewMember.biophoto
-                        guard let url = URL(string: urlString) else { return }
+                        guard let url = URL(string: urlString) else {
+                            self.image = Image(.astronautPlaceholder)
+                            return
+                        }
                         let imageData = try await loadImage(from: url)
                         DispatchQueue.main.async {
                             if let imageFromData = UIImage(data: imageData) {
                                 self.image = Image(uiImage: imageFromData)
                             } else {
-                                self.image = Image(placeholderImage)
+                                self.image = Image(.astronautPlaceholder)
                             }
                         }
                     } catch {
+                        self.image = Image(.astronautPlaceholder)
                         print("Error loading image: \(error.localizedDescription)")
                     }
                 }
@@ -138,17 +132,17 @@ struct CrewDetailView: View {
 #Preview {
     CrewDetailView(
         crewMember: Crews.People(
-            name: "Joe Astronaut",
-            biophoto: "https://issrttapi.com/md.jpg",
-            country: "USA",
-            launchdate: "2024-04-20",
-            title: "Flight Engineer",
+            name: "Oleg Kononenko",
+            biophoto: "https://issrttapi.com/kononenko.jpeg",
+            country: "Russia",
+            launchdate: "2023-09-15",
+            title: "Commander",
             location: "International Space Station",
             bio: "Oleg Dmitriyevich Kononenko is a Russian cosmonaut. He has flown to the International Space Station four times. He accumulated over 736 days in orbit during his four long duration flights, the longest time in space of any currently active cosmonaut or astronaut.",
-            biolink: "https://www.nasa.gov/people/jeanette-j-epps/",
-            twitter: "https://www.nasa.gov/people/jeanette-j-epps/",
-            mission: "Crew-9",
-            launchvehicle: "Crew Dragon",
+            biolink: "https://en.wikipedia.org/wiki/Oleg_Kononenko",
+            twitter: "",
+            mission: "Soyuz MS-24",
+            launchvehicle: "Soyuz",
             expedition: "71"
         )
     )

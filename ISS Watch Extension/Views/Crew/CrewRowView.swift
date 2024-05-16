@@ -30,7 +30,7 @@ struct CrewRowView: View {
                     Spacer()
                 }
                 HStack {
-                    Text(Flags.getFlag(for: country))
+                    Text(getFlag(for: country))
                     Text(title)
                         .withMDSDataLabelModifier
                     Spacer()
@@ -42,7 +42,15 @@ struct CrewRowView: View {
         }
         .cornerRadius(10.0)
     }
+    
+    /// Helper method to get a flag emoji
+    /// - Parameter country: String
+    /// - Returns: Emoji as String or the country name
+    private func getFlag(for country: String) -> String {
+        Globals.countryFlags[country] ?? country.uppercased()
+    }
 }
+
 
 #Preview {
     CrewRowView(country: "USA", name: "Joe Astro", station: "Tiangong", title: "Flight Engineer", colorKey: .ISSRTT3DRed)

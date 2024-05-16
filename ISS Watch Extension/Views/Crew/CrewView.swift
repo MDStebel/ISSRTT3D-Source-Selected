@@ -10,6 +10,9 @@ import SwiftUI
 
 struct CrewView: View {
     
+    // Get the current phase of the scene
+    @Environment(\.scenePhase) private var scenePhase
+    
     @StateObject var viewModel = CrewViewModel()
     
     private var crews = [Crews.People]()
@@ -46,12 +49,30 @@ struct CrewView: View {
             .navigationTitle("Crews").navigationBarTitleDisplayMode(.inline)
         }
         .ignoresSafeArea(edges: .bottom)
-        
+
         .onAppear() {
-            viewModel.fetchData()
+            viewModel.start()
+        }
+        
+        // Respond to lifecycle phases
+        .onChange(of: scenePhase) { _, phase in
+            switch phase {
+            case .active:
+                // The scene has become active, so start updating
+                viewModel.start()
+            case .inactive:
+                // The app has become inactive, so stop updating
+                break
+            case .background:
+                // The app has moved to the background, so stop updating
+                viewModel.stop()
+            @unknown default:
+                fatalError("The app has entered an unknown state.")
+            }
         }
     }
 }
+
 
 #Preview {
     CrewView()
