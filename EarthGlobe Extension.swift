@@ -64,7 +64,6 @@ extension EarthGlobe {
         
     }
     
-    
     /// Adds the satellite's viewing circle marker at the precise latitude and longitude to our globe scene
     /// - Parameters:
     ///   - lat: The current latitude as a decimal value
@@ -75,7 +74,6 @@ extension EarthGlobe {
         self.addMarker(viewingCircle, shouldPulse: false)
         
     }
-    
     
     /// Adds the satellite's viewing circle marker at the precise latitude and longitude to our globe scene
     /// - Parameters:
@@ -88,7 +86,6 @@ extension EarthGlobe {
         
     }
     
-    
     /// Adds the satellite's viewing circle marker at the precise latitude and longitude to our globe scene
     /// - Parameters:
     ///   - lat: The current latitude as a decimal value
@@ -99,7 +96,6 @@ extension EarthGlobe {
         self.addMarker(viewingCircle, shouldPulse: false)
         
     }
-    
     
     /// Create an orbital track around the globe at the station's precise orbital inclination and location, heading, and altitude
     ///

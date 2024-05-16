@@ -22,12 +22,9 @@ extension DateFormatter: StringDateConversions {
         dateFormat = fromStringFormat
         
         if let tempDate = self.date(from: date) {
-            
             dateFormat = toStringFormat
             return string(from: tempDate)
-            
         } else {
-
             return nil
         }
         

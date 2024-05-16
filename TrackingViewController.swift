@@ -375,15 +375,15 @@ class TrackingViewController: UIViewController, MKMapViewDelegate, UIGestureReco
     }
     
     
-    /// Present What's New if app was updated or if the switch is enabled in Settings
-    private func showWhatsNewIfNeeded() {
-        
-        if hasAppBeenUpdated() || Globals.showWhatsNewUponNextStartup {
-            self.present(whatsNewViewController, animated: true)
-            Globals.showWhatsNewUponNextStartup = false
-        }
-        
-    }
+//    /// Present What's New if app was updated or if the switch is enabled in Settings
+//    private func showWhatsNewIfNeeded() {
+//        
+//        if hasAppBeenUpdated() || Globals.showWhatsNewUponNextStartup {
+//            self.present(whatsNewViewController, animated: true)
+//            Globals.showWhatsNewUponNextStartup = false
+//        }
+//        
+//    }
     
     
     override func viewDidAppear(_ animated: Bool) {
@@ -391,7 +391,7 @@ class TrackingViewController: UIViewController, MKMapViewDelegate, UIGestureReco
         super.viewDidAppear(animated)
         
         animateStartPrompt()
-        showWhatsNewIfNeeded()
+//        showWhatsNewIfNeeded()
         
         map.isZoomEnabled   = Globals.mapScrollingAndZoomIsEnabled
         map.isScrollEnabled = Globals.mapScrollingAndZoomIsEnabled

@@ -25,7 +25,6 @@ protocol EarthGlobeProtocol: UIViewController {
 
 // MARK: - Default implementations
 
-
 extension EarthGlobeProtocol {
     
     /// Create the context globe scene

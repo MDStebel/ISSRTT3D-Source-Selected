@@ -387,8 +387,8 @@ class PassesTableViewController: UITableViewController, CLLocationManagerDelegat
     private func addEvent(_ passEvent: Passes.Pass) {
         
         let eventStore = EKEventStore()
-        if (EKEventStore.authorizationStatus(for: .event) != EKAuthorizationStatus.authorized) {
-            eventStore.requestAccess(to: .event) { [self] (granted, error) -> Void in
+        if (EKEventStore.authorizationStatus(for: .event) != EKAuthorizationStatus.fullAccess) {
+            eventStore.requestFullAccessToEvents() { [self] (granted, error) -> Void in
                 if granted {
                     createEvent(eventStore, passEvent: passEvent)
                 } else {
