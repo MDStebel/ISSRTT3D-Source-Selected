@@ -375,21 +375,22 @@ extension CrewMembersTableViewController {
     /// Get astronaut's image, if available
     /// - Parameter index: Cell index
     /// - Returns: A n optional image
-    private func getAstronautImage(forCell index: Int) -> UIImage? {
-        
-        var imageToReturn: UIImage? = nil
-        
-        if let imageURL = URL(string: currentCrew![index].image) {
-            if let astonautImageData = try? Data(contentsOf: imageURL) {
-                
-                imageToReturn = UIImage(data: astonautImageData)
-                
-            }
+    private func getAstronautImage(forCell index: Int) async -> UIImage? {
+        guard let imageURLString = currentCrew?[index].image,
+              let imageURL = URL(string: imageURLString) else {
+            return nil
         }
         
-        return imageToReturn
-        
+        do {
+            let (data, _) = try await URLSession.shared.data(from: imageURL)
+            print("got it")
+            return UIImage(data: data)
+        } catch {
+            print("Failed to fetch image data: \(error)")
+            return nil
+        }
     }
+
     
     @IBAction func changeStation(_ sender: UIBarButtonItem) {
         
@@ -430,6 +431,7 @@ extension CrewMembersTableViewController {
     
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> AstronautTableViewCell {
+        var image: UIImage?
         
         let cell = tableView.dequeueReusableCell(withIdentifier: Constants.customCellIdentifier, for: indexPath) as! AstronautTableViewCell   // Custom cell class
         cell.backgroundColor = UIColor.lightGray.withAlphaComponent(Theme.cellBackgroundColorAlpha)
@@ -438,30 +440,31 @@ extension CrewMembersTableViewController {
             
             let row                        = indexPath.row
             
-            cell.astronautImage.image      = getAstronautImage(forCell: row) ?? placeholderImage
-            
-            let daysInSpace                = currentCrew![row].numberOfDaysInSpace()
-            let expedition                 = currentCrew![row].expedition
-            let flag                       = currentCrew![row].flag
-            let launchDate                 = currentCrew![row].launchDateFormatted
-            let mission                    = currentCrew![row].mission
-            let name                       = currentCrew![row].name
-            let title                      = currentCrew![row].title
-            let vehicle                    = currentCrew![row].launchVehicle
-            
-            cell.astronautName.text        = name + Globals.spacer + flag
-            
-            // Get launch spacecraft image using vehicle name
-            let spacecraft                 = Spacecraft(rawValue: vehicle) ?? .crewDragon
-            cell.spacecraftWatermark.image = spacecraft.spacecraftImages
-            
-            // Build string containing the basic crew member data
-            cell.astronautInfo.text        = "\(title)\n\(expedition)\n\(mission)\n\(launchDate)\n\(vehicle)\n\(daysInSpace)"
-            
+            Task {
+                image = await getAstronautImage(forCell: row)
+                
+                cell.astronautImage.image      = image ?? placeholderImage
+                
+                let daysInSpace                = currentCrew![row].numberOfDaysInSpace()
+                let expedition                 = currentCrew![row].expedition
+                let flag                       = currentCrew![row].flag
+                let launchDate                 = currentCrew![row].launchDateFormatted
+                let mission                    = currentCrew![row].mission
+                let name                       = currentCrew![row].name
+                let title                      = currentCrew![row].title
+                let vehicle                    = currentCrew![row].launchVehicle
+                
+                cell.astronautName.text        = name + Globals.spacer + flag
+                
+                // Get launch spacecraft image using vehicle name
+                let spacecraft                 = Spacecraft(rawValue: vehicle) ?? .crewDragon
+                cell.spacecraftWatermark.image = spacecraft.spacecraftImages
+                
+                // Build string containing the basic crew member data
+                cell.astronautInfo.text        = "\(title)\n\(expedition)\n\(mission)\n\(launchDate)\n\(vehicle)\n\(daysInSpace)"
+            }
         }
-        
         return cell
-        
     }
     
     
