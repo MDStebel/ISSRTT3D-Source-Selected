@@ -12,11 +12,11 @@ import WidgetKit
 
 struct Provider: TimelineProvider {
     func placeholder(in context: Context) -> NextPass {
-        NextPass(date: Date(), startAzimuth: 216.0, startAzCompass: "SW", startElevation: 18.0, maxAzimuth: 270.0, maxElevation: 60.0, endAzimuth: 30.0, endElevation: 20.0)
+        NextPass(date: Date(), passDate: Date(), startAzimuth: 216.0, startAzCompass: "SW", startElevation: 18.0, maxAzimuth: 270.0, maxElevation: 60.0, endAzimuth: 30.0, endElevation: 20.0)
     }
     
     func getSnapshot(in context: Context, completion: @escaping (NextPass) -> ()) {
-        let entry = NextPass(date: Date(), startAzimuth: 216.0, startAzCompass: "SW", startElevation: 18.0, maxAzimuth: 270.0, maxElevation: 60.0, endAzimuth: 30.0, endElevation: 20.0)
+        let entry = NextPass(date: Date(), passDate: Date(), startAzimuth: 216.0, startAzCompass: "SW", startElevation: 18.0, maxAzimuth: 270.0, maxElevation: 60.0, endAzimuth: 30.0, endElevation: 20.0)
         completion(entry)
     }
     
@@ -26,9 +26,16 @@ struct Provider: TimelineProvider {
             if let apiData = await fetchData() {
                 let nextPass = apiData.passes[0]
                 let passDate = Date(timeIntervalSince1970: Double(nextPass.startUTC))
-                let entry = NextPass(date: passDate, startAzimuth: nextPass.startAz, startAzCompass: nextPass.startAzCompass, startElevation: nextPass.startEl, maxAzimuth: nextPass.maxAz, maxElevation: nextPass.maxEl, endAzimuth: nextPass.endAz, endElevation: nextPass.endEl)
-                entries.append(entry)
+                
+                // Generate a timeline consisting of five entries an hour apart, starting from the current date.
+                let currentDate = Date()
+                for hourOffset in 0 ..< 5 {
+                    let entryDate = Calendar.current.date(byAdding: .hour, value: hourOffset, to: currentDate)!
+                    let entry = NextPass(date: entryDate, passDate: passDate, startAzimuth: nextPass.startAz, startAzCompass: nextPass.startAzCompass, startElevation: nextPass.startEl, maxAzimuth: nextPass.maxAz, maxElevation: nextPass.maxEl, endAzimuth: nextPass.endAz, endElevation: nextPass.endEl)
+                    entries.append(entry)
+                }
             }
+            
             let timeline = Timeline(entries: entries, policy: .atEnd)
             completion(timeline)
         }
@@ -83,7 +90,8 @@ struct Provider: TimelineProvider {
 
 /// Simplfied pass model
 struct NextPass: TimelineEntry {
-    let date: Date
+    var date: Date
+    let passDate: Date
     let startAzimuth: Double
     let startAzCompass: String
     let startElevation: Double
@@ -230,5 +238,6 @@ struct ISS_Real_Time_Tracker_3D_Widget: Widget {
 #Preview(as: .systemSmall) {
     ISS_Real_Time_Tracker_3D_Widget()
 } timeline: {
-    NextPass(date: Date(), startAzimuth: 216.3, startAzCompass: "SW", startElevation: 18.7, maxAzimuth: 270.0, maxElevation: 60.0, endAzimuth: 30.0, endElevation: 20.0)
+    NextPass(date: Date(), passDate: Date(), startAzimuth: 216.3, startAzCompass: "SW", startElevation: 18.7, maxAzimuth: 270.0, maxElevation: 60.0, endAzimuth: 30.0, endElevation: 20.0)
+    NextPass(date: Date(), passDate: Date(), startAzimuth: 350, startAzCompass: "NNW", startElevation: 22, maxAzimuth: 270.0, maxElevation: 60.0, endAzimuth: 30.0, endElevation: 20.0)
 }
