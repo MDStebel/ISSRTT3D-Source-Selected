@@ -16,7 +16,8 @@ struct CrewDetailSubheading: View {
     
     var body: some View {
         Text(heading)
-            .font(.title3)
+            .font(.footnote)
+            .foregroundStyle(.white.opacity(0.5))
             .textCase(.uppercase)
             .bold()
             .padding(EdgeInsets(top: 3, leading: 2, bottom: 1, trailing: 2))

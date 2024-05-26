@@ -95,7 +95,6 @@ struct GlobeView: View {
             // Update the coordinates when this view appears
             .onAppear() {
                 vm.start()
-                print("appeared")
             }
             
             // Respond to lifecycle phases
