@@ -110,15 +110,7 @@ struct ISS_Real_Time_Tracker_3D_WidgetEntryView: View {
     
     var body: some View {
         ZStack {
-            ContainerRelativeShape()
-                .fill(Color.issrttRed)
-                .overlay(
-                    LinearGradient(
-                        colors: [Color.issrttRed, Color.issrttWhite],
-                        startPoint: .top,
-                        endPoint: .bottom
-                    ).opacity(0.25)
-                )
+            ContainerView()
             VStack(spacing: 5) {
                 HeaderView()
                 Spacer()
@@ -128,6 +120,21 @@ struct ISS_Real_Time_Tracker_3D_WidgetEntryView: View {
                     .offset(y: -45)
             }
         }
+    }
+}
+
+struct ContainerView: View {
+    var body: some View {
+        ContainerRelativeShape()
+            .fill(Color.issrttRed)
+            .overlay(
+                LinearGradient(
+                    colors: [Color.issrttRed, Color.issrttWhite],
+                    startPoint: .top,
+                    endPoint: .bottom
+                )
+                .opacity(0.25)
+            )
     }
 }
 
@@ -169,13 +176,11 @@ struct DateView: View {
 
 struct InfoCardView: View {
     var entry: Provider.Entry
-    
     @Environment(\.widgetFamily) var family
     
     var body: some View {
-
         let date = Text("\(entry.passDate.formatted(date: .omitted, time: .shortened))")
-        let azi = Text("\(entry.startAzimuth, format: .number.precision(.fractionLength(0)))")
+        let azi = Text("\(entry.startAzimuth, format: .number.precision(.fractionLength(0)))°")
         let elev = Text("\(entry.startElevation, format: .number.precision(.fractionLength(1)))°")
 
         let tmLabel = family == .systemMedium ? "  Start Time:  " : " Tm: "
@@ -187,26 +192,11 @@ struct InfoCardView: View {
             Rectangle()
                 .foregroundColor(.issrttWhite)
                 .cornerRadius(5)
-                .frame(width: .infinity, height: 50)
+                .frame(maxWidth: .infinity, maxHeight: 50)
             VStack(alignment: .leading, spacing: 0) {
-                InfoRow(
-                    icon: "clock",
-                    label: tmLabel,
-                    value: date,
-                    spacing: spacing
-                )
-                InfoRow(
-                    icon: "safari",
-                    label: azLabel,
-                    value: azi + Text("° ") + Text(entry.startAzCompass), 
-                    spacing: spacing
-                )
-                InfoRow(
-                    icon: "angle",
-                    label: elLabel,
-                    value: elev, 
-                    spacing: spacing
-                )
+                InfoRow(icon: "clock", label: tmLabel, value: date, spacing: spacing)
+                InfoRow(icon: "safari", label: azLabel, value: azi + Text(" ") + Text(entry.startAzCompass), spacing: spacing)
+                InfoRow(icon: "angle", label: elLabel, value: elev, spacing: spacing)
             }
             .foregroundColor(.issrttRed)
             .padding(.horizontal, 5)
