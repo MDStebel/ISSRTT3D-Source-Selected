@@ -106,140 +106,126 @@ extension EarthGlobe {
     ///   - lon: Longitude as a decimal value as a Float
     ///   - headingFactor: Indicates whether the statellite is heading generally north or south as a Float
     public func addOrbitTrackAroundTheGlobe(for station: StationsAndSatellites, lat: Float, lon: Float, headingFactor: Float) {
+        let orbitTrack = createOrbitTrack(for: station)
+        guard let orbitTrackNode = orbitTrack else { return }
         
-        // Create a hi-res torus geometry with a small pipeRadius to be used as our orbital track around the globe
-        let orbitTrack                                 = SCNTorus()
-        
-        var orbitInclination: Float
-        var multiplier: Float
-        
-        switch station {
-        case .iss :
-            orbitTrack.firstMaterial?.diffuse.contents = Theme.issrtt3dRedCGColor
-            orbitTrack.ringRadius                      = CGFloat(Globals.issOrbitAltitudeInScene)
-            orbitInclination                           = Globals.issOrbitInclinationInRadians
-            multiplier                                 = 2.5
-        case .tss :
-            orbitTrack.firstMaterial?.diffuse.contents = Theme.issrtt3dGoldCGColor
-            orbitTrack.ringRadius                      = CGFloat(Globals.tssOrbitAltitudeInScene)
-            orbitInclination                           = Globals.tssOrbitInclinationInRadians
-            multiplier                                 = 2.8
-        case .hst :
-            orbitTrack.firstMaterial?.diffuse.contents = Theme.hubbleOrbitalCGColor
-            orbitTrack.ringRadius                      = CGFloat(Globals.hubbleOrbitAltitudeInScene)
-            orbitInclination                           = Globals.hubbleOrbitInclinationInRadians
-            multiplier                                 = 3.1
-        case .none :
-            return
-        }
-        
-        orbitTrack.pipeRadius                          = pipeRadius
-        orbitTrack.ringSegmentCount                    = ringSegmentCount
-        orbitTrack.pipeSegmentCount                    = pipeSegmentCount
-        
-        // Assign the torus as a node and add it as a child of globe
-        let orbitTrackNode                             = SCNNode(geometry: orbitTrack)
         globe.addChildNode(orbitTrackNode)
         
-        // Set the lat, lon, and inclination corrections that are be needed to align orbital properly to the satellite and its heading
-        var orbitalCorrectionForInclination: Float
+        let adjustedCoordinates = adjustCoordinates(lat: lat, lon: lon)
+        let orbitalCorrectionForLon = adjustedCoordinates.lon * Float(Globals.degreesToRadians)
+        let orbitalCorrectionForLat = adjustedCoordinates.lat * Float(Globals.degreesToRadians)
+        let absLat = abs(lat)
         
-        let adjustedLat                                = lat + Float(Globals.oneEightyDegrees)
-        let adjustedLon                                = lon - Float(Globals.oneEightyDegrees)
-        let orbitalCorrectionForLon                    = adjustedLon * Float(Globals.degreesToRadians)  // lon & lat used as angular displacement from the origin (lon-origin=lon-0=lon)
-        let orbitalCorrectionForLat                    = adjustedLat * Float(Globals.degreesToRadians)
-        let absLat                                     = abs(lat)
-        let exponent                                   = .pi / multiplier + absLat * Float(Globals.degreesToRadians) / orbitInclination  // Adjustment to the inclination (z-axis) as we approach max latitudes
+        let orbitInclination = getOrbitInclination(for: station)
+        let multiplier = getMultiplier(for: station)
+        let exponent = calculateExponent(absLat: absLat, orbitInclination: orbitInclination, multiplier: multiplier)
+        
+        let orbitalCorrectionForInclination = calculateOrbitalCorrectionForInclination(for: station, absLat: absLat, exponent: exponent)
+        let orbitInclinationInRadiansCorrected = pow(orbitInclination, orbitalCorrectionForInclination) * headingFactor
+        
+        let compositeRotationMatrix = createCompositeRotationMatrix(orbitInclinationInRadiansCorrected: orbitInclinationInRadiansCorrected, orbitalCorrectionForLon: orbitalCorrectionForLon, orbitalCorrectionForLat: orbitalCorrectionForLat)
+        
+        orbitTrackNode.transform = compositeRotationMatrix
+    }
+
+    private func createOrbitTrack(for station: StationsAndSatellites) -> SCNNode? {
+        let orbitTrack = SCNTorus()
         
         switch station {
-        case .iss :
-            switch absLat {   // Apply a power function to the adjustment (exponent) based on the latitude
-            case _ where absLat <= 12.0 :
-                orbitalCorrectionForInclination        = pow(exponent, 0.80)
-            case _ where absLat <= 17.0 :
-                orbitalCorrectionForInclination        = pow(exponent, 0.85)
-            case _ where absLat <= 25.0 :
-                orbitalCorrectionForInclination        = pow(exponent, 1.00)
-            case _ where absLat <= 33.0 :
-                orbitalCorrectionForInclination        = pow(exponent, 1.25)
-            case _ where absLat <= 40.0 :
-                orbitalCorrectionForInclination        = pow(exponent, 1.60)
-            case _ where absLat <= 45.0 :
-                orbitalCorrectionForInclination        = pow(exponent, 2.00)
-            case _ where absLat <= 49.0 :
-                orbitalCorrectionForInclination        = pow(exponent, 2.50)
-            case _ where absLat <= 51.0 :
-                orbitalCorrectionForInclination        = pow(exponent, 3.20)
-            default :
-                orbitalCorrectionForInclination        = pow(exponent, 4.00)
-            }
-        case .tss :
-            switch absLat {   // Apply a power function to the adjustment (exponent) based on the latitude
-            case _ where absLat <= 15.0 :
-                orbitalCorrectionForInclination        = pow(exponent, 0.75)
-            case _ where absLat <= 20.0 :
-                orbitalCorrectionForInclination        = pow(exponent, 0.85)
-            case _ where absLat <= 25.0 :
-                orbitalCorrectionForInclination        = pow(exponent, 1.00)
-            case _ where absLat <= 30.0 :
-                orbitalCorrectionForInclination        = pow(exponent, 1.20)
-            case _ where absLat <= 35.0 :
-                orbitalCorrectionForInclination        = pow(exponent, 1.45)
-            case _ where absLat <= 38.0 :
-                orbitalCorrectionForInclination        = pow(exponent, 1.70)
-            case _ where absLat <= 40.0 :
-                orbitalCorrectionForInclination        = pow(exponent, 2.00)
-            case _ where absLat <= 41.0 :
-                orbitalCorrectionForInclination        = pow(exponent, 2.30)
-            case _ where absLat <= 41.5 :
-                orbitalCorrectionForInclination        = pow(exponent, 2.50)
-            default :
-                orbitalCorrectionForInclination        = pow(exponent, 2.80)
-            }
-        case .hst :
-            switch absLat {   // Apply a power function to the adjustment (exponent) based on the latitude
-            case _ where absLat <= 10.0 :
-                orbitalCorrectionForInclination        = pow(exponent, 0.35)
-            case _ where absLat <= 15.0 :
-                orbitalCorrectionForInclination        = pow(exponent, 0.50)
-            case _ where absLat <= 18.0 :
-                orbitalCorrectionForInclination        = pow(exponent, 0.65)
-            case _ where absLat <= 20.0 :
-                orbitalCorrectionForInclination        = pow(exponent, 0.80)
-            case _ where absLat <= 22.0 :
-                orbitalCorrectionForInclination        = pow(exponent, 1.00)
-            case _ where absLat <= 24.0 :
-                orbitalCorrectionForInclination        = pow(exponent, 1.30)
-            case _ where absLat <= 26.0 :
-                orbitalCorrectionForInclination        = pow(exponent, 1.75)
-            case _ where absLat <= 27.0 :
-                orbitalCorrectionForInclination        = pow(exponent, 2.10)
-            default :
-                orbitalCorrectionForInclination        = pow(exponent, 3.00)
-            }
-        case .none :
-            return
+        case .iss:
+            orbitTrack.firstMaterial?.diffuse.contents = Theme.issrtt3dRedCGColor
+            orbitTrack.ringRadius = CGFloat(Globals.issOrbitAltitudeInScene)
+            orbitTrack.pipeRadius = pipeRadius
+            orbitTrack.ringSegmentCount = ringSegmentCount
+            orbitTrack.pipeSegmentCount = pipeSegmentCount
+        case .tss:
+            orbitTrack.firstMaterial?.diffuse.contents = Theme.issrtt3dGoldCGColor
+            orbitTrack.ringRadius = CGFloat(Globals.tssOrbitAltitudeInScene)
+            orbitTrack.pipeRadius = pipeRadius
+            orbitTrack.ringSegmentCount = ringSegmentCount
+            orbitTrack.pipeSegmentCount = pipeSegmentCount
+        case .hst:
+            orbitTrack.firstMaterial?.diffuse.contents = Theme.hubbleOrbitalCGColor
+            orbitTrack.ringRadius = CGFloat(Globals.hubbleOrbitAltitudeInScene)
+            orbitTrack.pipeRadius = pipeRadius
+            orbitTrack.ringSegmentCount = ringSegmentCount
+            orbitTrack.pipeSegmentCount = pipeSegmentCount
+        case .none:
+            return nil
         }
         
-        let orbitInclinationInRadiansCorrected         = pow(orbitInclination, orbitalCorrectionForInclination) * headingFactor
+        return SCNNode(geometry: orbitTrack)
+    }
+
+    private func adjustCoordinates(lat: Float, lon: Float) -> (lat: Float, lon: Float) {
+        let adjustedLat = lat + Float(Globals.oneEightyDegrees)
+        let adjustedLon = lon - Float(Globals.oneEightyDegrees)
+        return (lat: adjustedLat, lon: adjustedLon)
+    }
+
+    private func getOrbitInclination(for station: StationsAndSatellites) -> Float {
+        switch station {
+        case .iss:
+            return Globals.issOrbitInclinationInRadians
+        case .tss:
+            return Globals.tssOrbitInclinationInRadians
+        case .hst:
+            return Globals.hubbleOrbitInclinationInRadians
+        case .none:
+            return 0.0
+        }
+    }
+
+    private func getMultiplier(for station: StationsAndSatellites) -> Float {
+        switch station {
+        case .iss:
+            return 2.5
+        case .tss:
+            return 2.8
+        case .hst:
+            return 3.1
+        case .none:
+            return 0.0
+        }
+    }
+
+    private func calculateExponent(absLat: Float, orbitInclination: Float, multiplier: Float) -> Float {
+        return .pi / multiplier + absLat * Float(Globals.degreesToRadians) / orbitInclination
+    }
+
+    private func calculateOrbitalCorrectionForInclination(for station: StationsAndSatellites, absLat: Float, exponent: Float) -> Float {
+        switch station {
+        case .iss:
+            return calculateOrbitalCorrection(absLat: absLat, exponent: exponent, thresholds: [12.0, 17.0, 25.0, 33.0, 40.0, 45.0, 49.0, 51.0], powers: [0.80, 0.85, 1.00, 1.25, 1.60, 2.00, 2.50, 3.20, 4.00])
+        case .tss:
+            return calculateOrbitalCorrection(absLat: absLat, exponent: exponent, thresholds: [15.0, 20.0, 25.0, 30.0, 35.0, 38.0, 40.0, 41.0, 41.5], powers: [0.75, 0.85, 1.00, 1.20, 1.45, 1.70, 2.00, 2.30, 2.50, 2.80])
+        case .hst:
+            return calculateOrbitalCorrection(absLat: absLat, exponent: exponent, thresholds: [10.0, 15.0, 18.0, 20.0, 22.0, 24.0, 26.0, 27.0], powers: [0.35, 0.50, 0.65, 0.80, 1.00, 1.30, 1.75, 2.10, 3.00])
+        case .none:
+            return 0.0
+        }
+    }
+
+    private func calculateOrbitalCorrection(absLat: Float, exponent: Float, thresholds: [Float], powers: [Float]) -> Float {
+        for (index, threshold) in thresholds.enumerated() {
+            if absLat <= threshold {
+                return pow(exponent, powers[index])
+            }
+        }
+        return pow(exponent, powers.last ?? 1.0)
+    }
+
+    private func createCompositeRotationMatrix(orbitInclinationInRadiansCorrected: Float, orbitalCorrectionForLon: Float, orbitalCorrectionForLat: Float) -> SCNMatrix4 {
+        var rotationMatrix1 = SCNMatrix4Identity
+        var rotationMatrix2 = SCNMatrix4Identity
+        var rotationMatrix3 = SCNMatrix4Identity
         
-        // Create 4x4 transform matrices for each rotation and initialize them as the identity matrix
-        var rotationMatrix1                            = SCNMatrix4Identity
-        var rotationMatrix2                            = SCNMatrix4Identity
-        var rotationMatrix3                            = SCNMatrix4Identity
+        rotationMatrix1 = SCNMatrix4RotateF(rotationMatrix1, orbitInclinationInRadiansCorrected, 0, 0, 1)
+        rotationMatrix2 = SCNMatrix4RotateF(rotationMatrix2, orbitalCorrectionForLon, 0, 1, 0)
+        rotationMatrix3 = SCNMatrix4RotateF(rotationMatrix3, orbitalCorrectionForLat, 1, 0, 0)
         
-        // Create the rotation matrices for the orbital inclination to align relative to the globe and the current satellite position
-        rotationMatrix1                                = SCNMatrix4RotateF(rotationMatrix1, orbitInclinationInRadiansCorrected , 0, 0, 1)      // z rotation
-        rotationMatrix2                                = SCNMatrix4RotateF(rotationMatrix2, orbitalCorrectionForLon, 0, 1, 0)                  // y rotation
-        rotationMatrix3                                = SCNMatrix4RotateF(rotationMatrix3, orbitalCorrectionForLat, 1, 0, 0)                  // x rotation
-        
-        // Multiply the matrices together to make a composite matrix and use this as the transform matrix
-        let firstProduct                               = SCNMatrix4Mult(rotationMatrix3, rotationMatrix2)                                      // Note! The order of the operands is NOT cummulative in matrix multiplication
-        let compositeRotationMatrix                    = SCNMatrix4Mult(rotationMatrix1, firstProduct)                                         // Note! The order of the operands is NOT cummulative in matrix multiplication
-        
-        // Apply the transform
-        orbitTrackNode.transform                       = compositeRotationMatrix
-        
+        let firstProduct = SCNMatrix4Mult(rotationMatrix3, rotationMatrix2)
+        return SCNMatrix4Mult(rotationMatrix1, firstProduct)
     }
     
     
