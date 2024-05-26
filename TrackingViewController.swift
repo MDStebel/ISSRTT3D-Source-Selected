@@ -338,7 +338,6 @@ class TrackingViewController: UIViewController, MKMapViewDelegate, UIGestureReco
         displayInfoBox(false)                                                                       // Start up with map overlay info box and buttons off
         
         justStartedUp = true
-        
     }
     
     
@@ -353,7 +352,6 @@ class TrackingViewController: UIViewController, MKMapViewDelegate, UIGestureReco
             navigationController?.navigationBar.titleTextAttributes = attributes
             navigationController?.navigationBar.barTintColor = UIColor(named: Theme.tint)
         }
-        
     }
     
     
@@ -371,7 +369,6 @@ class TrackingViewController: UIViewController, MKMapViewDelegate, UIGestureReco
             createZoomSliderRanges()
             alreadyAnimatedStartPrompt = true
         }
-        
     }
     
     
@@ -395,14 +392,12 @@ class TrackingViewController: UIViewController, MKMapViewDelegate, UIGestureReco
         
         map.isZoomEnabled   = Globals.mapScrollingAndZoomIsEnabled
         map.isScrollEnabled = Globals.mapScrollingAndZoomIsEnabled
-        
     }
     
     
     @IBAction func resetGlobe(_ sender: UIButton) {
         
         resetGlobeAction()
-        
     }
     
     
@@ -411,7 +406,6 @@ class TrackingViewController: UIViewController, MKMapViewDelegate, UIGestureReco
         
         globe = EarthGlobe()
         setUpEarthGlobeScene(for: globe, in: globeScene, hasTintedBackground: true)
-        
     }
     
     
@@ -428,7 +422,6 @@ class TrackingViewController: UIViewController, MKMapViewDelegate, UIGestureReco
         UIPasteboard.general.string = dataToBeCopiedString  // Copy to general pasteboard
         
         alert(for: "Current ISS Position" + Constants.linefeed + "Copied to Your Clipboard", message: dataToBeCopiedString)
-        
     }
     
     
@@ -442,7 +435,6 @@ class TrackingViewController: UIViewController, MKMapViewDelegate, UIGestureReco
             self.timerValue = self.getTimerInterval()
             self.playAction()
         }
-        
     }
     
     
@@ -453,7 +445,6 @@ class TrackingViewController: UIViewController, MKMapViewDelegate, UIGestureReco
         } else {
             stopAction()
         }
-        
     }
     
     
@@ -470,7 +461,6 @@ class TrackingViewController: UIViewController, MKMapViewDelegate, UIGestureReco
         
         running = true
         playButton.image = UIImage(named: TrackingButtonImages.pause, in: nil, compatibleWith: nil)     // While running, change play to pause
-        
     }
     
     
@@ -485,7 +475,6 @@ class TrackingViewController: UIViewController, MKMapViewDelegate, UIGestureReco
         
         soundtrackMusicPlayer?.pause()
         playButton?.image = UIImage(named: TrackingButtonImages.play, in: nil, compatibleWith: nil)     // While paused, change pause icon to play icon
-        
     }
     
     
@@ -493,7 +482,6 @@ class TrackingViewController: UIViewController, MKMapViewDelegate, UIGestureReco
     @IBAction private func startPromptButton(_ sender: UIButton) {
         
         playAction()
-        
     }
     
     
@@ -501,7 +489,6 @@ class TrackingViewController: UIViewController, MKMapViewDelegate, UIGestureReco
     @IBAction private func play(_ sender: UIBarButtonItem) {
         
         playAction()
-        
     }
     
     
@@ -529,7 +516,6 @@ class TrackingViewController: UIViewController, MKMapViewDelegate, UIGestureReco
             locateSatellite(for: target)                   // Call once to update screen quickly to current ISS position with current settings
             timerStartup()                                  // Call method to set up a timer
         }
-        
     }
     
     
@@ -541,7 +527,6 @@ class TrackingViewController: UIViewController, MKMapViewDelegate, UIGestureReco
         targetName       = target.satelliteName
         targetImageGlobe = target.satelliteImage
         targetImageMap   = target.satelliteImageSmall
-        
     }
     
     
@@ -556,7 +541,6 @@ class TrackingViewController: UIViewController, MKMapViewDelegate, UIGestureReco
             .sink { _ in
                 self.locateSatellite(for: self.target)
             }
-        
     }
     
     
@@ -605,7 +589,6 @@ class TrackingViewController: UIViewController, MKMapViewDelegate, UIGestureReco
         }
         
         return timerIntervalToReturn
-        
     }
     
     
@@ -623,7 +606,6 @@ class TrackingViewController: UIViewController, MKMapViewDelegate, UIGestureReco
         } else {
             zoomSlider.value = Float(zoomFactorDefaultValue)
         }
-        
     }
     
     
@@ -634,7 +616,6 @@ class TrackingViewController: UIViewController, MKMapViewDelegate, UIGestureReco
         let integerTimerInterval = Int(timerInterval)
         
         zoomFactorLabel.text! = "Scale: \(zoomRangeFactorLabel) \(Constants.linefeed)" + String(format: Constants.zoomFactorStringFormat, round(zoomSlider.value * 100.0) / 100.0) + "\(Constants.linefeed)Interval: \(integerTimerInterval)" + "\(integerTimerInterval > 1 ? " secs." : " sec.")"
-        
     }
     
     
@@ -655,7 +636,6 @@ class TrackingViewController: UIViewController, MKMapViewDelegate, UIGestureReco
         if Globals.displayZoomFactorBelowMarkerIsOn {
             setupZoomFactorLabel(timerValue)
         }
-        
     }
     
     
@@ -799,7 +779,6 @@ class TrackingViewController: UIViewController, MKMapViewDelegate, UIGestureReco
                 cursor.image = targetImageMap
             }
         }
-        
     }
       
     
@@ -815,7 +794,6 @@ class TrackingViewController: UIViewController, MKMapViewDelegate, UIGestureReco
             coordinatesLabel.isHidden = true
             velocityLabel.isHidden    = true
         }
-        
     }
 
     
@@ -863,7 +841,6 @@ class TrackingViewController: UIViewController, MKMapViewDelegate, UIGestureReco
         default :
             stopAction()
         }
-        
     }
     
     
@@ -892,7 +869,6 @@ class TrackingViewController: UIViewController, MKMapViewDelegate, UIGestureReco
         
         soundtrackButtonOn = false
         soundtrackMusicPlayer?.numberOfLoops = -1       // Loop indefinitely
-        
     }
     
     
@@ -908,7 +884,6 @@ class TrackingViewController: UIViewController, MKMapViewDelegate, UIGestureReco
         }
         
         soundtrackButtonOn.toggle()
-        
     }
     
     
@@ -923,14 +898,11 @@ class TrackingViewController: UIViewController, MKMapViewDelegate, UIGestureReco
         
         alertController.addAction(UIAlertAction(title: "Cancel", style: .cancel))
         present(alertController, animated: true, completion: nil)
-        
     }
     
     
     @IBAction func switchTarget(_ sender: UIButton) {
-        
         switchStationPopup(withTitle: "Select a Target", withStyleToUse: .actionSheet)
-        
     }
     
     
@@ -977,7 +949,6 @@ class TrackingViewController: UIViewController, MKMapViewDelegate, UIGestureReco
         }
         
         self.present(alertController, animated: true, completion: nil)
-
     }
  
     
@@ -987,5 +958,4 @@ class TrackingViewController: UIViewController, MKMapViewDelegate, UIGestureReco
         stopAction()
         
     }
-    
 }
