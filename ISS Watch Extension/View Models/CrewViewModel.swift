@@ -6,67 +6,67 @@
 //  Copyright © 2024 ISS Real-Time Tracker. All rights reserved.
 //
 
-import SwiftUI
 import Combine
+import SwiftUI
 
 @Observable
 final class CrewViewModel: ObservableObject {
     
     // MARK: - Published properties
-    
-    var crews                            = [Crews.People]()
-    var wasError                         = false
+    var crews    = [Crews.People]()
+    var wasError = false
     var errorForAlert: ErrorCodes?
     
     // MARK: - Properties
-    
     private let crewAPIEndpointURLString = ApiEndpoints.crewAPIEndpoint
     private let timerValue               = 5.0
     private var cancellables             = Set<AnyCancellable>()
     private var timer: AnyCancellable?
-
-    // MARK: - Methods
     
+    // MARK: - Initializer
     init() {
-        fetchData()                      // Update the globe once before starting the timer
+        fetchData() // Fetch data once before starting the timer
         start()
     }
     
-    /// Set up and start the timer
+    // MARK: - Timer Methods
     func start() {
         timer = Timer
             .publish(every: timerValue, on: .main, in: .common)
             .autoconnect()
-            .sink { _ in
-                self.fetchData()
+            .sink { [weak self] _ in
+                self?.fetchData()
             }
     }
-     
-    /// Stop the timer
+    
     func stop() {
         timer?.cancel()
     }
     
-    /// Get crew data using Combine pipeline
+    // MARK: - Data Fetching
     func fetchData() {
         guard let url = URL(string: crewAPIEndpointURLString) else { return }
         
         URLSession.shared.dataTaskPublisher(for: url)
-            .map { (data: Data, response: URLResponse) in
-                data
-            }
+            .map { $0.data }
             .decode(type: Crews.self, decoder: JSONDecoder())
             .receive(on: DispatchQueue.main)
-            .sink(receiveCompletion: { [weak self] completion in
-                if case .failure(let error) = completion {
-                    self?.wasError      = true
-                    self?.errorForAlert = ErrorCodes(message: "\(error.localizedDescription)")
-                } else {
-                    self?.wasError      = false
-                }
-            }, receiveValue: { [weak self] crews in
-                self?.crews = crews.people
-            })
+            .sink(receiveCompletion: handleCompletion, receiveValue: handleNewData)
             .store(in: &cancellables)
+    }
+    
+    // MARK: - Helper Methods
+    private func handleCompletion(_ completion: Subscribers.Completion<Error>) {
+        switch completion {
+        case .failure(let error):
+            wasError = true
+            errorForAlert = ErrorCodes(message: "\(error.localizedDescription)")
+        case .finished:
+            wasError = false
+        }
+    }
+    
+    private func handleNewData(_ crews: Crews) {
+        self.crews = crews.people
     }
 }
