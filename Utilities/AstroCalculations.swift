@@ -11,42 +11,26 @@ import Foundation
 /// A set of functions that provide solar position calculations
 public struct AstroCalculations {
     
-    
     /// Convert a given Gregorian date to a Julian date
     /// - Parameter date: Gregorian date to convert as a Date
     /// - Returns: Julian date as a Double
     static func jDFromDate(date: Date) -> Double {
-        
-        let jD = Globals.julianDateForJan011970At0000GMT + date.timeIntervalSince1970 / Globals.numberOfSecondsInADay
-        
-        return jD
-        
+        return Globals.julianDateForJan011970At0000GMT + date.timeIntervalSince1970 / Globals.numberOfSecondsInADay
     }
-
 
     /// Convert a given Julian date to a Gregorian date
     /// - Parameter jd: Julian date as a Double
     /// - Returns: Standard date as a NSDate
     static func dateFromJd(jd : Double) -> NSDate {
-        
-        let gD = NSDate(timeIntervalSince1970: (jd - Globals.julianDateForJan011970At0000GMT) * Globals.numberOfSecondsInADay)
-        
-        return gD
-        
+        return NSDate(timeIntervalSince1970: (jd - Globals.julianDateForJan011970At0000GMT) * Globals.numberOfSecondsInADay)
     }
-    
     
     /// Calculate the Julian century since Jan-1-2000
     /// - Parameter date: Gregorian date as a Date
     /// - Returns: Julian century as a Double
     static func julianCenturySinceJan2000(date: Date) -> Double {
-        
-        let jc = (jDFromDate(date: date) - 2451545) / Globals.numberOfDaysInACentury
-        
-        return jc
-        
+       return (jDFromDate(date: date) - 2451545) / Globals.numberOfDaysInACentury
     }
-    
     
     /// Calculate the Orbital Eccentricity of the Earth
     ///
@@ -54,13 +38,8 @@ public struct AstroCalculations {
     /// - Parameter t: Julian century as a Double
     /// - Returns: Eccentricity as a Double
     static func orbitEccentricityOfEarth(t: Double) -> Double {
-        
-        let ecc = 0.016708634 - t * (0.000042037 + 0.0000001267 * t)
-        
-        return ecc
-        
+        return 0.016708634 - t * (0.000042037 + 0.0000001267 * t)
     }
-    
     
     /// Calculate the Mean Anomaly of the Sun for a given date
     ///
@@ -71,13 +50,8 @@ public struct AstroCalculations {
     /// - Parameter t: Julian century as a Double
     /// - Returns: The mean anomaly as a Double
     static func meanAnomaly(t: Double) -> Double {
-        
-        let m = 357.52911 + t * 35999.05029 - t * 0.0001537
-        
-        return m
-        
+       return 357.52911 + t * 35999.05029 - t * 0.0001537
     }
-    
     
     /// Calculate the Equation of Time for a given date
     ///
@@ -100,12 +74,9 @@ public struct AstroCalculations {
         part3              = 4 * ecc * vary * sin(meanAInRadians) * cos(2 * meanGInRadians)
         part4              = 0.5 * vary * vary * sin(4 * meanGInRadians)
         part5              = 1.25 * ecc * ecc * sin(2 * meanAInRadians)
-        let eOT            = 4 * (part1 - part2 + part3 - part4 - part5) * Double(Globals.radiansToDegrees)
         
-        return eOT
-        
+        return 4 * (part1 - part2 + part3 - part4 - part5) * Double(Globals.radiansToDegrees)
     }
-    
     
     /// Calculate the Sun Equation of Center
     ///
@@ -115,14 +86,10 @@ public struct AstroCalculations {
     /// - Parameter t: Julian century
     /// - Returns: The Sun equation of Center in radians as a Double
     static func sunEquationOfCenter(t: Double) -> Double {
-        
         let m = meanAnomaly(t: t)
-        let sEOC = sin(m * Double(Globals.degreesToRadians)) * (1.914602 - t * (0.004817 + 0.000014 * t)) + sin(2 * m * Double(Globals.degreesToRadians)) * (0.019993 - 0.000101 * t) + sin(3 * m * Double(Globals.degreesToRadians)) * 0.000289
-        
-        return sEOC
-        
+       
+        return sin(m * Double(Globals.degreesToRadians)) * (1.914602 - t * (0.004817 + 0.000014 * t)) + sin(2 * m * Double(Globals.degreesToRadians)) * (0.019993 - 0.000101 * t) + sin(3 * m * Double(Globals.degreesToRadians)) * 0.000289
     }
-    
     
     /// Calculate the Geometric Mean Longitude of the Sun
     ///
@@ -131,13 +98,8 @@ public struct AstroCalculations {
     /// - Parameter t: Julian century as a Double
     /// - Returns: The geometric mean longitude in degrees as a Double
     static func geometricMeanLongitudeOfSunAtCurrentTime(t: Double) -> Double {
-        
-        let sunGeometricMeanLongitude = (280.46646 + t * 36000.76983 + t * t * 0.0003032).truncatingRemainder(dividingBy: Double(Globals.threeSixtyDegrees))
-        
-        return sunGeometricMeanLongitude
-        
+        return (280.46646 + t * 36000.76983 + t * t * 0.0003032).truncatingRemainder(dividingBy: Double(Globals.threeSixtyDegrees))
     }
-    
     
     /// Calculate the exact current latitude of the Sun for a given date
     ///
@@ -151,12 +113,9 @@ public struct AstroCalculations {
         let geomMeanLongitude        = geometricMeanLongitudeOfSunAtCurrentTime(t: jC)
         let sunTrueLongitude         = geomMeanLongitude + sunEquationOfCenter(t: jC)
         let latitudeOfSun            = asin(sin(sunTrueLongitude * Double(Globals.degreesToRadians)) * sin(Globals.earthTiltInRadians))
-        let sunTrueLatitudeInDegrees = latitudeOfSun * Double(Globals.radiansToDegrees)
         
-        return sunTrueLatitudeInDegrees
-        
+        return latitudeOfSun * Double(Globals.radiansToDegrees)
     }
-    
     
     /// Calculate the exact current longitude of the Sun for a given date
     ///
@@ -203,12 +162,8 @@ public struct AstroCalculations {
             lonCorrection = 0
         }
 
-        let subSolarLongitudeActual = subSolarLon + lonCorrection
-        
-        return subSolarLongitudeActual
-        
+        return subSolarLon + lonCorrection
     }
-    
     
     /// Get the subsolar coordinates at the current date and time
     /// 
@@ -221,7 +176,5 @@ public struct AstroCalculations {
         let lon = Float(subSolarLongitudeOfSunAtCurrentTime(for: now))
         
         return (lat, lon)
-        
     }
-    
 }
