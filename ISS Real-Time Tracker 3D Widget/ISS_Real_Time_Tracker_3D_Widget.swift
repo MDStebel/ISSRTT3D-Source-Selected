@@ -16,24 +16,27 @@ struct Provider: TimelineProvider {
     }
     
     func getSnapshot(in context: Context, completion: @escaping (NextPass) -> ()) {
-        let entry = NextPass(date: Date(), passDate: Date(), startAzimuth: 216.0, startAzCompass: "SW", startElevation: 18.0, maxAzimuth: 270.0, maxElevation: 60.0, endAzimuth: 30.0, endElevation: 20.0)
-        completion(entry)
+        Task {
+            if let apiData = await fetchData() {
+                let pass = apiData.passes[0]
+                let passStartDate = Date(timeIntervalSince1970: Double(pass.startUTC))
+                let currentDate = Date()
+                let entry = NextPass(date: currentDate, passDate: passStartDate, startAzimuth: pass.startAz, startAzCompass: pass.startAzCompass, startElevation: pass.startEl, maxAzimuth: pass.maxAz, maxElevation: pass.maxEl, endAzimuth: pass.endAz, endElevation: pass.endEl)
+                
+                completion(entry)
+            }
+        }
     }
     
     func getTimeline(in context: Context, completion: @escaping (Timeline<NextPass>) -> ()) {
         Task {
             var entries: [NextPass] = []
             if let apiData = await fetchData() {
-                let nextPass = apiData.passes[0]
-                let passDate = Date(timeIntervalSince1970: Double(nextPass.startUTC))
-                
-                // Generate a timeline consisting of five entries an hour apart, starting from the current date.
+                let pass = apiData.passes[0]
+                let passStartDate = Date(timeIntervalSince1970: Double(pass.startUTC))
                 let currentDate = Date()
-                for hourOffset in 0 ..< 5 {
-                    let entryDate = Calendar.current.date(byAdding: .hour, value: hourOffset, to: currentDate)!
-                    let entry = NextPass(date: entryDate, passDate: passDate, startAzimuth: nextPass.startAz, startAzCompass: nextPass.startAzCompass, startElevation: nextPass.startEl, maxAzimuth: nextPass.maxAz, maxElevation: nextPass.maxEl, endAzimuth: nextPass.endAz, endElevation: nextPass.endEl)
-                    entries.append(entry)
-                }
+                let entry = NextPass(date: currentDate, passDate: passStartDate, startAzimuth: pass.startAz, startAzCompass: pass.startAzCompass, startElevation: pass.startEl, maxAzimuth: pass.maxAz, maxElevation: pass.maxEl, endAzimuth: pass.endAz, endElevation: pass.endEl)
+                entries.append(entry)
             }
             
             let timeline = Timeline(entries: entries, policy: .atEnd)
@@ -116,10 +119,10 @@ struct ISS_Real_Time_Tracker_3D_WidgetEntryView: View {
                         endPoint: .bottom
                     ).opacity(0.25)
                 )
-            VStack(spacing: 7) {
+            VStack(spacing: 5) {
                 HeaderView()
                 Spacer()
-                DateView(date: entry.date)
+                DateView(date: entry.passDate)
                 Spacer()
                 InfoCardView(entry: entry)
                     .offset(y: -45)
@@ -167,31 +170,42 @@ struct DateView: View {
 struct InfoCardView: View {
     var entry: Provider.Entry
     
+    @Environment(\.widgetFamily) var family
+    
     var body: some View {
-        let date = Text("\(entry.date.formatted(date: .omitted, time: .shortened))")
+
+        let date = Text("\(entry.passDate.formatted(date: .omitted, time: .shortened))")
         let azi = Text("\(entry.startAzimuth, format: .number.precision(.fractionLength(0)))")
         let elev = Text("\(entry.startElevation, format: .number.precision(.fractionLength(1)))°")
 
+        let tmLabel = family == .systemMedium ? "  Start Time:  " : " Tm: "
+        let azLabel = family == .systemMedium ? "  Azimuth:  " : " Az: "
+        let elLabel = family == .systemMedium ? " Elevation:  " : "El: "
+        let spacing = family == .systemMedium ? 5.0 : 0.0
+        
         ZStack {
             Rectangle()
                 .foregroundColor(.issrttWhite)
-                .cornerRadius(10)
-                .frame(width: 135, height: 50)
+                .cornerRadius(5)
+                .frame(width: .infinity, height: 50)
             VStack(alignment: .leading, spacing: 0) {
                 InfoRow(
                     icon: "clock",
-                    label: " Start: ",
-                    value: date
+                    label: tmLabel,
+                    value: date,
+                    spacing: spacing
                 )
                 InfoRow(
                     icon: "safari",
-                    label: " Azi: ",
-                    value: azi + Text("° ") + Text(entry.startAzCompass)
+                    label: azLabel,
+                    value: azi + Text("° ") + Text(entry.startAzCompass), 
+                    spacing: spacing
                 )
                 InfoRow(
                     icon: "angle",
-                    label: "Elev: ",
-                    value: elev
+                    label: elLabel,
+                    value: elev, 
+                    spacing: spacing
                 )
             }
             .foregroundColor(.issrttRed)
@@ -205,18 +219,19 @@ struct InfoRow: View {
     var icon: String
     var label: String
     var value: Text
+    var spacing: CGFloat
     
     var body: some View {
-        HStack(spacing: 3) {
+        HStack(spacing: spacing) {
             Image(systemName: icon)
-                .font(.caption2).fontWeight(.heavy)
+                .font(.caption).fontWeight(.bold)
             Text(label)
-                .font(.caption).fontWeight(.heavy)
+                .font(.caption).fontWeight(.black)
             value
-                .font(.caption).fontWeight(.medium)
+                .font(.caption).fontWeight(.semibold)
             Spacer()
         }
-        .offset(x: 3)
+        .offset(x: spacing * 10)
     }
 }
 
@@ -229,7 +244,7 @@ struct ISS_Real_Time_Tracker_3D_Widget: Widget {
                 .containerBackground(.fill.tertiary, for: .widget)
         }
         .contentMarginsDisabled()
-        .supportedFamilies([.systemSmall])
+        .supportedFamilies([.systemSmall, .systemMedium])
         .configurationDisplayName("ISSRTT3D Widget")
         .description("Displays the next ISS pass for your location.")
     }
