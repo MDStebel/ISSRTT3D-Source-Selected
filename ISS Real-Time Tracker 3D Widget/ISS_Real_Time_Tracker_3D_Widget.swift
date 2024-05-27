@@ -3,7 +3,7 @@
 //  ISS Real-Time Tracker 3D Widget
 //
 //  Created by Michael Stebel on 5/17/24.
-//  Copyright © 2024 ISS Real-Time Tracker, LLC. All rights reserved.
+//  Copyright © 2024 ISS Real-Time Tracker. All rights reserved.
 //
 
 import CoreLocation
