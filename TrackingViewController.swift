@@ -548,47 +548,44 @@ class TrackingViewController: UIViewController, MKMapViewDelegate, UIGestureReco
     /// Computes timer interval based on the zoom interval.
     /// - Returns: TimeInterval
     private func getTimerInterval() -> TimeInterval {
-        
         var timerIntervalToReturn: TimeInterval = Constants.defaultTimerInterval
-        
-        // We must do the following before returning at some point
         defer {
             zoomValueWasChanged = false
             Globals.zoomFactorWasResetInSettings = false
             if Globals.displayZoomFactorBelowMarkerIsOn {
                 setupZoomFactorLabel(timerIntervalToReturn)
             }
-        } // end of deferred code
-        
-        if (zoomValueWasChanged || Globals.zoomFactorWasResetInSettings) && running! {
-            
-            timer?.cancel()
-            
-            if running != nil {
-                running = false
-            }
-            
         }
-        
+
+        if (zoomValueWasChanged || Globals.zoomFactorWasResetInSettings) && running == true {
+            timer?.cancel()
+            running = false
+        }
+
         if Globals.zoomFactorWasResetInSettings {
-            
             createZoomSliderRanges()
             setUpZoomSlider(usingSavedZoomFactor: false)
-            
         }
-        
-        // Calculate the update interval in seconds, based on the zoom scale and zoom expansion multiplier
+
+        let timerInterval: TimeInterval
         switch zoomSlider.value {
-        case zoomInterval[0]..<zoomInterval[1] : timerIntervalToReturn = 1.0
-        case zoomInterval[1]..<zoomInterval[2] : timerIntervalToReturn = 2.0
-        case zoomInterval[2]..<zoomInterval[3] : timerIntervalToReturn = 3.0
-        case zoomInterval[3]..<zoomInterval[4] : timerIntervalToReturn = 4.0
-        case zoomInterval[4]..<zoomInterval[5] : timerIntervalToReturn = 5.0
-        case zoomInterval[5]...zoomInterval[6] : timerIntervalToReturn = 6.0
-        default : timerIntervalToReturn = Constants.defaultTimerInterval
+        case zoomInterval[0]..<zoomInterval[1]:
+            timerInterval = 1.0
+        case zoomInterval[1]..<zoomInterval[2]:
+            timerInterval = 2.0
+        case zoomInterval[2]..<zoomInterval[3]:
+            timerInterval = 3.0
+        case zoomInterval[3]..<zoomInterval[4]:
+            timerInterval = 4.0
+        case zoomInterval[4]..<zoomInterval[5]:
+            timerInterval = 5.0
+        case zoomInterval[5]...zoomInterval[6]:
+            timerInterval = 6.0
+        default:
+            timerInterval = Constants.defaultTimerInterval
         }
-        
-        return timerIntervalToReturn
+
+        return timerInterval
     }
     
     
@@ -643,142 +640,48 @@ class TrackingViewController: UIViewController, MKMapViewDelegate, UIGestureReco
     ///
     /// Sets the map type and associated parameters basedon selector control in Settings. Sets cursor and zoomFactorLabel color to black or white, and coordinatesLabel to red or white depending upon map type.
     func setUpDisplayConfiguration() {
-        
-        switch Globals.mapTypeSelection {
-        
-        case 0 :
-            
-            map.mapType                = .standard
-            zoomFactorLabel.textColor  = UIColor.white
-            coordinatesLabel.textColor = UIColor.white
-            altitudeLabel.textColor    = UIColor.white
-            velocityLabel.textColor    = UIColor.white
-            cursor.alpha               = 1.0
-            zoomFactorLabel.alpha      = 1.0
-            copyButton.tintColor       = UIColor.white
-            
-            // Use appropriate cursor color for light or dark mode when using standard map mode
-            if traitCollection.userInterfaceStyle == .light {
-                cursor.tintColor = .black
-            } else {
-                cursor.tintColor = .white
-            }
-            
-            switch Globals.markerType {
+        configureMapType()
+        configureLabelsAndButtons()
+        configureCursor()
+    }
 
-            case 0 :
-                
-                cursor.image = targetImageMap
-                
-            case 1 :
-                
-                cursor.image = UIImage(named: "center_direction_black")
-                
-            case 2 :
-                
-                cursor.image = UIImage(named: "Plus Math Black")
-                
-            default :
-                
-                cursor.image = targetImageMap
-                
-            }
-            
-        case 1 :
-            
-            map.mapType                = .satellite
-            zoomFactorLabel.textColor  = UIColor.white
-            coordinatesLabel.textColor = UIColor.white
-            altitudeLabel.textColor    = UIColor.white
-            velocityLabel.textColor    = UIColor.white
-            cursor.alpha               = 1.0
-            zoomFactorLabel.alpha      = 0.90
-            copyButton.tintColor       = UIColor.white
-            cursor.tintColor           = .white
-            
-            switch Globals.markerType {
-            
-            case 0 :
-                
-                cursor.image = targetImageMap
-                
-            case 1 :
-                
-                cursor.image = UIImage(named: "center_direction")
-                
-            case 2 :
-                
-                cursor.image = UIImage(named: "Plus Math White")
-                
-            default :
-                
-                cursor.image = targetImageMap
-                
-            }
-            
-        case 2 :
-            
-            map.mapType                = .hybrid
-            zoomFactorLabel.textColor  = UIColor.white
-            coordinatesLabel.textColor = UIColor.white
-            altitudeLabel.textColor    = UIColor.white
-            velocityLabel.textColor    = UIColor.white
-            cursor.alpha               = 1.0
-            zoomFactorLabel.alpha      = 0.90
-            copyButton.tintColor       = UIColor.white
-            cursor.tintColor           = .white
-            
-            switch Globals.markerType {
-            
-            case 0 :
-                
-                cursor.image = targetImageMap
-                
-            case 1 :
-                
-                cursor.image = UIImage(named: "center_direction")
-                
-            case 2 :
-                
-                cursor.image = UIImage(named: "Plus Math White")
-                
-            default :
-                
-                cursor.image = targetImageMap
-                
-            }
-            
-        default :
-            
-            map.mapType                = .satellite
-            zoomFactorLabel.textColor  = UIColor.white
-            coordinatesLabel.textColor = UIColor.white
-            altitudeLabel.textColor    = UIColor.white
-            velocityLabel.textColor    = UIColor.white
-            cursor.alpha               = 1.0
-            zoomFactorLabel.alpha      = 0.90
-            copyButton.tintColor       = UIColor.white
-            cursor.tintColor           = .white
-            
-            switch Globals.markerType {
-            
-            case 0 :
-                
-                cursor.image = targetImageMap
-                
-            case 1 :
-                
-                cursor.image = UIImage(named: "center_direction")
-                
-            case 2 :
-                
-                cursor.image = UIImage(named: "Plus Math White")
-                
-            default :
-                
-                cursor.image = targetImageMap
-            }
+    private func configureMapType() {
+        switch Globals.mapTypeSelection {
+        case 0:
+            map.mapType = .standard
+        case 1, 2:
+            map.mapType = Globals.mapTypeSelection == 1 ? .satellite : .hybrid
+        default:
+            map.mapType = .satellite
         }
+    }
+
+    private func configureLabelsAndButtons() {
+        let commonTextColor = UIColor.white
+        let commonAlpha: CGFloat = 1.0
+        zoomFactorLabel.textColor = commonTextColor
+        coordinatesLabel.textColor = commonTextColor
+        altitudeLabel.textColor = commonTextColor
+        velocityLabel.textColor = commonTextColor
+        cursor.alpha = commonAlpha
+        zoomFactorLabel.alpha = Globals.mapTypeSelection == 0 ? commonAlpha : 0.90
+        copyButton.tintColor = commonTextColor
+        cursor.tintColor = (Globals.mapTypeSelection == 0 && traitCollection.userInterfaceStyle == .light) ? .black : .white
+    }
+
+    private func configureCursor() {
+        let imageName: String
+        switch Globals.markerType {
+        case 0:
+            imageName = "targetImageMap"
+        case 1:
+            imageName = Globals.mapTypeSelection == 0 ? "center_direction_black" : "center_direction"
+        case 2:
+            imageName = Globals.mapTypeSelection == 0 ? "Plus Math Black" : "Plus Math White"
+        default:
+            imageName = "targetImageMap"
+        }
+        cursor.image = UIImage(named: imageName)
     }
       
     
@@ -799,49 +702,39 @@ class TrackingViewController: UIViewController, MKMapViewDelegate, UIGestureReco
     
     /// Prepare for seque
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        
-        guard let segueInProcess = segue.identifier else { return } // Prevents crash if a segue is unnamed
-        
-        switch segueInProcess {
-        case Segues.globeSegue, Segues.segueToFullGlobeFromTabBar : // Stop tracking if Globe segue was selected from either the mini globe or tab bar button
+        guard let segueIdentifier = segue.identifier else { return }
+
+        switch segueIdentifier {
+        case Segues.globeSegue, Segues.segueToFullGlobeFromTabBar, Segues.passesSegue, Segues.crewSeque:
             stopAction()
-        
-        case Segues.passesSegue :                                   // Stop tracking if Passes segue was selected
+
+        case Segues.earthViewSegue, Segues.nasaTvSegue:
             stopAction()
-        
-        case Segues.crewSeque :                                     // Stop tracking if Crew segue was selected
-            stopAction()
-        
-        case Segues.earthViewSegue :                                // Stop tracking and select live earth view channel
-            stopAction()
-            let navigationController                          = segue.destination as! UINavigationController
-            let destinationVC                                 = navigationController.topViewController as! LiveVideoViewController
-            destinationVC.channelSelected                     = .liveEarth
-            destinationVC.title                               = destinationVC.channelSelected.rawValue
-            
-        case Segues.nasaTvSegue :                                   // Stop tracking and select NASA TV channel
-            stopAction()
-            let navigationController                          = segue.destination as! UINavigationController
-            let destinationVC                                 = navigationController.topViewController as! LiveVideoViewController
-            destinationVC.channelSelected                     = .nasaTv
-            destinationVC.title                               = destinationVC.channelSelected.rawValue
-            
-        case Segues.settingsSegue :                                 // Keep tracking, set popover arrow to point to middle, below settings button
-            let navigationController                          = segue.destination as! UINavigationController
-            let destinationVC                                 = navigationController.topViewController as! SettingsTableViewController
-            destinationVC.settingsButtonInCallingVCSourceView = settingsButton
-            
-        case Segues.helpSegue :                                     // Keep tracking, set popover arrow to point to middle, below help button
-            let navigationController                          = segue.destination as! UINavigationController
-            let destinationVC                                 = navigationController.topViewController as! HelpViewController
-            destinationVC.helpContentHTML                     = UserGuide.helpContentHTML
-            destinationVC.helpButtonInCallingVCSourceView     = helpButton
-            destinationVC.title                               = Constants.helpTitle
-            
-        default :
+            if let navigationController = segue.destination as? UINavigationController,
+               let destinationVC = navigationController.topViewController as? LiveVideoViewController {
+                destinationVC.channelSelected = (segueIdentifier == Segues.earthViewSegue) ? .liveEarth : .nasaTv
+                destinationVC.title = destinationVC.channelSelected.rawValue
+            }
+
+        case Segues.settingsSegue:
+            if let navigationController = segue.destination as? UINavigationController,
+               let destinationVC = navigationController.topViewController as? SettingsTableViewController {
+                destinationVC.settingsButtonInCallingVCSourceView = settingsButton
+            }
+
+        case Segues.helpSegue:
+            if let navigationController = segue.destination as? UINavigationController,
+               let destinationVC = navigationController.topViewController as? HelpViewController {
+                destinationVC.helpContentHTML = UserGuide.helpContentHTML
+                destinationVC.helpButtonInCallingVCSourceView = helpButton
+                destinationVC.title = Constants.helpTitle
+            }
+
+        default:
             stopAction()
         }
     }
+
     
     
     /// Unwind segue
@@ -889,20 +782,33 @@ class TrackingViewController: UIViewController, MKMapViewDelegate, UIGestureReco
     
     /// Clear the ground track plot line
     @IBAction func clearOrbitGroundTrack(_ sender: UIButton) {
+        let alertController = UIAlertController(
+            title: "Clear Ground Track",
+            message: """
+                     Are you sure you wish to
+                     clear the ground track?
+
+                     Note: You can turn off the
+                     ground track line in Settings.
+                     """,
+            preferredStyle: .alert
+        )
         
-        let alertController = UIAlertController(title: "Clear Ground Track", message: "Are you sure you wish to" + Constants.linefeed + "clear the ground track?" + Constants.linefeed + Constants.linefeed + "Note: You can turn off the" + Constants.linefeed + "ground track line in Settings.", preferredStyle: .alert)
+        let clearAction = UIAlertAction(title: "Clear", style: .destructive) { _ in
+            self.map.removeOverlays(self.map.overlays)
+        }
         
-        alertController.addAction(UIAlertAction(title: "Clear", style: .destructive) { (clearIt) in
-            self.map.removeOverlays(self.map.overlays)              // Need to remove all MKMap overlays, as multitple polylines are overlayed on the map as location is updated
-        })
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel)
         
-        alertController.addAction(UIAlertAction(title: "Cancel", style: .cancel))
-        present(alertController, animated: true, completion: nil)
+        alertController.addAction(clearAction)
+        alertController.addAction(cancelAction)
+        
+        present(alertController, animated: true)
     }
-    
+  
     
     @IBAction func switchTarget(_ sender: UIButton) {
-        switchStationPopup(withTitle: "Select a Target", withStyleToUse: .actionSheet)
+        switchStationPopup(withTitle: "Select a Target", usingStyle: .actionSheet)
     }
     
     
@@ -910,47 +816,58 @@ class TrackingViewController: UIViewController, MKMapViewDelegate, UIGestureReco
     /// - Parameters:
     ///   - title: Pop-up title
     ///   - usingStyle: The alert style
-    private func switchStationPopup(withTitle title: String, withStyleToUse usingStyle: UIAlertController.Style) {
-        
-        let alertController = UIAlertController(title: title, message: "Select a satellite target for tracking", preferredStyle: usingStyle)
-        
-        alertController.addAction(UIAlertAction(title: "Back", style: .cancel) { (_) in
-            return
-        })
-        
-        // Add a selection for each of the targets we can track
-        for target in [StationsAndSatellites.iss, StationsAndSatellites.tss, StationsAndSatellites.hst] {
-            alertController.addAction(UIAlertAction(title: "\(target.satelliteName)", style: .default) { (_) in
-                action(selectedTarget: target)
+    private func switchStationPopup(withTitle title: String, usingStyle: UIAlertController.Style) {
+        let alertController = UIAlertController(
+            title: title,
+            message: "Select a satellite target for tracking",
+            preferredStyle: usingStyle
+        )
+
+        alertController.addAction(UIAlertAction(title: "Back", style: .cancel))
+
+        let targets: [StationsAndSatellites] = [.iss, .tss, .hst]
+        for target in targets {
+            alertController.addAction(UIAlertAction(title: target.satelliteName, style: .default) { _ in
+                self.handleTargetSelection(target)
             })
-        }
-        
-        func action(selectedTarget: StationsAndSatellites) {
-            DispatchQueue.main.async {
-                self.stopAction()
-                self.delay(1.0) {                               // Delay 1 sec to make sure we don't violate the API's 1 second rate limit if moving the slider too fast
-                    self.zoomValueWasChanged = true
-                    self.timerValue          = self.getTimerInterval()
-                    self.target              = selectedTarget
-                    self.satelliteCode       = self.target.satelliteNORADCode
-                    self.listOfCoordinates.removeAll()          // Needed before we can clear the track
-                    self.map.removeOverlays(self.map.overlays)  // Need to remove all MKMap overlays, as multitple polylines are overlayed on the map as location is updated
-                    self.resetGlobeAction()
-                    self.startAction()
-                }
-            }
         }
 
         if usingStyle == .actionSheet {
-            // Set the target rect for the popover
-            alertController.popoverPresentationController?.permittedArrowDirections = UIPopoverArrowDirection([.up])
-            alertController.popoverPresentationController?.sourceView = selectTargetButton
-            alertController.popoverPresentationController?.sourceRect = CGRect(x: 1.00, y: 3.0, width: selectTargetButton.bounds.width, height: selectTargetButton.bounds.height)
+            configurePopover(for: alertController)
         }
         
-        self.present(alertController, animated: true, completion: nil)
+        present(alertController, animated: true)
     }
- 
+
+    
+    private func handleTargetSelection(_ selectedTarget: StationsAndSatellites) {
+        DispatchQueue.main.async {
+            self.stopAction()
+            self.delay(1.0) {
+                self.zoomValueWasChanged = true
+                self.timerValue = self.getTimerInterval()
+                self.target = selectedTarget
+                self.satelliteCode = selectedTarget.satelliteNORADCode
+                self.listOfCoordinates.removeAll()
+                self.map.removeOverlays(self.map.overlays)
+                self.resetGlobeAction()
+                self.startAction()
+            }
+        }
+    }
+
+    private func configurePopover(for alertController: UIAlertController) {
+        guard let popoverController = alertController.popoverPresentationController else { return }
+        popoverController.permittedArrowDirections = .up
+        popoverController.sourceView = selectTargetButton
+        popoverController.sourceRect = CGRect(
+            x: 1.0,
+            y: 3.0,
+            width: selectTargetButton.bounds.width,
+            height: selectTargetButton.bounds.height
+        )
+    }
+    
     
     override func didReceiveMemoryWarning() {
         

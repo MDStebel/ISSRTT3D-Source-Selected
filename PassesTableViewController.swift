@@ -11,16 +11,12 @@ import EventKit
 import CoreLocation
 
 class PassesTableViewController: UITableViewController, CLLocationManagerDelegate, TableAnimatable {
-    
+
     // MARK: - Rating System Enum
     
-    /// Defines the passes rating system
-    ///
-    /// This enum holds the max (i.e., lowest magnitude) values for the respective ratings and returns number of stars for each. Call: var nStars = RatingSystem.good.numberOfStars
     private enum RatingSystem: Double, CaseIterable {
-        
-        case unknown = 100000.0         // A magnitude of this value reported by the API indicates that it is unknown
-        case poor    = 100.0            // Let's just consider anything this dim to be the 'poor' limit
+        case unknown = 100000.0
+        case poor    = 100.0
         case fair    = -0.5
         case good    = -1.0
         case better  = -1.5
@@ -28,80 +24,71 @@ class PassesTableViewController: UITableViewController, CLLocationManagerDelegat
         
         var numberOfStars: Int {
             switch self {
-            case .unknown :
-                return 0
-            case .poor   :
-                return 0
-            case .fair   :
-                return 1
-            case .good   :
-                return 2
-            case .better :
-                return 3
-            case .best   :
-                return 4
+            case .unknown: return 0
+            case .poor:    return 0
+            case .fair:    return 1
+            case .good:    return 2
+            case .better:  return 3
+            case .best:    return 4
             }
         }
     }
-    
-    
+
     // MARK: - Properties
     
-    /// Defines type for completion handler function
     private typealias completionHandler = (Data) -> ()
-    
+
     private struct Constants {
         static let altitude                             = 0
-        static let apiKey                               = ApiKeys.passesApiKey                     // API key
+        static let apiKey                               = ApiKeys.passesApiKey
         static let customCellIdentifier                 = "OverheadTimesCell"
         static let deg                                  = "°"
-        static let endpointForPassesAPI                 = ApiEndpoints.passesAPIEndpoint           // API endpoint
+        static let endpointForPassesAPI                 = ApiEndpoints.passesAPIEndpoint
         static let fontForTitle                         = Theme.nasa
-        static let minObservationTime                   = 300                                      // In seconds
+        static let minObservationTime                   = 300
         static let newLine                              = Globals.newLine
         static let noRatingStar                         = #imageLiteral(resourceName: "star-unfilled")
         static let ratingStar                           = #imageLiteral(resourceName: "star")
         static let segueToHelpFromPasses                = "segueToHelpFromPasses"
         static let unknownRatingStar                    = #imageLiteral(resourceName: "unknownRatingStar")
     }
-    
+
     private var ISSlocationManager: CLLocationManager!
-    private var dateFormatterForDate                    = DateFormatter()
-    private var dateFormatterForTime                    = DateFormatter()
-    private var helpTitle                               = "Passes Help"
-    private var numberOfDays                            = 1
-    private var numberOfOverheadTimesActuallyReported   = 0
-    private var overheadTimesList                       = [Passes.Pass]()
-    private var rating                                  = 0
-    private var station: StationsAndSatellites          = .iss {
-        didSet{
+    private var dateFormatterForDate = DateFormatter()
+    private var dateFormatterForTime = DateFormatter()
+    private var helpTitle = "Passes Help"
+    private var numberOfDays = 1
+    private var numberOfOverheadTimesActuallyReported = 0
+    private var overheadTimesList = [Passes.Pass]()
+    private var rating = 0
+    private var station: StationsAndSatellites = .iss {
+        didSet {
             getStationID(for: station)
         }
     }
-    private var stationID                               = ""
-    private var stationImage: UIImage?                  = nil
-    private var stationName                             = ""
-    private var userCurrentCoordinatesString            = ""
-    private var userLatitude                            = 0.0
-    private var userLongitude                           = 0.0
+    private var stationID = ""
+    private var stationImage: UIImage? = nil
+    private var stationName = ""
+    private var userCurrentCoordinatesString = ""
+    private var userLatitude = 0.0
+    private var userLongitude = 0.0
     private var stationSelectionButton: UIImage {
         UIImage(systemName: "target")!
     }
-    
+
     // Change status bar to light color for this VC
     override var preferredStatusBarStyle: UIStatusBarStyle {
         .lightContent
     }
-    
-    
+
     // MARK: - Outlets
     
     @IBOutlet private var overheadTimes: UITableView!
     @IBOutlet private var promptLabel: UILabel! {
         didSet {
-            promptLabel.text                = "Getting your location..."
+            promptLabel.text = "Getting your location..."
             promptLabel.layer.maskedCorners = [.layerMinXMaxYCorner, .layerMaxXMaxYCorner]
-            promptLabel.layer.cornerRadius  = Theme.cornerRadius
+            promptLabel.layer.cornerRadius = Theme.cornerRadius
             promptLabel.layer.masksToBounds = true
         }
     }
@@ -110,385 +97,355 @@ class PassesTableViewController: UITableViewController, CLLocationManagerDelegat
             spinner.hidesWhenStopped = true
         }
     }
-    @IBOutlet private weak var selectTarget: UIBarButtonItem!{
+    @IBOutlet private weak var selectTarget: UIBarButtonItem! {
         didSet {
             selectTarget.image = stationSelectionButton
         }
     }
     @IBOutlet private weak var changeNumberOfDaysButton: UIBarButtonItem!
 
-    
     // MARK: - Methods
     
-    /// Get  NORAD ID, name, and icon to use in background for selected target satellite/space station
-    /// - Parameter station: Station selector value.
     private func getStationID(for station: StationsAndSatellites) {
-        
-        selectTarget.image     = stationSelectionButton
-        stationID              = station.satelliteNORADCode
-        stationImage           = station.satelliteImage
-        stationName            = station.satelliteName
-        
+        selectTarget.image = stationSelectionButton
+        stationID = station.satelliteNORADCode
+        stationImage = station.satelliteImage
+        stationName = station.satelliteName
     }
-    
-    
+
     private func setUpDateFormatter() {
-        
         dateFormatterForDate.dateFormat = Globals.outputDateOnlyFormatString
         dateFormatterForTime.dateFormat = Globals.outputTimeOnlyFormatString
-        
     }
-    
-    
+
     private func getNumberOfDaysOfPassesToReturn() {
-        
         numberOfDays = Int(Passes.numberOfDaysDictionary[Globals.numberOfDaysOfPassesSelectedSegment] ?? String(Globals.numberOfDaysOfPassesDefaultSelectionSegment))!
-    
     }
-    
-    
+
     override func viewDidLoad() {
-        
         super.viewDidLoad()
-        
         getStationID(for: station)
         setUpDateFormatter()
         getNumberOfDaysOfPassesToReturn()
         setUpRefreshControl()
         setUpLocationManager()
-        
     }
-    
-    
+
     override func viewWillAppear(_ animated: Bool) {
-        super .viewWillAppear(animated)
-        
-        // Set navigation and status bar font and color to our Theme
-        let titleFontSize                   = Theme.navigationBarTitleFontSize
-        let barAppearance                   = UINavigationBarAppearance()
-        barAppearance.backgroundColor       = UIColor(named: Theme.tint)
-        barAppearance.titleTextAttributes   = [.font : UIFont(name: Constants.fontForTitle, size: titleFontSize) as Any, .foregroundColor : UIColor.white]
-        navigationItem.standardAppearance   = barAppearance
-        navigationItem.scrollEdgeAppearance = barAppearance
-        
+        super.viewWillAppear(animated)
+        setNavigationBarAppearance()
     }
-    
-    
-    /// Set up refresh contol to allow pull-to-refresh in table view
+
+    private func setNavigationBarAppearance() {
+        let titleFontSize = Theme.navigationBarTitleFontSize
+        let barAppearance = UINavigationBarAppearance()
+        barAppearance.backgroundColor = UIColor(named: Theme.tint)
+        barAppearance.titleTextAttributes = [
+            .font: UIFont(name: Constants.fontForTitle, size: titleFontSize) as Any,
+            .foregroundColor: UIColor.white
+        ]
+        navigationItem.standardAppearance = barAppearance
+        navigationItem.scrollEdgeAppearance = barAppearance
+    }
+
     private func setUpRefreshControl() {
-        
         refreshControl = UIRefreshControl()
         refreshControl?.tintColor = UIColor(named: Theme.tint)
-        
         if let refreshingFont = UIFont(name: Constants.fontForTitle, size: 12.0) {
-            let attributes = [NSAttributedString.Key.font: refreshingFont, .foregroundColor: UIColor.white]
-            refreshControl?.attributedTitle = NSAttributedString(string: "Updating passes...", attributes: attributes )
+            let attributes = [
+                NSAttributedString.Key.font: refreshingFont,
+                .foregroundColor: UIColor.white
+            ]
+            refreshControl?.attributedTitle = NSAttributedString(string: "Updating passes...", attributes: attributes)
         }
-        
-        // Configure refresh control
         refreshControl?.addTarget(self, action: #selector(refreshTable(_:)), for: .valueChanged)
-        
     }
-    
-    
-    /// Selector for refresh control
-    @objc func refreshTable(_ sender: Any) {
-        
+
+    @objc private func refreshTable(_ sender: Any) {
         restartGettingUserLocation()
-        
     }
-    
-    
-    /// Set up location manager
+
     private func setUpLocationManager() {
-        
-        ISSlocationManager                 = CLLocationManager()                // Create a CLLocationManager instance to get user's location
-        ISSlocationManager.delegate        = self
+        ISSlocationManager = CLLocationManager()
+        ISSlocationManager.delegate = self
         ISSlocationManager.desiredAccuracy = kCLLocationAccuracyBest
         ISSlocationManager.requestWhenInUseAuthorization()
-        
     }
-    
-    
-    /// Start getting locations
+
     private func startGettingLocations() {
-
-        ISSlocationManager.startUpdatingLocation()                              // Now, we can get locations
-        
+        ISSlocationManager.startUpdatingLocation()
     }
-    
-    
+
     private func restartGettingUserLocation() {
-        
         startGettingLocations()
-        
     }
 
-    
-    @IBAction func changeNumberOfDaysThisTimeOnlyAndRefreshPasses(_ sender: UIBarButtonItem) {
-        
+    @IBAction private func changeNumberOfDaysThisTimeOnlyAndRefreshPasses(_ sender: UIBarButtonItem) {
         noPasesPopup(withTitle: "Change Number of Days", withStyleToUse: .actionSheet)
-        
     }
-    
-    
-    /// Give user opportunity to change number of days (this run only!) and try again
-    /// - Parameters:
-    ///   - title: Pop-up title
-    ///   - usingStyle: The alert style
-    private func noPasesPopup(withTitle title: String, withStyleToUse usingStyle : UIAlertController.Style) {
-        
-        let alertController = UIAlertController(title: title, message: "Change number of days for this time only by selecting below, or change for next time in Settings", preferredStyle: usingStyle)
-        
-        alertController.addAction(UIAlertAction(title: "Back", style: .cancel) { (dontShow) in
+
+    private func noPasesPopup(withTitle title: String, withStyleToUse usingStyle: UIAlertController.Style) {
+        let alertController = UIAlertController(
+            title: title,
+            message: "Change number of days for this time only by selecting below, or change for next time in Settings",
+            preferredStyle: usingStyle
+        )
+
+        alertController.addAction(UIAlertAction(title: "Back", style: .cancel) { _ in
             self.dismiss(animated: true, completion: nil)
         })
-        
-        // Add number-of-days selections from the dictionary in the Passes model
+
         for i in 0..<Int(Passes.numberOfDaysDictionary.count) {
-            alertController.addAction(UIAlertAction(title: "\(Passes.numberOfDaysDictionary[i]!) days", style: .default) { (choice) in
+            alertController.addAction(UIAlertAction(title: "\(Passes.numberOfDaysDictionary[i]!) days", style: .default) { _ in
                 self.numberOfDays = Int(Passes.numberOfDaysDictionary[i]!)!
                 self.restartGettingUserLocation()
             })
         }
-        
-        alertController.addAction(UIAlertAction(title: "Select a Target", style: .default) { (choice) in
+
+        alertController.addAction(UIAlertAction(title: "Select a Target", style: .default) { _ in
             self.switchStationPopup(withTitle: "Select a Target", withStyleToUse: .actionSheet)
         })
-        
+
         if usingStyle == .actionSheet {
             alertController.popoverPresentationController?.barButtonItem = changeNumberOfDaysButton
         }
-        
-        self.present(alertController, animated: true, completion: nil)
-        
+
+        present(alertController, animated: true, completion: nil)
     }
-    
-    
-    @IBAction func changeStation(_ sender: UIBarButtonItem) {
-        
+
+    @IBAction private func changeStation(_ sender: UIBarButtonItem) {
         switchStationPopup(withTitle: "Select a Target", withStyleToUse: .actionSheet)
-        
     }
-    
-    
-    /// Switch to a different station to get pass predictions for
-    /// - Parameters:
-    ///   - title: Pop-up title
-    ///   - usingStyle: The alert style
-    private func switchStationPopup(withTitle title: String, withStyleToUse usingStyle : UIAlertController.Style) {
-        
-        let alertController = UIAlertController(title: title, message: "Select a satellite target for pass predictions", preferredStyle: usingStyle)
-        
-        alertController.addAction(UIAlertAction(title: "Back", style: .cancel) { (dontShow) in
+
+    private func switchStationPopup(withTitle title: String, withStyleToUse usingStyle: UIAlertController.Style) {
+        let alertController = UIAlertController(
+            title: title,
+            message: "Select a satellite target for pass predictions",
+            preferredStyle: usingStyle
+        )
+
+        alertController.addAction(UIAlertAction(title: "Back", style: .cancel) { _ in
             self.dismiss(animated: true, completion: nil)
         })
-        
-        // Add selection for each of the stations/satellites for which we can get pass predictions
+
         for target in [StationsAndSatellites.iss, StationsAndSatellites.tss, StationsAndSatellites.hst] {
-            alertController.addAction(UIAlertAction(title: "\(target.satelliteName)", style: .default) { (choice) in
+            alertController.addAction(UIAlertAction(title: "\(target.satelliteName)", style: .default) { _ in
                 self.station = target
                 self.restartGettingUserLocation()
             })
         }
-        
+
         if usingStyle == .actionSheet {
             alertController.popoverPresentationController?.barButtonItem = selectTarget
         }
-        
-        self.present(alertController, animated: true, completion: nil)
-        
+
+        present(alertController, animated: true, completion: nil)
     }
-    
-    
-    /// Decode the raw passes in the JSON data
-    /// - Parameter data: JSON passes data
+
     private func decodeJSONPasses(withData data: Data) {
-        
         let decoder = JSONDecoder()
-
         do {
-            
             let passesDataSet = try decoder.decode(Passes.self, from: data)
-
-            numberOfOverheadTimesActuallyReported = passesDataSet.info.passescount
-            if numberOfOverheadTimesActuallyReported > 0 {
-                // Success! So, here's our array of passes
-                overheadTimesList = passesDataSet.passes
-
-                DispatchQueue.main.async { [self] in
-                    spinner.stopAnimating()
-                    refreshControl?.endRefreshing()
-                    animate(table: overheadTimes)
-                    userCurrentCoordinatesString = CoordinateConversions.decimalCoordinatesToDegMinSec(latitude: userLatitude, longitude: userLongitude, format: Globals.coordinatesStringFormat)
-                    promptLabel.text = "\(numberOfOverheadTimesActuallyReported) \(numberOfOverheadTimesActuallyReported > 1 ? "\(station.satelliteName) passes" : "\(station.satelliteName) pass") found over next \(numberOfDays) days\nYour location: \(userCurrentCoordinatesString)\nTap a pass to add alert to your calendar"
-                }
-            } else {
-                DispatchQueue.main.async { [self] in
-                    spinner.stopAnimating()
-                    refreshControl?.endRefreshing()
-                    promptLabel.text = "No visible passes for the next \(numberOfDays) days"
-                    noPasesPopup(withTitle: "No \(station.satelliteName) Passes Found", withStyleToUse: .alert)
-                }
-            }
+            handlePassesDataSet(passesDataSet)
         } catch {
-            
-            DispatchQueue.main.async { [self] in
-                spinner.stopAnimating()
-                refreshControl?.endRefreshing()
-                promptLabel.text = "No visible passes for the next \(numberOfDays) days"
-                noPasesPopup(withTitle: "No \(station.satelliteName) Passes Found", withStyleToUse: .alert)
-            }
-            
+            handleDecodingError()
         }
-        
     }
-    
-    
-    /// Get the ISS passes as JSON from the REST API
-    /// - Parameter completionHandler: The function to handle to process the raw data returned
-    private func getISSOverheadtimes(for station: StationsAndSatellites, then completionHandler: @escaping completionHandler ) {
-        
-        DispatchQueue.main.async { [self] in
-            spinner.startAnimating()
-            promptLabel.text = "Computing \(station.satelliteName) passes for next \(numberOfDays) days"
+
+    private func handlePassesDataSet(_ passesDataSet: Passes) {
+        numberOfOverheadTimesActuallyReported = passesDataSet.info.passescount
+        if numberOfOverheadTimesActuallyReported > 0 {
+            overheadTimesList = passesDataSet.passes
+            updateUIForSuccessfulFetch()
+        } else {
+            updateUIForNoPasses()
         }
-        
-        // Create the API URL request from endpoint. If not succesful, then return
-        let URLrequestString = Constants.endpointForPassesAPI + "\(stationID)/\(userLatitude)/\(userLongitude)/\(Constants.altitude)/\(numberOfDays)/\(Constants.minObservationTime)/&apiKey=\(Constants.apiKey)"
-        
-        guard let URLRequest = URL(string: URLrequestString) else { return }
-        
-        // Get the data. We need to get data or report connection error
-        let getPassesDataFromAPI = URLSession.shared.dataTask(with: URLRequest) { (data, response, error) in
-            
+    }
+
+    private func updateUIForSuccessfulFetch() {
+        DispatchQueue.main.async { [weak self] in
+            self?.spinner.stopAnimating()
+            self?.refreshControl?.endRefreshing()
+            self?.animate(table: self!.overheadTimes)
+            self?.userCurrentCoordinatesString = CoordinateConversions.decimalCoordinatesToDegMinSec(
+                latitude: self?.userLatitude ?? 0,
+                longitude: self?.userLongitude ?? 0,
+                format: Globals.coordinatesStringFormat
+            )
+            self?.promptLabel.text = "\(self?.numberOfOverheadTimesActuallyReported ?? 0) \(self?.numberOfOverheadTimesActuallyReported ?? 0 > 1 ? "\(self?.station.satelliteName ?? "") passes" : "\(self?.station.satelliteName ?? "") pass") found over next \(self?.numberOfDays ?? 0) days\nYour location: \(self?.userCurrentCoordinatesString ?? "")\nTap a pass to add alert to your calendar"
+        }
+    }
+
+    private func updateUIForNoPasses() {
+        DispatchQueue.main.async { [weak self] in
+            self?.spinner.stopAnimating()
+            self?.refreshControl?.endRefreshing()
+            self?.promptLabel.text = "No visible passes for the next \(self?.numberOfDays ?? 0) days"
+            self?.noPasesPopup(withTitle: "No \(self?.station.satelliteName ?? "") Passes Found", withStyleToUse: .alert)
+        }
+    }
+
+    private func handleDecodingError() {
+        DispatchQueue.main.async { [weak self] in
+            self?.spinner.stopAnimating()
+            self?.refreshControl?.endRefreshing()
+            self?.promptLabel.text = "No visible passes for the next \(self?.numberOfDays ?? 0) days"
+            self?.noPasesPopup(withTitle: "No \(self?.station.satelliteName ?? "") Passes Found", withStyleToUse: .alert)
+        }
+    }
+
+    private func getISSOverheadtimes(for station: StationsAndSatellites, then completionHandler: @escaping completionHandler) {
+        updateUIForFetchingData(for: station)
+
+        guard let URLRequest = createAPIRequestURL(for: station) else { return }
+
+        fetchData(from: URLRequest, completionHandler: completionHandler)
+    }
+
+    private func updateUIForFetchingData(for station: StationsAndSatellites) {
+        DispatchQueue.main.async { [weak self] in
+            self?.spinner.startAnimating()
+            self?.promptLabel.text = "Computing \(station.satelliteName) passes for next \(self?.numberOfDays ?? 0) days"
+        }
+    }
+
+    private func createAPIRequestURL(for station: StationsAndSatellites) -> URL? {
+        let URLrequestString = "\(Constants.endpointForPassesAPI)\(stationID)/\(userLatitude)/\(userLongitude)/\(Constants.altitude)/\(numberOfDays)/\(Constants.minObservationTime)/&apiKey=\(Constants.apiKey)"
+        return URL(string: URLrequestString)
+    }
+
+    private func fetchData(from URLRequest: URL, completionHandler: @escaping completionHandler) {
+        let getPassesDataFromAPI = URLSession.shared.dataTask(with: URLRequest) { [weak self] (data, response, error) in
             if let dataReturned = data {
-                
                 completionHandler(dataReturned)
-                
             } else {
-                
-                DispatchQueue.main.async { [self] in
-                    spinner.stopAnimating()
-                    refreshControl?.endRefreshing()
-                    cannotConnectToInternetAlert()
-                    promptLabel.text = "Connection Error"
-                }
+                self?.handleConnectionError()
             }
         }
-        
         getPassesDataFromAPI.resume()
-        
     }
-    
-    
-    /// This method adds an event to user's calendar if access is granted
-    /// - Parameter passEvent: The pass to add to the calendar
+
+    private func handleConnectionError() {
+        DispatchQueue.main.async { [weak self] in
+            self?.spinner.stopAnimating()
+            self?.refreshControl?.endRefreshing()
+            self?.cannotConnectToInternetAlert()
+            self?.promptLabel.text = "Connection Error"
+        }
+    }
+
     private func addEvent(_ passEvent: Passes.Pass) {
-        
         let eventStore = EKEventStore()
-        if (EKEventStore.authorizationStatus(for: .event) != EKAuthorizationStatus.fullAccess) {
-            eventStore.requestFullAccessToEvents() { [self] (granted, error) -> Void in
+        if EKEventStore.authorizationStatus(for: .event) != .fullAccess {
+            eventStore.requestFullAccessToEvents { [weak self] (granted, error) in
                 if granted {
-                    createEvent(eventStore, passEvent: passEvent)
+                    self?.createEvent(eventStore, passEvent: passEvent)
                 } else {
-                    DispatchQueue.main.async {
-                        self.alert(for: "Can't create reminder", message: "Access to your calendar was previously denied. Please update your device Settings to change this")
-                    }
+                    self?.showCalendarAccessDeniedAlert()
                 }
             }
         } else {
             createEvent(eventStore, passEvent: passEvent)
         }
-        
     }
-    
-    
-    /// Create the calendar event
-    /// - Parameters:
-    ///   - eventStore: EventStore to use
-    ///   - passEvent: The pass to add to the calendar
-    private func createEvent(_ eventStore: EKEventStore, passEvent: Passes.Pass) {
-        
-        // Create an event
-        let event       = EKEvent(eventStore: eventStore)
-        event.title     = "\(station.satelliteName) Pass Starts"
-        event.calendar  = eventStore.defaultCalendarForNewEvents
-        event.startDate = Date(timeIntervalSince1970: Double(passEvent.startUTC))
-        event.endDate   = Date(timeIntervalSince1970: Double(passEvent.endUTC))
-        
-        // Set two alarms: one at 15 mins and the other at 60 mins before the pass
-        event.alarms    = [EKAlarm(relativeOffset: -900.0), EKAlarm(relativeOffset: -3600.0)]      // In seconds
-        
-        // Create entries for event location
-        event.location  = "Your Location: \(userCurrentCoordinatesString)"
-        
-        // Add notes with viewing details
-        let mag         = passEvent.mag
-        let startAz     = String(format: Globals.azimuthFormat, passEvent.startAz) + Constants.deg
-        let startEl     = String(format: Globals.elevationFormat, passEvent.startEl) + Constants.deg
-        let maxAz       = String(format: Globals.azimuthFormat, passEvent.maxAz) + Constants.deg
-        let maxEl       = String(format: Globals.elevationFormat, passEvent.maxEl) + Constants.deg
-        let endAz       = String(format: Globals.azimuthFormat, passEvent.endAz) + Constants.deg
-        let endEl       = String(format: Globals.elevationFormat, passEvent.endEl) + Constants.deg
-        event.notes     = "Max Magnitude: \(mag)\nStarting azimuth: \(startAz) \(passEvent.startAzCompass)\nStarting elevation: \(startEl)\nMax azimuth: \(maxAz) \(passEvent.maxAzCompass)\nMax elevation: \(maxEl)\nEnding azimuth: \(endAz) \(passEvent.endAzCompass)\nEnding elevation: \(endEl)"
-        
-        let whichEvent  = EKSpan.thisEvent
-        do {
-            try eventStore.save(event, span: whichEvent)
-            DispatchQueue.main.async {
-                self.alert(for: "Pass Reminded Saved!", message: "A \(self.station.satelliteName) pass reminder was added to your calendar. You'll be alerted 1 hour in advance, and again 15 minutes before it begins.")
-            }
-        } catch {
-            DispatchQueue.main.async {
-                self.alert(for: "Failed", message: "Could not add the \(self.station.satelliteName) pass reminder to your calendar")
-            }
+
+    private func showCalendarAccessDeniedAlert() {
+        DispatchQueue.main.async {
+            self.alert(for: "Can't create reminder", message: "Access to your calendar was previously denied. Please update your device Settings to change this")
         }
-        
     }
-    
-    
-    /// Prepare for seque
+
+    private func createEvent(_ eventStore: EKEventStore, passEvent: Passes.Pass) {
+        let event = EKEvent(eventStore: eventStore)
+        event.title = "\(station.satelliteName) Pass Starts"
+        event.calendar = eventStore.defaultCalendarForNewEvents
+        event.startDate = Date(timeIntervalSince1970: Double(passEvent.startUTC))
+        event.endDate = Date(timeIntervalSince1970: Double(passEvent.endUTC))
+        event.alarms = [EKAlarm(relativeOffset: -900.0), EKAlarm(relativeOffset: -3600.0)]
+        event.location = "Your Location: \(userCurrentCoordinatesString)"
+        event.notes = createEventNotes(from: passEvent)
+        
+        do {
+            try eventStore.save(event, span: .thisEvent)
+            showEventSavedAlert()
+        } catch {
+            showEventSaveFailedAlert()
+        }
+    }
+
+    private func createEventNotes(from passEvent: Passes.Pass) -> String {
+        let mag = passEvent.mag
+        let startAz = formattedAzimuth(passEvent.startAz)
+        let startEl = formattedElevation(passEvent.startEl)
+        let maxAz = formattedAzimuth(passEvent.maxAz)
+        let maxEl = formattedElevation(passEvent.maxEl)
+        let endAz = formattedAzimuth(passEvent.endAz)
+        let endEl = formattedElevation(passEvent.endEl)
+
+        return """
+        Max Magnitude: \(mag)
+        Starting azimuth: \(startAz) \(passEvent.startAzCompass)
+        Starting elevation: \(startEl)
+        Max azimuth: \(maxAz) \(passEvent.maxAzCompass)
+        Max elevation: \(maxEl)
+        Ending azimuth: \(endAz) \(passEvent.endAzCompass)
+        Ending elevation: \(endEl)
+        """
+    }
+
+    private func formattedAzimuth(_ azimuth: Double) -> String {
+        return String(format: Globals.azimuthFormat, azimuth) + Constants.deg
+    }
+
+    private func formattedElevation(_ elevation: Double) -> String {
+        return String(format: Globals.elevationFormat, elevation) + Constants.deg
+    }
+
+    private func showEventSavedAlert() {
+        DispatchQueue.main.async {
+            self.alert(for: "Pass Reminded Saved!", message: "A \(self.station.satelliteName) pass reminder was added to your calendar. You'll be alerted 1 hour in advance, and again 15 minutes before it begins.")
+        }
+    }
+
+    private func showEventSaveFailedAlert() {
+        DispatchQueue.main.async {
+            self.alert(for: "Failed", message: "Could not add the \(self.station.satelliteName) pass reminder to your calendar")
+        }
+    }
+
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        guard let identifier = segue.identifier else { return }
         
-        guard segue.identifier != nil else { return }                                     // Prevents crash if a segue is unnamed
-        
-        switch segue.identifier {
-        case Constants.segueToHelpFromPasses :
-            
-            DispatchQueue.main.async {
-                self.spinner.startAnimating()
-            }
-            
-            let navigationController                        = segue.destination as! UINavigationController
-            let destinationVC                               = navigationController.topViewController as! HelpViewController
-            destinationVC.helpContentHTML                   = UserGuide.passesHelp
-            destinationVC.helpButtonInCallingVCSourceView   = navigationController.navigationBar
-            destinationVC.title                             = helpTitle
-            
-            DispatchQueue.main.async {
-                self.spinner.stopAnimating()
-            }
-            
-        default :
+        switch identifier {
+        case Constants.segueToHelpFromPasses:
+            showHelpViewController(segue)
+        default:
             break
         }
-        
     }
-    
-    
-    /// Unwind segue
-    @IBAction func unwindFromOtherVCs(unwindSegue: UIStoryboardSegue) {
+
+    private func showHelpViewController(_ segue: UIStoryboardSegue) {
+        DispatchQueue.main.async {
+            self.spinner.startAnimating()
+        }
         
+        let navigationController = segue.destination as! UINavigationController
+        let destinationVC = navigationController.topViewController as! HelpViewController
+        destinationVC.helpContentHTML = UserGuide.passesHelp
+        destinationVC.helpButtonInCallingVCSourceView = navigationController.navigationBar
+        destinationVC.title = helpTitle
+        
+        DispatchQueue.main.async {
+            self.spinner.stopAnimating()
+        }
     }
-    
-    
+
+    @IBAction func unwindFromOtherVCs(unwindSegue: UIStoryboardSegue) {}
+
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
     }
-    
 }
-
 
 //  MARK: - Tableview delegate methods
 extension PassesTableViewController {
@@ -496,198 +453,171 @@ extension PassesTableViewController {
     override func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
-    
-    
+
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return numberOfOverheadTimesActuallyReported
     }
-    
-    
-    /// Populate the cell with a card for each pass
-    /// - Parameters:
-    ///   - tableView: The table view we're using
-    ///   - indexPath: Index of the cell
-    /// - Returns: Populated cell
+
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        
-        /// Helper function to convert number of seconds into minutes and seconds and return in a string. Parameter numberOfSeconds: time in secondsReturns: string representation of time in minutes and seconds
-        func minsAndSecs(from numberOfSeconds: Int) -> String {
-            let dateComponentsFormatter = DateComponentsFormatter()
-            dateComponentsFormatter.allowedUnits = [.minute, .second]
-            dateComponentsFormatter.unitsStyle = .brief
-            
-            return dateComponentsFormatter.string(from: Double(numberOfSeconds)) ?? " "
-        }
-        
-        /// Helper function to get number of stars to display for this pass
-        /// - Parameter thisMagnitude: Magnitude of the pass
-        /// - Returns: Integer representing the rating stars
-        func numberOfRatingStars(for thisMagnitude: Double) -> Int {
-            // Determine the rating based on the magnitude of this pass
-            switch thisMagnitude { // Now determine number of stars to show
-            case _ where thisMagnitude <= RatingSystem.best.rawValue   : rating = RatingSystem.best.numberOfStars
-            case _ where thisMagnitude <= RatingSystem.better.rawValue : rating = RatingSystem.better.numberOfStars
-            case _ where thisMagnitude <= RatingSystem.good.rawValue   : rating = RatingSystem.good.numberOfStars
-            case _ where thisMagnitude <= RatingSystem.fair.rawValue   : rating = RatingSystem.fair.numberOfStars
-            case _ where thisMagnitude == RatingSystem.unknown.rawValue: rating = RatingSystem.unknown.numberOfStars
-            default                                                    : rating = RatingSystem.poor.numberOfStars
-            }
-            
-            return rating
-        }
-        
-        /// Helper function to clear data displayed in cell
-        func clearDataIn(thisCell cell: PassesTableViewCell) {
-            cell.passDate.text            = ""
-            cell.durationLabel.text       = ""
-            cell.magnitudeLabel.text      = ""
-            cell.startTime.text           = ""
-            cell.startAz.text             = ""
-            cell.startEl.text             = ""
-            cell.startComp.text           = ""
-            cell.maxTime.text             = ""
-            cell.maxAz.text               = ""
-            cell.maxEl.text               = ""
-            cell.maxComp.text             = ""
-            cell.endTime.text             = ""
-            cell.endAz.text               = ""
-            cell.endEl.text               = ""
-            cell.endComp.text             = ""
-            cell.backgroundColor          = UIColor(named: Theme.popupBgd)
-            cell.tintColor                = UIColor(named: Theme.popupBgd)
-            cell.passDate.backgroundColor = UIColor(named: Theme.popupBgd)
-        }
-        
-        // Set up the cell
-        let cell                          = tableView.dequeueReusableCell(withIdentifier: Constants.customCellIdentifier, for: indexPath) as! PassesTableViewCell
-        let row                           = indexPath.row
-        
+        let cell = tableView.dequeueReusableCell(withIdentifier: Constants.customCellIdentifier, for: indexPath) as! PassesTableViewCell
+        let row = indexPath.row
+
         if numberOfOverheadTimesActuallyReported > 0 {
-            let mag                       = overheadTimesList[row].mag    // Get the magnitude of this pass, as we'll use it later.
-            
-            // Set date of pass & set date label background color
-            cell.passDate.backgroundColor = UIColor(named: Theme.lblBgd)    // Set the date label background color
-            cell.passDate.text            = dateFormatterForDate.string(from: Date(timeIntervalSince1970: overheadTimesList[row].startUTC))
-            cell.passDate.text? += "\(Constants.newLine)\(Constants.newLine)"
-            
-            // Set the image for the cell background watermark
-            cell.stationIcon.image        = stationImage
-            
-            // Duration & max magnitude
-            cell.durationLabel.text       = "DUR: \(minsAndSecs(from: overheadTimesList[row].duration))"
-            cell.magnitudeLabel.text      = mag != RatingSystem.unknown.rawValue ? "MAG: \(mag)" : "MAG: N/A"
-            
-            // Start of pass data
-            cell.startTime.text           = dateFormatterForTime.string(from: Date(timeIntervalSince1970: overheadTimesList[row].startUTC))
-            cell.startAz.text             = String(format: Globals.azimuthFormat, overheadTimesList[row].startAz) + Constants.deg
-            cell.startEl.text             = String(format: Globals.elevationFormat, overheadTimesList[row].startEl) + Constants.deg
-            cell.startComp.text           = String(overheadTimesList[row].startAzCompass)
-            
-            // Maximum elevation data
-            cell.maxTime.text             = dateFormatterForTime.string(from: Date(timeIntervalSince1970: overheadTimesList[row].maxUTC))
-            cell.maxAz.text               = String(format: Globals.azimuthFormat, overheadTimesList[row].maxAz) + Constants.deg
-            cell.maxEl.text               = String(format: Globals.elevationFormat, overheadTimesList[row].maxEl) + Constants.deg
-            cell.maxComp.text             = String(overheadTimesList[row].maxAzCompass)
-            
-            // End-of-pass data
-            cell.endTime.text             = dateFormatterForTime.string(from: Date(timeIntervalSince1970: overheadTimesList[row].endUTC))
-            cell.endAz.text               = String(format: Globals.azimuthFormat, overheadTimesList[row].endAz) + Constants.deg
-            cell.endEl.text               = String(format: Globals.elevationFormat, overheadTimesList[row].endEl) + Constants.deg
-            cell.endComp.text             = String(overheadTimesList[row].endAzCompass)
-            
-            // Show the correct number of rating stars based on the magnitude of the pass according the rating system enum
-            // If the magnitude is unknown (.unknown) then show the greyed-out stars only
-            let totalStarsInRatingSystem = RatingSystem.allCases.count - 2         // Subtract 1 because there are less actual stars than values in the enum
-            if mag != RatingSystem.unknown.rawValue {                              // Only show stars if the rating is NOT unknown
-                let rating = numberOfRatingStars(for: mag)
-                for star in 0...(totalStarsInRatingSystem - 1) {                   // Less 1 since the index range of stars is from 0...3
-                    cell.ratingStarView[star].image = star < rating ? Constants.ratingStar : Constants.noRatingStar
-                    cell.ratingStarView[star].alpha = 1.0
-                }
-            } else {                                                               // Rating is unknown, so show the greyed-out stars
-                for star in 0...(totalStarsInRatingSystem - 1) {                   // Less 1 since the index range of stars is from 0...3
-                    cell.ratingStarView[star].image = Constants.unknownRatingStar
-                    cell.ratingStarView[star].alpha = 0.15
-                }
-            }
-            
+            configureCell(cell, with: overheadTimesList[row])
         } else {
-            // If there there's no passes data show alert and clear cells, as any data in the table is invalid
-            alert(for: "No Visible Passes", message: "No visible \(station.satelliteName) passes found during the next \(numberOfDays) days")
-            clearDataIn(thisCell: cell)
+            showAlertForNoVisiblePasses()
+            clearData(in: cell)
         }
-        
+
         return cell
-        
     }
-    
-    
-    /// Cell was selected, so add as event to calendar
-    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+
+    private func configureCell(_ cell: PassesTableViewCell, with pass: Passes.Pass) {
+        let mag = pass.mag
         
-        // Make a copy of the selected pass and create a calendar event for it
+        cell.passDate.backgroundColor = UIColor(named: Theme.lblBgd)
+        cell.passDate.text = dateFormatterForDate.string(from: Date(timeIntervalSince1970: pass.startUTC)) + "\(Constants.newLine)\(Constants.newLine)"
+        cell.stationIcon.image = stationImage
+        cell.durationLabel.text = "DUR: \(minsAndSecs(from: pass.duration))"
+        cell.magnitudeLabel.text = mag != RatingSystem.unknown.rawValue ? "MAG: \(mag)" : "MAG: N/A"
+        cell.startTime.text = dateFormatterForTime.string(from: Date(timeIntervalSince1970: pass.startUTC))
+        cell.startAz.text = formattedAzimuth(pass.startAz)
+        cell.startEl.text = formattedElevation(pass.startEl)
+        cell.startComp.text = pass.startAzCompass
+        cell.maxTime.text = dateFormatterForTime.string(from: Date(timeIntervalSince1970: pass.maxUTC))
+        cell.maxAz.text = formattedAzimuth(pass.maxAz)
+        cell.maxEl.text = formattedElevation(pass.maxEl)
+        cell.maxComp.text = pass.maxAzCompass
+        cell.endTime.text = dateFormatterForTime.string(from: Date(timeIntervalSince1970: pass.endUTC))
+        cell.endAz.text = formattedAzimuth(pass.endAz)
+        cell.endEl.text = formattedElevation(pass.endEl)
+        cell.endComp.text = pass.endAzCompass
+
+        configureRatingStars(for: cell, with: mag)
+    }
+
+    private func minsAndSecs(from numberOfSeconds: Int) -> String {
+        let formatter = DateComponentsFormatter()
+        formatter.allowedUnits = [.minute, .second]
+        formatter.unitsStyle = .brief
+        return formatter.string(from: Double(numberOfSeconds)) ?? " "
+    }
+
+    private func configureRatingStars(for cell: PassesTableViewCell, with magnitude: Double) {
+        let totalStars = RatingSystem.allCases.count - 2
+        if magnitude != RatingSystem.unknown.rawValue {
+            let rating = numberOfRatingStars(for: magnitude)
+            for star in 0..<totalStars {
+                cell.ratingStarView[star].image = star < rating ? Constants.ratingStar : Constants.noRatingStar
+                cell.ratingStarView[star].alpha = 1.0
+            }
+        } else {
+            for star in 0..<totalStars {
+                cell.ratingStarView[star].image = Constants.unknownRatingStar
+                cell.ratingStarView[star].alpha = 0.15
+            }
+        }
+    }
+
+    private func numberOfRatingStars(for magnitude: Double) -> Int {
+        switch magnitude {
+        case _ where magnitude <= RatingSystem.best.rawValue:
+            return RatingSystem.best.numberOfStars
+        case _ where magnitude <= RatingSystem.better.rawValue:
+            return RatingSystem.better.numberOfStars
+        case _ where magnitude <= RatingSystem.good.rawValue:
+            return RatingSystem.good.numberOfStars
+        case _ where magnitude <= RatingSystem.fair.rawValue:
+            return RatingSystem.fair.numberOfStars
+        case _ where magnitude == RatingSystem.unknown.rawValue:
+            return RatingSystem.unknown.numberOfStars
+        default:
+            return RatingSystem.poor.numberOfStars
+        }
+    }
+
+    private func clearData(in cell: PassesTableViewCell) {
+        cell.passDate.text = ""
+        cell.durationLabel.text = ""
+        cell.magnitudeLabel.text = ""
+        cell.startTime.text = ""
+        cell.startAz.text = ""
+        cell.startEl.text = ""
+        cell.startComp.text = ""
+        cell.maxTime.text = ""
+        cell.maxAz.text = ""
+        cell.maxEl.text = ""
+        cell.maxComp.text = ""
+        cell.endTime.text = ""
+        cell.endAz.text = ""
+        cell.endEl.text = ""
+        cell.endComp.text = ""
+        cell.backgroundColor = UIColor(named: Theme.popupBgd)
+        cell.tintColor = UIColor(named: Theme.popupBgd)
+        cell.passDate.backgroundColor = UIColor(named: Theme.popupBgd)
+    }
+
+    private func showAlertForNoVisiblePasses() {
+        alert(for: "No Visible Passes", message: "No visible \(station.satelliteName) passes found during the next \(numberOfDays) days")
+    }
+
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let passToSave = overheadTimesList[indexPath.row]
         addEvent(passToSave)
-        
     }
-    
 }
-
 
 // MARK: - Location Manager delegate methods
 extension PassesTableViewController {
     
     func locationManagerDidChangeAuthorization(_ manager: CLLocationManager) {
-        
-        let authStatus     = ISSlocationManager.authorizationStatus
-        let canGetLocation = authStatus != .denied
-        if canGetLocation {
-            
-            ISSlocationManager.startUpdatingLocation()                              // Now, we can get locations
-            
+        let authStatus = ISSlocationManager.authorizationStatus
+        if authStatus != .denied {
+            ISSlocationManager.startUpdatingLocation()
         } else {
-            
-            spinner.stopAnimating()
-            promptLabel.text = "Access to your location was not granted"
-            
-            // Present alert to allow user to go to system Settings to change access tp Location Services
-            let alert = UIAlertController(title: "Location Access Denied", message: "Access to your location was previously denied. Please update your iOS Settings to change this.", preferredStyle: .alert)
-            
-            let goToSettingAction = UIAlertAction(title: "Go to Settings", style: .default) { (action) in
-                DispatchQueue.main.async {
-                    let url = URL(string: UIApplication.openSettingsURLString)!
-                    UIApplication.shared.open(url, options: [:])
-                }
-            }
-            
-            let cancelAction = UIAlertAction(title: "Cancel", style: .cancel) { (action) in
-                DispatchQueue.main.async {
-                    self.dismiss(animated: true, completion: nil)                   // Return to main screen if user cancels
-                }
-            }
-            
-            alert.addAction(goToSettingAction)
-            alert.addAction(cancelAction)
-            alert.preferredAction = goToSettingAction
-            
-            present(alert, animated: true)
-            
+            handleLocationAccessDenied()
         }
-        
     }
-    
-    
-    /// Location manager did update locations delegate
-    func locationManager(_ ISSLocationManager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        
+
+    private func handleLocationAccessDenied() {
+        spinner.stopAnimating()
+        promptLabel.text = "Access to your location was not granted"
+
+        let alert = UIAlertController(
+            title: "Location Access Denied",
+            message: "Access to your location was previously denied. Please update your iOS Settings to change this.",
+            preferredStyle: .alert
+        )
+
+        let goToSettingAction = UIAlertAction(title: "Go to Settings", style: .default) { _ in
+            self.openAppSettings()
+        }
+
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel) { _ in
+            self.dismiss(animated: true, completion: nil)
+        }
+
+        alert.addAction(goToSettingAction)
+        alert.addAction(cancelAction)
+        alert.preferredAction = goToSettingAction
+
+        present(alert, animated: true)
+    }
+
+    private func openAppSettings() {
+        DispatchQueue.main.async {
+            if let url = URL(string: UIApplication.openSettingsURLString) {
+                UIApplication.shared.open(url, options: [:])
+            }
+        }
+    }
+
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         let userLocation = locations.first!
-        userLatitude     = userLocation.coordinate.latitude
-        userLongitude    = userLocation.coordinate.longitude
-        
-        getISSOverheadtimes(for: station, then: decodeJSONPasses)                   // Get passes from API, then run callback to decode/parse JSON
-        
-        ISSLocationManager.stopUpdatingLocation()                                   // Now that we have user's location, we don't need it again, so stop updating location
-        
+        userLatitude = userLocation.coordinate.latitude
+        userLongitude = userLocation.coordinate.longitude
+
+        getISSOverheadtimes(for: station, then: decodeJSONPasses)
+        ISSlocationManager.stopUpdatingLocation()
     }
-    
 }

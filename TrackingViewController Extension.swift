@@ -28,25 +28,33 @@ extension TrackingViewController {
 
     /// Draw orbit ground track line overlay
     private func drawOrbitGroundTrackLine() {
+        appendCurrentCoordinate()
         
-        listOfCoordinates.append(CLLocationCoordinate2DMake(CLLocationDegrees(latitude) ?? 0.0, CLLocationDegrees(longitude) ?? 0.0))
-        let index = listOfCoordinates.count
+        guard Globals.orbitGroundTrackLineEnabled, listOfCoordinates.count >= 2 else { return }
         
-        // Plot the orbit ground track line, if enabled and only when we have at least two coordinates
-        if Globals.orbitGroundTrackLineEnabled && index >= 2  {
-            aPolyLine = MKPolyline(coordinates: [listOfCoordinates[index-2], listOfCoordinates[index-1]], count: 2)
-            let polyLineRenderer = MKPolylineRenderer(overlay: aPolyLine)
-            polyLineRenderer.strokeColor = .blue
-            polyLineRenderer.fillColor = .blue
-            map.addOverlay(aPolyLine)
+        drawPolyline()
+        removeExcessCoordinates()
+    }
+
+    private func appendCurrentCoordinate() {
+        let coordinate = CLLocationCoordinate2D(latitude: CLLocationDegrees(latitude) ?? 0.0, longitude: CLLocationDegrees(longitude) ?? 0.0)
+        listOfCoordinates.append(coordinate)
+    }
+
+    private func drawPolyline() {
+        let lastTwoCoordinates = Array(listOfCoordinates.suffix(2))
+        let polyline = MKPolyline(coordinates: lastTwoCoordinates, count: lastTwoCoordinates.count)
+        let polylineRenderer = MKPolylineRenderer(overlay: polyline)
+        polylineRenderer.strokeColor = .blue
+        polylineRenderer.fillColor = .blue
+        map.addOverlay(polyline)
+    }
+
+    private func removeExcessCoordinates() {
+        let maxCoordinates = 4
+        if listOfCoordinates.count == maxCoordinates {
+            listOfCoordinates.removeFirst(maxCoordinates - 1)
         }
-        
-        // Remove first n coordinates, as we only need the last two (keeps array small)
-        let maxCoordinatesInArray = 4
-        if index == maxCoordinatesInArray {
-            listOfCoordinates.removeFirst(maxCoordinatesInArray - 1)
-        }
-        
     }
     
     
@@ -56,27 +64,24 @@ extension TrackingViewController {
     ///   - overlay: An MKOverlay
     /// - Returns: A renderer
     func mapView(_ mapView: MKMapView, rendererFor overlay: MKOverlay) -> MKOverlayRenderer {
-
-        let color: UIColor
         let renderer = MKPolylineRenderer(overlay: overlay)
-        
-        switch target {
-        case .iss :
-            color = UIColor(named: Theme.issOrbitalColor) ?? .gray
-        case .tss :
-            color = UIColor(named: Theme.tssOrbitalColor) ?? .gray
-        case .hst :
-            color = UIColor(named: Theme.hubbleOrbitalColor) ?? .gray
-        case .none :
-            color = UIColor(named: Theme.issOrbitalColor) ?? .gray
-        }
-        
-        renderer.strokeColor = color
-        renderer.lineWidth   = 5.0
-        renderer.lineCap     = .round
-        
+        renderer.strokeColor = colorForTarget(target)
+        renderer.lineWidth = 5.0
+        renderer.lineCap = .round
         return renderer
-        
+    }
+
+    private func colorForTarget(_ target: StationsAndSatellites) -> UIColor {
+        switch target {
+        case .iss:
+            return UIColor(named: Theme.issOrbitalColor) ?? .gray
+        case .tss:
+            return UIColor(named: Theme.tssOrbitalColor) ?? .gray
+        case .hst:
+            return UIColor(named: Theme.hubbleOrbitalColor) ?? .gray
+        case .none:
+            return UIColor(named: Theme.issOrbitalColor) ?? .gray
+        }
     }
     
     
