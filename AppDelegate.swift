@@ -11,103 +11,68 @@ import StoreKit
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
-    
+
     // MARK: - Properties
-    
-    
+
     var window: UIWindow?
-    
-    /// This property holds a reference to the tracking view controller
-    var referenceToViewController          = TrackingViewController()
-    
-    /// This property holds a reference to the Earth globe full view controller
+    var referenceToViewController = TrackingViewController()
     var referenceToGlobeFullViewController = GlobeFullViewController()
-    
-    
+
     // MARK: - Methods
-    
-    
+
     func application(_ application: UIApplication, willFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        
-        window?.tintColor           = UIColor(named: Theme.tint)            // Set the global tint color
-        
-        Globals.thisDevice          = UIDevice.current.model                // Get device model name
-        Globals.isIPad              = Globals.thisDevice.hasPrefix("iPad")  // Determine if device is an iPad and set this constant to true if so
-
-        // Request user review between shortestTime & longestTime of use
-        let shortestTime: UInt32    = 50                                    // In seconds
-        let longestTime: UInt32     = 200                                   // In seconds
-        guard let timeInterval      = TimeInterval(exactly: arc4random_uniform(longestTime - shortestTime) + shortestTime) else { return true }
-        Timer.scheduledTimer(timeInterval: timeInterval, target: self, selector: #selector(AppDelegate.requestReview), userInfo: nil, repeats: false)
-
+        configureGlobalSettings()
+        scheduleReviewRequest()
         return true
-        
     }
-    
-    /// Selector called by timer for App Store reviews
-    @objc func requestReview() {
-        
+
+    private func configureGlobalSettings() {
+        window?.tintColor = UIColor(named: Theme.tint)
+        Globals.thisDevice = UIDevice.current.model
+        Globals.isIPad = Globals.thisDevice.hasPrefix("iPad")
+    }
+
+    private func scheduleReviewRequest() {
+        let shortestTime: UInt32 = 50
+        let longestTime: UInt32 = 200
+        let timeInterval = TimeInterval(arc4random_uniform(longestTime - shortestTime) + shortestTime)
+        Timer.scheduledTimer(timeInterval: timeInterval, target: self, selector: #selector(requestReview), userInfo: nil, repeats: false)
+    }
+
+    @objc private func requestReview() {
         if let windowScene = window?.windowScene {
             SKStoreReviewController.requestReview(in: windowScene)
         }
-        
     }
-    
-    
-    func applicationWillResignActive(_ application: UIApplication) {
-        
-        // Invalidate the timers and save user's settings when moving to inactive state
-        referenceToViewController.stopAction()
-        SettingsDataModel.saveUserSettings()
-        
-        if referenceToGlobeFullViewController.isViewLoaded {                // Only stop the globe if the view is loaded to avoid nil error
-            referenceToGlobeFullViewController.stopUpdatingGlobe()
-        }
-        
-    }
-    
-    
-    func applicationDidEnterBackground(_ application: UIApplication) {
-        
-        // Invalidate the timers and save user's settings when moving to inactive state
-        referenceToViewController.stopAction()
-        SettingsDataModel.saveUserSettings()
-        
-        if referenceToGlobeFullViewController.isViewLoaded {                // Only stop the globe if the view is loaded to avoid nil error
-            referenceToGlobeFullViewController.stopUpdatingGlobe()
-        }
-        
-    }
-    
-    
-    func applicationWillEnterForeground(_ application: UIApplication) {
-        
-        SettingsDataModel.restoreUserSettings()
-        
-    }
-    
-    
-    func applicationDidBecomeActive(_ application: UIApplication) {
 
+    func applicationWillResignActive(_ application: UIApplication) {
+        handleAppStateChange()
+    }
+
+    func applicationDidEnterBackground(_ application: UIApplication) {
+        handleAppStateChange()
+    }
+
+    func applicationWillEnterForeground(_ application: UIApplication) {
         SettingsDataModel.restoreUserSettings()
-        
-        if referenceToGlobeFullViewController.isViewLoaded {                // Only start-up the globe if the view is loaded to avoid nil error
+    }
+
+    func applicationDidBecomeActive(_ application: UIApplication) {
+        SettingsDataModel.restoreUserSettings()
+        if referenceToGlobeFullViewController.isViewLoaded {
             referenceToGlobeFullViewController.startUpdatingGlobe()
         }
-        
     }
-    
-    
+
     func applicationWillTerminate(_ application: UIApplication) {
-        
-        // Invalidate the timers and save user's settings when moving to inactive state
+        handleAppStateChange()
+    }
+
+    private func handleAppStateChange() {
         referenceToViewController.stopAction()
         SettingsDataModel.saveUserSettings()
-        
-        if referenceToGlobeFullViewController.isViewLoaded {                // Only stop the globe if the view is loaded to avoid nil error
+        if referenceToGlobeFullViewController.isViewLoaded {
             referenceToGlobeFullViewController.stopUpdatingGlobe()
         }
-        
     }
-    
 }

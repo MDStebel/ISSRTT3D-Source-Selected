@@ -122,7 +122,7 @@ struct ISS_Real_Time_Tracker_3D_WidgetEntryView: View {
                     Spacer()
                     Image(.issrttNewIconWhite)
                     Text("\(entry.passDate.formatted(.dateTime.month(.abbreviated)).uppercased()) \(entry.passDate.formatted(.dateTime.day()))")
-                        .font(.headline).fontWidth(.condensed).fontWeight(.black)
+                        .font(.subheadline).fontWidth(.condensed).fontWeight(.black)
                     Text("\(entry.passDate.formatted(date: .omitted, time: .shortened))")
                         .font(.caption).fontWidth(.condensed)
                     Spacer()
