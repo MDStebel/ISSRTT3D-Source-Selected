@@ -35,10 +35,12 @@ struct Provider: TimelineProvider {
                 let pass = apiData.passes[0]
                 let passStartDate = Date(timeIntervalSince1970: Double(pass.startUTC))
                 let currentDate = Date()
-                let entry = NextPass(date: currentDate, passDate: passStartDate, startAzimuth: pass.startAz, startAzCompass: pass.startAzCompass, startElevation: pass.startEl, maxAzimuth: pass.maxAz, maxElevation: pass.maxEl, endAzimuth: pass.endAz, endElevation: pass.endEl)
-                entries.append(entry)
+                for minuteOffset in 0 ..< 2 {
+                    let entryDate = Calendar.current.date(byAdding: .minute, value: minuteOffset, to: currentDate)!
+                    let entry = NextPass(date: entryDate, passDate: passStartDate, startAzimuth: pass.startAz, startAzCompass: pass.startAzCompass, startElevation: pass.startEl, maxAzimuth: pass.maxAz, maxElevation: pass.maxEl, endAzimuth: pass.endAz, endElevation: pass.endEl)
+                    entries.append(entry)
+                }
             }
-            
             let timeline = Timeline(entries: entries, policy: .atEnd)
             completion(timeline)
         }
@@ -117,23 +119,19 @@ struct ISS_Real_Time_Tracker_3D_WidgetEntryView: View {
                 Circle()
                     .fill(.black)
                 VStack(alignment: .center, spacing: 0) {
+                    Spacer()
                     Image(.issrttNewIconWhite)
                     Text("\(entry.passDate.formatted(.dateTime.month(.abbreviated)).uppercased()) \(entry.passDate.formatted(.dateTime.day()))")
-                        .font(.custom("SF Pro", size: 11)).fontWeight(.bold)
+                        .font(.headline).fontWidth(.condensed).fontWeight(.black)
                     Text("\(entry.passDate.formatted(date: .omitted, time: .shortened))")
-                        .font(.custom("SF Pro", size: 9))
+                        .font(.caption).fontWidth(.condensed)
+                    Spacer()
                 }
-            }
-        case .accessoryInline:
-            HStack(spacing: 0) {
-                Image(.issrttNewIconWhite)
-                Text("\(entry.passDate.formatted(.dateTime.month(.abbreviated))) \(entry.passDate.formatted(.dateTime.day()))")
-                Text("\(entry.passDate.formatted(date: .omitted, time: .shortened))")
             }
         default:
             ZStack {
                 ContainerView()
-                VStack(spacing: 5) {
+                VStack(spacing: family == .systemMedium ? 3 : 5) {
                     HeaderView()
                     Spacer()
                     DateView(date: entry.passDate)
@@ -183,16 +181,16 @@ struct DateView: View {
     var body: some View {
         switch family {
         case .systemSmall:
-            smallMediumView()
+            smallView()
         case .systemMedium:
             mediumView()
         default:
-            smallMediumView()
+            smallView()
         }
     }
     
     @ViewBuilder
-    private func smallMediumView() -> some View {
+    private func smallView() -> some View {
         HStack {
             VStack(alignment: .leading, spacing: 2) {
                 dateText
@@ -218,6 +216,7 @@ struct DateView: View {
             Spacer()
             VStack {
                 countdownText
+                Spacer()
                 Spacer()
             }
             Spacer()
@@ -267,8 +266,8 @@ struct InfoCardView: View {
         ZStack {
             Rectangle()
                 .foregroundColor(.issrttWhite)
-                .cornerRadius(5)
-                .frame(maxWidth: .infinity, maxHeight: 50)
+                .cornerRadius(8)
+                .frame(width: .infinity, height: 55)
             VStack(alignment: .leading, spacing: 0) {
                 InfoRow(icon: "clock", label: tmLabel, value: date, spacing: spacing)
                 InfoRow(icon: "safari", label: azLabel, value: azi + Text(" ") + Text(entry.startAzCompass), spacing: spacing)
@@ -314,9 +313,9 @@ struct ISS_Real_Time_Tracker_3D_Widget: Widget {
         .description("Displays the next ISS pass for your location.")
         
 #if os(watchOS)
-        .supportedFamilies([.accessoryInline, .accessoryCircular])
+        .supportedFamilies([.accessoryCircular])
 #else
-        .supportedFamilies([.systemSmall, .systemMedium, .accessoryInline, .accessoryCircular])
+        .supportedFamilies([.systemSmall, .systemMedium, .accessoryCircular])
 #endif
     }
 }
