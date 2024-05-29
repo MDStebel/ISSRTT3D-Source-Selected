@@ -301,7 +301,8 @@ struct UserGuide {
     <div id="watch"></div>
     <h2>Using the Apple Watch App</h2>
     <p>If you own an Apple Watch, installing the app on your phone will also install it on your watch.</p>
-    <p>The watch app shows the interactive 3D globe with real-time positions of the ISS, Tiangong (Chinese space station), and the Hubble Space Telescope. From the globe tap on the reset button on the bottom-left of the watchface to restore the globe to its starting position. Tap the bottom-middle button to disable/enable the globe's autorotation. Tap the show details button on the bottom-right to display a table of the coordinates and altitudes of the three satellites, along with the subsolar point. The data update every three seconds.</p>
+    <p>The watch app shows the interactive 3D globe with real-time positions of the ISS, Tiangong (Chinese space station), and the Hubble Space Telescope. It also provides crew listings, stats, and bios.</p>
+    <p>From the globe tap on the reset button on the bottom-left of the watchface to restore the globe to its starting position. Tap the bottom-middle button to disable/enable the globe's autorotation. Tap the show details button on the bottom-right to display a table of the coordinates and altitudes of the three satellites, along with the subsolar point. The data update every three seconds.</p>
     <p>Tap the back button to return to the globe.</p>
     <h4><a href="#contents">Back to contents</a></h4>
     \(tail)
