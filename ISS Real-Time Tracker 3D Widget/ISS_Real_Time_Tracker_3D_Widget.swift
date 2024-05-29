@@ -107,17 +107,40 @@ struct NextPass: TimelineEntry {
 /// Widget view
 struct ISS_Real_Time_Tracker_3D_WidgetEntryView: View {
     var entry: Provider.Entry
+    @Environment(\.widgetFamily) var family
     
+    @ViewBuilder
     var body: some View {
-        ZStack {
-            ContainerView()
-            VStack(spacing: 5) {
-                HeaderView()
-                Spacer()
-                DateView(date: entry.passDate)
-                Spacer()
-                InfoCardView(entry: entry)
-                    .offset(y: -45)
+        switch family {
+        case .accessoryCircular:
+            ZStack {
+                Circle()
+                    .fill(.black)
+                VStack(alignment: .center, spacing: 0) {
+                    Image(.issrttNewIconWhite)
+                    Text("\(entry.passDate.formatted(.dateTime.month(.abbreviated)).uppercased()) \(entry.passDate.formatted(.dateTime.day()))")
+                        .font(.custom("SF Pro", size: 11)).fontWeight(.bold)
+                    Text("\(entry.passDate.formatted(date: .omitted, time: .shortened))")
+                        .font(.custom("SF Pro", size: 9))
+                }
+            }
+        case .accessoryInline:
+            HStack(spacing: 0) {
+                Image(.issrttNewIconWhite)
+                Text("\(entry.passDate.formatted(.dateTime.month(.abbreviated))) \(entry.passDate.formatted(.dateTime.day()))")
+                Text("\(entry.passDate.formatted(date: .omitted, time: .shortened))")
+            }
+        default:
+            ZStack {
+                ContainerView()
+                VStack(spacing: 5) {
+                    HeaderView()
+                    Spacer()
+                    DateView(date: entry.passDate)
+                    Spacer()
+                    InfoCardView(entry: entry)
+                        .offset(y: -45)
+                }
             }
         }
     }
@@ -154,17 +177,27 @@ struct HeaderView: View {
 
 struct DateView: View {
     var date: Date
+    @Environment(\.widgetFamily) var family
     
+    @ViewBuilder
     var body: some View {
+        switch family {
+        case .systemSmall:
+            smallMediumView()
+        case .systemMedium:
+            mediumView()
+        default:
+            smallMediumView()
+        }
+    }
+    
+    @ViewBuilder
+    private func smallMediumView() -> some View {
         HStack {
             VStack(alignment: .leading, spacing: 2) {
-                Text(date.formatted(.dateTime.weekday(.wide)).uppercased())
-                    .font(.caption).fontWeight(.heavy)
-                    .opacity(0.60)
-                    .offset(y: 20)
+                dateText
                 Spacer()
-                Text("\(date.formatted(.dateTime.month(.abbreviated)).uppercased()) \(date.formatted(.dateTime.day()))")
-                    .font(.largeTitle).fontWeight(.black)
+                monthDayText
                 Spacer()
             }
             .foregroundColor(.issrttWhite)
@@ -172,18 +205,61 @@ struct DateView: View {
             Spacer()
         }
     }
+    
+    @ViewBuilder
+    private func mediumView() -> some View {
+        HStack {
+            VStack(alignment: .leading, spacing: 2) {
+                dateText
+                Spacer()
+                monthDayText
+                Spacer()
+            }
+            Spacer()
+            VStack {
+                countdownText
+                Spacer()
+            }
+            Spacer()
+        }
+        .foregroundColor(.issrttWhite)
+        .offset(x: 16)
+        Spacer()
+    }
+    
+    private var dateText: some View {
+        Text(date.formatted(.dateTime.weekday(.wide)).uppercased())
+            .font(.caption).fontWeight(.heavy)
+            .opacity(0.60)
+            .offset(y: 20)
+    }
+    
+    private var monthDayText: some View {
+        Text("\(date.formatted(.dateTime.month(.abbreviated)).uppercased()) \(date.formatted(.dateTime.day()))")
+            .font(.largeTitle).fontWeight(.black)
+    }
+    
+    private var countdownText: some View {
+        let diff = Calendar.current.dateComponents([.day, .hour, .minute], from: Date(), to: date)
+        let diffInMinutes = (diff.day ?? 999) * 1440 + (diff.hour ?? 0) * 60 + (diff.minute ?? 0)
+        return Text("T-minus \(diffInMinutes) mins")
+            .font(.subheadline).fontWeight(.bold)
+            .offset(y: 44)
+            .padding(.horizontal)
+    }
 }
 
 struct InfoCardView: View {
     var entry: Provider.Entry
     @Environment(\.widgetFamily) var family
     
+    @ViewBuilder
     var body: some View {
         let date = Text("\(entry.passDate.formatted(date: .omitted, time: .shortened))")
         let azi = Text("\(entry.startAzimuth, format: .number.precision(.fractionLength(0)))°")
         let elev = Text("\(entry.startElevation, format: .number.precision(.fractionLength(1)))°")
 
-        let tmLabel = family == .systemMedium ? "  Start Time:  " : " Tm: "
+        let tmLabel = family == .systemMedium ? "  Pass Start Time:  " : " Tm: "
         let azLabel = family == .systemMedium ? "  Azimuth:  " : " Az: "
         let elLabel = family == .systemMedium ? " Elevation:  " : "El: "
         let spacing = family == .systemMedium ? 5.0 : 0.0
@@ -234,15 +310,20 @@ struct ISS_Real_Time_Tracker_3D_Widget: Widget {
                 .containerBackground(.fill.tertiary, for: .widget)
         }
         .contentMarginsDisabled()
-        .supportedFamilies([.systemSmall, .systemMedium])
         .configurationDisplayName("ISSRTT3D Widget")
         .description("Displays the next ISS pass for your location.")
+        
+#if os(watchOS)
+        .supportedFamilies([.accessoryInline, .accessoryCircular])
+#else
+        .supportedFamilies([.systemSmall, .systemMedium, .accessoryInline, .accessoryCircular])
+#endif
     }
 }
 
 #Preview(as: .systemSmall) {
     ISS_Real_Time_Tracker_3D_Widget()
 } timeline: {
+    NextPass(date: Date(), passDate: Date(), startAzimuth: 350.8, startAzCompass: "NNW", startElevation: 22, maxAzimuth: 270.0, maxElevation: 60.0, endAzimuth: 30.0, endElevation: 20.0)
     NextPass(date: Date(), passDate: Date(), startAzimuth: 216.3, startAzCompass: "SW", startElevation: 18.7, maxAzimuth: 270.0, maxElevation: 60.0, endAzimuth: 30.0, endElevation: 20.0)
-    NextPass(date: Date(), passDate: Date(), startAzimuth: 350, startAzCompass: "NNW", startElevation: 22, maxAzimuth: 270.0, maxElevation: 60.0, endAzimuth: 30.0, endElevation: 20.0)
 }

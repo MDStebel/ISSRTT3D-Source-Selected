@@ -549,43 +549,45 @@ class TrackingViewController: UIViewController, MKMapViewDelegate, UIGestureReco
     /// - Returns: TimeInterval
     private func getTimerInterval() -> TimeInterval {
         var timerIntervalToReturn: TimeInterval = Constants.defaultTimerInterval
+        
+        // We must do the following before returning at some point
         defer {
             zoomValueWasChanged = false
             Globals.zoomFactorWasResetInSettings = false
             if Globals.displayZoomFactorBelowMarkerIsOn {
                 setupZoomFactorLabel(timerIntervalToReturn)
             }
-        }
-
-        if (zoomValueWasChanged || Globals.zoomFactorWasResetInSettings) && running == true {
+        } // end of deferred code
+        
+        if (zoomValueWasChanged || Globals.zoomFactorWasResetInSettings) && running! {
+            
             timer?.cancel()
-            running = false
+            
+            if running != nil {
+                running = false
+            }
+            
         }
-
+        
         if Globals.zoomFactorWasResetInSettings {
+            
             createZoomSliderRanges()
             setUpZoomSlider(usingSavedZoomFactor: false)
+            
         }
-
-        let timerInterval: TimeInterval
+        
+        // Calculate the update interval in seconds, based on the zoom scale and zoom expansion multiplier
         switch zoomSlider.value {
-        case zoomInterval[0]..<zoomInterval[1]:
-            timerInterval = 1.0
-        case zoomInterval[1]..<zoomInterval[2]:
-            timerInterval = 2.0
-        case zoomInterval[2]..<zoomInterval[3]:
-            timerInterval = 3.0
-        case zoomInterval[3]..<zoomInterval[4]:
-            timerInterval = 4.0
-        case zoomInterval[4]..<zoomInterval[5]:
-            timerInterval = 5.0
-        case zoomInterval[5]...zoomInterval[6]:
-            timerInterval = 6.0
-        default:
-            timerInterval = Constants.defaultTimerInterval
+        case zoomInterval[0]..<zoomInterval[1] : timerIntervalToReturn = 1.0
+        case zoomInterval[1]..<zoomInterval[2] : timerIntervalToReturn = 2.0
+        case zoomInterval[2]..<zoomInterval[3] : timerIntervalToReturn = 3.0
+        case zoomInterval[3]..<zoomInterval[4] : timerIntervalToReturn = 4.0
+        case zoomInterval[4]..<zoomInterval[5] : timerIntervalToReturn = 5.0
+        case zoomInterval[5]...zoomInterval[6] : timerIntervalToReturn = 6.0
+        default : timerIntervalToReturn = Constants.defaultTimerInterval
         }
-
-        return timerInterval
+        
+        return timerIntervalToReturn
     }
     
     
