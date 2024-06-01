@@ -383,7 +383,6 @@ extension CrewMembersTableViewController {
         
         do {
             let (data, _) = try await URLSession.shared.data(from: imageURL)
-            print("got it")
             return UIImage(data: data)
         } catch {
             print("Failed to fetch image data: \(error)")
