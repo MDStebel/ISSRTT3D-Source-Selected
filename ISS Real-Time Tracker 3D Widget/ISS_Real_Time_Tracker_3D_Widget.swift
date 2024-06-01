@@ -122,9 +122,11 @@ struct ISS_Real_Time_Tracker_3D_WidgetEntryView: View {
                     Spacer()
                     Image(.issrttNewIconWhite)
                     Text("\(entry.passDate.formatted(.dateTime.month(.abbreviated)).uppercased()) \(entry.passDate.formatted(.dateTime.day()))")
-                        .font(.subheadline).fontWidth(.condensed).fontWeight(.black)
+                        .font(.subheadline).fontWidth(.condensed).fontWeight(.bold)
+                        .minimumScaleFactor(0.90)
                     Text("\(entry.passDate.formatted(date: .omitted, time: .shortened))")
                         .font(.caption).fontWidth(.condensed)
+                        .minimumScaleFactor(0.90)
                     Spacer()
                 }
             }
@@ -154,7 +156,7 @@ struct ContainerView: View {
                     startPoint: .top,
                     endPoint: .bottom
                 )
-                .opacity(0.25)
+                .opacity(0.35)
             )
     }
 }
@@ -192,12 +194,13 @@ struct DateView: View {
     @ViewBuilder
     private func smallView() -> some View {
         HStack {
-            VStack(alignment: .leading, spacing: 2) {
+            VStack(alignment: .leading, spacing: 3) {
                 dateText
                 Spacer()
                 monthDayText
-                Spacer()
+                Spacer(minLength: 10)
             }
+            .minimumScaleFactor(0.90)
             .foregroundColor(.issrttWhite)
             .offset(x: 16)
             Spacer()
@@ -207,23 +210,23 @@ struct DateView: View {
     @ViewBuilder
     private func mediumView() -> some View {
         HStack {
-            VStack(alignment: .leading, spacing: 2) {
+            VStack(alignment: .leading, spacing: 3) {
                 dateText
                 Spacer()
                 monthDayText
-                Spacer()
+                Spacer(minLength: 15)
             }
-            Spacer()
-            VStack {
+//            Spacer()
+            VStack(alignment: .leading, spacing: 3) {
                 countdownText
                 Spacer()
-                Spacer()
+//                Spacer()
             }
             Spacer()
         }
         .foregroundColor(.issrttWhite)
         .offset(x: 16)
-        Spacer()
+//        Spacer()
     }
     
     private var dateText: some View {
@@ -243,8 +246,8 @@ struct DateView: View {
         let diffInMinutes = (diff.day ?? 999) * 1440 + (diff.hour ?? 0) * 60 + (diff.minute ?? 0)
         return Text("T-minus \(diffInMinutes) mins")
             .font(.subheadline).fontWeight(.bold)
-            .offset(y: 44)
-            .padding(.horizontal)
+            .offset(y: 46)
+            .minimumScaleFactor(0.60)
     }
 }
 
@@ -324,5 +327,5 @@ struct ISS_Real_Time_Tracker_3D_Widget: Widget {
     ISS_Real_Time_Tracker_3D_Widget()
 } timeline: {
     NextPass(date: Date(), passDate: Date(), startAzimuth: 350.8, startAzCompass: "NNW", startElevation: 22, maxAzimuth: 270.0, maxElevation: 60.0, endAzimuth: 30.0, endElevation: 20.0)
-    NextPass(date: Date(), passDate: Date(), startAzimuth: 216.3, startAzCompass: "SW", startElevation: 18.7, maxAzimuth: 270.0, maxElevation: 60.0, endAzimuth: 30.0, endElevation: 20.0)
+    NextPass(date: Date(), passDate: Calendar.current.date(byAdding: .month, value: 6, to: Date())!, startAzimuth: 216.3, startAzCompass: "SW", startElevation: 18.7, maxAzimuth: 270.0, maxElevation: 60.0, endAzimuth: 30.0, endElevation: 20.0)
 }
