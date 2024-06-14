@@ -19,7 +19,7 @@ struct Provider: TimelineProvider {
         Task {
             if let apiData = await fetchData() {
                 let pass = apiData.passes[0]
-                let passStartDate = Date(timeIntervalSince1970: Double(pass.startUTC))
+                let passStartDate = Date(timeIntervalSince1970: pass.startUTC)
                 let currentDate = Date()
                 let entry = NextPass(date: currentDate, passDate: passStartDate, startAzimuth: pass.startAz, startAzCompass: pass.startAzCompass, startElevation: pass.startEl, maxAzimuth: pass.maxAz, maxElevation: pass.maxEl, endAzimuth: pass.endAz, endElevation: pass.endEl)
                 
@@ -33,7 +33,7 @@ struct Provider: TimelineProvider {
             var entries: [NextPass] = []
             if let apiData = await fetchData() {
                 let pass = apiData.passes[0]
-                let passStartDate = Date(timeIntervalSince1970: Double(pass.startUTC))
+                let passStartDate = Date(timeIntervalSince1970: pass.startUTC)
                 let currentDate = Date()
                 for minuteOffset in 0 ..< 2 {
                     let entryDate = Calendar.current.date(byAdding: .minute, value: minuteOffset, to: currentDate)!
