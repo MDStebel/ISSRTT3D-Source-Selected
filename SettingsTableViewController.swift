@@ -311,7 +311,7 @@ class SettingsTableViewController: UITableViewController {
         mapTypeSelector?.selectedSegmentIndex         = Globals.mapTypeSelection
         backgroundSelector?.selectedSegmentIndex      = Globals.globeBackgroundImageSelection
         dateAndTimeSaved                              = "Last saved: \(Globals.lastDateAndTimeSettingsWereSaved)"
-        versionAndCopyrightFooter                     = "Version: \(versionNumber)  Build: \(buildNumber)\n\(copyrightNotice)\n\nIncludes: WhatsNewKit © 2020 Sven Tiigi"
+        versionAndCopyrightFooter                     = "Version: \(versionNumber)  Build: \(buildNumber)\n\(copyrightNotice)"
     }
     
     

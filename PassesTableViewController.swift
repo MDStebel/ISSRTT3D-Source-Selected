@@ -12,28 +12,6 @@ import CoreLocation
 
 class PassesTableViewController: UITableViewController, CLLocationManagerDelegate, TableAnimatable {
 
-    // MARK: - Rating System Enum
-    
-    private enum RatingSystem: Double, CaseIterable {
-        case unknown = 100000.0
-        case poor    = 100.0
-        case fair    = -0.5
-        case good    = -1.0
-        case better  = -1.5
-        case best    = -2.0
-        
-        var numberOfStars: Int {
-            switch self {
-            case .unknown: return 0
-            case .poor:    return 0
-            case .fair:    return 1
-            case .good:    return 2
-            case .better:  return 3
-            case .best:    return 4
-            }
-        }
-    }
-
     // MARK: - Properties
     
     private typealias completionHandler = (Data) -> ()
@@ -42,14 +20,14 @@ class PassesTableViewController: UITableViewController, CLLocationManagerDelegat
         static let altitude                             = 0
         static let apiKey                               = ApiKeys.passesApiKey
         static let customCellIdentifier                 = "OverheadTimesCell"
-        static let deg                                  = "°"
+        static let deg                                  = Globals.degreeSign
         static let endpointForPassesAPI                 = ApiEndpoints.passesAPIEndpoint
         static let fontForTitle                         = Theme.nasa
         static let minObservationTime                   = 300
         static let newLine                              = Globals.newLine
+        static let segueToHelpFromPasses                = "segueToHelpFromPasses"
         static let noRatingStar                         = #imageLiteral(resourceName: "star-unfilled")
         static let ratingStar                           = #imageLiteral(resourceName: "star")
-        static let segueToHelpFromPasses                = "segueToHelpFromPasses"
         static let unknownRatingStar                    = #imageLiteral(resourceName: "unknownRatingStar")
     }
 
@@ -506,7 +484,7 @@ extension PassesTableViewController {
     private func configureRatingStars(for cell: PassesTableViewCell, with magnitude: Double) {
         let totalStars = RatingSystem.allCases.count - 2
         if magnitude != RatingSystem.unknown.rawValue {
-            let rating = numberOfRatingStars(for: magnitude)
+            let rating = RatingSystem.numberOfRatingStars(for: magnitude)
             for star in 0..<totalStars {
                 cell.ratingStarView[star].image = star < rating ? Constants.ratingStar : Constants.noRatingStar
                 cell.ratingStarView[star].alpha = 1.0
@@ -516,23 +494,6 @@ extension PassesTableViewController {
                 cell.ratingStarView[star].image = Constants.unknownRatingStar
                 cell.ratingStarView[star].alpha = 0.15
             }
-        }
-    }
-
-    private func numberOfRatingStars(for magnitude: Double) -> Int {
-        switch magnitude {
-        case _ where magnitude <= RatingSystem.best.rawValue:
-            return RatingSystem.best.numberOfStars
-        case _ where magnitude <= RatingSystem.better.rawValue:
-            return RatingSystem.better.numberOfStars
-        case _ where magnitude <= RatingSystem.good.rawValue:
-            return RatingSystem.good.numberOfStars
-        case _ where magnitude <= RatingSystem.fair.rawValue:
-            return RatingSystem.fair.numberOfStars
-        case _ where magnitude == RatingSystem.unknown.rawValue:
-            return RatingSystem.unknown.numberOfStars
-        default:
-            return RatingSystem.poor.numberOfStars
         }
     }
 
