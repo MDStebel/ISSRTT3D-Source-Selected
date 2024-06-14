@@ -86,6 +86,7 @@ struct Globals {
     static let blackBackgroundImage                          = "blackBackgroundImage"
     static let coordinatesStringFormatShortForm              = "%3d° %02d' %@  %3d° %02d' %@"
     static let dateFormatStringEuropeanForm                  = "yyyy-MM-dd"
+    static let degreeSign                                    = "°"
     static let degreesLongitudePerHour: Double               = 15
     static let degreesToRadians: Double                      = .pi / 180
     static let e                                             = M_E
@@ -143,7 +144,7 @@ struct Globals {
     static let outputDateFormatString                        = "MMM-dd-YYYY 'at' hh:mma"
     static let outputDateFormatStringShortForm               = "MMM-dd-yyyy"
     static let outputDateOnlyFormatString                    = "MMM-dd-YYY"
-    static let outputTimeOnlyFormatString                    = "hh:mma"
+    static let outputTimeOnlyFormatString                    = "hh:mm a"
     static let radiansToDegrees: Double                      = 1 / degreesToRadians
     static let settingsChar                                  = "⚙"
     static let spacer                                        = "  "
