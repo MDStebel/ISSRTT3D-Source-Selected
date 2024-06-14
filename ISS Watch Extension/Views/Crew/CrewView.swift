@@ -1,6 +1,6 @@
 //
 //  CrewView.swift
-//  ISS Watch Extension
+//  ISS Watch
 //
 //  Created by Michael Stebel on 4/13/24.
 //  Copyright © 2024 ISS Real-Time Tracker. All rights reserved.
@@ -50,9 +50,9 @@ struct CrewView: View {
         }
         .ignoresSafeArea(edges: .bottom)
 
-        .onAppear() {
-            viewModel.start()
-        }
+//        .onAppear() {
+//            viewModel.start()
+//        }
         
         // Respond to lifecycle phases
         .onChange(of: scenePhase) { _, phase in

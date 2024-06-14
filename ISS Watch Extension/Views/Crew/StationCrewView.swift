@@ -1,6 +1,6 @@
 //
 //  StationCrewView.swift
-//  ISS Watch Extension
+//  ISS Watch
 //
 //  Created by Michael Stebel on 4/29/24.
 //  Copyright © 2024 ISS Real-Time Tracker. All rights reserved.
@@ -20,22 +20,23 @@ struct StationCrewView: View {
         Section(header: Text("\(station.rawValue): \(crew.count) people")
             .font(.system(size: 14, weight: .semibold))
             .foregroundStyle(.gray)) {
-                ForEach(crew, id: \.self) { item in
-                    NavigationLink(destination: CrewDetailView(crewMember: item)) {
+                ForEach(crew, id: \.self) { person in
+                    NavigationLink(destination: CrewDetailView(crewMember: person)) {
                         CrewRowView(
-                            country: item.country,
-                            name: item.name,
-                            station: item.location,
-                            title: item.title,
+                            country: person.country,
+                            name: person.name,
+                            station: person.location,
+                            title: person.title,
                             colorKey: colorKey
                         )
                     }
                     .listRowInsets(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0))
-                    .listItemTint(.ISSRTT3DGrey)
+                    .listItemTint(.ISSRTT3DBackground)
                 }
             }
     }
 }
+
 
 #Preview {
     StationCrewView(

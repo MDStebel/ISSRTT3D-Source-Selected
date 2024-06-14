@@ -1,6 +1,6 @@
 //
 //  GlobeView.swift
-//  ISS Watch Extension
+//  ISS Watch
 //
 //  Created by Michael Stebel on 8/26/21.
 //  Copyright © 2021-2024 ISS Real-Time Tracker. All rights reserved.
@@ -34,6 +34,7 @@ struct GlobeView: View {
                 // Show progress indicator when starting up/resetting
                 if vm.isStartingUp {
                     ProgressView()
+                        .scaleEffect(x: 2, y: 2, anchor: .center) // Scale the ProgressView
                 }
                 
                 // MARK: Buttons
@@ -92,10 +93,10 @@ struct GlobeView: View {
             
             // MARK: Handle lifecycle events
             
-            // Update the coordinates when this view appears
-            .onAppear() {
-                vm.start()
-            }
+//            // Update the coordinates when this view appears
+//            .onAppear() {
+//                vm.start()
+//            }
             
             // Respond to lifecycle phases
             .onChange(of: scenePhase) { _, phase in
@@ -103,11 +104,8 @@ struct GlobeView: View {
                 case .active:
                     // The scene has become active, so start updating
                     vm.start()
-                case .inactive:
+                case .inactive, .background:
                     // The app has become inactive, so stop updating
-                    vm.stop()
-                case .background:
-                    // The app has moved to the background, so stop updating
                     vm.stop()
                 @unknown default:
                     fatalError("The app has entered an unknown state.")

@@ -1,6 +1,6 @@
 //
 //  NotificationController.swift
-//  ISS Watch Extension
+//  ISS Watch
 //
 //  Created by Michael Stebel on 8/26/21.
 //  Copyright © 2021-2024 ISS Real-Time Tracker. All rights reserved.

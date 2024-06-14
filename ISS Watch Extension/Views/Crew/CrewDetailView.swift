@@ -1,6 +1,6 @@
 //
 //  CrewDetailView.swift
-//  ISS Watch Extension
+//  ISS Watch
 //
 //  Created by Michael Stebel on 4/13/24.
 //  Copyright © 2024 ISS Real-Time Tracker. All rights reserved.
@@ -38,6 +38,7 @@ struct CrewDetailView: View {
                             .padding(EdgeInsets(top: 15, leading: 15, bottom: 15, trailing: 15))
                     } else {
                         ProgressView()
+                            .scaleEffect(x: 2, y: 2, anchor: .center) // Scale the ProgressView
                     }
                 }
                 
@@ -47,24 +48,24 @@ struct CrewDetailView: View {
                     let launchdate = DateFormatter().convert(from:  crewMember.launchdate, fromStringFormat: Globals.dateFormatStringEuropeanForm, toStringFormat: Globals.outputDateFormatStringShortForm) ?? ""
                     let numDays = numberOfDaysInSpace(since: launchdate)
                     
-                    CrewDetailSubheading(heading: "General")
+                    DetailSubheading(heading: "General")
                     
-                    CrewStatView(label: "Name", stat: crewMember.name)
-                    CrewStatView(label: "Country", stat: crewMember.country)
+                    StatView(label: "Name", stat: crewMember.name)
+                    StatView(label: "Country", stat: crewMember.country)
                     
-                    CrewDetailSubheading(heading: "On Station")
+                    DetailSubheading(heading: "On Station")
                     
-                    CrewStatView(label: "Title", stat: crewMember.title)
-                    CrewStatView(label: "Expediiton", stat: crewMember.expedition)
-                    CrewStatView(label: "Days in space", stat: "\(numDays)")
+                    StatView(label: "Title", stat: crewMember.title)
+                    StatView(label: "Expediiton", stat: crewMember.expedition)
+                    StatView(label: "Days in space", stat: "\(numDays)")
                     
-                    CrewDetailSubheading(heading: "Launch")
+                    DetailSubheading(heading: "Launch")
                     
-                    CrewStatView(label: "Date", stat: launchdate)
-                    CrewStatView(label: "Mission", stat: crewMember.mission)
-                    CrewStatView(label: "Vehicle", stat: crewMember.launchvehicle)
+                    StatView(label: "Date", stat: launchdate)
+                    StatView(label: "Mission", stat: crewMember.mission)
+                    StatView(label: "Vehicle", stat: crewMember.launchvehicle)
 
-                    CrewDetailSubheading(heading: "Biography")
+                    DetailSubheading(heading: "Biography")
                     
                     Text(crewMember.bio)
                         .font(.caption)

@@ -1,6 +1,6 @@
 //
 //  CrewsModel.swift
-//  ISS Watch Extension
+//  ISS Watch
 //
 //  Created by Michael Stebel on 4/25/24.
 //  Copyright © 2024 ISS Real-Time Tracker. All rights reserved.

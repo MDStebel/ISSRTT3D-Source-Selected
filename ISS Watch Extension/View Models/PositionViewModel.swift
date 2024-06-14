@@ -1,14 +1,14 @@
 //
 //  ViewModel.swift
-//  ISS Watch Extension
+//  ISS Watch
 //
 //  Created by Michael Stebel on 9/8/21.
-//  Copyright © 2021-2024 ISS Real-Time Tracker. All rights reserved.
+//  Copyright © 2024 ISS Real-Time Tracker. All rights reserved.
 //
 
 import Combine
+import Foundation
 import SceneKit
-import SwiftUI
 
 @Observable
 final class PositionViewModel: ObservableObject {
@@ -95,7 +95,7 @@ final class PositionViewModel: ObservableObject {
     
     /// Helps with initialization and reset
     private func initHelper() {
-        DispatchQueue.main.asyncAfter(deadline: .now() + 5.5) { [self] in       // Will tell the view to show the progress indicator
+        DispatchQueue.main.asyncAfter(deadline: .now() + 6.0) { [self] in       // Will tell the view to show the progress indicator
             isStartingUp = false
         }
         
@@ -222,24 +222,24 @@ extension PositionViewModel {
                 issLatitude              = Float(positionData.positions[0].satlatitude)
                 issLongitude             = Float(positionData.positions[0].satlongitude)
                 issAltitude              = Float(positionData.positions[0].sataltitude)
-                issAltitudeInKm          = "\(numberFormatter.string(from: NSNumber(value: Double(issAltitude))) ?? "")km"
-                issAltitudeInMi          = "\(numberFormatter.string(from: NSNumber(value: Double(issAltitude) * Globals.kilometersToMiles)) ?? "")mi"
+                issAltitudeInKm          = "\(numberFormatter.string(from: NSNumber(value: Double(issAltitude))) ?? "") km"
+                issAltitudeInMi          = "\(numberFormatter.string(from: NSNumber(value: Double(issAltitude) * Globals.kilometersToMiles)) ?? "") mi"
                 issFormattedLatitude     = CoordinateConversions.decimalCoordinatesToDegMinSec(coordinate: Double(issLatitude), format: Globals.coordinatesStringFormat, isLatitude: true)
                 issFormattedLongitude    = CoordinateConversions.decimalCoordinatesToDegMinSec(coordinate: Double(issLongitude), format: Globals.coordinatesStringFormat, isLatitude: false)
             case .tss :
                 tssLatitude              = Float(positionData.positions[0].satlatitude)
                 tssLongitude             = Float(positionData.positions[0].satlongitude)
                 tssAltitude              = Float(positionData.positions[0].sataltitude)
-                tssAltitudeInKm          = "\(numberFormatter.string(from: NSNumber(value: Double(tssAltitude))) ?? "")km"
-                tssAltitudeInMi          = "\(numberFormatter.string(from: NSNumber(value: Double(tssAltitude) * Globals.kilometersToMiles)) ?? "")mi"
+                tssAltitudeInKm          = "\(numberFormatter.string(from: NSNumber(value: Double(tssAltitude))) ?? "") km"
+                tssAltitudeInMi          = "\(numberFormatter.string(from: NSNumber(value: Double(tssAltitude) * Globals.kilometersToMiles)) ?? "") mi"
                 tssFormattedLatitude     = CoordinateConversions.decimalCoordinatesToDegMinSec(coordinate: Double(tssLatitude), format: Globals.coordinatesStringFormat, isLatitude: true)
                 tssFormattedLongitude    = CoordinateConversions.decimalCoordinatesToDegMinSec(coordinate: Double(tssLongitude), format: Globals.coordinatesStringFormat, isLatitude: false)
             case .hst :
                 hubbleLatitude           = Float(positionData.positions[0].satlatitude)
                 hubbleLongitude          = Float(positionData.positions[0].satlongitude)
                 hubbleAltitude           = Float(positionData.positions[0].sataltitude)
-                hubbleAltitudeInKm       = "\(numberFormatter.string(from: NSNumber(value: Double(hubbleAltitude))) ?? "")km"
-                hubbleAltitudeInMi       = "\(numberFormatter.string(from: NSNumber(value: Double(hubbleAltitude) * Globals.kilometersToMiles)) ?? "")mi"
+                hubbleAltitudeInKm       = "\(numberFormatter.string(from: NSNumber(value: Double(hubbleAltitude))) ?? "") km"
+                hubbleAltitudeInMi       = "\(numberFormatter.string(from: NSNumber(value: Double(hubbleAltitude) * Globals.kilometersToMiles)) ?? "") mi"
                 hubbleFormattedLatitude  = CoordinateConversions.decimalCoordinatesToDegMinSec(coordinate: Double(hubbleLatitude), format: Globals.coordinatesStringFormat, isLatitude: true)
                 hubbleFormattedLongitude = CoordinateConversions.decimalCoordinatesToDegMinSec(coordinate: Double(hubbleLongitude), format: Globals.coordinatesStringFormat, isLatitude: false)
             case .none :

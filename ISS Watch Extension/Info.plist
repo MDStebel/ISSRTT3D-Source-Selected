@@ -2,6 +2,12 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+    <key>NSLocationWhenInUseUsageDescription</key>
+    <string>We need your location to compute passes.</string>
+    <key>NSCalendarsUsageDescription</key>
+    <string>We need access to your calendar to add events.</string>
+    <key>NSRemindersUsageDescription</key>
+    <string>We need access to your reminders to add events.</string>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
 	<key>CFBundleDisplayName</key>
@@ -33,7 +39,7 @@
 		<string>com.apple.watchkit</string>
 	</dict>
 	<key>NSHumanReadableCopyright</key>
-	<string>© 2022-2023 ISS Real-Time Tracker</string>
+	<string>© 2022-2024 ISS Real-Time Tracker</string>
 	<key>UIAppFonts</key>
 	<array>
 		<string>nasalization-rg.ttf</string>

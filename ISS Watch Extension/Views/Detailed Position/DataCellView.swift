@@ -1,9 +1,9 @@
 //
 //  DataCellView.swift
-//  ISS Watch Extension
+//  ISS Watch
 //
 //  Created by Michael Stebel on 9/17/21.
-//  Copyright © 2021-2024 ISS Real-Time Tracker. All rights reserved.
+//  Copyright © 2024 ISS Real-Time Tracker. All rights reserved.
 //
 
 import SwiftUI
@@ -18,21 +18,24 @@ struct DataCellView: View {
     let latitude: String
     let longitude: String
     let sidebarColor: Color
+    let target: StationsAndSatellites
     
-    private let max: Float        = Globals.hubbleMaxAltitudeInKM   // Scale max
-    private let min: Float        = Globals.tssMinAltitudeInKM      // Scale min
+    private let max: Float = Globals.hubbleMaxAltitudeInKM   // Scale max
+    private let min: Float = Globals.tssMinAltitudeInKM      // Scale min
     private let multiplier: Float = 20
     
     var body: some View {
         HStack {
             
-            Rectangle()                                             // Sidebar with color indicator
+            // MARK: - Sidebar area
+            Rectangle()
                 .frame(width: 6)
                 .foregroundStyle(sidebarColor)
             
             VStack {
                 
-                HStack {                                            // Title
+                // MARK: - Title area
+                HStack {
                     Text(title)
                         .font(.system(size: 14, weight: .semibold))
                         .foregroundStyle(.gray)
@@ -49,8 +52,8 @@ struct DataCellView: View {
                     // If not, we'll assume we're showing the subsolar point, so show the Sun
                     if let altKm = altitudeInKm, let altMi = altitudeInMi, let alt = altitude {
                         
-                        let range             = max - min                   // Scale range
-                        let boundedAlt        = fmin(fmax(alt, min), max)   // Keep within scale range
+                        let range             = max - min                       // Scale range
+                        let boundedAlt        = fmin(fmax(alt, min), max)       // Keep within scale range
                         let normalizedAlt     = (boundedAlt - min) / range
                         let yOffsetComputed   = -CGFloat(normalizedAlt * multiplier) + 6
                         
@@ -80,14 +83,12 @@ struct DataCellView: View {
                                 
                                 Text(altMi)
                                     .withMDSDataLabelModifier
-                                
                             }
                             .offset(x: -3, y: 1.5)
-                            
                         }
                         .offset(y: yOffsetComputed)                         // This will position the alt on the scale
-                    
-                    // Show the Sun icon if this is not a satellite
+                        
+                        // Show the Sun icon if this is not a satellite
                     } else {
                         
                         Image(systemName: "sun.max.fill")
@@ -96,12 +97,10 @@ struct DataCellView: View {
                             .foregroundStyle(.yellow)
                             .offset(x: 1, y: -5)
                             .frame(width: 40, height: 40, alignment: .leading)
-                        
                     }
                     
                     // MARK: - Coordinates area
                     VStack {
-                        
                         HStack {
                             Spacer()
                             Text(latitude)
@@ -115,28 +114,21 @@ struct DataCellView: View {
                                 .withCoordinatesTextModifier
                         }
                         .offset(x: 0)
-                        
                     }
-                    
                 }
-                
             }
             .padding([.vertical], 2)
             .padding([.leading], 1)
             .padding([.trailing], 6)
-            
         }
         .frame(height: 70)
         .background(Color.ISSRTT3DBackground)
-        .cornerRadius(5.0)
-        
+        .cornerRadius(10.0)
     }
-    
 }
-
 
 struct DataCellView_Previews: PreviewProvider {
     static var previews: some View {
-        DataCellView(title: "Title", altitude: 435, altitudeInKm: "400 km", altitudeInMi: "249 mi", latitude: "155°55'55\"N", longitude: "177°48'48\"E", sidebarColor: .blue)
+        DataCellView(title: "Title", altitude: 435, altitudeInKm: "450 km", altitudeInMi: "249 mi", latitude: "155°55'55\"N", longitude: "177°48'48\"E", sidebarColor: .blue, target: .iss)
     }
 }

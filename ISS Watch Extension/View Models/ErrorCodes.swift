@@ -1,13 +1,13 @@
 //
 //  ErrorCodes.swift
-//  ISS Watch Extension
+//  ISS Watch
 //
 //  Created by Michael Stebel on 10/1/21.
 //  Copyright © 2021-2024 ISS Real-Time Tracker. All rights reserved.
 //
 
 import Combine
-import SwiftUI
+import Foundation
 
 /// Errors used by the app
 struct ErrorCodes: Error, Identifiable {

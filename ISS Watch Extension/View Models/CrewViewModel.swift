@@ -1,13 +1,13 @@
 //
 //  CrewViewModel.swift
-//  ISS Watch Extension
+//  ISS Watch
 //
 //  Created by Michael Stebel on 4/24/24.
 //  Copyright © 2024 ISS Real-Time Tracker. All rights reserved.
 //
 
 import Combine
-import SwiftUI
+import Foundation
 
 @Observable
 final class CrewViewModel: ObservableObject {
