@@ -12,22 +12,19 @@ import Foundation
 ///
 /// Represents the JSON-returned data from Pass Predictions API
 /// A pass is in a struct named Pass. Array of Passes is named passes[].
-struct Passes: Decodable {
+struct Passes: Decodable, Hashable {
     
     let info: Info
     let passes: [Pass]
     
-    struct Info: Decodable {
-        
+    struct Info: Decodable, Hashable {
         let satid: Int
         let satname: String
         let transactionscount: Int
         let passescount: Int
-        
     }
     
-    struct Pass: Decodable {
-        
+    struct Pass: Decodable, Hashable {
         let startAz: Double
         let startAzCompass: String
         let startEl: Double
@@ -42,7 +39,6 @@ struct Passes: Decodable {
         let endUTC: Double
         let mag: Double
         let duration: Int
-        
     }
     
     /// Number of days to project that can be in the API request. Used in segmented switch in settings, etc.
