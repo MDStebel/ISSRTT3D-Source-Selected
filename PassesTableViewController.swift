@@ -580,5 +580,17 @@ extension PassesTableViewController {
 
         getISSOverheadtimes(for: station, then: decodeJSONPasses)
         ISSlocationManager.stopUpdatingLocation()
+        
+        saveLocation(latitude: userLatitude, longitude: userLongitude)
+    }
+    
+    /// Save location in app group
+    /// - Parameters:
+    ///   - lat: The latitude as a double
+    ///   - lon: The longitude as a double
+    private func saveLocation(latitude lat: Double, longitude lon: Double) {
+        let sharedDefaults = UserDefaults(suiteName: Globals.appSuiteName)
+        sharedDefaults?.set(lat, forKey: "latitude")
+        sharedDefaults?.set(lon, forKey: "longitude")
     }
 }
