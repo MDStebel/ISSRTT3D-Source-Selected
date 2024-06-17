@@ -13,10 +13,11 @@ struct PassesView: View {
     // Get the current phase of the scene
     @Environment(\.scenePhase) private var scenePhase
     
-    @State private var vm = PassesViewModel()
-    @State private var isAnimating = false
-    @State private var displayedText: String = ""
-    @State private var currentIndex: Int = 0
+    @State private var locationVm            = LocationViewModel()
+    @State private var vm                    = PassesViewModel()
+    @State private var isAnimating           = false
+    @State private var displayedText         = ""
+    @State private var currentIndex: Int     = 0
 
     var station: StationsAndSatellites
     
@@ -42,7 +43,9 @@ struct PassesView: View {
             }
         }
         .onAppear {
-            vm.getPasses(for: station.satelliteNORADCode)
+            if locationVm.authorizationStatus == .authorizedWhenInUse || locationVm.authorizationStatus == .authorizedAlways {
+            vm.getPasses(for: station.satelliteNORADCode, latitude: locationVm.latitude, longitude: locationVm.longitude)
+            }
         }
     }
     
@@ -56,7 +59,7 @@ struct PassesView: View {
             VStack(alignment: .leading) {
                 Text(displayedText)
                     .font(.footnote)
-                    .opacity(0.7)
+                    .opacity(0.75)
                     .minimumScaleFactor(0.7)
                     .onReceive(timer) { _ in                // Animate the text one character at a time upon receiving updates from the timer we have set
                         if currentIndex < fullText.count {
@@ -110,9 +113,9 @@ struct PassesView: View {
                     noQualityAvailableView()
                 }
             }
-            .padding(.horizontal, 1)
-            .padding(.vertical, 1)
         }
+        .padding(.horizontal, 1)
+        .padding(.vertical, 1)
     }
     
     private func passQualityView(for pass: Passes.Pass) -> some View {

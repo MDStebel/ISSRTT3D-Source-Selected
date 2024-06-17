@@ -23,19 +23,19 @@ struct PassDetailView: View {
         let mg = pass.mag != RatingSystem.unknown.rawValue ? String(pass.mag) : "N/A"
         // Start
         let st = Date(timeIntervalSince1970: pass.startUTC).formatted(date: .omitted, time: .shortened)
-        let sa = String(pass.startAz) + Globals.degreeSign
+        let sa = String(format: "%.0f%", pass.startAz) + Globals.degreeSign
         let sc = String(pass.startAzCompass)
-        let se = String(pass.startEl) + Globals.degreeSign
+        let se = String(format: "%.1f%", pass.startEl) + Globals.degreeSign
         // Max
         let mt = Date(timeIntervalSince1970: pass.maxUTC).formatted(date: .omitted, time: .shortened)
-        let ma = String(pass.maxAz) + Globals.degreeSign
+        let ma = String(format: "%.0f%", pass.maxAz) + Globals.degreeSign
         let mc = String(pass.maxAzCompass)
-        let me = String(pass.maxEl) + Globals.degreeSign
+        let me = String(format: "%.1f%", pass.maxEl) + Globals.degreeSign
         // End
         let et = Date(timeIntervalSince1970: pass.endUTC).formatted(date: .omitted, time: .shortened)
-        let ea = String(pass.endAz) + Globals.degreeSign
+        let ea = String(format: "%.0f%", pass.endAz) + Globals.degreeSign
         let ec = String(pass.endAzCompass)
-        let ee = String(pass.endEl) + Globals.degreeSign
+        let ee = String(format: "%.1f%", pass.endEl) + Globals.degreeSign
         
         ZStack {
             Color.cyan.opacity(0.6)
