@@ -45,15 +45,16 @@ struct GlobeView: View {
                     // Button group
                     HStack(spacing: -35) {
                         Button(action: {
-                            vm.reset()
+                            vm.reset()                              // Reset globe
                         })
                         {
-                            Image("reset")
+                            Image(systemName: vm.isStartingUp ? "arrow.triangle.2.circlepath" : "arrow.circlepath")
+                                .contentTransition(.symbolEffect(.replace.byLayer))
                         }
                         .withSmallButtonModifier
                         
                         Button(action: {
-                            vm.spinEnabled.toggle()
+                            vm.spinEnabled.toggle()                 // Toggle globe rotation
                         })
                         {
                             Image(systemName: vm.spinEnabled ? "rotate.3d.fill" : "rotate.3d")
@@ -65,7 +66,8 @@ struct GlobeView: View {
                             destination: DetailView(vm: vm)         // Show detail view with data from our view model
                         )
                         {
-                            Image(systemName: "tablecells.fill")
+                            Image(systemName: "tablecells")
+                                .scaleEffect(0.9)
                         }
                         .withSmallButtonModifier
                         
@@ -73,7 +75,7 @@ struct GlobeView: View {
                             destination: CrewView()                 // Show crew view
                         )
                         {
-                            Image("astronaut_helmet_filled_watch")
+                            Image(systemName: "person.fill")
                         }
                         .withSmallButtonModifier
                     }
@@ -92,13 +94,7 @@ struct GlobeView: View {
             .navigationBarTitleDisplayMode(.inline)     // We want the small navigation title
             
             // MARK: Handle lifecycle events
-            
-//            // Update the coordinates when this view appears
-//            .onAppear() {
-//                vm.start()
-//            }
-            
-            // Respond to lifecycle phases
+
             .onChange(of: scenePhase) { _, phase in
                 switch phase {
                 case .active:
