@@ -148,6 +148,7 @@ struct Globals {
     static let radiansToDegrees: Double                      = 1 / degreesToRadians
     static let settingsChar                                  = "⚙"
     static let spacer                                        = "  "
+    static let appSuiteName                                  = "group.issrtt3d"
     static let tarantulaNebula                               = "Tarantula Nebula in the Large Magellanic Cloud"
     static let threeSixtyDegrees: Float                      = 360
     static let tssAltitudeFactor: Float                      = tssOrbitalAltitudeFactor * 1.015
