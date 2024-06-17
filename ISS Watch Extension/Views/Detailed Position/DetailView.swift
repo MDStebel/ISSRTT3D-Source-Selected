@@ -28,7 +28,7 @@ struct DetailView: View {
         .opacity(1)
         .ignoresSafeArea(edges: .bottom)
         .navigationTitle("Live Positions")
-        .onAppear { start() }
+//        .onAppear { start() }
         .onChange(of: scenePhase) { _, phase in
             handleScenePhaseChange(phase)
         }
