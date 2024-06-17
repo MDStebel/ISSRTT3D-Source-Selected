@@ -19,9 +19,19 @@ final class PassesViewModel: ObservableObject {
     var isComputing = false
     var noradID: String = ""
     
-    func getPasses(for noradCode: String) {
+    private var lat: Double = 5
+    private var lon: Double = 5
+    
+    /// Get array of predicted passes
+    /// - Parameters:
+    ///   - noradCode: Norad code for satellite
+    ///   - latitude: User's latitude
+    ///   - longitude: User's longitude
+    func getPasses(for noradCode: String, latitude: Double, longitude: Double) {
         Task {
             isComputing.toggle()
+            lat = latitude
+            lon = longitude
             noradID = noradCode
             if let passes = await fetchData() {
                 predictedPasses = passes.passes
@@ -62,40 +72,20 @@ final class PassesViewModel: ObservableObject {
         let minObservationTime   = 300
         let numberOfDays         = 30
         let stationID            = noradID
-        
-        // Get user's coordinates
-        let coordinates = getUserCoordinates()
-        if let userLatitude = coordinates.latitude, let userLongitude = coordinates.longitude {
-            
-            // Create the API URL request from endpoint. If not succesful, then return
-            let URLrequestString = endpointForPassesAPI + "\(stationID)/\(userLatitude)/\(userLongitude)/\(altitude)/\(numberOfDays)/\(minObservationTime)/&apiKey=\(apiKey)"
-            guard let url = URL(string: URLrequestString) else {
-                return nil
-            }
-            do {
-                let (data, _) = try await URLSession.shared.data(from: url)
-                let decoder = JSONDecoder()
-                let apiData = try decoder.decode(Passes.self, from: data)
-                return apiData
-            } catch {
-                print("Error getting passes: \(error.localizedDescription)")
-                return nil
-            }
-        } else {
+
+        // Create the API URL request from endpoint. If not succesful, then return
+        let URLrequestString = endpointForPassesAPI + "\(stationID)/\(lat)/\(lon)/\(altitude)/\(numberOfDays)/\(minObservationTime)/&apiKey=\(apiKey)"
+        guard let url = URL(string: URLrequestString) else {
             return nil
         }
-    }
-    
-    /// Get user's coordinates
-    /// - Returns: A tuple containing the lat and lon.
-    private func getUserCoordinates() -> (latitude: Double?, longitude: Double?) {
-        let locationManager = CLLocationManager()
-        locationManager.requestWhenInUseAuthorization()
-        locationManager.startUpdatingLocation()
-        
-        let lat = 20.0 //locationManager.location?.coordinate.latitude
-        let lon = -81.0 //locationManager.location?.coordinate.longitude
-        
-        return (lat, lon)
+        do {
+            let (data, _) = try await URLSession.shared.data(from: url)
+            let decoder = JSONDecoder()
+            let apiData = try decoder.decode(Passes.self, from: data)
+            return apiData
+        } catch {
+            print("Error getting passes: \(error.localizedDescription)")
+            return nil
+        }
     }
 }
