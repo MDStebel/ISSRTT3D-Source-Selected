@@ -35,7 +35,7 @@ struct Provider: TimelineProvider {
                 let pass = apiData.passes[0]
                 let passStartDate = Date(timeIntervalSince1970: pass.startUTC)
                 let currentDate = Date()
-                for minuteOffset in 0 ..< 2 {
+                for minuteOffset in 0 ..< 5 {
                     let entryDate = Calendar.current.date(byAdding: .minute, value: minuteOffset, to: currentDate)!
                     let entry = NextPass(date: entryDate, passDate: passStartDate, startAzimuth: pass.startAz, startAzCompass: pass.startAzCompass, startElevation: pass.startEl, maxAzimuth: pass.maxAz, maxElevation: pass.maxEl, endAzimuth: pass.endAz, endElevation: pass.endEl)
                     entries.append(entry)
@@ -58,10 +58,8 @@ struct Provider: TimelineProvider {
         
         // Get user's coordinates
         let coordinates = getUserCoordinates()
-        if let userLatitude = coordinates.latitude, let userLongitude = coordinates.longitude {
-            
             // Create the API URL request from endpoint. If not succesful, then return
-            let URLrequestString = endpointForPassesAPI + "\(stationID)/\(userLatitude)/\(userLongitude)/\(altitude)/\(numberOfDays)/\(minObservationTime)/&apiKey=\(apiKey)"
+        let URLrequestString = endpointForPassesAPI + "\(stationID)/\(coordinates.latitude)/\(coordinates.longitude)/\(altitude)/\(numberOfDays)/\(minObservationTime)/&apiKey=\(apiKey)"
             guard let url = URL(string: URLrequestString) else {
                 return nil
             }
@@ -74,22 +72,15 @@ struct Provider: TimelineProvider {
                 print("Error getting passes: \(error.localizedDescription)")
                 return nil
             }
-        } else {
-            return nil
-        }
     }
     
-    /// Get user's coordinates
+    /// Get user's coordinates from the app group data store
     /// - Returns: A tuple containing the lat and lon.
-    private func getUserCoordinates() -> (latitude: Double?, longitude: Double?) {
-        let locationManager = CLLocationManager()
-        locationManager.requestWhenInUseAuthorization()
-        locationManager.startUpdatingLocation()
-        
-        let lat = locationManager.location?.coordinate.latitude
-        let lon = locationManager.location?.coordinate.longitude
-        
-        return (lat, lon)
+    private func getUserCoordinates() -> (latitude: Double, longitude: Double) {
+        let sharedDefaults = UserDefaults(suiteName: Globals.appSuiteName)
+        let latitude = sharedDefaults?.double(forKey: "latitude") ?? 0.0
+        let longitude = sharedDefaults?.double(forKey: "longitude") ?? 0.0
+        return (latitude, longitude)
     }
 }
 
@@ -270,7 +261,7 @@ struct InfoCardView: View {
             Rectangle()
                 .foregroundColor(.issrttWhite)
                 .cornerRadius(8)
-                .frame(width: .infinity, height: 55)
+                .frame(height: 55)
             VStack(alignment: .leading, spacing: 0) {
                 InfoRow(icon: "clock", label: tmLabel, value: date, spacing: spacing)
                 InfoRow(icon: "safari", label: azLabel, value: azi + Text(" ") + Text(entry.startAzCompass), spacing: spacing)
