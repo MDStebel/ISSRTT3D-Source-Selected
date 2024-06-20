@@ -38,14 +38,16 @@ struct PassDetailView: View {
         let ee = String(format: "%.1f%", pass.endEl) + Globals.degreeSign
         
         ZStack {
-            Color.cyan.opacity(0.6)
-                .ignoresSafeArea(edges: .all)
+            gradientBackground(with: [.issrttRed, .ISSRTT3DGrey])
             
             ScrollView {
-                
                 VStack {
                     
                     DetailSubheading(heading: "General")
+                    
+                    if pass.mag != RatingSystem.unknown.rawValue {
+                        passQualityView(for: pass.mag)
+                    }
                     
                     StatView(label: "Date", stat: dw + ", " + dm + " " + dd)
                     StatView(label: "T-Minus", stat: tm)
@@ -90,28 +92,39 @@ struct PassDetailView: View {
         return "\(diffInMinutes.formatted(.number)) mins"
     }
     
-    /// Helper function to fetch image acsynchronously
-    /// - Parameter url: The image URL
-    /// - Returns: Image data
-    private func loadImage(from url: URL) async throws -> Data {
-        let (data, _) = try await URLSession.shared.data(from: url)
-        return data
+    /// Return 1-4 stars in a view based on the magnitude of the pass
+    /// - Parameter pass: The pass
+    /// - Returns: A view consisting of an HStack of rating stars
+    private func passQualityView(for magnitude: Double) -> some View {
+        HStack(spacing: 4) {
+            Text("Quality:")
+                .font(.caption).fontWeight(.bold)
+                .opacity(1.0)
+                .minimumScaleFactor(0.6)
+                .lineLimit(1)
+            HStack(spacing: 2) {
+                ForEach(0 ..< 4) { star in
+                    Image(star < (getNumberOfStars(forMagnitude: magnitude) ?? 0) ? .icons8StarFilledWhite : .starUnfilled)
+                        .resizable()
+                        .aspectRatio(contentMode: .fit)
+                        .frame(width: 15)
+                }
+            }
+            Spacer()
+        }
+        .padding(EdgeInsets(top: 0, leading: 2, bottom: -4, trailing: 0))
     }
-    
-    /// Helper method to calculate the number of days an astronaut has been in space (today - launch date).
-    /// If there's an error in the data, this will detect it and return 0 days.
-    /// - Returns: Number of days since launch.
-    private func numberOfDaysInSpace(since launch: String) -> Int {
-        
-        let todaysDate = Date()
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = Globals.outputDateFormatStringShortForm
-        
-        if launch != "" {
-            let startDate = dateFormatter.date(from: launch)
-            return Int(Float(todaysDate.timeIntervalSince(startDate!)) / Float(Globals.numberOfSecondsInADay ))
+
+    /// Get the number of stars from the rating system enum
+    /// If no magnitude was returned by the API, return nil
+    /// - Parameters:
+    ///   - magnitude: pass magnitude
+    /// - Returns: optional Int
+    private func getNumberOfStars(forMagnitude magnitude: Double) -> Int? {
+        if magnitude != RatingSystem.unknown.rawValue {
+            return RatingSystem.numberOfRatingStars(for: magnitude)
         } else {
-            return 0
+            return nil
         }
     }
 }

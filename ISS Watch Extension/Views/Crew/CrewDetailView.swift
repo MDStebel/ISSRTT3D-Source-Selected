@@ -19,23 +19,20 @@ struct CrewDetailView: View {
     private let corner   = 15.0
     
     var body: some View {
-        
         ZStack {
-            Color.cyan.opacity(0.6)
-                .ignoresSafeArea(edges: .all)
+            gradientBackground(with: [.issrttRed, .ISSRTT3DGrey])
             
             ScrollView {
-                
                 ZStack {
                     Circle()
-                        .fill(Gradient(colors: [.blue, .green]))
-                        .padding(EdgeInsets(top: 0, leading: 8, bottom: 0, trailing: 8))
+                        .fill(Gradient(colors: [.ISSRTT3DRed.opacity(0.95), .blue.opacity(0.80), .white.opacity(0.25), ]))
+                        .padding(EdgeInsets(top: 0, leading: 20, bottom: 0, trailing: 20))
                     if let image {
                         image
                             .resizable()
                             .scaledToFit()
                             .clipShape(Circle())
-                            .padding(EdgeInsets(top: 15, leading: 15, bottom: 15, trailing: 15))
+                            .padding(EdgeInsets(top: 0, leading: 25, bottom: 0, trailing: 25))
                     } else {
                         ProgressView()
                             .scaleEffect(x: 2, y: 2, anchor: .center) // Scale the ProgressView

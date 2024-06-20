@@ -1,6 +1,5 @@
 //
 //  StyleExtensions.swift
-//  ISS Watch
 //
 //  Created by Michael Stebel on 9/5/21.
 //  Copyright © 2021-2024 ISS Real-Time Tracker. All rights reserved.
@@ -11,8 +10,8 @@ import SwiftUI
 
 /// Create new colors from ISSRTT3D theme colors and other colors
 extension Color {
-    
     static let hubbleColor        = Color(Theme.hubbleOrbitalColor)
+    static let issWhite           = Color(Theme.issrttWhite)
     static let ISSRTT3DBackground = Color(red: 0.2, green: 0.2, blue: 0.2, opacity: 0.75)
     static let ISSRTT3DGold       = Color(Theme.issrtt3dGoldCGColor!)
     static let ISSRTT3DGrey       = Color(Theme.usrGuide)
@@ -21,8 +20,21 @@ extension Color {
 }
 
 
+/// Create a blurred gradient background
+/// - Parameter colors: Array of colors to use
+/// - Returns: A view
+@ViewBuilder
+func gradientBackground(with colors: [Color]) -> some View {
+    LinearGradient(
+        gradient: Gradient(colors: colors),
+        startPoint: .top,
+        endPoint: .bottom
+    )
+    .blur(radius: 25)
+}
+
+
 extension Font {
-    
     static let ISSRTT3DFont       = Font.custom(Theme.nasa, size: 15.0)
 }
 

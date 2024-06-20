@@ -13,11 +13,11 @@ struct PassesView: View {
     // Get the current phase of the scene
     @Environment(\.scenePhase) private var scenePhase
     
+    @State private var currentIndex: Int     = 0
+    @State private var displayedText         = ""
+    @State private var isAnimating           = false
     @State private var locationVm            = LocationViewModel()
     @State private var vm                    = PassesViewModel()
-    @State private var isAnimating           = false
-    @State private var displayedText         = ""
-    @State private var currentIndex: Int     = 0
 
     var station: StationsAndSatellites
     
@@ -118,6 +118,9 @@ struct PassesView: View {
         .padding(.vertical, 1)
     }
     
+    /// Return 1-4 stars in a view based on the magnitude of the pass
+    /// - Parameter pass: The pass
+    /// - Returns: A view consisting of an HStack of stars
     private func passQualityView(for pass: Passes.Pass) -> some View {
         HStack(spacing: 3) {
             Text("Pass quality:")
@@ -149,5 +152,5 @@ struct PassesView: View {
 
 
 #Preview {
-    PassesView(station: .tss)
+    PassesView(station: .iss)
 }
