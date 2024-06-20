@@ -11,9 +11,10 @@ import Combine
 import CoreLocation
 
 final class LocationViewModel: ObservableObject {
-    @Published var latitude: Double = 0.0
-    @Published var longitude: Double = 0.0
+    
     @Published var authorizationStatus: CLAuthorizationStatus
+    @Published var latitude: Double  = 0.0
+    @Published var longitude: Double = 0.0
     
     var locationManager = LocationManager()
     private var cancellables = Set<AnyCancellable>()

@@ -261,15 +261,14 @@ extension PositionViewModel {
             .receive(on: RunLoop.main)
             .sink(receiveCompletion: { [weak self] completion in
                 if case .failure(let error) = completion {
-                    self?.wasError      = true
+                    self?.wasError = true
                     self?.errorForAlert = ErrorCodes(message: "\(error.localizedDescription)")
                 } else {
-                    self?.wasError      = false
+                    self?.wasError = false
                 }
             }, receiveValue: { position in
                 getCoordinates(from: position)
             })
             .store(in: &cancellables)
-        
     }
 }

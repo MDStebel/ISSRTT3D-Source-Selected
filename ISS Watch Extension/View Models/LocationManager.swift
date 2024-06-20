@@ -11,7 +11,9 @@ import CoreLocation
 import Combine
 
 final class LocationManager: NSObject, ObservableObject, CLLocationManagerDelegate {
+    
     private let locationManager = CLLocationManager()
+    
     @Published var location: CLLocation? = nil
     @Published var authorizationStatus: CLAuthorizationStatus
 

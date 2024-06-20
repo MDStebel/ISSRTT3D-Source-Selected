@@ -15,9 +15,9 @@ final class PassesViewModel: ObservableObject {
     
     // MARK: Published properties
     
-    var predictedPasses = [Passes.Pass]()
-    var isComputing = false
+    var isComputing     = false
     var noradID: String = ""
+    var predictedPasses = [Passes.Pass]()
     
     private var lat: Double = 5
     private var lon: Double = 5
@@ -45,21 +45,11 @@ final class PassesViewModel: ObservableObject {
     /// - Parameters:
     ///   - magnitude: pass magnitude
     /// - Returns: optional Int
-    func getNumberOfStars(forMagnitude magnitude: Double) -> Int? {
-        
-        struct Constants {
-            static let noRatingStar      = #imageLiteral(resourceName: "star-unfilled")
-            static let ratingStar        = #imageLiteral(resourceName: "star")
-            static let unknownRatingStar = #imageLiteral(resourceName: "unknownRatingStar")
-        }
-        
+    func getNumberOfStars(forMagnitude magnitude: Double) -> Int? {        
         if magnitude != RatingSystem.unknown.rawValue {
             return RatingSystem.numberOfRatingStars(for: magnitude)
         } else {
             return nil
-            //            for star in 0..<totalStars {
-            //                cell.ratingStarView[star].image = Constants.unknownRatingStar
-            //                cell.ratingStarView[star].alpha = 0.15
         }
     }
     
