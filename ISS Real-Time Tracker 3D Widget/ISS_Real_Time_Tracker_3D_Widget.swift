@@ -337,7 +337,7 @@ private func passQualityView(for magnitude: Double) -> some View {
             .lineLimit(1)
         HStack(spacing: 2) {
             ForEach(0..<4) { star in
-                Image(star < (getNumberOfStars(forMagnitude: magnitude) ?? 0) ? .icons8StarFilledWhite : .starUnfilled)
+                Image(star < (getNumberOfStars(forMagnitude: magnitude) ?? 0) ? .icons8StarFilledWhite : .starUnfilledForWidgets)
                     .resizable()
                     .aspectRatio(contentMode: .fit)
                     .frame(width: 15)
