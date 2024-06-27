@@ -126,7 +126,6 @@ struct CrewDetailView: View {
     }
 }
 
-
 #Preview {
     CrewDetailView(
         crewMember: Crews.People(

@@ -37,7 +37,6 @@ struct StationCrewView: View {
     }
 }
 
-
 #Preview {
     StationCrewView(
         crew: [

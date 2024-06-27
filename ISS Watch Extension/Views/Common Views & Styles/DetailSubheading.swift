@@ -8,7 +8,6 @@
 
 import SwiftUI
 
-
 /// Displays heading for detail view
 struct DetailSubheading: View {
     
@@ -23,7 +22,6 @@ struct DetailSubheading: View {
             .padding(EdgeInsets(top: 3, leading: 2, bottom: 1, trailing: 2))
     }
 }
-
 
 #Preview {
     DetailSubheading(heading: "Stuff")

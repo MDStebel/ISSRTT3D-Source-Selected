@@ -110,7 +110,6 @@ struct GlobeView: View {
         }
     }
 }
-
     
 struct GlobeView_Previews: PreviewProvider {
     static var previews: some View {

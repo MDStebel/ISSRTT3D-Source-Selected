@@ -18,7 +18,7 @@ struct PassesView: View {
     @State private var isAnimating           = false
     @State private var locationVm            = LocationViewModel()
     @State private var vm                    = PassesViewModel()
-
+    
     var station: StationsAndSatellites
     
     private var sidebarColor: Color {
@@ -42,9 +42,10 @@ struct PassesView: View {
                 navigationContent
             }
         }
-        .onAppear {
+        .onAppear {         // When view appears, get user's location and save it in the app group
             if locationVm.authorizationStatus == .authorizedWhenInUse || locationVm.authorizationStatus == .authorizedAlways {
-            vm.getPasses(for: station.satelliteNORADCode, latitude: locationVm.latitude, longitude: locationVm.longitude)
+                vm.getPasses(for: station.satelliteNORADCode, latitude: locationVm.latitude, longitude: locationVm.longitude)
+                saveLocation(latitude: locationVm.latitude, longitude: locationVm.longitude)
             }
         }
     }
@@ -71,7 +72,7 @@ struct PassesView: View {
                     .onAppear {
                         displayedText = ""
                         currentIndex = 0
-                }
+                    }
             }
             ProgressView()
                 .scaleEffect(x: 2, y: 2, anchor: .center) // Scale the ProgressView
@@ -82,7 +83,7 @@ struct PassesView: View {
         NavigationStack {
             List {
                 ForEach(vm.predictedPasses, id: \.self) { pass in
-                    NavigationLink(destination: PassDetailView(pass: pass)) {
+                    NavigationLink(destination: PassDetailView(pass: pass, station: station)) {
                         passRow(for: pass)
                     }
                     .cornerRadius(10.0)
@@ -130,7 +131,7 @@ struct PassesView: View {
                 .lineLimit(1)
             HStack(spacing: 2) {
                 ForEach(0..<4) { star in
-                    Image(star < (vm.getNumberOfStars(forMagnitude: pass.mag) ?? 0) ? .icons8StarFilled : .starUnfilled)
+                    Image(star < (vm.getNumberOfStars(forMagnitude: pass.mag) ?? 0) ? .icons8StarFilled : .starUnfilledWatch)
                         .resizable()
                         .aspectRatio(contentMode: .fit)
                         .frame(width: 15)
@@ -148,8 +149,17 @@ struct PassesView: View {
                 .lineLimit(1)
         }
     }
+    
+    /// Save location in app group user defaults data base
+    /// - Parameters:
+    ///   - lat: The latitude as a double
+    ///   - lon: The longitude as a double
+    private func saveLocation(latitude lat: Double, longitude lon: Double) {
+        let sharedDefaults = UserDefaults(suiteName: Globals.appSuiteName)
+        sharedDefaults?.set(lat, forKey: "latitude")
+        sharedDefaults?.set(lon, forKey: "longitude")
+    }
 }
-
 
 #Preview {
     PassesView(station: .iss)

@@ -52,7 +52,6 @@ struct CrewRowView: View {
     }
 }
 
-
 #Preview {
     CrewRowView(country: "USA", name: "Joe Astro", station: "Tiangong", title: "Flight Engineer", colorKey: .ISSRTT3DRed)
 }

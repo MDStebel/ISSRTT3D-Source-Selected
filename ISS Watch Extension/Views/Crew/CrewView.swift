@@ -49,10 +49,6 @@ struct CrewView: View {
             .navigationTitle("Crews").navigationBarTitleDisplayMode(.inline)
         }
         .ignoresSafeArea(edges: .bottom)
-
-//        .onAppear() {
-//            viewModel.start()
-//        }
         
         // Respond to lifecycle phases
         .onChange(of: scenePhase) { _, phase in
@@ -72,7 +68,6 @@ struct CrewView: View {
         }
     }
 }
-
 
 #Preview {
     CrewView()

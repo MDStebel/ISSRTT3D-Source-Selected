@@ -8,7 +8,6 @@
 
 import SwiftUI
 
-
 /// Custom view for a line of stats with a label and the stat itself on a single line
 struct StatView: View {
 
@@ -30,7 +29,6 @@ struct StatView: View {
         .padding(EdgeInsets(top: 0, leading: 2, bottom: 0, trailing: 2))
     }
 }
-
 
 #Preview {
     StatView(label: "Name", stat: "Tom Jones")

@@ -7,7 +7,6 @@
 
 import SwiftUI
 
-
 /// Create new colors from ISSRTT3D theme colors and other colors
 extension Color {
     static let hubbleColor        = Color(Theme.hubbleOrbitalColor)
@@ -18,7 +17,6 @@ extension Color {
     static let ISSRTT3DRed        = Color(Theme.tint)
     static let subsolorColor      = Color.yellow
 }
-
 
 /// Create a blurred gradient background
 /// - Parameter colors: Array of colors to use
@@ -33,11 +31,9 @@ func gradientBackground(with colors: [Color]) -> some View {
     .blur(radius: 25)
 }
 
-
 extension Font {
     static let ISSRTT3DFont       = Font.custom(Theme.nasa, size: 15.0)
 }
-
 
 extension View {
     
@@ -48,7 +44,6 @@ extension View {
         self.modifier(smallButtonModifier())
     }
 }
-
 
 struct smallButtonModifier: ViewModifier {
     
@@ -67,14 +62,12 @@ struct smallButtonModifier: ViewModifier {
     }
 }
 
-
 extension View {
     
     var withListButtonModifier: some View {
         self.modifier(listButtonModifier())
     }
 }
-
 
 struct listButtonModifier: ViewModifier {
     
@@ -88,7 +81,6 @@ struct listButtonModifier: ViewModifier {
     }
 }
 
-
 extension View {
     
     /// Custom modifier for text
@@ -98,7 +90,6 @@ extension View {
         self.modifier(MDSDataLabelModifier())
     }
 }
-
 
 struct MDSDataLabelModifier: ViewModifier {
     
@@ -114,7 +105,6 @@ struct MDSDataLabelModifier: ViewModifier {
     }
 }
 
-
 extension View {
     
     /// Custom modifier for coordinates text
@@ -124,7 +114,6 @@ extension View {
         self.modifier(CoordinatesTextModifier())
     }
 }
-
 
 struct CoordinatesTextModifier: ViewModifier {
     

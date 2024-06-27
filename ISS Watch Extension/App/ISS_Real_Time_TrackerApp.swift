@@ -17,7 +17,5 @@ struct ISS_Real_Time_TrackerApp: App {
         }
         
         WKNotificationScene(controller: NotificationController.self, category: "myCategory")
-        
     }
-    
 }

@@ -11,6 +11,9 @@ import SwiftUI
 struct PassDetailView: View {
     
     var pass: Passes.Pass
+    var station: StationsAndSatellites
+    
+    @StateObject private var vm = PassesViewModel()
     
     var body: some View {
         
@@ -45,7 +48,7 @@ struct PassDetailView: View {
                     
                     DetailSubheading(heading: "General")
                     
-                    if pass.mag != RatingSystem.unknown.rawValue {
+                    if pass.mag != RatingSystem.unknown.rawValue && station == .iss  {
                         passQualityView(for: pass.mag)
                     }
                     
@@ -104,7 +107,7 @@ struct PassDetailView: View {
                 .lineLimit(1)
             HStack(spacing: 2) {
                 ForEach(0 ..< 4) { star in
-                    Image(star < (getNumberOfStars(forMagnitude: magnitude) ?? 0) ? .icons8StarFilledWhite : .starUnfilled)
+                    Image(star < (vm.getNumberOfStars(forMagnitude: magnitude) ?? 0) ? .icons8StarFilledWhite : .starUnfilledWatch)
                         .resizable()
                         .aspectRatio(contentMode: .fit)
                         .frame(width: 15)
@@ -114,22 +117,8 @@ struct PassDetailView: View {
         }
         .padding(EdgeInsets(top: 0, leading: 2, bottom: -4, trailing: 0))
     }
-
-    /// Get the number of stars from the rating system enum
-    /// If no magnitude was returned by the API, return nil
-    /// - Parameters:
-    ///   - magnitude: pass magnitude
-    /// - Returns: optional Int
-    private func getNumberOfStars(forMagnitude magnitude: Double) -> Int? {
-        if magnitude != RatingSystem.unknown.rawValue {
-            return RatingSystem.numberOfRatingStars(for: magnitude)
-        } else {
-            return nil
-        }
-    }
 }
 
-
 #Preview {
-    PassDetailView(pass: Passes.Pass(startAz: 270, startAzCompass: "W", startEl: 20, startUTC: 1720659580.0, maxAz: 355, maxAzCompass: "NNE", maxEl: 50, maxUTC: 1720659585.0, endAz: 10, endAzCompass: "NNE", endEl: 25, endUTC: 1720659590.0, mag: -2.1, duration: 300))
+    PassDetailView(pass: Passes.Pass(startAz: 270, startAzCompass: "W", startEl: 20, startUTC: 1720659580.0, maxAz: 355, maxAzCompass: "NNE", maxEl: 50, maxUTC: 1720659585.0, endAz: 10, endAzCompass: "NNE", endEl: 25, endUTC: 1720659590.0, mag: -2.1, duration: 300), station: .iss)
 }
