@@ -69,10 +69,8 @@ extension EarthGlobe {
     ///   - lat: The current latitude as a decimal value
     ///   - lon: The current longitude as a decimal value
     public func addISSViewingCircle(lat: Float, lon: Float) {
-        
         let viewingCircle = EarthGlobeMarkers(for: .iss, using: Globals.issViewingCircleGraphic, lat: lat, lon: lon, isInOrbit: false)
         self.addMarker(viewingCircle, shouldPulse: false)
-        
     }
     
     /// Adds the satellite's viewing circle marker at the precise latitude and longitude to our globe scene
@@ -80,10 +78,8 @@ extension EarthGlobe {
     ///   - lat: The current latitude as a decimal value
     ///   - lon: The current longitude as a decimal value
     public func addTSSViewingCircle(lat: Float, lon: Float) {
-        
         let viewingCircle = EarthGlobeMarkers(for: .tss, using: Globals.tssViewingCircleGraphic, lat: lat, lon: lon, isInOrbit: false)
         self.addMarker(viewingCircle, shouldPulse: false)
-        
     }
     
     /// Adds the satellite's viewing circle marker at the precise latitude and longitude to our globe scene
@@ -94,7 +90,6 @@ extension EarthGlobe {
         
         let viewingCircle = EarthGlobeMarkers(for: .hst, using: Globals.hubbleViewingCircleGraphic, lat: lat, lon: lon, isInOrbit: false)
         self.addMarker(viewingCircle, shouldPulse: false)
-        
     }
     
     /// Create an orbital track around the globe at the station's precise orbital inclination and location, heading, and altitude
@@ -127,7 +122,7 @@ extension EarthGlobe {
         
         orbitTrackNode.transform = compositeRotationMatrix
     }
-
+    
     private func createOrbitTrack(for station: StationsAndSatellites) -> SCNNode? {
         let orbitTrack = SCNTorus()
         
@@ -156,13 +151,13 @@ extension EarthGlobe {
         
         return SCNNode(geometry: orbitTrack)
     }
-
+    
     private func adjustCoordinates(lat: Float, lon: Float) -> (lat: Float, lon: Float) {
         let adjustedLat = lat + Float(Globals.oneEightyDegrees)
         let adjustedLon = lon - Float(Globals.oneEightyDegrees)
         return (lat: adjustedLat, lon: adjustedLon)
     }
-
+    
     private func getOrbitInclination(for station: StationsAndSatellites) -> Float {
         switch station {
         case .iss:
@@ -175,7 +170,7 @@ extension EarthGlobe {
             return 0.0
         }
     }
-
+    
     private func getMultiplier(for station: StationsAndSatellites) -> Float {
         switch station {
         case .iss:
@@ -188,11 +183,11 @@ extension EarthGlobe {
             return 0.0
         }
     }
-
+    
     private func calculateExponent(absLat: Float, orbitInclination: Float, multiplier: Float) -> Float {
         return .pi / multiplier + absLat * Float(Globals.degreesToRadians) / orbitInclination
     }
-
+    
     private func calculateOrbitalCorrectionForInclination(for station: StationsAndSatellites, absLat: Float, exponent: Float) -> Float {
         switch station {
         case .iss:
@@ -205,7 +200,7 @@ extension EarthGlobe {
             return 0.0
         }
     }
-
+    
     private func calculateOrbitalCorrection(absLat: Float, exponent: Float, thresholds: [Float], powers: [Float]) -> Float {
         for (index, threshold) in thresholds.enumerated() {
             if absLat <= threshold {
@@ -214,7 +209,7 @@ extension EarthGlobe {
         }
         return pow(exponent, powers.last ?? 1.0)
     }
-
+    
     private func createCompositeRotationMatrix(orbitInclinationInRadiansCorrected: Float, orbitalCorrectionForLon: Float, orbitalCorrectionForLat: Float) -> SCNMatrix4 {
         var rotationMatrix1 = SCNMatrix4Identity
         var rotationMatrix2 = SCNMatrix4Identity
@@ -229,12 +224,11 @@ extension EarthGlobe {
     }
     
     
-//#if !os(watchOS)
+    //#if !os(watchOS)
     
     /// Start/stop autospinning the globe
     /// - Parameter run: Start if true. Stop if false.
     public func autoSpinGlobeRun(run: Bool) {
-        
         if run && !globe.hasActions {
             let spinRotation = SCNAction.rotate(by: CGFloat(Globals.twoPi), around: SCNVector3(0, 1, 0), duration: globeDefaultRotationSpeedInSeconds)
             let spinAction   = SCNAction.repeatForever(spinRotation)
@@ -242,10 +236,9 @@ extension EarthGlobe {
         } else if !run && globe.hasActions {
             globe.removeAllActions()
         }
-        
     }
     
-//#endif
+    //#endif
     
     
     /// Add a marker to the globe and make it pulse
@@ -264,20 +257,16 @@ extension EarthGlobe {
     
     /// Remove the last child node in the nodes array
     public func removeLastNode() {
-        
         if let nodeToRemove = globe.childNodes.last {
             nodeToRemove.removeFromParentNode()
         }
-        
     }
     
     
     /// Get the number of child nodes in the nodes array
     /// - Returns: The number of child nodes in the scene heirarchy as an Int
     public func getNumberOfChildNodes() -> Int {
-        
         return globe.childNodes.count
-        
     }
     
     
@@ -286,7 +275,6 @@ extension EarthGlobe {
     ///   - lat: Subsolor point latitude in degrees
     ///   - lon: Subsolor point longitude in degrees
     public func setUpTheSun(lat: Float, lon: Float) {
-        
         let adjustedLon        = lon + Globals.ninetyDegrees
         let adjustedLat        = lat
         let distanceToTheSun   = sunDistance
@@ -300,7 +288,6 @@ extension EarthGlobe {
         sun.light!.intensity   = sunlightIntensity      // Sunlight intensity in lumens
         
         globe.addChildNode(sun)
-        
     }
     
     
@@ -311,7 +298,6 @@ extension EarthGlobe {
     ///   - alt: altitude as a decimal Float
     /// - Returns: Position as a SCNVector3
     static func transformLatLonCoordinatesToXYZ(lat: Float, lon: Float, alt: Float) -> SCNVector3 {
-        
         let cosLat    = cosf(lat * Float(Globals.degreesToRadians))
         let sinLat    = sinf(lat * Float(Globals.degreesToRadians))
         let cosLon    = cosf(lon * Float(Globals.degreesToRadians))
@@ -328,7 +314,6 @@ extension EarthGlobe {
         let position  = SCNVector3(x: sceneKitX, y: sceneKitY, z: sceneKitZ )
         
         return position
-        
     }
     
     
@@ -341,9 +326,6 @@ extension EarthGlobe {
     ///   - z: Z
     /// - Returns: A new 4-matrix
     func SCNMatrix4RotateF(_ src: SCNMatrix4, _ angle : Float, _ x : Float, _ y : Float, _ z : Float) -> SCNMatrix4 {
-        
         return SCNMatrix4Rotate(src, angle, x, y, z)
-        
     }
-    
 }

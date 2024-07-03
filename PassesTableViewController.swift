@@ -483,7 +483,7 @@ extension PassesTableViewController {
 
     private func configureRatingStars(for cell: PassesTableViewCell, with magnitude: Double) {
         let totalStars = RatingSystem.allCases.count - 2
-        if magnitude != RatingSystem.unknown.rawValue {
+        if magnitude != RatingSystem.unknown.rawValue && station == .iss {      // Only show ratings for satellites returning a magnitude and only for ISS
             let rating = RatingSystem.numberOfRatingStars(for: magnitude)
             for star in 0..<totalStars {
                 cell.ratingStarView[star].image = star < rating ? Constants.ratingStar : Constants.noRatingStar
@@ -584,7 +584,7 @@ extension PassesTableViewController {
         saveLocation(latitude: userLatitude, longitude: userLongitude)
     }
     
-    /// Save location in app group
+    /// Save location in app group user defaults data base
     /// - Parameters:
     ///   - lat: The latitude as a double
     ///   - lon: The longitude as a double

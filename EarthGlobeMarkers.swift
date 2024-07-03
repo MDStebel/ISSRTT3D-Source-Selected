@@ -33,7 +33,6 @@ final class EarthGlobeMarkers {
     ///   - lon: Longitude of the marker's position on Earth as a Float
     ///   - isInOrbit: Flag that indicates if the marker is above Earth or on its surface as a Bool
     init(for satellite: StationsAndSatellites, using image: String, lat: Float, lon: Float, isInOrbit: Bool) {
-        
         self.image             = image
         let adjustedLon        = lon + Globals.ninetyDegrees                                            // Textures are centered on 0,0, so adjust by 90 degrees
         
@@ -66,7 +65,6 @@ final class EarthGlobeMarkers {
                 widthAndHeight = Globals.issMarkerWidth
                 altitude       = Globals.issAltitudeFactor
             }
-            
         }
         
         // Initialize and configure the marker node
@@ -89,7 +87,6 @@ final class EarthGlobeMarkers {
         
         // Set the marker's orientation using pitch, roll, and yaw
         node.eulerAngles                                 = SCNVector3(x: pitch, y: yaw, z: roll )
-        
     }
     
 #if !os(watchOS)
