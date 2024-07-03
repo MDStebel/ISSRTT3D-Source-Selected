@@ -10,7 +10,7 @@ import Foundation
 
 /// Pass rating model based on magnitude of the object passing
 enum RatingSystem: Double, CaseIterable {
-    case unknown = 100000.0     // The API returns 100000 if there is no magnitude data available
+    case unknown = 100000.0     // The API returns 100000 if there is no magnitude data available for a satellite
     case poor    = 100.0
     case fair    = -0.5
     case good    = -1.0

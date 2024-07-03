@@ -16,7 +16,7 @@ struct CrewDetailView: View {
     
     @State private var image: Image? = nil    
     
-    private let corner   = 15.0
+    private let corner = 15.0
     
     var body: some View {
         ZStack {

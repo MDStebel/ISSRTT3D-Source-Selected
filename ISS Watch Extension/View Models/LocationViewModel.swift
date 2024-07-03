@@ -6,9 +6,9 @@
 //  Copyright © 2024 ISS Real-Time Tracker. All rights reserved.
 //
 
-import Foundation
 import Combine
 import CoreLocation
+import Foundation
 
 final class LocationViewModel: ObservableObject {
     

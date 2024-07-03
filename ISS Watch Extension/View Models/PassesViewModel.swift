@@ -7,7 +7,6 @@
 //
 
 import CoreLocation
-import Foundation
 import SwiftUI
 
 @Observable

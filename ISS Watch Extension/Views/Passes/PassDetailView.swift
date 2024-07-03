@@ -119,6 +119,7 @@ struct PassDetailView: View {
     }
 }
 
+
 #Preview {
     PassDetailView(pass: Passes.Pass(startAz: 270, startAzCompass: "W", startEl: 20, startUTC: 1720659580.0, maxAz: 355, maxAzCompass: "NNE", maxEl: 50, maxUTC: 1720659585.0, endAz: 10, endAzCompass: "NNE", endEl: 25, endUTC: 1720659590.0, mag: -2.1, duration: 300), station: .iss)
 }
