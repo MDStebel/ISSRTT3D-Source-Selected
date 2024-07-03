@@ -10,7 +10,7 @@ import UIKit
 
 // MARK: - Space stations and/or other satellites that we can get pass predictions for
 
-/// Model represents space stations, or any Earth-orbiting satellite, and their corresponding names and images
+/// Model that represents current space stations, or any Earth-orbiting satellite, and their corresponding names, NORAD codes, and images
 public enum StationsAndSatellites: String, CaseIterable {
     
     case iss
