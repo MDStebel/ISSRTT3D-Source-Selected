@@ -10,7 +10,7 @@ import SwiftUI
 /// Create new colors from ISSRTT3D theme colors and other colors
 extension Color {
     static let hubbleColor        = Color(Theme.hubbleOrbitalColor)
-    static let issWhite           = Color(Theme.issrttWhite)
+    static let issWhite           = Color(Theme.issrtt3dWhite)
     static let ISSRTT3DBackground = Color(red: 0.2, green: 0.2, blue: 0.2, opacity: 0.75)
     static let ISSRTT3DGold       = Color(Theme.issrtt3dGoldCGColor!)
     static let ISSRTT3DGrey       = Color(Theme.usrGuide)
