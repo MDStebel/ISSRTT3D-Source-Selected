@@ -29,7 +29,6 @@ extension EarthGlobe {
         
     }
     
-    
     /// Adds the TSS position marker at the precise latitude and longitude to our globe scene
     /// - Parameters:
     ///   - lat: The current latitude as a decimal value
@@ -111,8 +110,8 @@ extension EarthGlobe {
         let orbitalCorrectionForLat = adjustedCoordinates.lat * Float(Globals.degreesToRadians)
         let absLat = abs(lat)
         
-        let orbitInclination = getOrbitInclination(for: station)
-        let multiplier = getMultiplier(for: station)
+        let orbitInclination = station.orbitalInclinationInRadians
+        let multiplier = station.multiplier
         let exponent = calculateExponent(absLat: absLat, orbitInclination: orbitInclination, multiplier: multiplier)
         
         let orbitalCorrectionForInclination = calculateOrbitalCorrectionForInclination(for: station, absLat: absLat, exponent: exponent)
@@ -148,7 +147,6 @@ extension EarthGlobe {
         case .none:
             return nil
         }
-        
         return SCNNode(geometry: orbitTrack)
     }
     
@@ -156,32 +154,6 @@ extension EarthGlobe {
         let adjustedLat = lat + Float(Globals.oneEightyDegrees)
         let adjustedLon = lon - Float(Globals.oneEightyDegrees)
         return (lat: adjustedLat, lon: adjustedLon)
-    }
-    
-    private func getOrbitInclination(for station: StationsAndSatellites) -> Float {
-        switch station {
-        case .iss:
-            return Globals.issOrbitInclinationInRadians
-        case .tss:
-            return Globals.tssOrbitInclinationInRadians
-        case .hst:
-            return Globals.hubbleOrbitInclinationInRadians
-        case .none:
-            return 0.0
-        }
-    }
-    
-    private func getMultiplier(for station: StationsAndSatellites) -> Float {
-        switch station {
-        case .iss:
-            return 2.5
-        case .tss:
-            return 2.8
-        case .hst:
-            return 3.1
-        case .none:
-            return 0.0
-        }
     }
     
     private func calculateExponent(absLat: Float, orbitInclination: Float, multiplier: Float) -> Float {
@@ -223,7 +195,6 @@ extension EarthGlobe {
         return SCNMatrix4Mult(rotationMatrix1, firstProduct)
     }
     
-    
     //#if !os(watchOS)
     
     /// Start/stop autospinning the globe
@@ -240,7 +211,6 @@ extension EarthGlobe {
     
     //#endif
     
-    
     /// Add a marker to the globe and make it pulse
     public func addMarker(_ marker: EarthGlobeMarkers, shouldPulse: Bool) {
         
@@ -254,7 +224,6 @@ extension EarthGlobe {
         
     }
     
-    
     /// Remove the last child node in the nodes array
     public func removeLastNode() {
         if let nodeToRemove = globe.childNodes.last {
@@ -262,13 +231,11 @@ extension EarthGlobe {
         }
     }
     
-    
     /// Get the number of child nodes in the nodes array
     /// - Returns: The number of child nodes in the scene heirarchy as an Int
     public func getNumberOfChildNodes() -> Int {
         return globe.childNodes.count
     }
-    
     
     /// Set up the Sun
     /// - Parameters:
@@ -290,10 +257,9 @@ extension EarthGlobe {
         globe.addChildNode(sun)
     }
     
-    
     /// Convert map coordinates from lat, lon, altitude to SceneKit x, y, z coordinates
     /// - Parameters:
-    ///   - lat: Latitude as a decimal Float
+    ///   - lat: Latitude as a decimal Floa+t
     ///   - lon: Longitude as a decimal Float
     ///   - alt: altitude as a decimal Float
     /// - Returns: Position as a SCNVector3
@@ -315,7 +281,6 @@ extension EarthGlobe {
         
         return position
     }
-    
     
     /// Rotate a 4-vector
     /// - Parameters:

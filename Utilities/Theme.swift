@@ -22,7 +22,7 @@ struct Theme {
     static let issOrbitalColor                              = tint
     static let issrtt3dGoldCGColor                          = UIColor(named: tssOrbitalColor)?.cgColor
     static let issrtt3dRedCGColor                           = UIColor(named: tint)?.cgColor
-    static let issrttWhite                                  = "ISSRTT-White"
+    static let issrtt3dWhite                                  = "ISSRTT-White"
     static let lblBgd                                       = "Label Background"
     static let nasa                                         = "nasalization"
     static let navigationBarTitleFontSizeForIPad: CGFloat   = 24

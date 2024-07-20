@@ -20,54 +20,79 @@ public enum StationsAndSatellites: String, CaseIterable {
     
     var satelliteNORADCode: String {
         switch self {
-        case .iss  :
+        case .iss:
             return "25544"
-        case .tss  :
+        case .tss:
             return "48274"
-        case .hst  :
+        case .hst:
             return "20580"
-        case .none :
+        case .none:
             return "25544"
         }
     }
     
     var satelliteName: String {
         switch self {
-        case .iss  :
+        case .iss:
             return "ISS"
-        case .tss  :
+        case .tss:
             return "Tiangong"
-        case .hst  :
+        case .hst:
             return "Hubble"
-        case .none :
+        case .none:
             return "ISS"
+        }
+    }
+    
+    var orbitalInclinationInRadians: Float {
+        switch self {
+        case .iss:
+            return Globals.issOrbitInclinationInRadians
+        case .tss:
+            return Globals.tssOrbitInclinationInRadians
+        case .hst:
+            return Globals.hubbleOrbitInclinationInRadians
+        default:
+            return Globals.issOrbitInclinationInRadians
+        }
+    }
+    
+    var multiplier: Float {
+        switch self {
+        case .iss:
+            return 2.5
+        case .tss:
+            return 2.8
+        case .hst:
+            return 3.1
+        case .none:
+            return 0.0
         }
     }
     
     var satelliteImage: UIImage? {
         switch self {
-        case .iss :
+        case .iss:
             return UIImage(named: Globals.issIconFor3DGlobeView)!
-        case .tss :
+        case .tss:
             return UIImage(named: Globals.tssIconFor3DGlobeView)!
-        case .hst :
+        case .hst:
             return UIImage(named: Globals.hubbleIconFor3DGlobeView)!
-        case .none :
+        case .none:
             return UIImage(named: Globals.issIconFor3DGlobeView)!
         }
     }
     
     var satelliteImageSmall: UIImage? {
         switch self {
-        case .iss :
+        case .iss:
             return UIImage(named: Globals.issIconForMapView)!
-        case .tss :
+        case .tss:
             return UIImage(named: Globals.tssIconForMapView)!
-        case .hst :
+        case .hst:
             return UIImage(named: Globals.hubbleIconForMapView)!
-        case .none :
+        case .none:
             return UIImage(named: Globals.issIconForMapView)!
         }
     }
-    
 }

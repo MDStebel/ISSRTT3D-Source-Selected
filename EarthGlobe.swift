@@ -68,7 +68,7 @@ final class EarthGlobe: ObservableObject {
 #endif
         earthMaterial.setValue(emission, forKey: "emissionTexture")
         
-        /// OpenGL fragment shader modifier (lighting map) in C++ code that brings forth our emitter texture
+        /// Metal/OpenGL fragment shader modifier (lighting map) in C++ code that brings forth our emitter texture
         let shaderModifier             = """
                                          uniform sampler2D emissionTexture;
                                          vec3 light = _lightingContribution.diffuse;
@@ -122,7 +122,6 @@ final class EarthGlobe: ObservableObject {
         
     }
     
-    
 #if !os(watchOS)
     
     /// Set up our scene
@@ -151,7 +150,6 @@ final class EarthGlobe: ObservableObject {
     
 #endif
     
-    
     /// Set up ambient lighting, camera position, FOV, etc.
     private func completeTheSetup() {
         
@@ -170,7 +168,5 @@ final class EarthGlobe: ObservableObject {
         cameraNode.camera          = camera
         
         scene.rootNode.addChildNode(cameraNode)
-        
     }
-    
 }

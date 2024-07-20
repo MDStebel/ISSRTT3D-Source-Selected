@@ -20,5 +20,4 @@ extension String {
         return String(self.dropFirst(prefix.count))
         
     }
-    
 }

@@ -37,4 +37,3 @@ protocol AlertHandler {
     func alert(for title: String, message messageToDisplay: String)
     
 }
-

@@ -52,16 +52,16 @@ final class EarthGlobeMarkers {
         } else {                                                                                        // Otherwise, it's a satellite, so which one is it?
 
             switch satellite {
-            case .iss :
+            case .iss:
                 widthAndHeight = Globals.issMarkerWidth
                 altitude       = Globals.issAltitudeFactor
-            case .tss :
+            case .tss:
                 widthAndHeight = Globals.tssMarkerWidth
                 altitude       = Globals.tssAltitudeFactor
             case .hst:
                 widthAndHeight = Globals.hubbleMarkerWidth
                 altitude       = Globals.hubbleAltitudeFactor
-            case .none :
+            case .none:
                 widthAndHeight = Globals.issMarkerWidth
                 altitude       = Globals.issAltitudeFactor
             }

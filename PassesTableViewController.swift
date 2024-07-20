@@ -483,7 +483,7 @@ extension PassesTableViewController {
 
     private func configureRatingStars(for cell: PassesTableViewCell, with magnitude: Double) {
         let totalStars = RatingSystem.allCases.count - 2
-        if magnitude != RatingSystem.unknown.rawValue && station == .iss {      // Only show ratings for satellites returning a magnitude and only for ISS
+        if magnitude != RatingSystem.unknown.rawValue && station == .iss {      // Only show ratings for satellites returning a magnitude and only for ISS at this time
             let rating = RatingSystem.numberOfRatingStars(for: magnitude)
             for star in 0..<totalStars {
                 cell.ratingStarView[star].image = star < rating ? Constants.ratingStar : Constants.noRatingStar

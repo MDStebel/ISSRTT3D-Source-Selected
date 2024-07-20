@@ -20,26 +20,26 @@ public enum Spacecraft: String, CaseIterable {
     
     var spacecraftName: String {
         switch self {
-        case .soyuz :
+        case .soyuz:
             return "Soyuz"
-        case .crewDragon :
+        case .crewDragon:
             return "Crew Dragon"
-        case .starliner :
+        case .starliner:
             return "Starliner"
-        case .shenzhou :
+        case .shenzhou:
             return "Shenzhou"
         }
     }
     
     var spacecraftImages: UIImage {
         switch self {
-        case .soyuz      :
+        case .soyuz:
             return #imageLiteral(resourceName: "Soyuz-2")
-        case .crewDragon :
+        case .crewDragon:
             return #imageLiteral(resourceName: "spacex-dragon-spacecraft-1")
-        case .starliner  :
+        case .starliner:
             return #imageLiteral(resourceName: "starliner-spacecraft")
-        case .shenzhou   :
+        case .shenzhou:
             return #imageLiteral(resourceName: "Shenzhou")
         }
     }
