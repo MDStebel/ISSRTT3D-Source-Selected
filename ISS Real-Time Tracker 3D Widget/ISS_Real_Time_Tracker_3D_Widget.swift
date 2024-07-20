@@ -252,7 +252,6 @@ struct DateView: View {
             .offset(y: 46)
             .minimumScaleFactor(0.60)
     }
-
 }
 
 struct InfoCardView: View {
@@ -268,12 +267,12 @@ struct InfoCardView: View {
         let elev    = Text("\(entry.startElevation, format: .number.precision(.fractionLength(1)))\(Globals.degreeSign)")
         let mag     = Text("\(entry.mag, format: .number.precision(.fractionLength(1)))")
         
-        let azLabel = family == .systemMedium ? "  Azimuth:  " : " Az: "
-        let cpLabel = family == .systemMedium ? "  Compass:  " : " Cp: "
-        let duLabel = family == .systemMedium ? "  Duration:  " : " Du: "
+        let azLabel = family == .systemMedium ? "  Azimuth:  "   : " Az: "
+        let cpLabel = family == .systemMedium ? "  Compass:  "   : " Cp: "
+        let duLabel = family == .systemMedium ? "  Duration:  "  : " Du: "
         let elLabel = family == .systemMedium ? "  Elevation:  " : " El: "
-        let mgLabel = family == .systemMedium ? "  Mag:  " : " Mg: "
-        let tmLabel = family == .systemMedium ? "  Start:  " : " St: "
+        let mgLabel = family == .systemMedium ? "  Magnitude:  " : " Mg: "
+        let tmLabel = family == .systemMedium ? "  Start:  "     : " St: "
         let spacing = family == .systemMedium ? 0.0 : 0.0
         
         ZStack {
@@ -293,7 +292,7 @@ struct InfoCardView: View {
                     VStack(alignment: .leading, spacing: 0) {
                         InfoRow(icon: "paperplane.circle", label: elLabel, value: elev, spacing: spacing)
                         InfoRow(icon: "stopwatch", label: duLabel, value: dur, spacing: spacing)
-                        InfoRow(icon: "rays", label: mgLabel, value: mag, spacing: spacing)
+                        InfoRow(icon: "sun.max.circle", label: mgLabel, value: mag, spacing: spacing)
                     }
                     .foregroundColor(.issrttRed)
                     .padding(.horizontal, 0)
