@@ -22,7 +22,7 @@ struct PassDetailView: View {
         let dw = Date(timeIntervalSince1970: pass.startUTC).formatted(.dateTime.weekday())           // Day of the week
         let dd = Date(timeIntervalSince1970: pass.startUTC).formatted(.dateTime.day())               // Day of the month
         let tm = getCountdownText()                                                                  // Minutes to pass start
-        let du = pass.duration.formatted(.number) + " mins"
+        let du = pass.duration.formatted(.number) + " secs"
         let mg = pass.mag != RatingSystem.unknown.rawValue ? String(pass.mag) : "N/A"
         // Start
         let st = Date(timeIntervalSince1970: pass.startUTC).formatted(date: .omitted, time: .shortened)

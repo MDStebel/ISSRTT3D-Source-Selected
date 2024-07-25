@@ -2,14 +2,14 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-    <key>NSLocationWhenInUseUsageDescription</key>
-    <string>We need your location to show your current position.</string>
-    <key>NSLocationAlwaysUsageDescription</key>
-    <string>We need your location to provide continuous tracking.</string>
-    <key>NSCalendarsUsageDescription</key>
-    <string>We need access to your calendar to add events.</string>
-    <key>NSRemindersUsageDescription</key>
-    <string>We need access to your reminders to add events.</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>We need your location to use your current position.</string>
+	<key>NSLocationAlwaysUsageDescription</key>
+	<string>We need your location to provide continuous tracking.</string>
+	<key>NSCalendarsUsageDescription</key>
+	<string>We need access to your calendar to add events.</string>
+	<key>NSRemindersUsageDescription</key>
+	<string>We need access to your reminders to add events.</string>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
 	<key>CFBundleDisplayName</key>
