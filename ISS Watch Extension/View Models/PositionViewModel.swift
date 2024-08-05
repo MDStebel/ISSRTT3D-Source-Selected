@@ -173,7 +173,7 @@ final class PositionViewModel: ObservableObject {
         }
             
         if tssLastLat != 0 {
-            // MARK: Set up TSS
+            // MARK: Set up Tiangong
             tssHeadingFactor = tssLatitude - tssLastLat < 0 ? -1 : 1
             earthGlobe.addOrbitTrackAroundTheGlobe(for: .tss, lat: tssLatitude, lon: tssLongitude, headingFactor: tssHeadingFactor)
             
