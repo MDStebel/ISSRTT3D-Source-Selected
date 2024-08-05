@@ -82,9 +82,9 @@ struct UserGuide {
 
     <div id="track"></div>
     <h2>Track</h2>
-    <p>To locate and track the ISS (default), TSS, or Hubble in real time, tap the play button at the bottom of the screen. To pause tracking, tap the pause button.</p>
+    <p>To locate and track the ISS (default), Tiangong, or Hubble in real time, tap the play button at the bottom of the screen. To pause tracking, tap the pause button.</p>
     <h4>Switching Targets</h4>
-    <p>To change the target satellite to ISS, TSS, or Hubble, tap the target button at the top-left of the screen.</p>
+    <p>To change the target satellite to ISS, Tiangong, or Hubble, tap the target button at the top-left of the screen.</p>
     <h4>Map Formats</h4>
     <p>You can select from the following map types in Settings from the Tracking screen:</p>
     <ul>
@@ -126,11 +126,11 @@ struct UserGuide {
     <h5>Small +</h5>
     </li>
     </ul>
-    <p>The time interval between map updates is automatically set from 1 to 6 seconds, based upon the zoom slider setting. With the slider all the way to the left, the update interval is set at 1 second. As you drag the slider right, it increases by 1 second up to a maximum interval of 6 seconds. This keeps the relative motion of the map roughly equal at all scales within a given range.</p>
-    <h4>Track</h4>
-    <p>The orbit ground track line is drawn by default. This shows the ground track of the selected target. You can turn this on/off in Settings by tapping the settings icon from the 2D tracking map. When the orbit track is on, the ground track clear button is displayed on the Tracking screen. The track is automatically cleared when the target is switched to another satellite.</p>
+    <p>The time interval between map updates is automatically set from 1 to 6 seconds based on the zoom slider setting. With the slider all the way to the left, the update interval is set at 1 second. As you drag the slider right, it increases by 1 second up to a maximum interval of 6 seconds. This keeps the relative motion of the map roughly equal at all scales within a given range.</p>
+    <h4>Ground Track</h4>
+    <p>The orbit ground track line is drawn by default. This shows the ground track of the selected target. You can turn this on/off in Settings by tapping the settings icon from the 2D tracking map. The ground track clear button is displayed on the Tracking screen when the orbit track is on. The track is automatically cleared when the target is switched to another satellite.</p>
     <h4>3D Globe Overlay</h4>
-    <p>The globe shows the current position of selected target, its orbital track, and viewing range circle. The globe is a photorealistic model of the Earth complete with accurate Sun subsolar position, specular reflections on the water, seasonal tilt, mountain shadows, and other details. Drag the globe to rotate and pan it. The circle represents the approximate target sighting range from ground level. Autorotation is enabled by default and rotates the globe once every 90 seconds. To disable autorotation, as well as to enable/disable the globe overlay entirely, go to Settings. Tapping the expand icon on the globe overlay, or the globe button on the tab bar, expands the globe to fullscreen mode and hides the map. Tap the reset button to reset the globe.</p>
+    <p>The globe shows the current position of the selected target, its orbital track, and the viewing range circle. The globe is a photorealistic model of the Earth, complete with accurate subsolar point position, specular reflections on the water, seasonal tilt, mountain shadows, and other details. Drag the globe to rotate and pan it. The circle represents the approximate target sighting range from ground level. Autorotation is enabled by default and rotates the globe once every 90 seconds. To disable autorotation and enable/disable the globe overlay entirely, go to Settings. Tapping the expand icon on the globe overlay or the globe button on the tab bar expands the globe to full-screen mode and hides the map. Tap the reset button to reset the globe.</p>
     <h4>Copy Info to the Clipboard</h4>
     <p>Tap the copy icon next to the info box on bottom of the map to copy the target's location, altitude, velocity, and associated time to the clipboard. You can then paste the data in another app.</p>
     <h5>Notes:</h5>
@@ -145,10 +145,10 @@ struct UserGuide {
     <h4><a href="#contents">Back to contents</a></h4>
     <div id="globe"></div>
     <h2>Globe</h2>
-    <p>From the Tracking screen, tapping the expand icon on the globe overlay, or the globe icon on the tab bar, expands the globe to fullscreen mode and hides the map.</p>
-    <p>The fullscreen 3D interactive globe shows the current position of the ISS, TSS, and Hubble. It plots their orbital tracks and groundtrack footprints (viewing range circle). The ISS track and footprint are shown in red, in gold for the TSS, and in blue for the Hubble.</p>
+    <p>From the Tracking screen, tapping the expand icon on the globe overlay, or the globe icon on the tab bar, expands the globe to full-screen mode and hides the map.</p>
+    <p>The full-screen 3D interactive globe shows the current position of the ISS, Tiangong, and Hubble. It plots their orbital tracks and groundtrack footprints (viewing range circle). The ISS track and footprint are shown in red, gold for the Tiangong, and blue for the Hubble.</p>
     <p>The globe is a photorealistic model of the Earth complete with accurate Sun subsolar position, specular reflections on the water, seasonal tilt, mountain shadows, and other details.</p>
-    <p>The globe starts updating automatically when in fullscreen mode.</p>
+    <p>The globe starts updating automatically when in full-screen mode.</p>
     <h4>Using Gestures</h4>
     <ul>
     <li>
@@ -165,7 +165,7 @@ struct UserGuide {
     </li>
     </ul>
     <h4>Choose Your Background</h4>
-    <p>From Settings, you can select from six backgrounds for your fullscreen globe. These are:</p>
+    <p>From Settings, you can select from six backgrounds for your full-screen globe. These are:</p>
     <ul>
     <li>
     <h5>Hubble Deep Field (the default)</h5>
@@ -188,7 +188,7 @@ struct UserGuide {
     </ul>
     <h5>Notes:</h5>
     <ul>
-    <li><h6>The red, gold, and blue circles represent the approximate ISS, TSS, and Hubble sighting ranges (i.e., footprints), respectively, from ground level under perfect conditions. Use the Pass Predictor to get viewable ISS, TSS, or Hubble passes from your exact location.</h6></li>
+    <li><h6>The red, gold, and blue circles represent the approximate ISS, Tiangong, and Hubble sighting ranges (i.e., footprints), respectively, from ground level under perfect conditions. Use the Pass Predictor to get viewable ISS, Tiangong, or Hubble passes from your exact location.</h6></li>
     <li><h6>Autorotation is enabled by default and rotates the globe once every 90 seconds.</h6></li>
     <li><h6>To enable/disable autorotation, tap the toggle autorotation button on the upper-right, or go to Settings.</h6></li>
     <li><h6>Tap the reset button on the upper-right of the globe scene to reset the globe.</h6></li>
@@ -198,14 +198,14 @@ struct UserGuide {
     <h4><a href="#contents">Back to contents</a></h4>
     <div id="passes"></div>
     <h2>Passes</h2>
-    <p>Tapping the binoculars icon at the bottom of the main screen starts the process of computing up-coming visible ISS, TSS, or Hubble Space Telescope passes. First, ISS Real-Time Tracker 3D gets your current location's coordinates. Then, it computes the ISS , TSS, or Hubble passes that should be visible (weather permitting) from your location. The default number of days to predict passes is set in Settings and can be overridden in the Passes screen. The passes are listed in chronological order along with detailed viewing data.</p>
+    <p>Tapping the binoculars icon at the bottom of the main screen starts computing upcoming visible ISS, Tiangong, or Hubble passes. First, ISS Real-Time Tracker 3D gets your current location's coordinates. Then, it computes the ISS, Tiangong, or Hubble passes that should be visible (weather permitting) from your location. The default number of days to predict passes is set in Settings and can be overridden in the Passes screen. The passes are listed in chronological order, along with detailed viewing data.</p>
     <p>Data for each pass includes:</p>
     <ul>
     <li>
     <h5>Date of the pass</h5>
     </li>
     <li>
-    <h5>Rating (0, 1, 2, 3, or 4 stars)</h5>
+    <h5>Rating (0 - 4 stars)</h5>
     </li>
     <li>
     <h5>Visible duration (in minutes and seconds)</h5>
@@ -219,11 +219,11 @@ struct UserGuide {
     </ul>
     <p>Each pass is rated based on its maximum magnitude (i.e., brightness). The brightest passes get the highest ratings. Passes are rated with 0, 1, 2, 3, or 4 stars corresponding to relatively poor, fair, good, better, or best, respectively.</p>
     <h4>Switching Targets</h4>
-    <p>Tap the switch target button in the navigation bar to switch between the ISS, TSS (Chinese space station named Tiangong), and Hubble Space Telescope. The table will automatically refresh and present passes for the selected target.</p>
+    <p>Tap the switch target button in the navigation bar to switch between the ISS, Tiangong, and Hubble. The table will automatically refresh and present passes for the selected station.</p>
     <h4>Adding a Pass Event to Your Calendar</h4>
-    <p>Tap any pass in the table to add it as an event in your calendar. When adding a pass to your calendar, two alerts will be set: the first for 1 hour before, and the second for 15 minutes before the start of the pass. The starting and ending times for the pass are saved in the event in your calendar, along with the maximum magnitude, as well as the starting, maximum, and ending azimuths and elevations for the pass.</p>
-    <h4>Change Number of Days to Compute</h4>
-    <p>Tap the Calendar icon at the top-right of the screen to change the number of days to compute and refresh the list. To change the number of days so that the app remembers your setting for next time, change it in Settings.</p>
+    <p>Tap any pass in the table to add it as an event in your calendar. When adding a pass to your calendar, two alerts will be set: the first for 1 hour before and the second for 15 minutes before the start of the pass. The starting and ending times for the pass are saved in the event in your calendar, along with the maximum magnitude and the starting, maximum, and ending azimuths and elevations for the pass.</p>
+    <h4>Changing the Number of Days to Compute</h4>
+    <p>Tap the Calendar icon at the top-right of the screen to change the number of days to compute and refresh the list. You can also change the number of days so that the app remembers your settings for the next time in Settings.</p>
     <h4>Pull-to-Refresh</h4>
     <p>Drag down the table to refresh the data.</p>
     <h5>Notes:</h5>
@@ -235,7 +235,7 @@ struct UserGuide {
     <h6>Overhead passes returned are only those visible from your location for at least 300 seconds (5 minutes) and where the ISS is illuminated by the Sun.</h6>
     </li>
     <li>
-    <h6>Tiangong (TSS) pass predictions do not currently include the magnitude of the passes and are, therefore, not rated. The stars are greyed-out. This may change in the future, as the magnitude data are provided for the TSS.</h6>
+    <h6>Tiangong pass predictions do not currently include the magnitude of the passes and are, therefore, not rated. The stars are greyed-out. This may change in the future, once the magnitude data are provided for the Tiangong.</h6>
     </li>
     <li>
     <h6>If there are buildings, trees, or other obstructions, and depending upon the weather and other viewing conditions, you may not be able to spot the space station.</h6>
@@ -254,9 +254,9 @@ struct UserGuide {
     <p>Tap the astronaut icon at the bottom of the screen to get a table of information about the current space station crew.</p>
     <h4>Switching Stations</h4>
     <p>Tap the switch target button in the navigation bar to switch between the ISS and the Chinese space station, Tiangong. The table will automatically refresh and present the crew data for the selected space station.</p>
-    <h4>Crew Bios &amp; Tweets</h4>
+    <h4>Crew Bios &amp; X Tweets</h4>
     <p>Tap any cell in the table to pop-up the detail view for that crewmember. This will display a brief bio. To view the full bio, tap the biography icon.</p>
-    <p>To visit the crew member's Twitter feed, open their Twitter profile by tapping the Twitter button. If you do not have the Twitter app installed, it will open in Safari instead. If the crewmember does not have a Twitter profile, the Twitter button will not be displayed. Return to ISS Real-Time Tracker 3D by tapping "◀︎ ISS Tracker" on the top-left of Twitter.</p>
+    <p>To visit the crew member's X feed, open their X profile by tapping the X button. If you do not have the X app installed, it will open in Safari instead. If the crewmember does not have an X profile, the X button will not be displayed. Return to ISS Real-Time Tracker 3D by tapping "◀︎ ISS Tracker" on the top-left of X.</p>
     <p>Tap X to close the pop-up and return to the crew table.</p>
     <h4>Copy Crew Data to the Clipboard</h4>
     <p>Tap the copy icon at the top-right of the screen to copy the crew names, titles, and nationalities to the clipboard. You can then paste them into another app.</p>
@@ -300,10 +300,12 @@ struct UserGuide {
     <h4><a href="#contents">Back to contents</a></h4>
     <div id="watch"></div>
     <h2>Using the Apple Watch App</h2>
-    <p>If you own an Apple Watch, installing the app on your phone will also install it on your watch.</p>
-    <p>The watch app shows the interactive 3D globe with real-time positions of the ISS, Tiangong (Chinese space station), and the Hubble Space Telescope. It also provides pass predictions for each, plus crew listings, stats, and bios.</p>
-    <p>From the globe tap on the reset button on the bottom-left of the watchface to restore the globe to its starting position. Tap the rotation button to disable/enable the globe's autorotation. Tap the show details button on the bottom-right to display a table of the coordinates and altitudes of the three satellites, along with the subsolar point. The data update every three seconds.</p>
-    <p>Tap the detail for the ISS, Tiangong, or Hubble to get pass predictions.</p>
+    <p>If you own an Apple Watch, installing the app on your iPhone or iPad will install the companion app on your watch.</p>
+    <p>The watch app shows an interactive 3D globe with the real-time positions of the ISS, Tiangong, and Hubble. It also provides live position details, the subsolar point, pass predictions for each satellite, and crew listings, stats, and bios.</p>
+    <p>From the globe view, tap the reset button at the bottom-left of the watch face to restore the globe to its starting position. Tap the rotation button to disable/enable the globe's autorotation.</p>
+    <p>To see live position information for the three satellites and the subsolar point, tap the live position button (third from left). The positions are updated in real-time every three seconds.</p>
+    <p>Get pass predictions on your Apple Watch for the ISS, Tiangong, and Hubble. Tap the live position button, then tap the ISS, Tiangong, or Hubble position details. You'll get a list of your location's visible passes for that satellite for the next 30 days. Like the iPhone and iPad apps, each ISS pass is rated 0 - 4 stars. Tap any of the passes to get viewing details for that pass. Tapping the subsolar point provides a discussion of the subsolar point.</p>
+    <p>Tap the crew button (bottom-right) to get crew information for the ISS and Tiangong. Scroll to see the crews for each station. Tap a crew member to get their details.</p>
     <p>Tap the back button to return to the globe.</p>
     <h4><a href="#contents">Back to contents</a></h4>
     \(tail)
@@ -312,14 +314,14 @@ struct UserGuide {
     static let passesHelp =
     """
     \(head)
-    <p>This screen computes and presents a table of up-coming ISS, TSS (Tiangong), or Hubble Space Telescope passes that are predicted to be visible (weather permitting) from your location. First, ISS Real-Time Tracker 3D gets your current location's coordinates. Then, it computes the ISS, TSS, or Hubble passes that should be visible (weather permitting) from your location. The default number of days to predict passes is set in Settings and can be overridden in the Passes screen. The passes are listed in chronological order along with detailed viewing data.</p>
+    <p>This screen computes and presents a table of up-coming ISS, Tiangong, or Hubble passes that are predicted to be visible (weather permitting) from your location. First, ISS Real-Time Tracker 3D gets your current location's coordinates. Then, it computes the passes that should be visible (weather permitting) from your location. The default number of days to predict passes is set in Settings and can be overridden in the Passes screen. The passes are listed in chronological order along with detailed viewing data.</p>
     <p>Data for each pass includes:</p>
     <ul>
     <li>
     <h5>Date of the pass</h5>
     </li>
     <li>
-    <h5>Rating (0, 1, 2, 3, or 4 stars)</h5>
+    <h5>Rating (0 - 4 stars)</h5>
     </li>
     <li>
     <h5>Visible duration (in minutes and seconds)</h5>
@@ -333,7 +335,7 @@ struct UserGuide {
     </ul>
     <p>Each pass is rated based on its maximum magnitude (i.e., brightness). The brightest passes get the highest ratings. Passes are rated with 0, 1, 2, 3, or 4 stars corresponding to relatively poor, fair, good, better, or best, respectively.</p>
     <h4>Switching Targets</h4>
-    <p>Tap the switch target button in the navigation bar to switch between the ISS, TSS (Chinese space station named Tiangong), and Hubble Space Telescope. The table will automatically refresh and present passes for the selected station.</p>
+    <p>Tap the switch target button in the navigation bar to switch between the ISS, Tiangong, and Hubble. The table will automatically refresh and present passes for the selected station.</p>
     <h4>Adding a Pass Event to Your Calendar</h4>
     <p>Tap any pass in the table to add it as an event in your calendar. When adding a pass to your calendar, two alerts will be set: the first for 1 hour before, and the second for 15 minutes before the start of the pass. The starting and ending times for the pass are saved in the event in your calendar, along with the maximum magnitude, as well as the starting, maximum, and ending azimuths and elevations for the pass.</p>
     <h4>Change Number of Days to Compute &amp; Refresh</h4>
@@ -349,7 +351,7 @@ struct UserGuide {
     <h6>Overhead passes returned are only those visible from your location for at least 300 seconds (5 minutes) and where the ISS is illuminated by the Sun.</h6>
     </li>
     <li>
-    <h6>Tiangong (TSS) pass predictions do not currently include the magnitude of the passes and are, therefore, not rated. The stars are greyed-out. This may change in the future, as the magnitude data are provided for the TSS.</h6>
+    <h6>Tiangong pass predictions do not currently include the magnitude of the passes and are, therefore, not rated. The stars are greyed-out. This may change in the future, once the magnitude data are provided for the Tiangong.</h6>
     </li>
     <li>
     <h6>If there are buildings, trees, or other obstructions, and depending upon the weather and other viewing conditions, you may not be able to spot the space station.</h6>
@@ -368,9 +370,9 @@ struct UserGuide {
     static let fullGlobe =
     """
     \(head)
-    <p>The fullscreen 3D interactive globe shows the current position of the ISS, TSS, and Hubble. It plots their orbital tracks and groundtrack footprints (viewing range circle). The ISS track and footprint are shown in red, in gold for the TSS, and in blue for the Hubble.</p>
+    <p>The full-screen 3D interactive globe shows the current position of the ISS, Tiangong, and Hubble. It plots their orbital tracks and groundtrack footprints (viewing range circle). The ISS track and footprint are shown in red, gold for the Tiangong, and blue for the Hubble.</p>
     <p>The globe is a photorealistic model of the Earth complete with accurate Sun subsolar position, specular reflections on the water, seasonal tilt, mountain shadows, and other details.</p>
-    <p>The globe starts updating automatically when in fullscreen mode.</p>
+    <p>The globe starts updating automatically when in full-screen mode.</p>
     <h4>Using Gestures</h4>
     <ul>
     <li>
@@ -387,7 +389,7 @@ struct UserGuide {
     </li>
     </ul>
     <h4>Choose Your Background</h4>
-    <p>From Settings, you can select from six backgrounds for your fullscreen globe. These are:</p>
+    <p>From Settings, you can select from six backgrounds for your full-screen globe. These are:</p>
     <ul>
     <li>
     <h5>Hubble Deep Field (the default)</h5>
@@ -410,7 +412,7 @@ struct UserGuide {
     </ul>
     <h5>Notes:</h5>
     <ul>
-    <li><h6>The red, gold, and blue circles represent the approximate ISS, TSS, and Hubble sighting ranges (i.e., footprints), respectively, from ground level under perfect conditions. Use the Pass Predictor to get viewable ISS, TSS, or Hubble passes from your exact location.</h6></li>
+    <li><h6>The red, gold, and blue circles represent the approximate ISS, Tiangong, and Hubble sighting ranges (i.e., footprints), respectively, from ground level under perfect conditions. Use the Pass Predictor to get viewable ISS, Tiangong, or Hubble passes from your exact location.</h6></li>
     <li><h6>Autorotation is enabled by default and rotates the globe once every 90 seconds.</h6></li>
     <li><h6>To enable/disable autorotation, tap the toggle autorotation button on the upper-right, or go to Settings.</h6></li>
     <li><h6>Tap the reset button on the upper-right of the globe scene to reset the globe.</h6></li>
@@ -425,10 +427,10 @@ struct UserGuide {
     \(head)
     <p>This screen provides a table of information about the current space station crew. It also lets you drill down to deeper information about each crewmember and even tweet a crewmember.</p>
     <h4>Switching Stations</h4>
-    <p>Tap the switch target button in the navigation bar to switch between the ISS and the Chinese space station, Tiangong. The table will automatically refresh and present the crew data for the selected space station.</p>
-    <h4>Crew Bios &amp; Tweets</h4>
+    <p>Tap the switch target button in the navigation bar to switch between the ISS and Tiangong. The table will automatically refresh and present the crew data for the selected space station.</p>
+    <h4>Crew Bios &amp; X Tweets</h4>
     <p>Tap any cell in the table to pop up the detail view for that crewmember. This will display a brief bio. To view the full bio, tap the biography icon.</p>
-    <p>To visit the crew member's Twitter feed, open their Twitter profile by tapping the Twitter button. If you do not have the Twitter app installed, it will open in Safari instead. If the crewmember does not have a Twitter profile, the Twitter button will not be displayed. Return to ISS Real-Time Tracker 3D by tapping "◀︎ ISS Tracker" on the top-left of Twitter.</p>
+    <p>To visit the crew member's X feed, open their X profile by tapping the X button. If you do not have the X app installed, it will open in Safari instead. If the crewmember does not have an X profile, the X button will not be displayed. Return to ISS Real-Time Tracker 3D by tapping "◀︎ ISS Tracker" on the top-left of X.</p>
     <p>Tap X to close the pop-up and return to the crew table.</p>
     <h4>Copy Crew Data to the Clipboard</h4>
     <p>Tap the copy icon at the top-right of the screen to copy the crew names, titles, and nationalities to the clipboard. You can then paste them into another app.</p>

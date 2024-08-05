@@ -253,5 +253,4 @@ struct Globals {
         "united states": "🇺🇸",
         "usa": "🇺🇸",
     ]
-    
 }
