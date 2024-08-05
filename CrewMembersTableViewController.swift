@@ -65,9 +65,9 @@ class CrewMembersTableViewController: UITableViewController, TableAnimatable {
     @IBOutlet var crewMemberDetailView: CrewMemberDetailView!
     @IBOutlet var promptLabel: UILabel! {
         didSet {
-            promptLabel.text = Constants.updatingDataPromptText
+            promptLabel.text                = Constants.updatingDataPromptText
             promptLabel.layer.maskedCorners = [.layerMinXMaxYCorner, .layerMaxXMaxYCorner]
-            promptLabel.layer.cornerRadius = 27
+            promptLabel.layer.cornerRadius  = 27
             promptLabel.layer.masksToBounds = true
         }
     }
@@ -84,14 +84,13 @@ class CrewMembersTableViewController: UITableViewController, TableAnimatable {
     /// - Parameter station: Station selector value.
     private func getStationID(for station: StationsAndSatellites) {
         
-        selectTarget.image     = stationSelectionButton
-        stationID              = station.satelliteNORADCode
-        stationImage           = station.satelliteImage
-        stationName            = station.satelliteName
+        selectTarget.image = stationSelectionButton
+        stationID          = station.satelliteNORADCode
+        stationImage       = station.satelliteImage
+        stationName        = station.satelliteName
         if stationName == "ISS" {
             stationName = "International Space Station"     // We're using the long name for ISS here
         }
-
     }
     
     
@@ -101,7 +100,6 @@ class CrewMembersTableViewController: UITableViewController, TableAnimatable {
         
         getStationID(for: station)
         setUpRefreshControl()
-        
     } 
     
     
@@ -115,7 +113,6 @@ class CrewMembersTableViewController: UITableViewController, TableAnimatable {
         barAppearance.titleTextAttributes   = [.font : UIFont(name: Constants.fontForTitle, size: titleFontSize) as Any, .foregroundColor : UIColor.white]
         navigationItem.standardAppearance   = barAppearance
         navigationItem.scrollEdgeAppearance = barAppearance
-        
     }
     
     
@@ -129,9 +126,7 @@ class CrewMembersTableViewController: UITableViewController, TableAnimatable {
             DispatchQueue.global(qos: .userInteractive).async {
                 self.getCurrrentCrewMembers()
             }
-            
         }
-        
     }
     
     
@@ -148,7 +143,6 @@ class CrewMembersTableViewController: UITableViewController, TableAnimatable {
         
         // Configure refresh control
         refreshControl?.addTarget(self, action: #selector(refreshTable(_:)), for: .valueChanged)
-        
     }
     
     
@@ -158,7 +152,6 @@ class CrewMembersTableViewController: UITableViewController, TableAnimatable {
         DispatchQueue.global(qos: .userInteractive).async {
             self.getCurrrentCrewMembers()
         }
-        
     }
     
     
@@ -192,7 +185,7 @@ class CrewMembersTableViewController: UITableViewController, TableAnimatable {
                     // Sort the list by name and then by title
                     weakSelf?.currentCrew = selectedTargetStationCrewOnly?.sorted {$0.name < $1.name}
                     weakSelf?.currentCrew?.sort() {$0.title < $1.title}
-                    
+
                     weakSelf?.currentCrewSize = (weakSelf?.currentCrew!.count)!
                     
                     DispatchQueue.main.async {
@@ -229,7 +222,6 @@ class CrewMembersTableViewController: UITableViewController, TableAnimatable {
         
         // Start task
         crewMembersTask.resume()
-        
     }
     
     
@@ -245,7 +237,6 @@ class CrewMembersTableViewController: UITableViewController, TableAnimatable {
         UIPasteboard.general.string = crewListString                                      // Copy to general pasteboard
         
         alert(for: "\(currentCrewSize) \(self.station.satelliteName) Crew Members\nCopied to Your Clipboard", message: crewListString)
-        
     }
       
 
@@ -279,7 +270,6 @@ class CrewMembersTableViewController: UITableViewController, TableAnimatable {
         }
         
         return fullString
-        
     }
     
     
@@ -336,7 +326,6 @@ class CrewMembersTableViewController: UITableViewController, TableAnimatable {
         default :
             break
         }
-        
     }
     
     
@@ -350,7 +339,6 @@ class CrewMembersTableViewController: UITableViewController, TableAnimatable {
         super.didReceiveMemoryWarning()
         dismiss(animated: true, completion: nil)
     }
-    
 }
 
 
@@ -361,14 +349,12 @@ extension CrewMembersTableViewController {
     override func numberOfSections(in tableView: UITableView) -> Int {
         
         return 1
-    
     }
     
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
         return currentCrewSize
-    
     }
     
     
@@ -385,7 +371,6 @@ extension CrewMembersTableViewController {
             let (data, _) = try await URLSession.shared.data(from: imageURL)
             return UIImage(data: data)
         } catch {
-            print("Failed to fetch image data: \(error)")
             return nil
         }
     }
@@ -436,8 +421,7 @@ extension CrewMembersTableViewController {
         cell.backgroundColor = UIColor.lightGray.withAlphaComponent(Theme.cellBackgroundColorAlpha)
         
         if currentCrewSize > 0 {
-            
-            let row                        = indexPath.row
+            let row = indexPath.row
             
             Task {
                 image = await getAstronautImage(forCell: row)
@@ -472,7 +456,6 @@ extension CrewMembersTableViewController {
     override func scrollViewDidScroll(_ scrollView: UIScrollView) {
         
         centerPopover()
-        
     }
     
     
@@ -484,7 +467,6 @@ extension CrewMembersTableViewController {
         let xPosition              = parentBounds.midX - shortBioViewWidth / 2.0
         let yPosition              = parentBounds.midY - shortBioViewHeight / 2.0
         crewMemberDetailView.frame = CGRect(x: xPosition, y: yPosition, width: shortBioViewWidth, height: shortBioViewHeight)
-        
     }
     
     
@@ -502,7 +484,6 @@ extension CrewMembersTableViewController {
         crewMemberDetailView.twitterHandleURL           = currentCrew?[row].twitter
         
         view.addSubview(crewMemberDetailView)
-        
     }
     
     
@@ -510,7 +491,5 @@ extension CrewMembersTableViewController {
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         
         return Constants.tableRowSize
-        
     }
-    
 }

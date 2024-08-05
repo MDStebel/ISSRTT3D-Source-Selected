@@ -27,9 +27,7 @@ extension DateFormatter: StringDateConversions {
         } else {
             return nil
         }
-        
     }
-
     
     /// Convert a Date to a date in String representation.
     /// - Parameters:
@@ -40,7 +38,5 @@ extension DateFormatter: StringDateConversions {
         
         dateFormat = withOutputFormat
         return string(from: date)
-        
     }
-
 }

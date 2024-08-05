@@ -18,7 +18,5 @@ extension UIViewController {
         let copyright      = Bundle.main.infoDictionary?["NSHumanReadableCopyright"] as! String
 
         return (currentVersion, currentBuild, copyright)
-        
     }
-    
 }

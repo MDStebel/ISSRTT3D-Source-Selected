@@ -22,9 +22,7 @@ extension TrackingViewController {
         
         defaults.setValue(currentAppVersion, forKey: "App Version")
         defaults.setValue(currentBuild, forKey: "App Build")
-        
     }
-    
     
     /// Checks if app has been updated.
     /// Requires that "App Version" and "App Build" keys were saved in the defaults instance of UserDefaults. If not, these are saved and method returns false.
@@ -49,7 +47,5 @@ extension TrackingViewController {
         saveAppCurrentVersionNumber()
         
         return wasUpdated
-        
     }
-    
 }
