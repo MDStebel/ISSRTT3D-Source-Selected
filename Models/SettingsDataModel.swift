@@ -8,11 +8,10 @@
 
 import Foundation
 
-/// Model for user settings data
+/// Model for user settings persistent data
 struct SettingsDataModel {
     
     // MARK: - Properties
-    
     
     /// Constants for each of the user defaults keys
     private struct UserSettingsPropertyKeys {
@@ -32,14 +31,11 @@ struct SettingsDataModel {
         static let showWhatsNewPopupKey                             = "Show Whats New"
         static let zoomRangeFactorKey                               = "Zoom Range Factor"
         static let zoomSliderSegmentValueKey                        = "Zoom Slider Segment Value"
-        
     }
  
     static let dateFormatter                                        = DateFormatter()
     
-    
     // MARK: - Methods
-    
     
     /// This method is called by AppDelegate when app is about to resign and first saves all user settings on the device, which are restored upon reloading this view controller.
     static func saveUserSettings() {
@@ -98,9 +94,7 @@ struct SettingsDataModel {
         let formattedDate = dateFormatter.getCurrentDateAndTimeInAString(forCurrent: Date(), withOutputFormat: Globals.outputDateFormatString)
         defaults.set(formattedDate, forKey: UserSettingsPropertyKeys.lastSavedDateAndTimeKey)
         defaults.setValue(Globals.blackScreenInHDEVExplanationPopsUp, forKey: UserSettingsPropertyKeys.blackScreenInEHDCExplanationPopupWillAppearKey)
-        
     }
-    
     
     /// Restore user settings to their saved values. Also called as a from AppDelegate when app returns to foreground
     static func restoreUserSettings() {
@@ -176,7 +170,5 @@ struct SettingsDataModel {
         if defaults.object(forKey: UserSettingsPropertyKeys.blackScreenInEHDCExplanationPopupWillAppearKey) != nil {
             Globals.blackScreenInHDEVExplanationPopsUp = defaults.bool(forKey: UserSettingsPropertyKeys.blackScreenInEHDCExplanationPopupWillAppearKey)
         }
-        
-    } 
-    
+    }
 }
