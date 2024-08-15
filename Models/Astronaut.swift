@@ -66,7 +66,6 @@ struct Astronaut: Decodable, Hashable {
         } else {
             return 0
         }
-        
     }
     
     /// Parses JSON file with current crew names from my API and returns an optional array of Astronauts.

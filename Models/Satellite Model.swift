@@ -57,6 +57,7 @@ public enum StationsAndSatellites: String, CaseIterable {
         }
     }
     
+    /// Used in computing the orbital track for the 3D model
     var multiplier: Float {
         switch self {
         case .iss:

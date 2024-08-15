@@ -22,7 +22,6 @@ struct SatelliteOrbitPosition: Decodable {
         var satid: Int
         var satname: String
         var transactionscount: Int
-        
     }
     
     struct Positions: Decodable {
@@ -36,6 +35,5 @@ struct SatelliteOrbitPosition: Decodable {
         var satlatitude: Double
         var satlongitude: Double
         var timestamp: Int
-        
     }
 }
