@@ -675,15 +675,16 @@ class TrackingViewController: UIViewController, MKMapViewDelegate, UIGestureReco
         let imageName: String
         switch Globals.markerType {
         case 0:
-            imageName = "targetImageMap"
+            cursor.image = targetImageMap
         case 1:
             imageName = Globals.mapTypeSelection == 0 ? "center_direction_black" : "center_direction"
+            cursor.image = UIImage(named: imageName)
         case 2:
             imageName = Globals.mapTypeSelection == 0 ? "Plus Math Black" : "Plus Math White"
+            cursor.image = UIImage(named: imageName)
         default:
-            imageName = "targetImageMap"
+            cursor.image = targetImageMap
         }
-        cursor.image = UIImage(named: imageName)
     }
       
     
@@ -857,6 +858,7 @@ class TrackingViewController: UIViewController, MKMapViewDelegate, UIGestureReco
             }
         }
     }
+    
 
     private func configurePopover(for alertController: UIAlertController) {
         guard let popoverController = alertController.popoverPresentationController else { return }

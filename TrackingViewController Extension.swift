@@ -120,7 +120,6 @@ extension TrackingViewController {
             
             self.cursor.isHidden = false                        // Now, show the marker
         }
-        
     }
 
     
@@ -160,9 +159,7 @@ extension TrackingViewController {
                 self.globeExpandButton.isHidden = true
                 self.globeStatusLabel.isHidden  = true
             }
-            
         }
-        
     }
     
     
@@ -261,9 +258,7 @@ extension TrackingViewController {
                         self.stopAction()
                         self.alert(for: "Can't get ISS location", message: "Wait a few minutes\nand then tap ▶︎ again.")
                     }
-                    
                 }
-                
             } else {
                 
                 // If can't access API
@@ -271,13 +266,9 @@ extension TrackingViewController {
                     self.stopAction()
                     self.cannotConnectToInternetAlert()
                 }
-                
             }
-            
         }
         
         globeUpdateTask.resume()
-        
     }
-    
 }
