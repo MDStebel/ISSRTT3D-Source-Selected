@@ -55,7 +55,7 @@ struct PassesView: View {
     private var progressIndicator: some View {
         VStack {
             Spacer()
-            let fullText = "Computing \(station.satelliteName) passes for your location over next 30 days."
+            let fullText = "Computing \(station.satelliteName) passes for your location over the next 30 days."
             let timer = Timer.publish(every: 0.03, on: .main, in: .common).autoconnect()
             VStack(alignment: .leading) {
                 Text(displayedText)
