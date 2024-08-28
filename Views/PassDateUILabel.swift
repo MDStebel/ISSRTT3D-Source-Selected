@@ -17,5 +17,4 @@ class PassDateUILabel: UILabel {
         backgroundColor = UIColor(named: Theme.lblBgd)
         
     }
-    
 }

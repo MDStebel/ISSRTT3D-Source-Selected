@@ -8,7 +8,7 @@
 
 import Foundation
 
-/// Model that encapsulates an astronaut.
+/// Model that encapsulates an astronaut/comonaut.
 ///
 /// Initialize an Astronaut instance with member-wise initializer: Astronaut(name: name, title: title, country: country, countryFlag: countryFlag, spaceCraft: spaceCraft, launchDate: launchDate, bio: bio, shortBioBlurb: shortBioBlurb, image: image, twitter: twitter, mission: mission, launchVehicle: launchVehicle).
 struct Astronaut: Decodable, Hashable {
@@ -85,7 +85,6 @@ struct Astronaut: Decodable, Hashable {
                let astronauts = json["people"] as? [JSONDictionary]
             {
                 for astronaut in astronauts  {
-                    
                     let name          = astronaut["name"] as! String
                     let title         = astronaut["title"] as! String
                     let country       = astronaut["country"] as! String
@@ -100,7 +99,6 @@ struct Astronaut: Decodable, Hashable {
                     let expedition    = astronaut["expedition"] as! String
                     
                     crew.append(Astronaut(name: name, title: title, country: country, spaceCraft: spaceCraft, launchDate: launchDate, bio: bio, launchVehicle: launchVehicle, shortBioBlurb: shortBioBlurb, image: image, twitter: twitter, mission: mission, expedition: expedition))
-                    
                 }
                 
                 guard crew.count == numberOfAstronauts else { return nil }      // Ensures there's no discrepancy in the number of crew returned
@@ -109,7 +107,6 @@ struct Astronaut: Decodable, Hashable {
             } else {
                 return nil
             }
-            
         }
         
         catch {
