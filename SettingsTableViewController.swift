@@ -75,8 +75,8 @@ class SettingsTableViewController: UITableViewController {
         popoverPresentationController?.permittedArrowDirections = UIPopoverArrowDirection([.up])
         popoverPresentationController?.sourceRect = CGRect(x: 1.00, y: 3.0, width: settingsButtonInCallingVCSourceView.bounds.width, height: settingsButtonInCallingVCSourceView.bounds.height)
         
-        Globals.zoomFactorWasResetInSettings   = false
-        Globals.globeBackgroundWasChanged = true
+        Globals.zoomFactorWasResetInSettings = false
+        Globals.globeBackgroundWasChanged    = true
     }
     
     
@@ -86,12 +86,12 @@ class SettingsTableViewController: UITableViewController {
         setUpSwitchesAndControlsFromSavedSettings()
         
         // Set navigation and status bar font and color to our Theme
-        let titleFontSize                   = Theme.navigationBarTitleFontSize
-        let barAppearance                   = UINavigationBarAppearance()
-        barAppearance.backgroundColor       = UIColor(named: Theme.tint)
-        barAppearance.titleTextAttributes   = [.font : UIFont(name: Constants.fontForTitle, size: titleFontSize) as Any, .foregroundColor : UIColor.white]
-        navigationItem.standardAppearance   = barAppearance
-        navigationItem.scrollEdgeAppearance = barAppearance
+        let titleFontSize                    = Theme.navigationBarTitleFontSize
+        let barAppearance                    = UINavigationBarAppearance()
+        barAppearance.backgroundColor        = UIColor(named: Theme.tint)
+        barAppearance.titleTextAttributes    = [.font : UIFont(name: Constants.fontForTitle, size: titleFontSize) as Any, .foregroundColor : UIColor.white]
+        navigationItem.standardAppearance    = barAppearance
+        navigationItem.scrollEdgeAppearance  = barAppearance
     }
     
     
@@ -208,7 +208,6 @@ class SettingsTableViewController: UITableViewController {
     
     /// Go directly to the reviews tab in the App Store for this app
     @IBAction private func rateMeNow(_ sender: UIButton) {
-        
         if let iTunesLinkForRating = URL(string: urlForRating), UIApplication.shared.canOpenURL(iTunesLinkForRating) {
             UIApplication.shared.open(iTunesLinkForRating, options: convertToUIApplicationOpenExternalURLOptionsKeyDictionary([:]), completionHandler: { (success) in })   // Replaced deprecated UIApplication.shared.openURL(iTunesLink)
         }
@@ -310,14 +309,13 @@ class SettingsTableViewController: UITableViewController {
         zoomRangeFactorSelector?.selectedSegmentIndex = Globals.zoomRangeFactorSelection
         mapTypeSelector?.selectedSegmentIndex         = Globals.mapTypeSelection
         backgroundSelector?.selectedSegmentIndex      = Globals.globeBackgroundImageSelection
-        dateAndTimeSaved                              = "Last saved: \(Globals.lastDateAndTimeSettingsWereSaved)"
+        dateAndTimeSaved                              = "Settings saved on: \(Globals.lastDateAndTimeSettingsWereSaved)"
         versionAndCopyrightFooter                     = "Version: \(versionNumber)  Build: \(buildNumber)\n\(copyrightNotice)"
     }
     
     
     // Table view data source for footer
     override func tableView(_ tableView: UITableView, titleForFooterInSection section: Int) -> String? {
-
         switch section {
         case 0 :
             return dateAndTimeSaved ?? ""
