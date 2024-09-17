@@ -276,7 +276,6 @@ class PassesTableViewController: UITableViewController, CLLocationManagerDelegat
         updateUIForFetchingData(for: station)
 
         guard let URLRequest = createAPIRequestURL(for: station) else { return }
-
         fetchData(from: URLRequest, completionHandler: completionHandler)
     }
 
@@ -288,7 +287,7 @@ class PassesTableViewController: UITableViewController, CLLocationManagerDelegat
     }
 
     private func createAPIRequestURL(for station: StationsAndSatellites) -> URL? {
-        let URLrequestString = "\(Constants.endpointForPassesAPI)\(stationID)/\(userLatitude)/\(userLongitude)/\(Constants.altitude)/\(numberOfDays)/\(Constants.minObservationTime)/&apiKey=\(Constants.apiKey)"
+        let URLrequestString = "\(Constants.endpointForPassesAPI)\(stationID)/\(userLatitude)/\(userLongitude)/\(Constants.altitude)/\(numberOfDays)/\(Constants.minObservationTime)&apiKey=\(Constants.apiKey)"
         return URL(string: URLrequestString)
     }
 
@@ -352,13 +351,13 @@ class PassesTableViewController: UITableViewController, CLLocationManagerDelegat
     }
 
     private func createEventNotes(from passEvent: Passes.Pass) -> String {
-        let mag = passEvent.mag
+        let mag     = passEvent.mag
         let startAz = formattedAzimuth(passEvent.startAz)
         let startEl = formattedElevation(passEvent.startEl)
-        let maxAz = formattedAzimuth(passEvent.maxAz)
-        let maxEl = formattedElevation(passEvent.maxEl)
-        let endAz = formattedAzimuth(passEvent.endAz)
-        let endEl = formattedElevation(passEvent.endEl)
+        let maxAz   = formattedAzimuth(passEvent.maxAz)
+        let maxEl   = formattedElevation(passEvent.maxEl)
+        let endAz   = formattedAzimuth(passEvent.endAz)
+        let endEl   = formattedElevation(0)
 
         return """
         Max Magnitude: \(mag)
@@ -454,22 +453,22 @@ extension PassesTableViewController {
         let mag = pass.mag
         
         cell.passDate.backgroundColor = UIColor(named: Theme.lblBgd)
-        cell.passDate.text = dateFormatterForDate.string(from: Date(timeIntervalSince1970: pass.startUTC)) + "\(Constants.newLine)\(Constants.newLine)"
-        cell.stationIcon.image = stationImage
-        cell.durationLabel.text = "DUR: \(minsAndSecs(from: pass.duration))"
-        cell.magnitudeLabel.text = mag != RatingSystem.unknown.rawValue ? "MAG: \(mag)" : "MAG: N/A"
-        cell.startTime.text = dateFormatterForTime.string(from: Date(timeIntervalSince1970: pass.startUTC))
-        cell.startAz.text = formattedAzimuth(pass.startAz)
-        cell.startEl.text = formattedElevation(pass.startEl)
-        cell.startComp.text = pass.startAzCompass
-        cell.maxTime.text = dateFormatterForTime.string(from: Date(timeIntervalSince1970: pass.maxUTC))
-        cell.maxAz.text = formattedAzimuth(pass.maxAz)
-        cell.maxEl.text = formattedElevation(pass.maxEl)
-        cell.maxComp.text = pass.maxAzCompass
-        cell.endTime.text = dateFormatterForTime.string(from: Date(timeIntervalSince1970: pass.endUTC))
-        cell.endAz.text = formattedAzimuth(pass.endAz)
-        cell.endEl.text = formattedElevation(pass.endEl)
-        cell.endComp.text = pass.endAzCompass
+        cell.passDate.text            = dateFormatterForDate.string(from: Date(timeIntervalSince1970: pass.startUTC)) + "\(Constants.newLine)\(Constants.newLine)"
+        cell.stationIcon.image        = stationImage
+        cell.durationLabel.text       = "DUR: \(minsAndSecs(from: pass.duration))"
+        cell.magnitudeLabel.text      = mag != RatingSystem.unknown.rawValue ? "MAG: \(mag)" : "MAG: N/A"
+        cell.startTime.text           = dateFormatterForTime.string(from: Date(timeIntervalSince1970: pass.startUTC))
+        cell.startAz.text             = formattedAzimuth(pass.startAz)
+        cell.startEl.text             = formattedElevation(pass.startEl)
+        cell.startComp.text           = pass.startAzCompass
+        cell.maxTime.text             = dateFormatterForTime.string(from: Date(timeIntervalSince1970: pass.maxUTC))
+        cell.maxAz.text               = formattedAzimuth(pass.maxAz)
+        cell.maxEl.text               = formattedElevation(pass.maxEl)
+        cell.maxComp.text             = pass.maxAzCompass
+        cell.endTime.text             = dateFormatterForTime.string(from: Date(timeIntervalSince1970: pass.endUTC))
+        cell.endAz.text               = formattedAzimuth(pass.endAz)
+        cell.endEl.text               = formattedElevation(0)
+        cell.endComp.text             = pass.endAzCompass
 
         configureRatingStars(for: cell, with: mag)
     }

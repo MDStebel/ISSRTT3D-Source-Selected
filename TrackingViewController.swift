@@ -30,10 +30,8 @@ class TrackingViewController: UIViewController, MKMapViewDelegate, UIGestureReco
     /// Segue names
     private struct Segues {
         static let crewSeque                  = "segueToCurrentCrew"
-        static let earthViewSegue             = "segueToStreamingVideo"
         static let globeSegue                 = "segueToFullGlobe"
         static let helpSegue                  = "helpViewSegue"
-        static let nasaTvSegue                = "segueToNasaTV"
         static let passesSegue                = "segueToPassTimes"
         static let segueToFullGlobeFromTabBar = "segueToFullGlobeFromTabBar"
         static let settingsSegue              = "segueToSettings"
@@ -513,7 +511,7 @@ class TrackingViewController: UIViewController, MKMapViewDelegate, UIGestureReco
                 justStartedUp = false                       // To keep this code from runing each time the view reappears
             }
             
-            locateSatellite(for: target)                   // Call once to update screen quickly to current ISS position with current settings
+            locateSatellite(for: target)                    // Call once to update screen quickly to current ISS position with current settings
             timerStartup()                                  // Call method to set up a timer
         }
     }
@@ -710,14 +708,6 @@ class TrackingViewController: UIViewController, MKMapViewDelegate, UIGestureReco
         switch segueIdentifier {
         case Segues.globeSegue, Segues.segueToFullGlobeFromTabBar, Segues.passesSegue, Segues.crewSeque:
             stopAction()
-
-        case Segues.earthViewSegue, Segues.nasaTvSegue:
-            stopAction()
-            if let navigationController = segue.destination as? UINavigationController,
-               let destinationVC = navigationController.topViewController as? LiveVideoViewController {
-                destinationVC.channelSelected = (segueIdentifier == Segues.earthViewSegue) ? .liveEarth : .nasaTv
-                destinationVC.title = destinationVC.channelSelected.rawValue
-            }
 
         case Segues.settingsSegue:
             if let navigationController = segue.destination as? UINavigationController,

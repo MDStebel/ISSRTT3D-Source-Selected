@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="32700.99.1234" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="xca-LQ-QDn">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="23094" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="xca-LQ-QDn">
     <device id="retina6_7" orientation="portrait" appearance="light"/>
     <dependencies>
-        <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22684"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="23084"/>
         <capability name="Image references" minToolsVersion="12.0"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -23,11 +22,11 @@
                         <viewControllerLayoutGuide type="bottom" id="SCu-lA-bUt"/>
                     </layoutGuides>
                     <view key="view" userInteractionEnabled="NO" contentMode="scaleToFill" id="fBq-BF-I6i">
-                        <rect key="frame" x="0.0" y="0.0" width="428" height="926"/>
+                        <rect key="frame" x="0.0" y="0.0" width="430" height="932"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView userInteractionEnabled="NO" alpha="0.69999999999999996" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Curves 7" translatesAutoresizingMaskIntoConstraints="NO" id="Pyb-uu-Rih" userLabel="Curves">
-                                <rect key="frame" x="0.0" y="0.0" width="428" height="926"/>
+                                <rect key="frame" x="0.0" y="0.0" width="430" height="932"/>
                                 <color key="tintColor" name="ISSRTT-White"/>
                                 <gestureRecognizers/>
                                 <connections>
@@ -35,11 +34,11 @@
                                 </connections>
                             </imageView>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ISS-New" translatesAutoresizingMaskIntoConstraints="NO" id="itU-6j-N9d">
-                                <rect key="frame" x="0.0" y="807" width="150" height="85"/>
+                                <rect key="frame" x="0.0" y="813" width="150" height="85"/>
                                 <color key="tintColor" name="ISSRTT-White"/>
                             </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" preservesSuperviewLayoutMargins="YES" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="4" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hMu-io-e1w">
-                                <rect key="frame" x="0.0" y="0.0" width="428" height="892"/>
+                                <rect key="frame" x="0.0" y="0.0" width="430" height="898"/>
                                 <color key="tintColor" name="Background"/>
                                 <string key="text">ISS
 REAL-TIME
@@ -53,7 +52,7 @@ TRACKER
                                 </variation>
                             </label>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="3D-Boxed-Reversed-Type-2" translatesAutoresizingMaskIntoConstraints="NO" id="d1e-Bn-Nx7">
-                                <rect key="frame" x="139" y="516" width="150" height="94"/>
+                                <rect key="frame" x="140" y="519" width="150" height="94"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="150" id="cdx-9P-AeV"/>
                                     <constraint firstAttribute="width" secondItem="d1e-Bn-Nx7" secondAttribute="height" multiplier="250:157" id="q0a-m2-Lw9"/>
@@ -103,16 +102,16 @@ TRACKER
                         <viewControllerLayoutGuide type="bottom" id="wfy-db-euE"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
-                        <rect key="frame" x="0.0" y="0.0" width="428" height="926"/>
+                        <rect key="frame" x="0.0" y="0.0" width="430" height="932"/>
                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" heightSizable="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="satellite" showsBuildings="NO" pitchEnabled="NO" showsPointsOfInterest="NO" translatesAutoresizingMaskIntoConstraints="NO" id="k3X-Gz-uum">
-                                <rect key="frame" x="0.0" y="43" width="428" height="838"/>
+                                <rect key="frame" x="0.0" y="43" width="430" height="844"/>
                                 <color key="backgroundColor" systemColor="viewFlipsideBackgroundColor"/>
                                 <color key="tintColor" name="ISSRTT-White"/>
                             </mapView>
                             <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="redraw" translucent="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HpK-If-zcL">
-                                <rect key="frame" x="0.0" y="881" width="428" height="45"/>
+                                <rect key="frame" x="0.0" y="887" width="430" height="45"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="45" id="hwh-95-T32"/>
                                 </constraints>
@@ -148,26 +147,11 @@ TRACKER
                                             <segue destination="KAf-66-1vZ" kind="presentation" identifier="segueToCurrentCrew" modalPresentationStyle="fullScreen" id="dke-2Y-gTW"/>
                                         </connections>
                                     </barButtonItem>
-                                    <barButtonItem style="plain" systemItem="flexibleSpace" id="2HH-mt-qk7"/>
-                                    <barButtonItem title="Item" image="Live-Earth-2" id="N5f-Xl-svW" userLabel="Live Earth Video">
-                                        <inset key="imageInsets" minX="0.0" minY="6" maxX="0.0" maxY="-4"/>
-                                        <color key="tintColor" name="White"/>
-                                        <connections>
-                                            <segue destination="kzn-zg-Bfo" kind="presentation" identifier="segueToStreamingVideo" modalPresentationStyle="fullScreen" id="xGF-6c-INn"/>
-                                        </connections>
-                                    </barButtonItem>
-                                    <barButtonItem style="plain" systemItem="flexibleSpace" id="FCe-fM-5tx"/>
-                                    <barButtonItem image="NASA-TV-3" id="mD9-FM-otc" userLabel="NASA TV">
-                                        <inset key="imageInsets" minX="0.0" minY="6" maxX="0.0" maxY="-4"/>
-                                        <connections>
-                                            <segue destination="kzn-zg-Bfo" kind="presentation" identifier="segueToNasaTV" modalPresentationStyle="fullScreen" id="ZG3-kZ-xmb"/>
-                                        </connections>
-                                    </barButtonItem>
                                 </items>
                                 <color key="barTintColor" name="Pop-Up and Tab Bar Background"/>
                             </toolbar>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="1000" verticalCompressionResistancePriority="1000" placeholderIntrinsicWidth="560" placeholderIntrinsicHeight="50" text="Track" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Fte-sW-KzP">
-                                <rect key="frame" x="0.0" y="0.0" width="428" height="43"/>
+                                <rect key="frame" x="0.0" y="0.0" width="430" height="43"/>
                                 <color key="backgroundColor" name="Background"/>
                                 <color key="tintColor" name="Background"/>
                                 <constraints>
@@ -228,7 +212,7 @@ TRACKER
                                 <variation key="heightClass=regular-widthClass=regular" spacing="25"/>
                             </stackView>
                             <button contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kSZ-y8-zT6" userLabel="HelpButton">
-                                <rect key="frame" x="377" y="8.6666666666666661" width="31" height="25.666666666666671"/>
+                                <rect key="frame" x="379" y="8.6666666666666661" width="31" height="25.666666666666671"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="31" id="eKb-5B-MNd"/>
                                 </constraints>
@@ -244,13 +228,13 @@ TRACKER
                                 </connections>
                             </button>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Z6D-TV-FeT" userLabel="Zoom Slider Background">
-                                <rect key="frame" x="0.0" y="43" width="428" height="60"/>
+                                <rect key="frame" x="0.0" y="43" width="430" height="60"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="nSf-Fo-OQm">
-                                        <rect key="frame" x="12" y="3" width="404" height="57"/>
+                                        <rect key="frame" x="12" y="3" width="406" height="57"/>
                                         <subviews>
                                             <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="30" minValue="1" maxValue="30" minimumValueImage="Plus Math_ffffff_50" maximumValueImage="Minus Math _ffffff_50" translatesAutoresizingMaskIntoConstraints="NO" id="wun-ka-2M8" userLabel="Zoom Slider">
-                                                <rect key="frame" x="-2" y="0.0" width="288" height="58"/>
+                                                <rect key="frame" x="-2" y="0.0" width="290" height="58"/>
                                                 <color key="minimumTrackTintColor" name="Background"/>
                                                 <color key="maximumTrackTintColor" name="White"/>
                                                 <connections>
@@ -258,7 +242,7 @@ TRACKER
                                                 </connections>
                                             </slider>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wLo-oU-Ai8">
-                                                <rect key="frame" x="284" y="0.0" width="120" height="57"/>
+                                                <rect key="frame" x="286" y="0.0" width="120" height="57"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" constant="120" id="g7j-Rr-asI"/>
                                                 </constraints>
@@ -279,7 +263,7 @@ TRACKER
                                 </constraints>
                             </view>
                             <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ISS-New" translatesAutoresizingMaskIntoConstraints="NO" id="cKo-c4-ZI0">
-                                <rect key="frame" x="189" y="437" width="50" height="50"/>
+                                <rect key="frame" x="190" y="440" width="50" height="50"/>
                                 <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <gestureRecognizers/>
                                 <constraints>
@@ -288,7 +272,7 @@ TRACKER
                                 </constraints>
                             </imageView>
                             <stackView opaque="NO" contentMode="scaleToFill" alignment="top" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="XrY-vP-Q2h">
-                                <rect key="frame" x="101.66666666666669" y="821" width="225" height="60"/>
+                                <rect key="frame" x="102.66666666666669" y="827" width="225" height="60"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="i4e-9Z-DpO">
                                         <rect key="frame" x="0.0" y="0.0" width="225" height="60"/>
@@ -354,7 +338,7 @@ TRACKER
                                 </subviews>
                             </stackView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bOt-bt-VWJ" userLabel="Play Soundtrack">
-                                <rect key="frame" x="317" y="9" width="30" height="25"/>
+                                <rect key="frame" x="319" y="9" width="30" height="25"/>
                                 <color key="tintColor" name="White"/>
                                 <state key="normal" image="music.quarternote.3" catalog="system">
                                     <color key="titleColor" name="White"/>
@@ -365,7 +349,7 @@ TRACKER
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jrE-4A-1fT">
-                                <rect key="frame" x="338.66666666666669" y="837" width="27.333333333333314" height="31"/>
+                                <rect key="frame" x="339.66666666666669" y="843" width="27.333333333333314" height="31"/>
                                 <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <state key="normal">
                                     <imageReference key="image" image="doc.on.doc" catalog="system" symbolScale="large"/>
@@ -375,7 +359,7 @@ TRACKER
                                 </connections>
                             </button>
                             <sceneKitView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Oek-QF-9gT">
-                                <rect key="frame" x="101.66666666666669" y="635" width="225" height="186"/>
+                                <rect key="frame" x="102.66666666666669" y="641" width="225" height="186"/>
                                 <color key="backgroundColor" name="Pop-Up and Tab Bar Background"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="225" id="hxB-h0-bGd"/>
@@ -383,7 +367,7 @@ TRACKER
                                 </constraints>
                             </sceneKitView>
                             <button opaque="NO" contentMode="redraw" placeholderIntrinsicWidth="223" placeholderIntrinsicHeight="100" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" adjustsImageWhenHighlighted="NO" adjustsImageWhenDisabled="NO" lineBreakMode="clip" translatesAutoresizingMaskIntoConstraints="NO" id="GvX-Ty-Z8L">
-                                <rect key="frame" x="20" y="796" width="223" height="100"/>
+                                <rect key="frame" x="20" y="802" width="223" height="100"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="100" id="HnY-Ug-aPI"/>
                                     <constraint firstAttribute="width" constant="223" id="J7Z-eO-Xqu"/>
@@ -398,7 +382,7 @@ TRACKER
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="FmF-pz-0hA">
-                                <rect key="frame" x="297.66666666666669" y="641" width="22" height="20"/>
+                                <rect key="frame" x="298.66666666666669" y="647" width="22" height="20"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="20" id="eb2-eR-n7l"/>
                                     <constraint firstAttribute="width" constant="22" id="f5a-8h-Mr5"/>
@@ -413,7 +397,7 @@ TRACKER
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="R9b-8r-JJO" userLabel="Status">
-                                <rect key="frame" x="107.66666666666669" y="641" width="125" height="13.666666666666629"/>
+                                <rect key="frame" x="108.66666666666669" y="647" width="125" height="13.666666666666629"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="125" id="aoK-Kj-uPX"/>
                                 </constraints>
@@ -425,7 +409,7 @@ TRACKER
                                 </variation>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="f0c-45-PcO" userLabel="Reset">
-                                <rect key="frame" x="203" y="641" width="18" height="20"/>
+                                <rect key="frame" x="204" y="647" width="18" height="20"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="20" id="ZPL-J9-SQu"/>
                                     <constraint firstAttribute="width" constant="18" id="hoy-5a-Xiu"/>
@@ -511,14 +495,14 @@ TRACKER
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1090.7692307692307" y="-3628.4360189573458"/>
+            <point key="canvasLocation" x="-1461" y="-3545"/>
         </scene>
         <!--Settings-->
         <scene sceneID="Xni-iU-0bq">
             <objects>
                 <tableViewController modalPresentationStyle="currentContext" id="XQO-Wu-Orz" customClass="SettingsTableViewController" customModule="ISS_Tracker" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="grouped" separatorStyle="default" allowsSelection="NO" rowHeight="44" sectionHeaderHeight="18" sectionFooterHeight="18" id="8pn-xy-Q8N">
-                        <rect key="frame" x="0.0" y="0.0" width="428" height="811"/>
+                        <rect key="frame" x="0.0" y="0.0" width="430" height="817"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" systemColor="groupTableViewBackgroundColor"/>
                         <color key="tintColor" name="Background"/>
@@ -526,10 +510,10 @@ TRACKER
                             <tableViewSection headerTitle="My Settings" footerTitle="Date &amp; time saved goes here" id="JNb-vQ-Ap2">
                                 <cells>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="5" shouldIndentWhileEditing="NO" id="feR-PF-bBx">
-                                        <rect key="frame" x="0.0" y="55.333332061767578" width="428" height="44"/>
+                                        <rect key="frame" x="0.0" y="55.333332061767578" width="430" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="feR-PF-bBx" id="QRL-Na-1X9">
-                                            <rect key="frame" x="0.0" y="0.0" width="428" height="44"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="430" height="44"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Map type" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cbo-qo-Ihw">
@@ -547,7 +531,7 @@ TRACKER
                                                     </variation>
                                                 </label>
                                                 <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="MRs-yr-nVb">
-                                                    <rect key="frame" x="116" y="7" width="292" height="32"/>
+                                                    <rect key="frame" x="116" y="7" width="294" height="32"/>
                                                     <segments>
                                                         <segment title="Map"/>
                                                         <segment title="Satellite"/>
@@ -578,14 +562,14 @@ TRACKER
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="0.0" shouldIndentWhileEditing="NO" id="zja-U5-eWI">
-                                        <rect key="frame" x="0.0" y="99.333332061767578" width="428" height="44"/>
+                                        <rect key="frame" x="0.0" y="99.333332061767578" width="430" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="zja-U5-eWI" id="OD8-2A-CvA">
-                                            <rect key="frame" x="0.0" y="0.0" width="428" height="44"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="430" height="44"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="7np-xe-gcm">
-                                                    <rect key="frame" x="116" y="7" width="292" height="31"/>
+                                                    <rect key="frame" x="116" y="7" width="294" height="31"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="31" id="8D4-ar-b6K"/>
                                                     </constraints>
@@ -634,10 +618,10 @@ TRACKER
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="0.0" shouldIndentWhileEditing="NO" id="buz-sN-J1J">
-                                        <rect key="frame" x="0.0" y="143.33333206176758" width="428" height="44"/>
+                                        <rect key="frame" x="0.0" y="143.33333206176758" width="430" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="buz-sN-J1J" id="5HF-3d-mKv">
-                                            <rect key="frame" x="0.0" y="0.0" width="428" height="44"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="430" height="44"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Marker" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eyi-XN-va6">
@@ -649,7 +633,7 @@ TRACKER
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <segmentedControl opaque="NO" contentMode="center" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="S3B-t3-Rch">
-                                                    <rect key="frame" x="116" y="6.6666666666666679" width="292" height="32"/>
+                                                    <rect key="frame" x="116" y="6.6666666666666679" width="294" height="32"/>
                                                     <segments>
                                                         <segment title="" image="ISS-Marker-25" width="80"/>
                                                         <segment title="" image="center_direction_black_small"/>
@@ -671,10 +655,10 @@ TRACKER
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="0.0" shouldIndentWhileEditing="NO" id="beH-mc-IKd">
-                                        <rect key="frame" x="0.0" y="187.33333206176758" width="428" height="44"/>
+                                        <rect key="frame" x="0.0" y="187.33333206176758" width="430" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="beH-mc-IKd" id="uw1-dR-xc5">
-                                            <rect key="frame" x="0.0" y="0.0" width="428" height="44"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="430" height="44"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Days" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zmH-Vl-DLV">
@@ -686,7 +670,7 @@ TRACKER
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="LP7-P2-Q6A">
-                                                    <rect key="frame" x="116" y="7" width="292" height="28"/>
+                                                    <rect key="frame" x="116" y="7" width="294" height="28"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="31" id="FZS-FU-W0H"/>
                                                     </constraints>
@@ -716,14 +700,14 @@ TRACKER
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="5" shouldIndentWhileEditing="NO" id="dVi-B5-9j7">
-                                        <rect key="frame" x="0.0" y="231.33333206176758" width="428" height="44"/>
+                                        <rect key="frame" x="0.0" y="231.33333206176758" width="430" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="dVi-B5-9j7" id="d8k-rc-HG2">
-                                            <rect key="frame" x="0.0" y="0.0" width="428" height="44"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="430" height="44"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <segmentedControl opaque="NO" contentMode="scaleAspectFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="bordered" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="esf-bJ-uN4">
-                                                    <rect key="frame" x="116" y="7" width="292" height="28"/>
+                                                    <rect key="frame" x="116" y="7" width="294" height="28"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="32" id="98W-ki-0Gm"/>
                                                     </constraints>
@@ -761,10 +745,10 @@ TRACKER
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="0.0" shouldIndentWhileEditing="NO" id="kQB-ZM-T5L">
-                                        <rect key="frame" x="0.0" y="275.33333206176758" width="428" height="44"/>
+                                        <rect key="frame" x="0.0" y="275.33333206176758" width="430" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="kQB-ZM-T5L" id="A1c-fr-ebT">
-                                            <rect key="frame" x="0.0" y="0.0" width="428" height="44"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="430" height="44"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Globe Autorotation" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mCi-0a-w3o" userLabel="Auto-rotate globe">
@@ -776,7 +760,7 @@ TRACKER
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="y2t-Ew-TEa">
-                                                    <rect key="frame" x="359" y="9" width="51" height="31"/>
+                                                    <rect key="frame" x="361" y="9" width="51" height="31"/>
                                                     <color key="tintColor" name="Tint"/>
                                                     <color key="onTintColor" name="Background"/>
                                                     <connections>
@@ -801,10 +785,10 @@ TRACKER
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="0.0" shouldIndentWhileEditing="NO" id="gRH-64-JhX">
-                                        <rect key="frame" x="0.0" y="319.33333206176758" width="428" height="44"/>
+                                        <rect key="frame" x="0.0" y="319.33333206176758" width="430" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="gRH-64-JhX" id="EsK-p8-Cli">
-                                            <rect key="frame" x="0.0" y="0.0" width="428" height="44"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="430" height="44"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Globe overlay" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="B6r-f2-awk">
@@ -816,7 +800,7 @@ TRACKER
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="AOh-xo-JII">
-                                                    <rect key="frame" x="359" y="9" width="51" height="31"/>
+                                                    <rect key="frame" x="361" y="9" width="51" height="31"/>
                                                     <color key="tintColor" name="Tint"/>
                                                     <color key="onTintColor" name="Background"/>
                                                     <connections>
@@ -841,10 +825,10 @@ TRACKER
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="0.0" shouldIndentWhileEditing="NO" id="fQW-ZK-NvN">
-                                        <rect key="frame" x="0.0" y="363.33333206176758" width="428" height="44"/>
+                                        <rect key="frame" x="0.0" y="363.33333206176758" width="430" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="fQW-ZK-NvN" id="YpX-dg-wFa">
-                                            <rect key="frame" x="0.0" y="0.0" width="428" height="44"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="430" height="44"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Orbit ground track line overlay" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="GPd-Eu-RcD">
@@ -856,7 +840,7 @@ TRACKER
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Km1-b4-h94">
-                                                    <rect key="frame" x="359" y="9" width="51" height="31"/>
+                                                    <rect key="frame" x="361" y="9" width="51" height="31"/>
                                                     <color key="tintColor" name="Tint"/>
                                                     <color key="onTintColor" name="Background"/>
                                                     <connections>
@@ -881,10 +865,10 @@ TRACKER
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="0.0" shouldIndentWhileEditing="NO" id="XV6-Z2-6Mv">
-                                        <rect key="frame" x="0.0" y="407.33333206176758" width="428" height="44"/>
+                                        <rect key="frame" x="0.0" y="407.33333206176758" width="430" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="XV6-Z2-6Mv" id="J75-Nv-mBX">
-                                            <rect key="frame" x="0.0" y="0.0" width="428" height="44"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="430" height="44"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Information box overlay" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xfj-lz-832">
@@ -896,7 +880,7 @@ TRACKER
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="rol-nn-Xhg">
-                                                    <rect key="frame" x="359" y="9" width="51" height="31"/>
+                                                    <rect key="frame" x="361" y="9" width="51" height="31"/>
                                                     <color key="tintColor" name="Tint"/>
                                                     <color key="onTintColor" name="Background"/>
                                                     <connections>
@@ -921,10 +905,10 @@ TRACKER
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="0.0" shouldIndentWhileEditing="NO" id="VFV-fK-x7T">
-                                        <rect key="frame" x="0.0" y="451.33333206176758" width="428" height="44"/>
+                                        <rect key="frame" x="0.0" y="451.33333206176758" width="430" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="VFV-fK-x7T" id="hOh-xP-3zK">
-                                            <rect key="frame" x="0.0" y="0.0" width="428" height="44"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="430" height="44"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Map scale overlay" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FSb-yK-u2l">
@@ -936,7 +920,7 @@ TRACKER
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ooZ-11-bTh">
-                                                    <rect key="frame" x="359" y="8.0000000000000018" width="51" height="25.666666666666671"/>
+                                                    <rect key="frame" x="361" y="8.0000000000000018" width="51" height="25.666666666666671"/>
                                                     <color key="tintColor" name="Tint"/>
                                                     <color key="onTintColor" name="Background"/>
                                                     <connections>
@@ -955,10 +939,10 @@ TRACKER
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="0.0" shouldIndentWhileEditing="NO" id="mXo-4X-FQR">
-                                        <rect key="frame" x="0.0" y="495.33333206176758" width="428" height="44"/>
+                                        <rect key="frame" x="0.0" y="495.33333206176758" width="430" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="mXo-4X-FQR" id="cJh-XB-Qv7">
-                                            <rect key="frame" x="0.0" y="0.0" width="428" height="44"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="430" height="44"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Map gestures" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DBL-Pp-u6g">
@@ -978,7 +962,7 @@ TRACKER
                                                     </variation>
                                                 </label>
                                                 <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="7xJ-s5-dux">
-                                                    <rect key="frame" x="359" y="5.3333333333333321" width="51" height="30.999999999999996"/>
+                                                    <rect key="frame" x="361" y="5.3333333333333321" width="51" height="30.999999999999996"/>
                                                     <color key="tintColor" name="Tint"/>
                                                     <color key="onTintColor" name="Background"/>
                                                     <connections>
@@ -1006,19 +990,19 @@ TRACKER
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="0.0" shouldIndentWhileEditing="NO" id="k8r-oT-1WM">
-                                        <rect key="frame" x="0.0" y="539.33333206176758" width="428" height="44"/>
+                                        <rect key="frame" x="0.0" y="539.33333206176758" width="430" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="k8r-oT-1WM" id="kdm-UA-Od9">
-                                            <rect key="frame" x="0.0" y="0.0" width="428" height="44"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="430" height="44"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Show 'What's New' at startup" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aPG-a1-iCB">
-                                                    <rect key="frame" x="28" y="10.000000000000002" width="339" height="21.666666666666671"/>
+                                                    <rect key="frame" x="28" y="10.000000000000002" width="341" height="21.666666666666671"/>
                                                     <fontDescription key="fontDescription" style="UICTFontTextStyleSubhead"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="Vga-UT-obK">
-                                                    <rect key="frame" x="359" y="8.0000000000000018" width="51" height="25.666666666666671"/>
+                                                    <rect key="frame" x="361" y="8.0000000000000018" width="51" height="25.666666666666671"/>
                                                     <color key="tintColor" name="Tint"/>
                                                     <color key="onTintColor" name="Background"/>
                                                     <connections>
@@ -1042,19 +1026,19 @@ TRACKER
                             <tableViewSection headerTitle="Support &amp; Links" id="6Rm-aX-KVa">
                                 <cells>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="0.0" shouldIndentWhileEditing="NO" id="fwg-6k-oYo">
-                                        <rect key="frame" x="0.0" y="651.33333015441906" width="428" height="44"/>
+                                        <rect key="frame" x="0.0" y="651.33333015441906" width="430" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="fwg-6k-oYo" id="Xoc-O1-JM2">
-                                            <rect key="frame" x="0.0" y="0.0" width="428" height="44"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="430" height="44"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="900" text="Get support" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6On-ZV-xND">
-                                                    <rect key="frame" x="28" y="13" width="244" height="18"/>
+                                                    <rect key="frame" x="28" y="13" width="246" height="18"/>
                                                     <fontDescription key="fontDescription" style="UICTFontTextStyleSubhead"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="right" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="onp-Jx-hi5">
-                                                    <rect key="frame" x="280" y="6" width="128" height="32"/>
+                                                    <rect key="frame" x="282" y="6" width="128" height="32"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="128" id="ANL-0O-ekQ"/>
                                                     </constraints>
@@ -1088,19 +1072,19 @@ TRACKER
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="0.0" shouldIndentWhileEditing="NO" id="Wea-DH-1rN">
-                                        <rect key="frame" x="0.0" y="695.33333015441906" width="428" height="44"/>
+                                        <rect key="frame" x="0.0" y="695.33333015441906" width="430" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Wea-DH-1rN" id="ggh-RZ-SPi">
-                                            <rect key="frame" x="0.0" y="0.0" width="428" height="44"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="430" height="44"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="900" text="Please rate this app" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Vch-Fm-EKI">
-                                                    <rect key="frame" x="28" y="13" width="244" height="18"/>
+                                                    <rect key="frame" x="28" y="13" width="246" height="18"/>
                                                     <fontDescription key="fontDescription" style="UICTFontTextStyleSubhead"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="right" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="EC8-uv-swn">
-                                                    <rect key="frame" x="280" y="6" width="128" height="32"/>
+                                                    <rect key="frame" x="282" y="6" width="128" height="32"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="128" id="fng-iz-HAU"/>
                                                     </constraints>
@@ -1190,7 +1174,7 @@ TRACKER
                 <placeholder placeholderIdentifier="IBFirstResponder" id="HeY-E6-t8C" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <exit id="KE2-yS-lMR" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="-3071" y="-1693"/>
+            <point key="canvasLocation" x="-3098" y="-1700"/>
         </scene>
         <!--Help-->
         <scene sceneID="lBM-mR-tUw">
@@ -1201,11 +1185,11 @@ TRACKER
                         <viewControllerLayoutGuide type="bottom" id="S2S-fB-GTB"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="LW9-Xd-LX6">
-                        <rect key="frame" x="0.0" y="0.0" width="428" height="860"/>
+                        <rect key="frame" x="0.0" y="0.0" width="430" height="866"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <wkWebView contentMode="redraw" translatesAutoresizingMaskIntoConstraints="NO" id="Nbi-HB-nAn">
-                                <rect key="frame" x="16" y="8" width="396" height="844"/>
+                                <rect key="frame" x="16" y="8" width="398" height="850"/>
                                 <color key="backgroundColor" name="User Guide Background"/>
                                 <wkWebViewConfiguration key="configuration" allowsPictureInPictureMediaPlayback="NO">
                                     <dataDetectorTypes key="dataDetectorTypes" none="YES"/>
@@ -1246,7 +1230,7 @@ TRACKER
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="NZ8-QY-0bf" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" translucent="NO" id="2yb-HW-x1L">
-                        <rect key="frame" x="0.0" y="0.0" width="428" height="56"/>
+                        <rect key="frame" x="0.0" y="0.0" width="430" height="56"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="backgroundColor" name="Background"/>
                         <color key="barTintColor" name="ISSRTT-Red"/>
@@ -1273,13 +1257,13 @@ TRACKER
             <objects>
                 <tableViewController extendedLayoutIncludesOpaqueBars="YES" id="m1v-86-AHt" customClass="PassesTableViewController" customModule="ISS_Tracker" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="250" sectionHeaderHeight="28" sectionFooterHeight="28" id="G6n-Hd-QGO" userLabel="Pass Times Table">
-                        <rect key="frame" x="0.0" y="0.0" width="428" height="926"/>
+                        <rect key="frame" x="0.0" y="0.0" width="430" height="932"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" systemColor="viewFlipsideBackgroundColor"/>
                         <color key="tintColor" name="Background"/>
                         <color key="sectionIndexBackgroundColor" systemColor="viewFlipsideBackgroundColor"/>
                         <label key="tableHeaderView" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Tbo-sP-sVS">
-                            <rect key="frame" x="0.0" y="0.0" width="428" height="80"/>
+                            <rect key="frame" x="0.0" y="0.0" width="430" height="80"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <color key="backgroundColor" name="Pop-Up and Tab Bar Background"/>
                             <fontDescription key="fontDescription" name="Avenir-Medium" family="Avenir" pointSize="14"/>
@@ -1287,7 +1271,7 @@ TRACKER
                             <nil key="highlightedColor"/>
                         </label>
                         <activityIndicatorView key="tableFooterView" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" animating="YES" style="whiteLarge" id="rhJ-RX-jo8">
-                            <rect key="frame" x="0.0" y="413" width="428" height="37"/>
+                            <rect key="frame" x="0.0" y="413" width="430" height="37"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <color key="tintColor" name="Tint"/>
@@ -1295,21 +1279,21 @@ TRACKER
                         </activityIndicatorView>
                         <prototypes>
                             <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationLevel="3" indentationWidth="2" reuseIdentifier="OverheadTimesCell" rowHeight="255" id="5CG-0E-Phl" customClass="PassesTableViewCell" customModule="ISS_Tracker" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="130" width="428" height="255"/>
+                                <rect key="frame" x="0.0" y="130" width="430" height="255"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="5CG-0E-Phl" id="Zm6-PV-KNg">
-                                    <rect key="frame" x="0.0" y="0.0" width="428" height="255"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="430" height="255"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="WUu-6h-bZl">
-                                            <rect key="frame" x="10" y="8" width="408" height="247"/>
+                                            <rect key="frame" x="10" y="8" width="410" height="247"/>
                                             <subviews>
                                                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" alpha="0.14999999999999999" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ISS-New-Marker" translatesAutoresizingMaskIntoConstraints="NO" id="Ts5-eC-YSk">
-                                                    <rect key="frame" x="0.0" y="0.0" width="408" height="247"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="410" height="247"/>
                                                     <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 </imageView>
                                                 <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" alpha="0.5" contentMode="top" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="4" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WIK-Oi-s9f" customClass="PassDateUILabel" customModule="ISS_Tracker" customModuleProvider="target">
-                                                    <rect key="frame" x="0.0" y="0.0" width="408" height="110"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="410" height="110"/>
                                                     <color key="backgroundColor" name="Label Background"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="110" id="Ufk-w7-HMR"/>
@@ -1324,10 +1308,10 @@ TRACKER
                                                     </variation>
                                                 </label>
                                                 <stackView opaque="NO" contentMode="scaleToFill" spacing="50" translatesAutoresizingMaskIntoConstraints="NO" id="qae-UY-wuq">
-                                                    <rect key="frame" x="6" y="83" width="394" height="25"/>
+                                                    <rect key="frame" x="6" y="83" width="396" height="25"/>
                                                     <subviews>
                                                         <stackView opaque="NO" contentMode="scaleToFill" distribution="equalCentering" spacing="6" translatesAutoresizingMaskIntoConstraints="NO" id="H1n-FM-qhX">
-                                                            <rect key="frame" x="0.0" y="0.0" width="233" height="25"/>
+                                                            <rect key="frame" x="0.0" y="0.0" width="235" height="25"/>
                                                             <subviews>
                                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icons8-time_span-1" translatesAutoresizingMaskIntoConstraints="NO" id="oIC-iY-It3">
                                                                     <rect key="frame" x="0.0" y="0.0" width="25" height="25"/>
@@ -1337,7 +1321,7 @@ TRACKER
                                                                     </constraints>
                                                                 </imageView>
                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="998" verticalHuggingPriority="251" horizontalCompressionResistancePriority="997" text="xxx" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="12" translatesAutoresizingMaskIntoConstraints="NO" id="WtP-wY-q2Y">
-                                                                    <rect key="frame" x="31" y="0.0" width="202" height="25"/>
+                                                                    <rect key="frame" x="31" y="0.0" width="204" height="25"/>
                                                                     <constraints>
                                                                         <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="160" id="NED-ZK-AWx"/>
                                                                     </constraints>
@@ -1354,7 +1338,7 @@ TRACKER
                                                             </constraints>
                                                         </stackView>
                                                         <stackView opaque="NO" contentMode="scaleToFill" distribution="equalSpacing" spacing="6" translatesAutoresizingMaskIntoConstraints="NO" id="VlI-eN-ADC">
-                                                            <rect key="frame" x="283" y="0.0" width="111" height="25"/>
+                                                            <rect key="frame" x="285" y="0.0" width="111" height="25"/>
                                                             <subviews>
                                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icons8-sun-1" translatesAutoresizingMaskIntoConstraints="NO" id="KJ9-U5-YEe">
                                                                     <rect key="frame" x="0.0" y="0.0" width="25" height="25"/>
@@ -1382,7 +1366,7 @@ TRACKER
                                                     </subviews>
                                                 </stackView>
                                                 <stackView opaque="NO" contentMode="scaleToFill" distribution="equalSpacing" translatesAutoresizingMaskIntoConstraints="NO" id="r7K-JN-JWJ">
-                                                    <rect key="frame" x="72" y="114" width="328" height="19.333333333333343"/>
+                                                    <rect key="frame" x="72" y="114" width="330" height="19.333333333333343"/>
                                                     <subviews>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="TIME" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DcM-ON-0Im">
                                                             <rect key="frame" x="0.0" y="0.0" width="55" height="19.333333333333332"/>
@@ -1394,7 +1378,7 @@ TRACKER
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="AZI" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XUk-Ek-693">
-                                                            <rect key="frame" x="91.333333333333343" y="0.0" width="53" height="19.333333333333332"/>
+                                                            <rect key="frame" x="92" y="0.0" width="53" height="19.333333333333332"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="width" constant="53" id="8sK-hc-8Wh"/>
                                                             </constraints>
@@ -1403,7 +1387,7 @@ TRACKER
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="ELEV" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FNi-dx-cv3">
-                                                            <rect key="frame" x="180.66666666666669" y="0.0" width="56" height="19.333333333333332"/>
+                                                            <rect key="frame" x="182" y="0.0" width="56" height="19.333333333333332"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="width" constant="56" id="bXU-It-96z"/>
                                                             </constraints>
@@ -1412,7 +1396,7 @@ TRACKER
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="COMP" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uHk-cj-EMP">
-                                                            <rect key="frame" x="273" y="0.0" width="55" height="19.333333333333332"/>
+                                                            <rect key="frame" x="275" y="0.0" width="55" height="19.333333333333332"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="width" constant="55" id="NIp-ua-eok"/>
                                                             </constraints>
@@ -1456,10 +1440,10 @@ TRACKER
                                                     </constraints>
                                                 </stackView>
                                                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="equalSpacing" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="UgT-nh-Qxn">
-                                                    <rect key="frame" x="72" y="140" width="328" height="92"/>
+                                                    <rect key="frame" x="72" y="140" width="330" height="92"/>
                                                     <subviews>
                                                         <stackView opaque="NO" contentMode="scaleToFill" distribution="equalSpacing" spacing="1" translatesAutoresizingMaskIntoConstraints="NO" id="3k5-o4-kUX">
-                                                            <rect key="frame" x="0.0" y="0.0" width="328" height="19.333333333333332"/>
+                                                            <rect key="frame" x="0.0" y="0.0" width="330" height="19.333333333333332"/>
                                                             <subviews>
                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="12:00PM" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FwY-ja-Py8">
                                                                     <rect key="frame" x="0.0" y="0.0" width="65" height="19.333333333333332"/>
@@ -1471,7 +1455,7 @@ TRACKER
                                                                     <nil key="highlightedColor"/>
                                                                 </label>
                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="30.5" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BiX-l4-gvd">
-                                                                    <rect key="frame" x="111" y="0.0" width="40" height="19.333333333333332"/>
+                                                                    <rect key="frame" x="111.66666666666666" y="0.0" width="40" height="19.333333333333332"/>
                                                                     <constraints>
                                                                         <constraint firstAttribute="width" constant="40" id="kOG-es-ZSg"/>
                                                                     </constraints>
@@ -1480,7 +1464,7 @@ TRACKER
                                                                     <nil key="highlightedColor"/>
                                                                 </label>
                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="15.05" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="f2M-3V-gfJ">
-                                                                    <rect key="frame" x="197" y="0.0" width="40" height="19.333333333333332"/>
+                                                                    <rect key="frame" x="198.33333333333331" y="0.0" width="40" height="19.333333333333332"/>
                                                                     <constraints>
                                                                         <constraint firstAttribute="width" constant="40" id="6on-fA-1SR"/>
                                                                     </constraints>
@@ -1489,7 +1473,7 @@ TRACKER
                                                                     <nil key="highlightedColor"/>
                                                                 </label>
                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="NE" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Vpw-I9-jil">
-                                                                    <rect key="frame" x="283" y="0.0" width="45" height="19.333333333333332"/>
+                                                                    <rect key="frame" x="285" y="0.0" width="45" height="19.333333333333332"/>
                                                                     <constraints>
                                                                         <constraint firstAttribute="width" constant="45" id="jqK-mo-6Bi"/>
                                                                     </constraints>
@@ -1500,7 +1484,7 @@ TRACKER
                                                             </subviews>
                                                         </stackView>
                                                         <stackView opaque="NO" contentMode="scaleToFill" distribution="equalSpacing" spacing="1" translatesAutoresizingMaskIntoConstraints="NO" id="T6F-mP-e3f">
-                                                            <rect key="frame" x="0.0" y="36.333333333333343" width="328" height="19.333333333333329"/>
+                                                            <rect key="frame" x="0.0" y="36.333333333333343" width="330" height="19.333333333333329"/>
                                                             <subviews>
                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="12:00PM" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="89O-zD-qRi">
                                                                     <rect key="frame" x="0.0" y="0.0" width="65" height="19.333333333333332"/>
@@ -1512,7 +1496,7 @@ TRACKER
                                                                     <nil key="highlightedColor"/>
                                                                 </label>
                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="30.5" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1hz-62-B2Y">
-                                                                    <rect key="frame" x="111" y="0.0" width="40" height="19.333333333333332"/>
+                                                                    <rect key="frame" x="111.66666666666666" y="0.0" width="40" height="19.333333333333332"/>
                                                                     <constraints>
                                                                         <constraint firstAttribute="width" constant="40" id="IJj-Jp-rXc"/>
                                                                     </constraints>
@@ -1521,7 +1505,7 @@ TRACKER
                                                                     <nil key="highlightedColor"/>
                                                                 </label>
                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="15.05" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="v94-95-EiB">
-                                                                    <rect key="frame" x="197" y="0.0" width="40" height="19.333333333333332"/>
+                                                                    <rect key="frame" x="198.33333333333331" y="0.0" width="40" height="19.333333333333332"/>
                                                                     <constraints>
                                                                         <constraint firstAttribute="width" constant="40" id="mbT-7M-2UE"/>
                                                                     </constraints>
@@ -1530,7 +1514,7 @@ TRACKER
                                                                     <nil key="highlightedColor"/>
                                                                 </label>
                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="NE" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yS1-9o-HC4">
-                                                                    <rect key="frame" x="283" y="0.0" width="45" height="19.333333333333332"/>
+                                                                    <rect key="frame" x="285" y="0.0" width="45" height="19.333333333333332"/>
                                                                     <constraints>
                                                                         <constraint firstAttribute="width" constant="45" id="js7-4r-kNo"/>
                                                                     </constraints>
@@ -1541,7 +1525,7 @@ TRACKER
                                                             </subviews>
                                                         </stackView>
                                                         <stackView opaque="NO" contentMode="scaleToFill" distribution="equalSpacing" spacing="1" translatesAutoresizingMaskIntoConstraints="NO" id="ZiG-CX-6Wn">
-                                                            <rect key="frame" x="0.0" y="72.666666666666657" width="328" height="19.333333333333329"/>
+                                                            <rect key="frame" x="0.0" y="72.666666666666657" width="330" height="19.333333333333329"/>
                                                             <subviews>
                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="12:00PM" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yjc-zr-CUh">
                                                                     <rect key="frame" x="0.0" y="0.0" width="65" height="19.333333333333332"/>
@@ -1553,7 +1537,7 @@ TRACKER
                                                                     <nil key="highlightedColor"/>
                                                                 </label>
                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="30.5" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VCN-OD-M3l">
-                                                                    <rect key="frame" x="111" y="0.0" width="40" height="19.333333333333332"/>
+                                                                    <rect key="frame" x="111.66666666666666" y="0.0" width="40" height="19.333333333333332"/>
                                                                     <constraints>
                                                                         <constraint firstAttribute="width" constant="40" id="dNg-RA-cmQ"/>
                                                                     </constraints>
@@ -1562,7 +1546,7 @@ TRACKER
                                                                     <nil key="highlightedColor"/>
                                                                 </label>
                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="15.05" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6XQ-YD-i1H">
-                                                                    <rect key="frame" x="197" y="0.0" width="40" height="19.333333333333332"/>
+                                                                    <rect key="frame" x="198.33333333333331" y="0.0" width="40" height="19.333333333333332"/>
                                                                     <constraints>
                                                                         <constraint firstAttribute="width" constant="40" id="C3d-QH-8Bv"/>
                                                                     </constraints>
@@ -1571,7 +1555,7 @@ TRACKER
                                                                     <nil key="highlightedColor"/>
                                                                 </label>
                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="NE" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nK8-zX-b3e">
-                                                                    <rect key="frame" x="283" y="0.0" width="45" height="19.333333333333332"/>
+                                                                    <rect key="frame" x="285" y="0.0" width="45" height="19.333333333333332"/>
                                                                     <constraints>
                                                                         <constraint firstAttribute="width" constant="45" id="x9k-fh-cla"/>
                                                                     </constraints>
@@ -1584,7 +1568,7 @@ TRACKER
                                                     </subviews>
                                                 </stackView>
                                                 <stackView opaque="NO" contentMode="scaleToFill" distribution="equalSpacing" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="bLf-V8-BYN">
-                                                    <rect key="frame" x="126.66666666666666" y="45" width="154.99999999999997" height="35"/>
+                                                    <rect key="frame" x="127.66666666666666" y="45" width="154.99999999999997" height="35"/>
                                                     <subviews>
                                                         <imageView userInteractionEnabled="NO" tag="1" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="star-unfilled" translatesAutoresizingMaskIntoConstraints="NO" id="xrj-a7-IwC" userLabel="star1">
                                                             <rect key="frame" x="0.0" y="0.0" width="35" height="35"/>
@@ -1745,20 +1729,20 @@ TRACKER
                 <placeholder placeholderIdentifier="IBFirstResponder" id="JCA-ed-TWT" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <exit id="v27-2Q-D4J" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="-932.24299065420553" y="-1699.5680345572355"/>
+            <point key="canvasLocation" x="-1091" y="-1700"/>
         </scene>
         <!--Crew-->
         <scene sceneID="xDe-RZ-xqm">
             <objects>
                 <tableViewController extendedLayoutIncludesOpaqueBars="YES" id="Dsg-u5-LHe" customClass="CrewMembersTableViewController" customModule="ISS_Tracker" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="228" sectionHeaderHeight="28" sectionFooterHeight="28" id="19Q-pe-1TS">
-                        <rect key="frame" x="0.0" y="0.0" width="428" height="926"/>
+                        <rect key="frame" x="0.0" y="0.0" width="430" height="932"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" systemColor="viewFlipsideBackgroundColor"/>
                         <color key="tintColor" name="Background"/>
                         <color key="sectionIndexBackgroundColor" systemColor="viewFlipsideBackgroundColor"/>
                         <label key="tableHeaderView" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" minimumFontSize="10" id="ulc-sM-zsy" userLabel="Prompt Label">
-                            <rect key="frame" x="0.0" y="0.0" width="428" height="55"/>
+                            <rect key="frame" x="0.0" y="0.0" width="430" height="55"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <color key="backgroundColor" name="Pop-Up and Tab Bar Background"/>
                             <fontDescription key="fontDescription" name="Avenir-Medium" family="Avenir" pointSize="14"/>
@@ -1766,7 +1750,7 @@ TRACKER
                             <nil key="highlightedColor"/>
                         </label>
                         <activityIndicatorView key="tableFooterView" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" animating="YES" style="whiteLarge" id="IwP-25-Idf">
-                            <rect key="frame" x="0.0" y="298" width="428" height="37"/>
+                            <rect key="frame" x="0.0" y="298" width="430" height="37"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <color key="tintColor" name="Tint"/>
@@ -1774,28 +1758,28 @@ TRACKER
                         </activityIndicatorView>
                         <prototypes>
                             <tableViewCell contentMode="scaleToFill" layoutMarginsFollowReadableWidth="YES" selectionStyle="none" indentationLevel="3" indentationWidth="2" reuseIdentifier="crewMemberCell" rowHeight="165" id="CQe-4X-BoY" customClass="AstronautTableViewCell" customModule="ISS_Tracker" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="105" width="428" height="165"/>
+                                <rect key="frame" x="0.0" y="105" width="430" height="165"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="CQe-4X-BoY" id="rmP-jJ-HdO">
-                                    <rect key="frame" x="0.0" y="0.0" width="428" height="165"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="430" height="165"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="udj-4z-tPg" userLabel="Cell Background">
-                                            <rect key="frame" x="14" y="8" width="400" height="157"/>
+                                            <rect key="frame" x="14" y="8" width="402" height="157"/>
                                             <subviews>
                                                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" alpha="0.14999999999999999" contentMode="scaleAspectFit" horizontalHuggingPriority="1000" verticalHuggingPriority="251" image="spacex-dragon-spacecraft-1" translatesAutoresizingMaskIntoConstraints="NO" id="jSl-aY-2Ie" userLabel="Launch spacecraft Image Watermark">
-                                                    <rect key="frame" x="195" y="0.0" width="205" height="157"/>
+                                                    <rect key="frame" x="195" y="0.0" width="207" height="157"/>
                                                     <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 </imageView>
                                                 <view alpha="0.5" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="553-YW-AOu">
-                                                    <rect key="frame" x="0.0" y="0.0" width="400" height="55"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="402" height="55"/>
                                                     <color key="backgroundColor" name="Label Background"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="55" id="VPs-2p-qmH"/>
                                                     </constraints>
                                                 </view>
                                                 <stackView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="999" verticalCompressionResistancePriority="1000" spacing="6" translatesAutoresizingMaskIntoConstraints="NO" id="lcf-6z-UBJ">
-                                                    <rect key="frame" x="6" y="12" width="388" height="133"/>
+                                                    <rect key="frame" x="6" y="12" width="390" height="133"/>
                                                     <subviews>
                                                         <imageView userInteractionEnabled="NO" tag="1" contentMode="scaleAspectFill" horizontalHuggingPriority="1" verticalHuggingPriority="1" horizontalCompressionResistancePriority="250" verticalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="Ueo-gK-6At" customClass="AstronautImageView" customModule="ISS_Tracker" customModuleProvider="target">
                                                             <rect key="frame" x="0.0" y="0.0" width="133" height="133"/>
@@ -1832,10 +1816,10 @@ TRACKER
                                                             </userDefinedRuntimeAttributes>
                                                         </imageView>
                                                         <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="6" translatesAutoresizingMaskIntoConstraints="NO" id="scr-vL-hhP">
-                                                            <rect key="frame" x="139" y="0.0" width="249" height="133"/>
+                                                            <rect key="frame" x="139" y="0.0" width="251" height="133"/>
                                                             <subviews>
                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="top" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.80000000000000004" translatesAutoresizingMaskIntoConstraints="NO" id="vM8-GE-2P2" userLabel="Name &amp; Nationality">
-                                                                    <rect key="frame" x="0.0" y="0.0" width="249" height="36"/>
+                                                                    <rect key="frame" x="0.0" y="0.0" width="251" height="36"/>
                                                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                                                     <constraints>
                                                                         <constraint firstAttribute="height" constant="36" id="AUk-Dg-A9X"/>
@@ -1848,7 +1832,7 @@ TRACKER
                                                                     </variation>
                                                                 </label>
                                                                 <stackView opaque="NO" contentMode="scaleToFill" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="Hwx-dy-Gdk">
-                                                                    <rect key="frame" x="0.0" y="42" width="249" height="91"/>
+                                                                    <rect key="frame" x="0.0" y="42" width="251" height="91"/>
                                                                     <subviews>
                                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="249" verticalCompressionResistancePriority="751" lineBreakMode="tailTruncation" numberOfLines="6" baselineAdjustment="alignBaselines" minimumScaleFactor="0.80000000000000004" translatesAutoresizingMaskIntoConstraints="NO" id="ttb-yV-w5e">
                                                                             <rect key="frame" x="0.0" y="0.0" width="108" height="91"/>
@@ -1870,7 +1854,7 @@ Days in Space:</string>
                                                                             </variation>
                                                                         </label>
                                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="249" verticalCompressionResistancePriority="751" text="Astronaut data" lineBreakMode="tailTruncation" numberOfLines="6" baselineAdjustment="alignBaselines" minimumScaleFactor="0.75" translatesAutoresizingMaskIntoConstraints="NO" id="bj9-hT-vTK">
-                                                                            <rect key="frame" x="102" y="0.0" width="147" height="91"/>
+                                                                            <rect key="frame" x="102" y="0.0" width="149" height="91"/>
                                                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                                                             <fontDescription key="fontDescription" name="AvenirNext-Regular" family="Avenir Next" pointSize="14"/>
                                                                             <color key="textColor" name="White"/>
@@ -2064,7 +2048,7 @@ Days in Space:</string>
                     </connections>
                 </view>
             </objects>
-            <point key="canvasLocation" x="-2154.6728971962616" y="-1693.088552915767"/>
+            <point key="canvasLocation" x="-2129" y="-1700"/>
         </scene>
         <!--AstronautBio-->
         <scene sceneID="Qb2-HR-8TG">
@@ -2075,11 +2059,11 @@ Days in Space:</string>
                         <viewControllerLayoutGuide type="bottom" id="PRF-aR-Fcj"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="iAb-4a-W37">
-                        <rect key="frame" x="0.0" y="0.0" width="428" height="882"/>
+                        <rect key="frame" x="0.0" y="0.0" width="430" height="888"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="2Uc-ji-9Bz" userLabel="Background">
-                                <rect key="frame" x="0.0" y="0.0" width="428" height="882"/>
+                                <rect key="frame" x="0.0" y="0.0" width="430" height="888"/>
                                 <color key="backgroundColor" systemColor="viewFlipsideBackgroundColor"/>
                             </view>
                         </subviews>
@@ -2118,7 +2102,7 @@ Days in Space:</string>
                     <toolbarItems/>
                     <navigationItem key="navigationItem" id="NbO-fa-Kas"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" barStyle="black" translucent="NO" id="AwQ-nj-sb9">
-                        <rect key="frame" x="0.0" y="0.0" width="428" height="44"/>
+                        <rect key="frame" x="0.0" y="0.0" width="430" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="backgroundColor" name="Background"/>
                         <color key="tintColor" name="White"/>
@@ -2143,7 +2127,7 @@ Days in Space:</string>
                     <toolbarItems/>
                     <navigationItem key="navigationItem" id="UCQ-cc-2Ks"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" barStyle="black" translucent="NO" id="yAo-aF-CV0">
-                        <rect key="frame" x="0.0" y="0.0" width="428" height="44"/>
+                        <rect key="frame" x="0.0" y="0.0" width="430" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="backgroundColor" name="Background"/>
                         <color key="tintColor" name="Background"/>
@@ -2173,7 +2157,7 @@ Days in Space:</string>
                     <toolbarItems/>
                     <navigationItem key="navigationItem" id="Hhb-qQ-T10"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" barStyle="black" translucent="NO" id="rlF-pp-kdv">
-                        <rect key="frame" x="0.0" y="0.0" width="428" height="44"/>
+                        <rect key="frame" x="0.0" y="0.0" width="430" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="backgroundColor" name="Background"/>
                         <color key="tintColor" name="Background"/>
@@ -2198,7 +2182,7 @@ Days in Space:</string>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="BQd-9j-Dfx" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" barStyle="black" translucent="NO" id="6sc-Ym-rrX">
-                        <rect key="frame" x="0.0" y="0.0" width="428" height="56"/>
+                        <rect key="frame" x="0.0" y="0.0" width="430" height="56"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="backgroundColor" name="Background"/>
                         <color key="tintColor" name="Background"/>
@@ -2220,66 +2204,6 @@ Days in Space:</string>
             </objects>
             <point key="canvasLocation" x="-1177" y="-786"/>
         </scene>
-        <!--Earth View-->
-        <scene sceneID="h53-Kz-gr7">
-            <objects>
-                <viewController extendedLayoutIncludesOpaqueBars="YES" id="ML7-44-Z1L" customClass="LiveVideoViewController" customModule="ISS_Tracker" customModuleProvider="target" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="GR7-gA-2Sg"/>
-                        <viewControllerLayoutGuide type="bottom" id="61g-B4-Mfb"/>
-                    </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="iR9-Vr-UOG">
-                        <rect key="frame" x="0.0" y="0.0" width="428" height="926"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="oup-Pf-N8L" userLabel="Background">
-                                <rect key="frame" x="4" y="44" width="420" height="882"/>
-                                <color key="backgroundColor" systemColor="viewFlipsideBackgroundColor"/>
-                            </view>
-                        </subviews>
-                        <color key="backgroundColor" systemColor="viewFlipsideBackgroundColor"/>
-                        <constraints>
-                            <constraint firstItem="oup-Pf-N8L" firstAttribute="top" secondItem="GR7-gA-2Sg" secondAttribute="bottom" id="YeU-JI-Q1j"/>
-                            <constraint firstItem="oup-Pf-N8L" firstAttribute="bottom" secondItem="61g-B4-Mfb" secondAttribute="top" id="eve-lh-NbP"/>
-                            <constraint firstItem="oup-Pf-N8L" firstAttribute="centerX" secondItem="iR9-Vr-UOG" secondAttribute="centerX" id="l2y-Di-ars"/>
-                            <constraint firstItem="oup-Pf-N8L" firstAttribute="leading" secondItem="iR9-Vr-UOG" secondAttribute="leadingMargin" constant="-16" id="qkY-LJ-CUR"/>
-                        </constraints>
-                    </view>
-                    <navigationItem key="navigationItem" title="Earth View" largeTitleDisplayMode="never" id="Glz-RY-sjH">
-                        <barButtonItem key="leftBarButtonItem" image="chevron.backward" catalog="system" id="dCW-UL-Gr6" userLabel="Done">
-                            <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                            <connections>
-                                <segue destination="sEe-Fv-QiU" kind="unwind" unwindAction="unwindFromOtherVCsWithUnwindSegue:" id="xyb-Oy-a42"/>
-                            </connections>
-                        </barButtonItem>
-                        <rightBarButtonItems>
-                            <barButtonItem image="questionmark.circle" catalog="system" id="b0z-lU-LXq">
-                                <color key="tintColor" name="ISSRTT-White"/>
-                                <connections>
-                                    <segue destination="BQd-9j-Dfx" kind="popoverPresentation" identifier="segueToHelpFromStreamingVideo" popoverAnchorBarButtonItem="b0z-lU-LXq" id="FzL-nh-cek">
-                                        <popoverArrowDirection key="popoverArrowDirection" up="YES" down="YES" left="YES" right="YES"/>
-                                    </segue>
-                                </connections>
-                            </barButtonItem>
-                            <barButtonItem systemItem="refresh" id="bkS-34-6BH">
-                                <color key="tintColor" name="White"/>
-                                <connections>
-                                    <action selector="refresh:" destination="ML7-44-Z1L" id="Snz-Pi-pFh"/>
-                                </connections>
-                            </barButtonItem>
-                        </rightBarButtonItems>
-                    </navigationItem>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="HI3-DY-aFm" userLabel="First Responder" sceneMemberID="firstResponder"/>
-                <exit id="sEe-Fv-QiU" userLabel="Exit" sceneMemberID="exit"/>
-                <tapGestureRecognizer id="cP2-nQ-Wqd">
-                    <connections>
-                        <action selector="userTappedImage:" destination="ML7-44-Z1L" id="cWg-IK-4Px"/>
-                    </connections>
-                </tapGestureRecognizer>
-            </objects>
-            <point key="canvasLocation" x="151" y="-1698"/>
-        </scene>
         <!--Globe-->
         <scene sceneID="FFZ-eW-W62">
             <objects>
@@ -2289,18 +2213,18 @@ Days in Space:</string>
                         <viewControllerLayoutGuide type="bottom" id="4tc-5W-dL4"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="ouM-W8-b2U">
-                        <rect key="frame" x="0.0" y="0.0" width="428" height="882"/>
+                        <rect key="frame" x="0.0" y="0.0" width="430" height="888"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="7EC-Ek-IrK">
-                                <rect key="frame" x="0.0" y="0.0" width="428" height="882"/>
+                                <rect key="frame" x="0.0" y="0.0" width="430" height="888"/>
                             </imageView>
                             <sceneKitView clipsSubviews="YES" contentMode="scaleToFill" sceneName="fullGlobe" translatesAutoresizingMaskIntoConstraints="NO" id="pEZ-ao-oHi">
-                                <rect key="frame" x="0.0" y="0.0" width="428" height="882"/>
+                                <rect key="frame" x="0.0" y="0.0" width="430" height="888"/>
                                 <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </sceneKitView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="M2A-FM-kEU" userLabel="Controls Background">
-                                <rect key="frame" x="0.0" y="0.0" width="428" height="60"/>
+                                <rect key="frame" x="0.0" y="0.0" width="430" height="60"/>
                                 <color key="backgroundColor" red="0.33333333329999998" green="0.33333334329999997" blue="0.33333334329999997" alpha="0.60217786819999997" colorSpace="custom" customColorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="60" id="aku-o6-txw"/>
@@ -2319,7 +2243,7 @@ Days in Space:</string>
                                 </variation>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6eU-e1-Lr2">
-                                <rect key="frame" x="383" y="9.9999999999999982" width="30" height="27.333333333333329"/>
+                                <rect key="frame" x="385" y="9.9999999999999982" width="30" height="27.333333333333329"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="30" id="zSP-Ql-HhX"/>
                                 </constraints>
@@ -2333,7 +2257,7 @@ Days in Space:</string>
                                 </connections>
                             </button>
                             <stackView opaque="NO" contentMode="scaleAspectFit" spacing="40" translatesAutoresizingMaskIntoConstraints="NO" id="CzR-Ni-2YD">
-                                <rect key="frame" x="247.33333333333334" y="9.9999999999999982" width="95.666666666666657" height="27.333333333333329"/>
+                                <rect key="frame" x="249.33333333333334" y="9.9999999999999982" width="95.666666666666657" height="27.333333333333329"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pEx-2J-tyc" userLabel="Reset">
                                         <rect key="frame" x="0.0" y="0.0" width="30" height="27.333333333333332"/>
@@ -2431,33 +2355,7 @@ Days in Space:</string>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="nDE-KW-MjK" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
                 <exit id="2Z1-xE-zUS" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="1127.6923076923076" y="-1697.6303317535544"/>
-        </scene>
-        <!--Navigation Controller-->
-        <scene sceneID="TJo-kv-MZz">
-            <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="kzn-zg-Bfo" sceneMemberID="viewController">
-                    <toolbarItems/>
-                    <navigationItem key="navigationItem" id="OIA-Hq-RNV"/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" barStyle="black" translucent="NO" id="oBh-qV-pGx">
-                        <rect key="frame" x="0.0" y="0.0" width="428" height="44"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                        <color key="backgroundColor" name="Background"/>
-                        <color key="tintColor" name="Background"/>
-                        <color key="barTintColor" name="ISSRTT-Red"/>
-                        <textAttributes key="titleTextAttributes">
-                            <fontDescription key="fontDescription" name="NasalizationRg-Regular" family="Nasalization" pointSize="17"/>
-                            <color key="textColor" name="White"/>
-                        </textAttributes>
-                    </navigationBar>
-                    <nil name="viewControllers"/>
-                    <connections>
-                        <segue destination="ML7-44-Z1L" kind="relationship" relationship="rootViewController" id="0cD-9J-Srj"/>
-                    </connections>
-                </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="aj1-rj-lPU" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="-293" y="-2559"/>
+            <point key="canvasLocation" x="-29" y="-1700"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="xIT-Qf-Dav">
@@ -2466,7 +2364,7 @@ Days in Space:</string>
                     <toolbarItems/>
                     <navigationItem key="navigationItem" id="5On-kT-UJN"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" barStyle="black" translucent="NO" id="E1E-2K-uL2">
-                        <rect key="frame" x="0.0" y="0.0" width="428" height="44"/>
+                        <rect key="frame" x="0.0" y="0.0" width="430" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="backgroundColor" name="Background"/>
                         <color key="tintColor" name="Background"/>
@@ -2483,13 +2381,12 @@ Days in Space:</string>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="YP6-QJ-nms" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="472" y="-2559"/>
+            <point key="canvasLocation" x="-315" y="-2562"/>
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
         <segue reference="cR5-3C-RSS"/>
-        <segue reference="ZG3-kZ-xmb"/>
-        <segue reference="iJ8-s1-Dwi"/>
+        <segue reference="QZj-XB-PmD"/>
         <segue reference="7Ix-1h-Ypp"/>
     </inferredMetricsTieBreakers>
     <color key="tintColor" name="Tint"/>
@@ -2500,17 +2397,15 @@ Days in Space:</string>
         <image name="ISS-Marker-25" width="43" height="25"/>
         <image name="ISS-New" width="150" height="85"/>
         <image name="ISS-New-Marker" width="75" height="42"/>
-        <image name="Live-Earth-2" width="40" height="40"/>
         <image name="Milky Way Correct Rotation in the Sky Square Thumb" width="100" height="100"/>
         <image name="Minus Math _ffffff_50" width="15" height="15"/>
-        <image name="NASA-TV-3" width="40" height="40"/>
         <image name="Orion Nebula Thumb" width="100" height="100"/>
         <image name="Plus Math Black" width="20" height="20"/>
         <image name="Plus Math_ffffff_50" width="16.666666030883789" height="16.666666030883789"/>
         <image name="Tarantula Nebula in the Large Magellanic Cloud Thumb" width="100" height="100"/>
         <image name="Track-Erase-ISSRTT" width="31" height="31"/>
         <image name="Track-Play" width="36" height="36"/>
-        <image name="arrow.clockwise" catalog="system" width="113" height="128"/>
+        <image name="arrow.clockwise" catalog="system" width="110" height="128"/>
         <image name="arrow.down.right.and.arrow.up.left" catalog="system" width="128" height="117"/>
         <image name="arrow.up.left.and.down.right.and.arrow.up.right.and.down.left" catalog="system" width="128" height="115"/>
         <image name="blackBackgroundImage_thumb" width="100" height="100"/>
