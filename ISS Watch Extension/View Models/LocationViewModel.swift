@@ -26,7 +26,6 @@ final class LocationViewModel: ObservableObject {
             .compactMap { $0 }
             .map { $0.coordinate }
             .sink { [weak self] coordinate in
-//                print("Coordinate received: \(coordinate.latitude), \(coordinate.longitude)")
                 self?.latitude = coordinate.latitude
                 self?.longitude = coordinate.longitude
             }

@@ -63,16 +63,24 @@ final class PassesViewModel: ObservableObject {
         let stationID            = noradID
 
         // Create the API URL request from endpoint. If not succesful, then return
-        let URLrequestString = endpointForPassesAPI + "\(stationID)/\(lat)/\(lon)/\(altitude)/\(numberOfDays)/\(minObservationTime)/&apiKey=\(apiKey)"
+        let URLrequestString = endpointForPassesAPI + "\(stationID)/\(lat)/\(lon)/\(altitude)/\(numberOfDays)/\(minObservationTime)&apiKey=\(apiKey)"
+        print(URLrequestString)
+        
+        // Ensure the URL is valid
         guard let url = URL(string: URLrequestString) else {
+            print("Invalid URL")
             return nil
         }
         do {
+            // Fetch the data asynchronously
             let (data, _) = try await URLSession.shared.data(from: url)
+            
+            // Decode the data into the Passes object
             let decoder = JSONDecoder()
             let apiData = try decoder.decode(Passes.self, from: data)
             return apiData
         } catch {
+            // Handle errors
             print("Error getting passes: \(error.localizedDescription)")
             return nil
         }

@@ -38,7 +38,7 @@ struct PassDetailView: View {
         let et = Date(timeIntervalSince1970: pass.endUTC).formatted(date: .omitted, time: .shortened)
         let ea = String(format: "%.0f%", pass.endAz) + Globals.degreeSign
         let ec = String(pass.endAzCompass)
-        let ee = String(format: "%.1f%", pass.endEl) + Globals.degreeSign
+        let ee = "0" + Globals.degreeSign
         
         ZStack {
             gradientBackground(with: [.issrttRed, .ISSRTT3DGrey])
@@ -121,5 +121,5 @@ struct PassDetailView: View {
 
 
 #Preview {
-    PassDetailView(pass: Passes.Pass(startAz: 270, startAzCompass: "W", startEl: 20, startUTC: 1720659580.0, maxAz: 355, maxAzCompass: "NNE", maxEl: 50, maxUTC: 1720659585.0, endAz: 10, endAzCompass: "NNE", endEl: 25, endUTC: 1720659590.0, mag: -2.1, duration: 300), station: .iss)
+    PassDetailView(pass: Passes.Pass(startAz: 270, startAzCompass: "W", startEl: 20, startUTC: 1720659580.0, maxAz: 355, maxAzCompass: "NNE", maxEl: 50, maxUTC: 1720659585.0, endAz: 10, endAzCompass: "NNE", endUTC: 1720659590.0, mag: -2.1, duration: 300, startVisibility: 1728744955), station: .iss)
 }

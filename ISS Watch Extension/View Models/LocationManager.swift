@@ -28,14 +28,12 @@ final class LocationManager: NSObject, ObservableObject, CLLocationManagerDelega
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         guard let location = locations.last else { return }
-        //        print("Location updated: \(location.coordinate.latitude), \(location.coordinate.longitude)")
         self.location = location
         saveLocation(latitude: location.coordinate.latitude, longitude: location.coordinate.longitude)
     }
     
     func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
         self.authorizationStatus = status
-        //        print("Authorization status changed: \(status.rawValue)")
         if status == .authorizedWhenInUse || status == .authorizedAlways {
             self.locationManager.startUpdatingLocation()
         } else {
@@ -51,6 +49,5 @@ final class LocationManager: NSObject, ObservableObject, CLLocationManagerDelega
         let sharedDefaults = UserDefaults(suiteName: Globals.appSuiteName)
         sharedDefaults?.set(lat, forKey: "latitude")
         sharedDefaults?.set(lon, forKey: "longitude")
-        //        print("saved")
     }
 }

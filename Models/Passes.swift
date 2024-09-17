@@ -35,10 +35,10 @@ struct Passes: Decodable, Hashable {
         let maxUTC: Double
         let endAz: Double
         let endAzCompass: String
-        let endEl: Double
         let endUTC: Double
         let mag: Double
         let duration: Int
+        let startVisibility: Double
     }
     
     /// Number of days to project that can be in the API request. Used in segmented switch in settings, etc.
