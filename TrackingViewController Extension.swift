@@ -11,21 +11,15 @@ import MapKit
 
 extension TrackingViewController {
     
-    
     /// Update the info box data 
     private func updateCoordinatesDisplay() {
-        
         DispatchQueue.main.async { [self] in
-            
             altitudeLabel.text    = altString
             coordinatesLabel.text = positionString
             velocityLabel.text    = velString
-            
         }
-        
     }
     
-
     /// Draw orbit ground track line overlay
     private func drawOrbitGroundTrackLine() {
         appendCurrentCoordinate()
@@ -57,7 +51,6 @@ extension TrackingViewController {
         }
     }
     
-    
     /// Overlay delegate
     /// - Parameters:
     ///   - mapView: An MKMapView
@@ -83,7 +76,6 @@ extension TrackingViewController {
             return UIColor(named: Theme.issOrbitalColor) ?? .gray
         }
     }
-    
     
     /// Set up the overlays and any buttons that depend on the user's settings
     fileprivate func setUpAllOverlaysAndButtons() {
@@ -122,7 +114,6 @@ extension TrackingViewController {
         }
     }
 
-    
     /// Update map and globe
     fileprivate func updateGlobeAndMapForPositionsOfStations() {
         
@@ -161,7 +152,6 @@ extension TrackingViewController {
             }
         }
     }
-    
     
     /// Locate satellite position and other data
     /// - Parameter satellite: The target satellite as a StationsAndSatellites object

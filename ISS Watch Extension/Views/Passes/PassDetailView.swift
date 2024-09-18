@@ -24,6 +24,7 @@ struct PassDetailView: View {
         let tm = getCountdownText()                                                                  // Minutes to pass start
         let du = pass.duration.formatted(.number) + " secs"
         let mg = pass.mag != RatingSystem.unknown.rawValue ? String(pass.mag) : "N/A"
+        let sv = Date(timeIntervalSince1970: pass.startVisibility).formatted(date: .omitted, time: .shortened)
         // Start
         let st = Date(timeIntervalSince1970: pass.startUTC).formatted(date: .omitted, time: .shortened)
         let sa = String(format: "%.0f%", pass.startAz) + Globals.degreeSign
@@ -53,6 +54,7 @@ struct PassDetailView: View {
                     }
                     
                     StatView(label: "Date", stat: dw + ", " + dm + " " + dd)
+                    StatView(label: "Vis. Starts", stat: sv)
                     StatView(label: "T-Minus", stat: tm)
                     StatView(label: "Duration", stat: du)
                     StatView(label: "Magnitude", stat: mg)

@@ -64,7 +64,6 @@ final class PassesViewModel: ObservableObject {
 
         // Create the API URL request from endpoint. If not succesful, then return
         let URLrequestString = endpointForPassesAPI + "\(stationID)/\(lat)/\(lon)/\(altitude)/\(numberOfDays)/\(minObservationTime)&apiKey=\(apiKey)"
-        print(URLrequestString)
         
         // Ensure the URL is valid
         guard let url = URL(string: URLrequestString) else {

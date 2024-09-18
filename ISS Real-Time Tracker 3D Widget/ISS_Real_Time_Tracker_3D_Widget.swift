@@ -379,9 +379,37 @@ struct ISS_Real_Time_Tracker_3D_Widget: Widget {
     }
 }
 
-#Preview(as: .systemMedium) {
+#Preview(
+    as: .systemMedium
+) {
     ISS_Real_Time_Tracker_3D_Widget()
 } timeline: {
-    NextPass(date: Date(), passDate: Date(), duration: 399, mag: -1.2, startAzimuth: 350.8, startAzCompass: "NNW", startElevation: 22, maxAzimuth: 270.0, maxElevation: 60.0, endAzimuth: 30.0)
-    NextPass(date: Date(), passDate: Calendar.current.date(byAdding: .month, value: 6, to: Date())!, duration: 401, mag: -0.9, startAzimuth: 216.3, startAzCompass: "SW", startElevation: 18.7, maxAzimuth: 270.0, maxElevation: 60.0, endAzimuth: 30.0)
+    NextPass(
+        date: Date(),
+        passDate: Date(),
+        duration: 399,
+        mag: -1.2,
+        startAzimuth: 350.8,
+        startAzCompass: "NNW",
+        startElevation: 22,
+        maxAzimuth: 270.0,
+        maxElevation: 60.0,
+        endAzimuth: 30.0
+    )
+    NextPass(
+        date: Date(),
+        passDate: Calendar.current.date(
+            byAdding: .month,
+            value: 6,
+            to: Date()
+        )!,
+        duration: 401,
+        mag: -0.9,
+        startAzimuth: 216.3,
+        startAzCompass: "SW",
+        startElevation: 18.7,
+        maxAzimuth: 270.0,
+        maxElevation: 60.0,
+        endAzimuth: 30.0
+    )
 }
