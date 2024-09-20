@@ -36,6 +36,7 @@ struct Passes: Decodable, Hashable {
         let endAz: Double
         let endAzCompass: String
         let endUTC: Double
+        let endEl: Double?  // The ending elevation isn't always returned for some reason
         let mag: Double
         let duration: Int
         let startVisibility: Double

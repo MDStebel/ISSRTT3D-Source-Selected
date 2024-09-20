@@ -357,7 +357,7 @@ class PassesTableViewController: UITableViewController, CLLocationManagerDelegat
         let maxAz   = formattedAzimuth(passEvent.maxAz)
         let maxEl   = formattedElevation(passEvent.maxEl)
         let endAz   = formattedAzimuth(passEvent.endAz)
-        let endEl   = formattedElevation(0)
+        let endEl   = formattedElevation(passEvent.endEl ?? 0.0)
 
         return """
         Max Magnitude: \(mag)
@@ -467,7 +467,7 @@ extension PassesTableViewController {
         cell.maxComp.text             = pass.maxAzCompass
         cell.endTime.text             = dateFormatterForTime.string(from: Date(timeIntervalSince1970: pass.endUTC))
         cell.endAz.text               = formattedAzimuth(pass.endAz)
-        cell.endEl.text               = formattedElevation(0)
+        cell.endEl.text               = formattedElevation(pass.endEl ?? 0.0)
         cell.endComp.text             = pass.endAzCompass
 
         configureRatingStars(for: cell, with: mag)
