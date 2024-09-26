@@ -55,32 +55,31 @@ public struct AstroCalculations {
     
     /// Calculate the Equation of Time for a given date
     ///
-    /// The equation of time (EOT) is a formula used in the process of converting between solar time and clock time to compensate for the earth's elliptical orbit around the sun and its axial tilt.
-    /// Essentially, the earth does not move perfectly smoothly in a perfectly circular orbit, so the EOT adjusts for that.
+    /// The Equation of Time (EOT) is a formula used to convert between solar time and clock time, accounting for the Earth’s elliptical orbit around the Sun and its axial tilt.
+    /// Essentially, the Earth does not move perfectly smoothly in a perfectly circular orbit, so the EOT adjusts for that.
     /// - Parameter date: A date as a Date type
     /// - Returns: Equation of time in minutes as a Double
     static func equationOfTime(for date: Date) -> Double {
+        let t = julianCenturySinceJan2000(date: date)
+        let meanLongitudeSunRadians = geometricMeanLongitudeOfSunAtCurrentTime(t: t) * Globals.degreesToRadians
+        let meanAnomalySunRadians = meanAnomaly(t: t) * Globals.degreesToRadians
+        let eccentricity = orbitEccentricityOfEarth(t: t)
+        let obliquity = 0.0430264916545165 // Earth's axial tilt
         
-        let vary, ecc, part1, part2, part3, part4, part5: Double
+        let term1 = obliquity * sin(2 * meanLongitudeSunRadians)
+        let term2 = 2 * eccentricity * sin(meanAnomalySunRadians)
+        let term3 = 4 * eccentricity * obliquity * sin(meanAnomalySunRadians) * cos(2 * meanLongitudeSunRadians)
+        let term4 = 0.5 * obliquity * obliquity * sin(4 * meanLongitudeSunRadians)
+        let term5 = 1.25 * eccentricity * eccentricity * sin(2 * meanAnomalySunRadians)
         
-        let t              = julianCenturySinceJan2000(date: date)
-        let meanGInRadians = geometricMeanLongitudeOfSunAtCurrentTime(t: t) * Double(Globals.degreesToRadians)
-        let meanAInRadians = meanAnomaly(t: t) * Double(Globals.degreesToRadians)
-        vary               = 0.0430264916545165
-        ecc                = orbitEccentricityOfEarth(t: t)
+        let equationOfTime = 4 * (term1 - term2 + term3 - term4 - term5) * Globals.radiansToDegrees
         
-        part1              = vary * sin(2 * meanGInRadians)
-        part2              = 2 * ecc * sin(meanAInRadians)
-        part3              = 4 * ecc * vary * sin(meanAInRadians) * cos(2 * meanGInRadians)
-        part4              = 0.5 * vary * vary * sin(4 * meanGInRadians)
-        part5              = 1.25 * ecc * ecc * sin(2 * meanAInRadians)
-        
-        return 4 * (part1 - part2 + part3 - part4 - part5) * Double(Globals.radiansToDegrees)
+        return equationOfTime
     }
     
     /// Calculate the Sun Equation of Center
     ///
-    /// The orbits of the planets are not perfect circles but rather ellipses, so the speed of the planet in its orbit varies, and therefore the apparent speed of the Sun along the ecliptic also varies throughout the planet's year.
+    /// The orbits of the planets are not perfect circles, but rather ellipses, so the speed of the planet in its orbit varies, and therefore the apparent speed of the Sun along the ecliptic also varies throughout the planet's year.
     /// The true anomaly is the angular distance of the planet from the perihelion of the planet, as seen from the Sun. For a circular orbit, the mean anomaly and the true anomaly are the same.
     /// The difference between the true anomaly and the mean anomaly is called the Equation of Center.
     /// - Parameter t: Julian century
