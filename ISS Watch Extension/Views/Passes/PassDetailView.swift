@@ -25,21 +25,24 @@ struct PassDetailView: View {
         let du = pass.duration.formatted(.number) + " secs"
         let mg = pass.mag != RatingSystem.unknown.rawValue ? String(pass.mag) : "N/A"
         let fv = Date(timeIntervalSince1970: pass.startVisibility).formatted(date: .omitted, time: .shortened)
+        
         // Start
         let st = Date(timeIntervalSince1970: pass.startUTC).formatted(date: .omitted, time: .shortened)
         let sa = String(format: "%.0f%", pass.startAz) + Globals.degreeSign
         let sc = String(pass.startAzCompass)
         let se = String(format: "%.1f%", pass.startEl) + Globals.degreeSign
+       
         // Max
         let mt = Date(timeIntervalSince1970: pass.maxUTC).formatted(date: .omitted, time: .shortened)
         let ma = String(format: "%.0f%", pass.maxAz) + Globals.degreeSign
         let mc = String(pass.maxAzCompass)
         let me = String(format: "%.1f%", pass.maxEl) + Globals.degreeSign
+        
         // End
         let et = Date(timeIntervalSince1970: pass.endUTC).formatted(date: .omitted, time: .shortened)
         let ea = String(format: "%.0f%", pass.endAz) + Globals.degreeSign
         let ec = String(pass.endAzCompass)
-        let ee = String(format: "%.1f%", pass.endEl ?? 0.0) + Globals.degreeSign
+        let ee = String(format: "%.1f%", pass.endEl ?? 0.0) + Globals.degreeSign                     // Ending elevation isn't always returned, for some reason
         
         ZStack {
             gradientBackground(with: [.issrttRed, .ISSRTT3DGrey])
@@ -89,12 +92,19 @@ struct PassDetailView: View {
     
     // MARK: - Helper functions
     
-    /// Compute time until the pass starts
-    /// - Returns: Formatted string representation of the time remaining in mins
+    /// Compute time until the pass starts.
+    /// We use compactMap to safely handle the optional values and eliminate nil components.
+    /// Instead of handling spaces manually, compactMap and joined(separator:) allow us to join non-nil components with a space only where needed.
+    /// - Returns: Formatted string representation of the time remaining in days hours minutes
     private func getCountdownText() -> String {
         let diff = Calendar.current.dateComponents([.day, .hour, .minute], from: Date(), to: Date(timeIntervalSince1970: pass.startUTC))
-        let diffInMinutes = (diff.day ?? 999) * 1440 + (diff.hour ?? 0) * 60 + (diff.minute ?? 0)
-        return "\(diffInMinutes.formatted(.number)) mins"
+        
+        let days = (diff.day ?? 0) > 0 ? "\(diff.day!)d" : nil
+        let hours = (diff.hour ?? 0) > 0 ? "\(diff.hour!)h" : nil
+        let minutes = (diff.minute ?? 0) > 0 ? "\(diff.minute!)min" : nil
+        
+        let timeComponents = [days, hours, minutes].compactMap { $0 }
+        return timeComponents.joined(separator: " ")
     }
     
     /// Return 1-4 stars in a view based on the magnitude of the pass
@@ -120,7 +130,6 @@ struct PassDetailView: View {
         .padding(EdgeInsets(top: 0, leading: 2, bottom: -4, trailing: 0))
     }
 }
-
 
 #Preview {
     PassDetailView(pass: Passes.Pass(startAz: 270, startAzCompass: "W", startEl: 20, startUTC: 1720659580.0, maxAz: 355, maxAzCompass: "NNE", maxEl: 50, maxUTC: 1720659585.0, endAz: 10, endAzCompass: "NNE", endUTC: 1720659590.0, endEl: 5.0, mag: -2.1, duration: 300, startVisibility: 1728744955), station: .iss)

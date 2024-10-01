@@ -8,7 +8,6 @@
 
 import SwiftUI
 
-
 /// The view for each station's crew
 struct StationCrewView: View {
     

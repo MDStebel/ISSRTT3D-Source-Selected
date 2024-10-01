@@ -15,34 +15,34 @@ struct CrewView: View {
     
     @StateObject var viewModel = CrewViewModel()
     
-    private var crews = [Crews.People]()
-    
-    private var issCrewFiltered: [Crews.People] {
-        let list = viewModel.crews.filter { $0.location == Stations.ISS.rawValue }
-        return list.sorted { $0.name < $1.name }
-    }
-    
-    private var tiangongCrewFiltered: [Crews.People] {
-        let list = viewModel.crews.filter { $0.location == Stations.Tiangong.rawValue }
-        return list.sorted { $0.name < $1.name }
+    /// Generalized crew filtering and sorting
+    /// - Parameter station: Station
+    /// - Returns: Sorted list of crews for each station, sorted by title by name
+    private func filteredCrew(for station: Stations) -> [Crews.People] {
+        viewModel.crews
+            .filter { $0.location == station.rawValue }
+            .sorted {
+                if $0.title == $1.title {
+                    return $0.name < $1.name
+                } else {
+                    return $0.title < $1.title
+                }
+            }
     }
     
     var body: some View {
-        
         NavigationStack {
-            
             List {
-                
                 // ISS Section
-                StationCrewView(crew: issCrewFiltered, station: .ISS, colorKey: .ISSRTT3DRed)
+                StationCrewView(crew: filteredCrew(for: .ISS), station: .ISS, colorKey: .ISSRTT3DRed)
                 
                 // Tiangong Section
-                StationCrewView(crew: tiangongCrewFiltered, station: .Tiangong, colorKey: .ISSRTT3DGold)
+                StationCrewView(crew: filteredCrew(for: .Tiangong), station: .Tiangong, colorKey: .ISSRTT3DGold)
                 
                 // Pop up an alert if there was an error fetching data
                     .alert(isPresented: $viewModel.wasError) {
                         Alert(title: Text(viewModel.errorForAlert?.title ?? "Oops!"),
-                              message: Text(viewModel.errorForAlert?.message ?? "Can't get data.")
+                              message: Text(viewModel.errorForAlert?.message ?? "Unable to retrieve data.")
                         )
                     }
             }

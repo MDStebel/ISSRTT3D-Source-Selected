@@ -129,7 +129,7 @@ struct ISS_Real_Time_Tracker_3D_WidgetEntryView: View {
         default:
             ZStack {
                 ContainerView()
-                VStack(spacing: family == .systemMedium ? 3 : 5) {
+                VStack(spacing: family == .systemMedium ? 1: 5) {
                     HeaderView()
                     Spacer()
                     DateView(date: entry.passDate, entry: entry)
