@@ -352,7 +352,7 @@ TRACKER
                                 <rect key="frame" x="339.66666666666669" y="843" width="27.333333333333314" height="31"/>
                                 <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <state key="normal">
-                                    <imageReference key="image" image="doc.on.doc" catalog="system" symbolScale="large"/>
+                                    <imageReference key="image" image="document.on.document" catalog="system" symbolScale="large"/>
                                 </state>
                                 <connections>
                                     <action selector="copyCoordinatesToClipboard:" destination="BYZ-38-t0r" eventType="touchUpInside" id="jqN-v6-m6C"/>
@@ -996,12 +996,12 @@ TRACKER
                                             <rect key="frame" x="0.0" y="0.0" width="430" height="44"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Show 'What's New' at startup" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aPG-a1-iCB">
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Show 'What's New' at startup" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" enabled="NO" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aPG-a1-iCB">
                                                     <rect key="frame" x="28" y="10.000000000000002" width="341" height="21.666666666666671"/>
                                                     <fontDescription key="fontDescription" style="UICTFontTextStyleSubhead"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="Vga-UT-obK">
+                                                <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="Vga-UT-obK">
                                                     <rect key="frame" x="361" y="8.0000000000000018" width="51" height="25.666666666666671"/>
                                                     <color key="tintColor" name="Tint"/>
                                                     <color key="onTintColor" name="Background"/>
@@ -1944,7 +1944,7 @@ Days in Space:</string>
                                 </connections>
                             </barButtonItem>
                             <barButtonItem id="vCZ-Vu-aHt">
-                                <imageReference key="image" image="doc.on.doc" catalog="system" symbolScale="medium"/>
+                                <imageReference key="image" image="document.on.document" catalog="system" symbolScale="medium"/>
                                 <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <connections>
                                     <action selector="copyCurrentCrewNamesToClipboard:" destination="Dsg-u5-LHe" id="KCi-AI-o6H"/>
@@ -2386,7 +2386,7 @@ Days in Space:</string>
     </scenes>
     <inferredMetricsTieBreakers>
         <segue reference="cR5-3C-RSS"/>
-        <segue reference="QZj-XB-PmD"/>
+        <segue reference="bZ3-Go-siV"/>
         <segue reference="7Ix-1h-Ypp"/>
     </inferredMetricsTieBreakers>
     <color key="tintColor" name="Tint"/>
@@ -2412,7 +2412,7 @@ Days in Space:</string>
         <image name="center_direction_black_small" width="25" height="25"/>
         <image name="chevron.backward" catalog="system" width="97" height="128"/>
         <image name="comments_filled_wide_mds_new_red" width="223" height="100"/>
-        <image name="doc.on.doc" catalog="system" width="116" height="128"/>
+        <image name="document.on.document" catalog="system" width="116" height="128"/>
         <image name="exit" width="30" height="30"/>
         <image name="gearshape" catalog="system" width="128" height="123"/>
         <image name="help" width="31" height="31"/>

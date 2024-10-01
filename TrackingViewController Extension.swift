@@ -165,13 +165,9 @@ extension TrackingViewController {
         /// Task to get JSON data from API by sending request to API endpoint, parse response for position data, and then display positions.
         /// Uses a capture list to capture a weak reference to self. This should prevent a retain cycle and allow ARC to release instance and reduce memory load.
         let globeUpdateTask = URLSession.shared.dataTask(with: endpointURL) { [ self ] (data, response, error) in
-            
             if let data {
-                
                 let decoder = JSONDecoder()
-                
                 do {
-                    
                     // Parse JSON
                     let parsedPosition = try decoder.decode(SatelliteOrbitPosition.self, from: data)
                     self.coordinates   = parsedPosition.positions

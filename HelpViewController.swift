@@ -81,9 +81,6 @@ class HelpViewController: UIViewController, WKUIDelegate, WKNavigationDelegate {
     
     
     override func didReceiveMemoryWarning() {
-        
         super.didReceiveMemoryWarning()
-        
     }
-    
 } 

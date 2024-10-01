@@ -729,7 +729,6 @@ class TrackingViewController: UIViewController, MKMapViewDelegate, UIGestureReco
     }
 
     
-    
     /// Unwind segue
     @IBAction func unwindFromOtherVCs(unwindSegue: UIStoryboardSegue) {
         
@@ -867,6 +866,5 @@ class TrackingViewController: UIViewController, MKMapViewDelegate, UIGestureReco
         
         super.didReceiveMemoryWarning()
         stopAction()
-        
     }
 }

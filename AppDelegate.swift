@@ -41,7 +41,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     @objc private func requestReview() {
         if let windowScene = window?.windowScene {
-            SKStoreReviewController.requestReview(in: windowScene)
+            AppStore.requestReview(in: windowScene)
         }
     }
 

@@ -169,7 +169,6 @@ class CrewMembersTableViewController: UITableViewController, TableAnimatable {
         crewURLSession.configuration.urlCache = nil                         // Turn off caching
         
         let urlForCurrentCrew = URL(string: Constants.crewAPIEndpointURLString)!
-        
         let crewMembersTask = crewURLSession.dataTask(with: urlForCurrentCrew) { [ weak weakSelf = self ] (data, response, error) -> Void in
             
             if let data {
