@@ -9,7 +9,7 @@ Note: Published for educational purposes only. Source files in this repository d
 Learn about the app or get support at https://www.issrtt.com.
 
 ![banner](https://github.com/MDStebel/ISSRTT3D-Source-Selected/blob/1c0aa5d3428f4f1672e56b767f30b43cb157b951/Banner%20-%20ISS%20Real-Time%20Tracker%203D.png)
-![banner]()
+
 ![banner](https://github.com/MDStebel/ISSRTT3D-Source-Selected/blob/afb3273a3790f2403a8e3cab3ec536dfffac3daa/Call%20for%20Beta%20Testers.png)
 
 
