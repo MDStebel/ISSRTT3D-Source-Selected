@@ -33,16 +33,22 @@ struct Provider: TimelineProvider {
     func getTimeline(in context: Context, completion: @escaping (Timeline<NextPass>) -> ()) {
         Task {
             var entries: [NextPass] = []
+            
+            // Fetch pass data asynchronously
             if let apiData = await fetchData() {
                 let pass = apiData.passes[0]
                 let passStartDate = Date(timeIntervalSince1970: pass.startUTC)
+                
+                // Generate entries for the next hour, every minute
                 let currentDate = Date()
-                for minuteOffset in 0 ..< 5 {
+                for minuteOffset in 0..<60 {
                     let entryDate = Calendar.current.date(byAdding: .minute, value: minuteOffset, to: currentDate)!
                     let entry = NextPass(date: entryDate, passDate: passStartDate, duration: pass.duration, mag: pass.mag, startAzimuth: pass.startAz, startAzCompass: pass.startAzCompass, startElevation: pass.startEl, maxAzimuth: pass.maxAz, maxElevation: pass.maxEl, endAzimuth: pass.endAz)
                     entries.append(entry)
                 }
             }
+            
+            // Create a timeline with the entries
             let timeline = Timeline(entries: entries, policy: .atEnd)
             completion(timeline)
         }
@@ -219,6 +225,8 @@ struct DateView: View {
                 VStack(alignment: .leading, spacing: -45) {
                     passQualityView(for: mag)
                     countdownText
+                        .lineLimit(1)
+                        .minimumScaleFactor(0.75)
                     Spacer()
                 }
                 Spacer(minLength: 5)
@@ -232,24 +240,26 @@ struct DateView: View {
     
     private var dateText: some View {
         Text(date.formatted(.dateTime.weekday(.wide)).uppercased())
-            .font(.caption).fontWeight(.heavy)
+            .font(.caption)
+            .fontWeight(.heavy)
             .opacity(0.70)
             .offset(y: 20)
     }
     
     private var monthDayText: some View {
         Text("\(date.formatted(.dateTime.month(.abbreviated)).uppercased()) \(date.formatted(.dateTime.day()))")
-            .font(.largeTitle).fontWeight(.black)
+            .font(.largeTitle)
+            .fontWeight(.black)
     }
     
     private var countdownText: some View {
-        let diff = Calendar.current.dateComponents([.day, .hour, .minute], from: Date(), to: date)
-        let diffInMinutes = (diff.day ?? 999) * 1440 + (diff.hour ?? 0) * 60 + (diff.minute ?? 0)
-        return Text("T-minus \(diffInMinutes) mins")
-            .font(.subheadline).fontWeight(.bold)
+        let time = convertCountdownText(for: date)
+        return Text("T-minus: \(time)")
+            .font(.subheadline)
+            .fontWeight(.bold)
             .opacity(0.70)
             .offset(y: 46)
-            .minimumScaleFactor(0.60)
+
     }
 }
 
@@ -262,7 +272,7 @@ struct InfoCardView: View {
         let azi     = Text("\(entry.startAzimuth, format: .number.precision(.fractionLength(0)))\(Globals.degreeSign)")
         let cp      = Text(entry.startAzCompass)
         let date    = Text("\(entry.passDate.formatted(date: .omitted, time: .shortened))")
-        let dur     = Text("\(entry.duration) min")
+        let dur     = Text("\(timeString(from: entry.duration))")
         let elev    = Text("\(entry.startElevation, format: .number.precision(.fractionLength(1)))\(Globals.degreeSign)")
         let mag     = Text("\(entry.mag, format: .number.precision(.fractionLength(1)))")
         
@@ -312,15 +322,45 @@ struct InfoRow: View {
     var body: some View {
         HStack(spacing: spacing) {
             Image(systemName: icon)
-                .font(.caption).fontWeight(.bold)
+                .font(.caption)
+                .fontWeight(.bold)
             Text(label)
-                .font(.caption).fontWeight(.black)
+                .font(.caption)
+                .fontWeight(.black)
             value
-                .font(.caption).fontWeight(.semibold)
+                .font(.caption)
+                .fontWeight(.semibold)
             Spacer()
         }
         .offset(x: spacing * 10)
     }
+}
+
+// MARK: - Helper functions
+
+/// Compute time until the pass starts.
+/// We use compactMap to safely handle the optional values and eliminate nil components.
+/// Instead of handling spaces manually, compactMap and joined(separator:) allow us to join non-nil components with a space only where needed.
+/// - Returns: Formatted string representation of the time remaining in days hours minutes
+private func convertCountdownText(for to: Date) -> String {
+    let diff = Calendar.current.dateComponents([.day, .hour, .minute], from: Date(), to: to)
+    
+    let days = (diff.day ?? 0) > 0 ? "\(diff.day!)d" : nil
+    let hours = (diff.hour ?? 0) > 0 ? "\(diff.hour!)h" : nil
+    let minutes = (diff.minute ?? 0) > 0 ? "\(diff.minute!)m" : nil
+    
+    let timeComponents = [days, hours, minutes].compactMap { $0 }
+    
+    return timeComponents.joined(separator: " ")
+}
+
+/// Generate a string of minutes and seconds from number of seconds.
+/// - Parameter seconds: Number of seconds as integer
+/// - Returns: String representation
+private func timeString(from seconds: Int) -> String {
+    let minutes = seconds / 60
+    let remainingSeconds = seconds % 60
+    return String(format: "%dm %02ds", minutes, remainingSeconds)
 }
 
 /// Return 1-4 stars in a view based on the magnitude of the pass
@@ -329,7 +369,8 @@ struct InfoRow: View {
 private func passQualityView(for magnitude: Double) -> some View {
     HStack(spacing: 3) {
         Text("Pass quality:")
-            .font(.subheadline).fontWeight(.bold)
+            .font(.subheadline)
+            .fontWeight(.bold)
             .opacity(0.7)
             .minimumScaleFactor(0.90)
             .lineLimit(1)
@@ -386,7 +427,11 @@ struct ISS_Real_Time_Tracker_3D_Widget: Widget {
 } timeline: {
     NextPass(
         date: Date(),
-        passDate: Date(),
+        passDate: Calendar.current.date(
+            byAdding: .day,
+            value: 6,
+            to: Date()
+        )!,
         duration: 399,
         mag: -1.2,
         startAzimuth: 350.8,
@@ -399,8 +444,8 @@ struct ISS_Real_Time_Tracker_3D_Widget: Widget {
     NextPass(
         date: Date(),
         passDate: Calendar.current.date(
-            byAdding: .month,
-            value: 6,
+            byAdding: .day,
+            value: 16,
             to: Date()
         )!,
         duration: 401,

@@ -22,7 +22,7 @@ struct PassDetailView: View {
         let dw = Date(timeIntervalSince1970: pass.startUTC).formatted(.dateTime.weekday())           // Day of the week
         let dd = Date(timeIntervalSince1970: pass.startUTC).formatted(.dateTime.day())               // Day of the month
         let tm = getCountdownText()                                                                  // Minutes to pass start
-        let du = pass.duration.formatted(.number) + " secs"
+        let du = timeString(from: pass.duration)
         let mg = pass.mag != RatingSystem.unknown.rawValue ? String(pass.mag) : "N/A"
         let fv = Date(timeIntervalSince1970: pass.startVisibility).formatted(date: .omitted, time: .shortened)
         
@@ -101,10 +101,20 @@ struct PassDetailView: View {
         
         let days = (diff.day ?? 0) > 0 ? "\(diff.day!)d" : nil
         let hours = (diff.hour ?? 0) > 0 ? "\(diff.hour!)h" : nil
-        let minutes = (diff.minute ?? 0) > 0 ? "\(diff.minute!)min" : nil
+        let minutes = (diff.minute ?? 0) > 0 ? "\(diff.minute!)m" : nil
         
         let timeComponents = [days, hours, minutes].compactMap { $0 }
+        
         return timeComponents.joined(separator: " ")
+    }
+    
+    /// Generate a string of minutes and seconds from number of seconds.
+    /// - Parameter seconds: Number of seconds as integer
+    /// - Returns: String representation
+    private func timeString(from seconds: Int) -> String {
+        let minutes = seconds / 60
+        let remainingSeconds = seconds % 60
+        return String(format: "%dm %02ds", minutes, remainingSeconds)
     }
     
     /// Return 1-4 stars in a view based on the magnitude of the pass
@@ -113,7 +123,8 @@ struct PassDetailView: View {
     private func passQualityView(for magnitude: Double) -> some View {
         HStack(spacing: 4) {
             Text("Quality:")
-                .font(.caption).fontWeight(.bold)
+                .font(.caption)
+                .fontWeight(.bold)
                 .opacity(1.0)
                 .minimumScaleFactor(0.6)
                 .lineLimit(1)
