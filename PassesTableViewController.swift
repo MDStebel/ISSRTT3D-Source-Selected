@@ -476,7 +476,7 @@ extension PassesTableViewController {
     private func minsAndSecs(from numberOfSeconds: Int) -> String {
         let formatter = DateComponentsFormatter()
         formatter.allowedUnits = [.minute, .second]
-        formatter.unitsStyle = .brief
+        formatter.unitsStyle = .abbreviated
         return formatter.string(from: Double(numberOfSeconds)) ?? " "
     }
 
