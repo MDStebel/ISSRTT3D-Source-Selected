@@ -71,9 +71,9 @@ final class EarthGlobe: ObservableObject {
         /// Metal/OpenGL fragment shader modifier (lighting map) in C++ code that brings forth our emitter texture
         let shaderModifier             = """
                                          uniform sampler2D emissionTexture;
-                                         float3 light = _lightingContribution.diffuse;
+                                         vec3 light = _lightingContribution.diffuse;
                                          float lum = max(0.0, 1 - (0.2126 * light.r + 0.7152 * light.g + 0.0722 * light.b));
-                                         float4 emission = texture2D(emissionTexture, _surface.diffuseTexcoord) * lum * 1.5;
+                                         vec4 emission = texture2D(emissionTexture, _surface.diffuseTexcoord) * lum * 1.5;
                                          _output.color += emission;
                                          """
         earthMaterial.shaderModifiers    = [.fragment: shaderModifier]            // Apply the shader modifier code
