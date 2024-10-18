@@ -49,7 +49,7 @@ struct GlobeView: View {
                         })
                         {
                             Image(systemName: vm.isStartingUp ? "arrow.triangle.2.circlepath" : "arrow.circlepath")
-                                .contentTransition(.symbolEffect(.replace.byLayer))
+                                .contentTransition(.symbolEffect(.replace.wholeSymbol))
                         }
                         .withSmallButtonModifier
                         
@@ -58,7 +58,7 @@ struct GlobeView: View {
                         })
                         {
                             Image(systemName: vm.spinEnabled ? "rotate.3d.fill" : "rotate.3d")
-                                .contentTransition(.symbolEffect(.replace.byLayer))
+                                .contentTransition(.symbolEffect(.replace.wholeSymbol))
                         }
                         .withSmallButtonModifier
                         
