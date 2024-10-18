@@ -64,7 +64,7 @@ public struct AstroCalculations {
         let meanLongitudeSunRadians = geometricMeanLongitudeOfSunAtCurrentTime(t: t) * Globals.degreesToRadians
         let meanAnomalySunRadians = meanAnomaly(t: t) * Globals.degreesToRadians
         let eccentricity = orbitEccentricityOfEarth(t: t)
-        let obliquity = 0.0430264916545165 // Earth's axial tilt
+        let obliquity = 0.0430264916545165 
         
         let term1 = obliquity * sin(2 * meanLongitudeSunRadians)
         let term2 = 2 * eccentricity * sin(meanAnomalySunRadians)
@@ -127,7 +127,7 @@ public struct AstroCalculations {
         var timeCorrection, dayCorrection, lonCorrection: Double
         
         // Time calculations for the current time
-        let eOT            = Double(equationOfTime(for: date))
+        let eOT            = equationOfTime(for: date)
         let localMins      = Double(Calendar.current.component(.minute, from: date))
         let localHour      = Double(Calendar.current.component(.hour, from: date)) + localMins / Globals.numberOfMinutesInAnHour   // The current time as a decimal value
         let secondsFromGMT = Double(TimeZone.current.secondsFromGMT())

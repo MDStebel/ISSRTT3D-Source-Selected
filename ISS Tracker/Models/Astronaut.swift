@@ -79,7 +79,6 @@ struct Astronaut: Decodable, Hashable {
         var crew = [Astronaut]()    // Create an empty array of Astronauts
         
         do {
-            
             if let json = try JSONSerialization.jsonObject(with: data!, options: []) as? JSONDictionary,
                let numberOfAstronauts = json["number"] as? Int,
                let astronauts = json["people"] as? [JSONDictionary]
