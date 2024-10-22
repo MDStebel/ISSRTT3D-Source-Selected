@@ -500,12 +500,11 @@ class TrackingViewController: UIViewController, MKMapViewDelegate, UIGestureReco
         }
         
         if !running! {
-            
             if justStartedUp {                              // If we're just starting up after loading the app
                 // Animate prompt hiding by animating alpha going from 1.0 to 0.0
                 UIView.animate(withDuration: 1.0) {
                     self.startPrompt.alpha = 0.0
-                } // end of animation closure
+                } 
                 
                 Globals.showWhatsNewUponNextStartup = false
                 justStartedUp = false                       // To keep this code from runing each time the view reappears
@@ -648,11 +647,13 @@ class TrackingViewController: UIViewController, MKMapViewDelegate, UIGestureReco
     private func configureMapType() {
         switch Globals.mapTypeSelection {
         case 0:
-            map.mapType = .standard
-        case 1, 2:
-            map.mapType = Globals.mapTypeSelection == 1 ? .satellite : .hybrid
+            map.preferredConfiguration = MKStandardMapConfiguration(elevationStyle: .realistic, emphasisStyle: .default)
+        case 1:
+            map.preferredConfiguration = MKImageryMapConfiguration()
+        case 2:
+            map.preferredConfiguration = MKHybridMapConfiguration()
         default:
-            map.mapType = .satellite
+            map.preferredConfiguration = MKImageryMapConfiguration()
         }
     }
 
@@ -737,9 +738,7 @@ class TrackingViewController: UIViewController, MKMapViewDelegate, UIGestureReco
     
     /// Set up audio player to play soundtrack without stopping any audio that was playing when app launched
     private func setUpSoundTrackMusicPlayer() {
-        
         if let bundlePath = Bundle.main.path(forResource: soundtrackFilePathString, ofType: nil) {
-            
             let url = URL.init(fileURLWithPath: bundlePath)
             do {
                 try soundtrackMusicPlayer = AVAudioPlayer(contentsOf: url)
@@ -747,7 +746,6 @@ class TrackingViewController: UIViewController, MKMapViewDelegate, UIGestureReco
             } catch {
                 return
             }
-            
         } else {
             return
         }
@@ -863,7 +861,6 @@ class TrackingViewController: UIViewController, MKMapViewDelegate, UIGestureReco
     
     
     override func didReceiveMemoryWarning() {
-        
         super.didReceiveMemoryWarning()
         stopAction()
     }

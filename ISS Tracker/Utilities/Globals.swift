@@ -39,7 +39,7 @@ struct Globals {
     static var markerType                                    = 0
     static var maxFov: CGFloat                               = defaultCameraFov * 1.5
     static var minFov: CGFloat                               = defaultCameraFov * 0.5
-    static var numberOfDaysOfPassesDefaultSelectionSegment   = 2
+    static var numberOfDaysOfPassesDefaultSelectionSegment   = 3
     static var numberOfDaysOfPassesSelectedSegment           = 0
     static var numberOfZoomFactors                           = 4
     static var orbitGroundTrackLineEnabled                   = true

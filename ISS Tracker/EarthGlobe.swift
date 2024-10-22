@@ -108,7 +108,7 @@ final class EarthGlobe: ObservableObject {
 #endif
         earthMaterial.normal.intensity   = 0.52
         
-        // Create a realistic specular reflection that changes its aspect based on angle
+        // Create a realistic specular reflection that changes its aspect based on viewing angle
         earthMaterial.fresnelExponent    = 1.75
         
         
