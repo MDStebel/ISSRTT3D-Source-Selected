@@ -52,7 +52,6 @@ class SettingsTableViewController: UITableViewController {
     @IBOutlet private weak var showCoordinatesSwitch: UISwitch!
     @IBOutlet private weak var showOrbitGroundTrackLine: UISwitch!
     @IBOutlet private weak var showWhatsNewSwitch: UISwitch!
-    @IBOutlet private weak var userMapScrollingEnbleSwitch: UISwitch!
     @IBOutlet private weak var zoomRangeFactorSelector: UISegmentedControl!
     @IBOutlet private weak var numberOfDaysOfPasses: UISegmentedControl! {
         // Set up segment labels from dictionary
@@ -150,30 +149,9 @@ class SettingsTableViewController: UITableViewController {
     }
     
     
-    @IBAction func userMapScrollingEnbleSwitchWasSet(_ sender: UISwitch) {
-        
-        if sender.isOn {
-            Globals.mapScrollingAndZoomIsEnabled = true
-        } else {
-            Globals.mapScrollingAndZoomIsEnabled = false
-        }
-    }
-    
-    
     @IBAction func markerTypeSelected(_ sender: UISegmentedControl) {
         
         Globals.markerType = sender.selectedSegmentIndex
-    }
-    
-
-    
-    @IBAction private func showWhatsNewSwitch(_ sender: UISwitch) {
-        
-        if sender.isOn {
-            Globals.showWhatsNewUponNextStartup = true
-        } else {
-            Globals.showWhatsNewUponNextStartup = false
-        }
     }
     
     
@@ -223,12 +201,6 @@ class SettingsTableViewController: UITableViewController {
         Globals.displayZoomFactorBelowMarkerIsOn     = true
         displayZoomFactorBelowMarkerSwitch.isOn      = true
         
-        Globals.mapScrollingAndZoomIsEnabled         = false
-        userMapScrollingEnbleSwitch.isOn             = false
-
-        Globals.showWhatsNewUponNextStartup          = false
-        showWhatsNewSwitch.isOn                      = false
-        
         Globals.orbitGroundTrackLineEnabled          = true
         showOrbitGroundTrackLine.isOn                = true
         
@@ -273,12 +245,6 @@ class SettingsTableViewController: UITableViewController {
         } else {
             displayZoomFactorBelowMarkerSwitch.isOn   = false
         }
-
-        if Globals.showWhatsNewUponNextStartup {
-            showWhatsNewSwitch.isOn                   = true
-        } else {
-            showWhatsNewSwitch.isOn                   = false
-        }
         
         if Globals.orbitGroundTrackLineEnabled {
             showOrbitGroundTrackLine.isOn             = true
@@ -296,12 +262,6 @@ class SettingsTableViewController: UITableViewController {
             autoRotateGlobeSwitch.isOn                = true
         } else {
             autoRotateGlobeSwitch.isOn                = false
-        }
-        
-        if Globals.mapScrollingAndZoomIsEnabled {
-            userMapScrollingEnbleSwitch.isOn          = true
-        } else {
-            userMapScrollingEnbleSwitch.isOn          = false
         }
         
         markerTypeSelector?.selectedSegmentIndex      = Globals.markerType

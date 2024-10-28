@@ -938,95 +938,12 @@ TRACKER
                                             </constraints>
                                         </tableViewCellContentView>
                                     </tableViewCell>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="0.0" shouldIndentWhileEditing="NO" id="mXo-4X-FQR">
-                                        <rect key="frame" x="0.0" y="495.33333206176758" width="430" height="44"/>
-                                        <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="mXo-4X-FQR" id="cJh-XB-Qv7">
-                                            <rect key="frame" x="0.0" y="0.0" width="430" height="44"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                            <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Map gestures" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DBL-Pp-u6g">
-                                                    <rect key="frame" x="28" y="10.000000000000002" width="294" height="21.666666666666671"/>
-                                                    <constraints>
-                                                        <constraint firstAttribute="width" constant="280" id="7Zd-45-Mkf"/>
-                                                        <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="225" id="B17-Jf-R09"/>
-                                                        <constraint firstAttribute="width" constant="294" id="Hkk-Zb-WBE"/>
-                                                    </constraints>
-                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleSubhead"/>
-                                                    <nil key="highlightedColor"/>
-                                                    <variation key="default">
-                                                        <mask key="constraints">
-                                                            <exclude reference="B17-Jf-R09"/>
-                                                            <exclude reference="7Zd-45-Mkf"/>
-                                                        </mask>
-                                                    </variation>
-                                                </label>
-                                                <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="7xJ-s5-dux">
-                                                    <rect key="frame" x="361" y="5.3333333333333321" width="51" height="30.999999999999996"/>
-                                                    <color key="tintColor" name="Tint"/>
-                                                    <color key="onTintColor" name="Background"/>
-                                                    <connections>
-                                                        <action selector="userMapScrollingEnbleSwitchWasSet:" destination="XQO-Wu-Orz" eventType="valueChanged" id="vEt-0o-Qxe"/>
-                                                    </connections>
-                                                </switch>
-                                            </subviews>
-                                            <constraints>
-                                                <constraint firstItem="DBL-Pp-u6g" firstAttribute="leading" secondItem="cJh-XB-Qv7" secondAttribute="leadingMargin" constant="8" id="391-bJ-wb3"/>
-                                                <constraint firstItem="DBL-Pp-u6g" firstAttribute="top" secondItem="cJh-XB-Qv7" secondAttribute="topMargin" constant="-3" id="8Jf-Ve-P9w"/>
-                                                <constraint firstAttribute="bottomMargin" secondItem="DBL-Pp-u6g" secondAttribute="bottom" constant="-0.5" id="Fr2-YG-Hyb"/>
-                                                <constraint firstItem="7xJ-s5-dux" firstAttribute="trailing" secondItem="cJh-XB-Qv7" secondAttribute="trailingMargin" id="UXd-z5-fUR"/>
-                                                <constraint firstItem="DBL-Pp-u6g" firstAttribute="top" secondItem="cJh-XB-Qv7" secondAttribute="topMargin" constant="-3" id="W9L-bv-tgU"/>
-                                                <constraint firstItem="DBL-Pp-u6g" firstAttribute="top" secondItem="cJh-XB-Qv7" secondAttribute="topMargin" id="faD-Sj-1Jb"/>
-                                                <constraint firstItem="7xJ-s5-dux" firstAttribute="centerY" secondItem="DBL-Pp-u6g" secondAttribute="centerY" id="h4M-Eu-1xy"/>
-                                                <constraint firstAttribute="bottomMargin" secondItem="DBL-Pp-u6g" secondAttribute="bottom" constant="-0.5" id="lSo-ht-s2z"/>
-                                            </constraints>
-                                            <variation key="default">
-                                                <mask key="constraints">
-                                                    <exclude reference="Fr2-YG-Hyb"/>
-                                                    <exclude reference="8Jf-Ve-P9w"/>
-                                                    <exclude reference="faD-Sj-1Jb"/>
-                                                </mask>
-                                            </variation>
-                                        </tableViewCellContentView>
-                                    </tableViewCell>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="0.0" shouldIndentWhileEditing="NO" id="k8r-oT-1WM">
-                                        <rect key="frame" x="0.0" y="539.33333206176758" width="430" height="44"/>
-                                        <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="k8r-oT-1WM" id="kdm-UA-Od9">
-                                            <rect key="frame" x="0.0" y="0.0" width="430" height="44"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                            <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Show 'What's New' at startup" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" enabled="NO" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aPG-a1-iCB">
-                                                    <rect key="frame" x="28" y="10.000000000000002" width="341" height="21.666666666666671"/>
-                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleSubhead"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
-                                                <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="Vga-UT-obK">
-                                                    <rect key="frame" x="361" y="8.0000000000000018" width="51" height="25.666666666666671"/>
-                                                    <color key="tintColor" name="Tint"/>
-                                                    <color key="onTintColor" name="Background"/>
-                                                    <connections>
-                                                        <action selector="showWhatsNewSwitch:" destination="XQO-Wu-Orz" eventType="valueChanged" id="uHg-WG-Vwb"/>
-                                                    </connections>
-                                                </switch>
-                                            </subviews>
-                                            <constraints>
-                                                <constraint firstItem="Vga-UT-obK" firstAttribute="trailing" secondItem="kdm-UA-Od9" secondAttribute="trailingMargin" id="GiH-v8-LRV"/>
-                                                <constraint firstItem="aPG-a1-iCB" firstAttribute="top" secondItem="kdm-UA-Od9" secondAttribute="topMargin" constant="-3" id="Jpn-Bd-kfc"/>
-                                                <constraint firstItem="aPG-a1-iCB" firstAttribute="leading" secondItem="kdm-UA-Od9" secondAttribute="leadingMargin" constant="8" id="V4t-19-4lG"/>
-                                                <constraint firstItem="Vga-UT-obK" firstAttribute="centerY" secondItem="aPG-a1-iCB" secondAttribute="centerY" id="Wg3-YG-HKj"/>
-                                                <constraint firstItem="Vga-UT-obK" firstAttribute="top" secondItem="kdm-UA-Od9" secondAttribute="topMargin" constant="-5" id="aQh-52-WkU"/>
-                                                <constraint firstAttribute="trailingMargin" secondItem="aPG-a1-iCB" secondAttribute="trailing" constant="41" id="sC3-lI-s5p"/>
-                                                <constraint firstAttribute="bottomMargin" secondItem="aPG-a1-iCB" secondAttribute="bottom" constant="-0.6666666666666714" id="vFY-Ei-pC5"/>
-                                            </constraints>
-                                        </tableViewCellContentView>
-                                    </tableViewCell>
                                 </cells>
                             </tableViewSection>
                             <tableViewSection headerTitle="Support &amp; Links" id="6Rm-aX-KVa">
                                 <cells>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="0.0" shouldIndentWhileEditing="NO" id="fwg-6k-oYo">
-                                        <rect key="frame" x="0.0" y="651.33333015441906" width="430" height="44"/>
+                                        <rect key="frame" x="0.0" y="563.33333015441895" width="430" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="fwg-6k-oYo" id="Xoc-O1-JM2">
                                             <rect key="frame" x="0.0" y="0.0" width="430" height="44"/>
@@ -1072,7 +989,7 @@ TRACKER
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="0.0" shouldIndentWhileEditing="NO" id="Wea-DH-1rN">
-                                        <rect key="frame" x="0.0" y="695.33333015441906" width="430" height="44"/>
+                                        <rect key="frame" x="0.0" y="607.33333015441895" width="430" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Wea-DH-1rN" id="ggh-RZ-SPi">
                                             <rect key="frame" x="0.0" y="0.0" width="430" height="44"/>
@@ -1166,8 +1083,6 @@ TRACKER
                         <outlet property="numberOfDaysOfPasses" destination="LP7-P2-Q6A" id="RLT-CD-Fys"/>
                         <outlet property="showCoordinatesSwitch" destination="rol-nn-Xhg" id="6Yr-9U-uaE"/>
                         <outlet property="showOrbitGroundTrackLine" destination="Km1-b4-h94" id="fO7-ih-Xzi"/>
-                        <outlet property="showWhatsNewSwitch" destination="Vga-UT-obK" id="wKQ-nC-yws"/>
-                        <outlet property="userMapScrollingEnbleSwitch" destination="7xJ-s5-dux" id="3ob-Qt-rR6"/>
                         <outlet property="zoomRangeFactorSelector" destination="7np-xe-gcm" id="3zN-MV-Dqb"/>
                     </connections>
                 </tableViewController>

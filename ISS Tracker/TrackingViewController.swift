@@ -676,10 +676,10 @@ class TrackingViewController: UIViewController, MKMapViewDelegate, UIGestureReco
         case 0:
             cursor.image = targetImageMap
         case 1:
-            imageName = Globals.mapTypeSelection == 0 ? "center_direction_black" : "center_direction"
+            imageName = Globals.mapTypeSelection == 0 ? "center_direction" : "center_direction"
             cursor.image = UIImage(named: imageName)
         case 2:
-            imageName = Globals.mapTypeSelection == 0 ? "Plus Math Black" : "Plus Math White"
+            imageName = Globals.mapTypeSelection == 0 ? "Plus Math White" : "Plus Math White"
             cursor.image = UIImage(named: imageName)
         default:
             cursor.image = targetImageMap
